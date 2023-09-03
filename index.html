@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title>TEST</title>
+    <script src="//unpkg.com/xhook@latest/dist/xhook.min.js"></script>
+    <script src="./script.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <link href="./style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- <button hx-on:click="localStorage.getItem('vertical')" hx-target="body" hx-swap="beforeend">TEST</button> -->
+    <!-- <div id="tabs" hx-get="./html/tab1.html" hx-trigger="load delay:100ms" hx-target="#tabs" hx-swap="innerHTML"></div> -->
+    <div id="tabs" hx-target="#tab-contents" role="tablist"
+        _="on htmx:afterOnLoad set @aria-selected of <[aria-selected=true]/> to false tell the target take .selected set @aria-selected to true">
+        <button role="tab" aria-controls="tab-content" aria-selected="true" hx-get="./html/tab1.html"
+            class="selected">Tab 1</button>
+        <button role="tab" aria-controls="tab-content" aria-selected="false" hx-get="./html/tab2.html">Tab 2</button>
+        <button role="tab" aria-controls="tab-content" aria-selected="false" hx-get="./html/tab3.html">Tab 3</button>
+    </div>
+    <div ht></div>
+    <div id="tab-contents" role="tabpanel" hx-get="html/tab1.html" hx-trigger="load"></div>
+    <!-- <input type="file" id="settings.loadFromSaveFile" accept=".txt" />
+    <input type="button" id="settings.saveToFile" value="Save to File" />
+    <label for="option">Choose data type:</label>
+    <button hx-get="./html/modal.html" hx-target="body" hx-swap="beforeend">Open a Modal</button>
+    <select name="option" id="option">
+        <option value="town">town</option>
+        <option value="talisman">talisman</option>
+        <option value="pet">pet</option>
+        <option value="expedition">expedition</option>
+        <option value="warriorActiveSet">warriorActiveSet</option>
+        <option value="wizardActiveSet">wizardActiveSet</option>
+        <option value="angelActiveSet">angelActiveSet</option>
+        <option value="thiefActiveSet">thiefActiveSet</option>
+        <option value="archerActiveSet">archerActiveSet</option>
+        <option value="tamerActiveSet">tamerActiveSet</option>
+        <option value="all">all</option>
+    </select>
+    <hr>
+    <textarea id="output" style="width: 100%; height: 90%;"></textarea> -->
+</body>
+
+
+
+</html>
