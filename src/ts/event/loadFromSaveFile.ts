@@ -21,7 +21,7 @@ export function loadFromSaveFile(event) {
     };
     localStorage.setItem("data", JSON.stringify(data));
     console.log("succes");
-    location.reload();
+    // location.reload();
     // console.log("DONE", filereader.readyState); // readyState will be 2
   };
   //   filereader.onload = () => callback(null, fr.result);
@@ -33,6 +33,6 @@ export function loadFromSaveFile(event) {
   //@ts-ignore
 }
 
-console.log("loader loaded");
+// console.log("loader loaded");
 //@ts-ignore
 document.getElementById("loadFromSaveFile").addEventListener("change", loadFromSaveFile);

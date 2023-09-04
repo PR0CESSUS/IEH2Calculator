@@ -22,8 +22,8 @@ export function onChange(event) {
     // console.log(event.target.value);
   }
   if (event.target.tagName == "INPUT" && event.target.type == "file") {
-    console.log("file hack force to save");
-
+    this.data = JSON.parse(localStorage.getItem("data"));
+    // console.log("file hack force to save");
     // this.load();
   }
 }
