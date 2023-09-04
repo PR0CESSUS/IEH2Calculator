@@ -5,9 +5,13 @@ export class LogicSettings {
     this.data = data;
     // console.log("LogicSettings constructor");
 
-    var script = document.createElement("script");
-    script.src = "loader.bundle.js";
-    document.head.appendChild(script);
+    if (!document.getElementById("saveFileloader")) {
+      var script = document.createElement("script");
+      script.src = "loader.bundle.js";
+      script.id = "saveFileloader";
+      document.head.appendChild(script);
+    }
+
     // console.log("script added");
     //@ts-ignore
   }
