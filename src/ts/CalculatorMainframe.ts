@@ -45,11 +45,18 @@ export class CalculatorMainframe {
   }
 
   set(endpoint, value) {
-    // console.log(endpoint, value);
-    this._set(this.data, endpoint, convertFrom(value));
+    if (this.data === JSON.parse(localStorage.getItem("data"))) {
+      // console.log(endpoint, value);
+      this._set(this.data, endpoint, convertFrom(value));
 
-    // save new value to localStorage
-    localStorage.setItem("data", JSON.stringify(this.data));
+      // save new value to localStorage
+      localStorage.setItem("data", JSON.stringify(this.data));
+    } else {
+      console.log("data missmatch, replacing with localStorage, and continue");
+      this.data = JSON.parse(localStorage.getItem("data"));
+      this._set(this.data, endpoint, convertFrom(value));
+      localStorage.setItem("data", JSON.stringify(this.data));
+    }
   }
 
   load() {
