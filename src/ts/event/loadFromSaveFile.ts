@@ -21,6 +21,7 @@ export function loadFromSaveFile(event) {
     };
     localStorage.setItem("data", JSON.stringify(data));
     console.log("succes");
+    location.reload();
     // console.log("DONE", filereader.readyState); // readyState will be 2
   };
   //   filereader.onload = () => callback(null, fr.result);
