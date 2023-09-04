@@ -19,7 +19,7 @@ module.exports = {
         },
       },
     },
-    runtimeChunk: "single",
+    // runtimeChunk: "single",
   },
   entry: {
     main: path.resolve(__dirname, "src/main.ts"),
