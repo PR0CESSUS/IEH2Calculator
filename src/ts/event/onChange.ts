@@ -23,7 +23,7 @@ export function onChange(event) {
   }
   if (event.target.tagName == "INPUT" && event.target.type == "file") {
     console.log("file hack force to save");
-
-    this.load();
+    location.reload();
+    // this.load();
   }
 }
