@@ -1,0 +1,26 @@
+.input-size-3 {
+  width: 2.5em;
+}
+
+.input-stone {
+  display: inline;
+}
+
+.input-stone:focus > #testicon {
+  background-color: yellow;
+  border-style: dashed;
+  border-width: 2px;
+}
+
+#container:hover > #cube {
+  background-color: yellow;
+}
+
+.input-stone:hover > .icon-stone {
+  background: yellow;
+}
+/* .input-stone:hover ~ .icon-stone {background-color: aqua;}    */
+
+/* body:has(.input-stone:focus) .icon-stone {
+    background: purple; 
+  }  */

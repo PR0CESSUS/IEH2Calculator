@@ -1,0 +1,41 @@
+{
+  "name": "ieh2calculator",
+  "version": "0.0.1",
+  "description": "Calculator for Incremental Epic Hero 2",
+  "main": "./src/main.ts",
+  "scripts": {
+    "start": "webpack serve --config webpack.config.js",
+    "test": "webpack --watch --config webpack.config.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PR0CESSUS/IEH2Calculator.git"
+  },
+  "keywords": [
+    "IEH2",
+    "Incremental",
+    "Epic",
+    "Hero",
+    "Calculator"
+  ],
+  "author": "Processus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PR0CESSUS/IEH2Calculator/issues"
+  },
+  "homepage": "https://github.com/PR0CESSUS/IEH2Calculator#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "ignore-emit-webpack-plugin": "^2.0.6",
+    "lodash": "^4.17.21",
+    "mini-css-extract-plugin": "^2.7.6",
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "ts-loader": "^9.4.4",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
