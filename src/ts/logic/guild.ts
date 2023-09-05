@@ -3,7 +3,6 @@ export class LogicGuild {
   data;
   constructor(data) {
     this.data = data;
-    this.update();
   }
 
   // console.log("class constructor aka Init");

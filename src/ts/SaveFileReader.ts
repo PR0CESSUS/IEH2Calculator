@@ -105,13 +105,14 @@ export class SaveFileReader {
     this.talisman = new StatisticTalisman(this.source.potionDisassembledNums).data;
     this.expedition = new StatisticExpedition(this.source.expeditionLevels).data;
     this.town = new StatisticTown(
-      this.getTown(),
+      this,
       {
         brick: this.expedition.Brick,
         log: this.expedition.Log,
         shard: this.expedition.Shard,
       },
-      this.talisman.MasonsTrowel,
+      //@ts-ignore
+      this.talisman.MasonsTrowel.passiveEffectValue,
       this.source.ascensionMilestoneLevelReached[0]
     ).data;
 
@@ -176,22 +177,6 @@ export class SaveFileReader {
         };
       }
     }
-  }
-
-  private getTown() {
-    let data = {
-      levels: <any>[],
-      stone: <any>[],
-      crystal: <any>[],
-      leaf: <any>[],
-    };
-    for (let index = 0; index < this.source.buildingLevels.length; index++) {
-      data.levels.push(this.source.buildingLevels[index] + this.getBuildingLevelBonus());
-      data.stone.push(this.source.buildingResearchLevelsStone[index]);
-      data.crystal.push(this.source.buildingResearchLevelsCrystal[index]);
-      data.leaf.push(this.source.buildingResearchLevelsLeaf[index]);
-    }
-    return data;
   }
 
   private getTalisman() {

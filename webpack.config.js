@@ -15,7 +15,10 @@ module.exports = {
     open: false,
     hot: false,
     liveReload: true,
-    watchFiles: ["src/**/*.php", "public/**/*"],
+    watchFiles: ["src/**/*", "src/html/*"],
+    devMiddleware: {
+      writeToDisk: true,
+    },
   },
   optimization: {
     splitChunks: {
@@ -29,6 +32,9 @@ module.exports = {
       },
     },
     runtimeChunk: "single",
+    // runtimeChunk: {
+    //   name: (entrypoint) => `runtime~${entrypoint.name}`,
+    // },
   },
   entry: {
     main: path.resolve(__dirname, "src/main.ts"),
@@ -59,10 +65,8 @@ module.exports = {
           },
         },
         {
-          from: path.resolve(__dirname, "src", "html"),
-          to({ context, absoluteFilename }) {
-            return "html/[name][ext]";
-          },
+          from: path.resolve(__dirname, "src/html"),
+          to: path.resolve(__dirname, "dist/html"),
         },
         {
           from: path.resolve(__dirname, "src", "favicon.ico"),
@@ -84,7 +88,7 @@ module.exports = {
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
-    clean: true,
+    // clean: true,
   },
   resolve: {
     extensions: [".js", ".ts"],
@@ -118,5 +122,18 @@ module.exports = {
         ],
       },
     ],
+  },
+
+  stats: {
+    modules: true,
+    warnings: false,
+    version: true,
+    timings: true,
+    performance: false,
+    hash: true,
+    errors: true,
+    errorDetails: true,
+    colors: true,
+    builtAt: true,
   },
 };

@@ -27,7 +27,7 @@ export function convertFrom(input) {
     } else if (input[2] == "k") {
       output = input[1] * 1000 ** 1;
     }
-    console.log(output, "from");
+    // console.log(output, "from");
 
     //@ts-ignore
     return parseFloat(output);

@@ -20,7 +20,14 @@ export function loadFromSaveFile(event) {
       ...new SaveFileReader(filereader.result),
     };
     localStorage.setItem("data", JSON.stringify(data));
-    console.log("succes");
+
+    let event = new CustomEvent("onLoadSaveFile", {
+      bubbles: true,
+      detail: {
+        complete: true,
+      },
+    });
+    document.body.dispatchEvent(event);
     // location.reload();
     // console.log("DONE", filereader.readyState); // readyState will be 2
   };
@@ -33,6 +40,5 @@ export function loadFromSaveFile(event) {
   //@ts-ignore
 }
 
-// console.log("loader loaded");
 //@ts-ignore
 document.getElementById("loadFromSaveFile").addEventListener("change", loadFromSaveFile);

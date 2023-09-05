@@ -1,30 +1,34 @@
-<h3>Settings</h3>
-
-<p style="padding-left: 20px;"><img src="./img/nitro.png" class="icon"> Nitro Speed: <input type="text" value="1"
-        data-endpoint="source.nitroSpeed" class="default-input warning"></p>
-
 <h3>Guild</h3>
 
-<div class="grid">
-    <label for="source.guildLevel">Current Level</label>
-    <input id="source.guildLevel" type="text" data-endpoint="source.guildLevel" class="default-input warning">
+<div>
+    <p>
+        <label>Guild EXP per hour:</label>
+        <input type="text" id="guild.expPerHour" class="default-input custom" data-endpoint="custom.guildexpPerHour"
+            data-precision="2">
+    </p>
+    <p> <label>Target Level:</label>
+        <input type="text" id="guild.levelTarget" class="default-input custom" data-endpoint="custom.guildLevelTarget">
+    </p>
+    <p>
+        <label for="source.guildLevel">Current Level:</label>
+        <input id="source.guildLevel" type="text" data-endpoint="source.guildLevel" class="default-input warning">
 
+    </p>
+    <p>
+        <label for="talisman.GuildMembersEmblem.disassembled">Guild Member's Emblem Disasambled:</label>
+        <input id="talisman.GuildMembersEmblem.disassembled " type="text"
+            data-endpoint="talisman.GuildMembersEmblem.disassembled" class="default-input warning">
 
-    <label>Target Level</label>
-    <input type="text" id="guild.levelTarget" class="default-input custom" data-endpoint="custom.guildLevelTarget">
+    </p>
+    <p>
+        <img src="./img/nitro.png" class="icon"> Nitro Speed:<br>
+        <input type="text" value="1" data-endpoint="source.nitroSpeed" class="default-input warning">
+    </p>
+    <p>
+        <label>Time Needed:</label>
+        <span id="guild.time" data-endpoint="custom.guildtime" data-type="time" class="data"></span>
 
+    </p>
 
-    <label>Guild EXP per hour</label>
-    <input type="text" id="guild.expPerHour" class="default-input custom" data-endpoint="custom.guildexpPerHour"
-        data-precision="2">
-
-
-
-    <label for="talisman.GuildMembersEmblem.disassembled">Guild Member's Emblem Disasambled</label>
-    <input id="talisman.GuildMembersEmblem.disassembled " type="text"
-        data-endpoint="talisman.GuildMembersEmblem.disassembled" class="default-input warning">
-
-    <label>Time Needed</label>
-    <p id="guild.time" data-endpoint="custom.guildtime" data-type="time" class="data"></p>
 
 </div>

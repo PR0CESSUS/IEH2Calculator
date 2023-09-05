@@ -10,6 +10,7 @@ import { CalculatorMainframe } from "./ts/CalculatorMainframe";
 // localStorage.setItem("saveData", "chuj");
 // localStorage.setItem("saveData", JSON.stringify(saveFileData));
 // let router = new Router(data);
+
 let calculator = new CalculatorMainframe();
 
 // let x = calculator.resolve("talisman.GuildMembersEmblem.disassembled");
