@@ -1,6 +1,3 @@
-/*!***************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/default.css ***!
-  \***************************************************************************************************/
 body {
   font-family: "Noto Sans JP";
   font-size: 16px;
@@ -456,9 +453,6 @@ body .active {
   background-repeat: no-repeat; 
 } */
 
-/*!***************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/buttons.css ***!
-  \***************************************************************************************************/
 .btn {
     font-family: 'Noto Sans JP';
     font-size: 15px;
@@ -519,15 +513,9 @@ body .active {
     border-right-color: #223e6a; 
 }
 
-/*!**************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/colors.css ***!
-  \**************************************************************************************************/
 .green {
     color: #01f304;
 }
-/*!*************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/modal.css ***!
-  \*************************************************************************************************/
 /***** MODAL DIALOG ****/
 #modal {
   /* Underlay covers entire screen. */
@@ -584,9 +572,6 @@ body .active {
   animation-timing-function: ease;
 }
 
-/*!*************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/index.css ***!
-  \*************************************************************************************************/
 .menu-button {
   border-width: 4px 4px 4px 4px;
   border-radius: 0px;
@@ -656,9 +641,6 @@ body .active {
   padding: 5px;
 }
 
-/*!*************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/icons.css ***!
-  \*************************************************************************************************/
 .lab-catalyst-icon {
     border-style: solid;
     border-width: 2px;
@@ -716,9 +698,6 @@ body .active {
     background-image: linear-gradient(#383a3b, #2a2d2f);
 
 }
-/*!*************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/input.css ***!
-  \*************************************************************************************************/
 .input-size-3 {
   width: 2.5em;
 }
@@ -746,5 +725,3 @@ body .active {
     background: purple; 
   }  */
 
-
-/*# sourceMappingURL=styles-bundle.css.map*/

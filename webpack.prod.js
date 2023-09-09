@@ -23,7 +23,7 @@ module.exports = {
   },
   entry: {
     main: path.resolve(__dirname, "src/main.ts"),
-    loader: path.resolve(__dirname, "src/ts/event/loadFromSaveFile.ts"),
+    saveFileLoader: path.resolve(__dirname, "src/ts/SaveFileLoader.ts"),
     // settings: "./src/js/settings.js",
     styles: [
       path.resolve(__dirname, "./src/css/default.css"),
@@ -60,6 +60,12 @@ module.exports = {
           from: path.resolve(__dirname, "src", "favicon.ico"),
           to({ context, absoluteFilename }) {
             return "[name][ext]";
+          },
+        },
+        {
+          from: path.resolve(__dirname, "src/ts/data", "default.json"),
+          to({ context, absoluteFilename }) {
+            return "data/[name][ext]";
           },
         },
       ],
