@@ -16,26 +16,28 @@
 
     <div class="wrapper">
         <div class="header">
-            <h1 id="title">IEH2Calculator</h1>
+            <h1 id="title">IEH2Calculator <img id="spinner" class="htmx-indicator" src="img/three-dots.svg" /> </h1>
+            <button onclick="localStorage.clear(); location.reload()">CLEAR</button>
         </div>
 
-        <div class="sidebar" hx-target="#content">
+        <div class="sidebar" hx-target="#content" hx-indicator="#title">
 
             <button hx-get="html/equip.html" class="menu-button">Equip</button>
             <button hx-get="html/modal.html" class="menu-button">MODAL</button>
             <button hx-get="html/tab1.html" class="menu-button">Tab1</button>
+            <button hx-get="html/test.html" class="menu-button">Test</button>
             <button hx-get="html/tab2.html" class="menu-button">Tab2</button>
             <button hx-get="html/slimebank.html" class="menu-button">Slime Bank</button>
             <button hx-get="html/guild.html" class="menu-button">Guild</button>
             <button hx-get="html/settings.html" class="menu-button">Settings</button>
-            <!-- <button id="expedition" class="menu-button">Expedition</button>
-            <button id="anvil" class="menu-button">Anvil</button>
-            <button id="gear" class="menu-button">Gear</button>
+            <button hx-get="html/expedition.html" class="menu-button">Expedition</button>
+            <button hx-get="html/anvil.html" class="menu-button">Anvil</button>
 
-            <button id="changelog" class="menu-button">Changelog</button> -->
+            <button id="changelog" class="menu-button">Changelog</button>
             <hr />
         </div>
-        <div id="content" hx-get="html/tab1.html" hx-trigger="load"></div>
+
+        <div id="content" hx-get="html/test.html" hx-trigger="load"></div>
         <!-- <div id="content" hx-get="html/tab1.html" hx-trigger="load"></div> -->
         <div id="footer" class="footer">version: <span id="version">0.0.0</span> | <a
                 href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a></div>

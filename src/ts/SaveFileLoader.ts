@@ -1,31 +1,19 @@
-import { SaveFileReader } from "../SaveFileReader";
+import { SaveFileReader } from "./SaveFileReader";
 
-export function loadFromSaveFile(event) {
+export function SaveFileLoader(event) {
   // No files, do nothing.
   //@ts-ignore
   if (!event.target.files) {
     return;
   }
-  //   console.log(event.target.files);
 
   const filereader = new FileReader();
   filereader.readAsText(event.target.files[0]);
   filereader.onloadend = () => {
     // console.log(filereader.result);
-    // console.log(this);
-    //@ts-ignore
-    let custom = JSON.parse(localStorage.getItem("data"));
-    let data = {
-      ...custom,
-      ...new SaveFileReader(filereader.result),
-    };
-    localStorage.setItem("data", JSON.stringify(data));
 
     let event = new CustomEvent("onLoadSaveFile", {
-      bubbles: true,
-      detail: {
-        complete: true,
-      },
+      detail: { type: "source", data: new SaveFileReader(filereader.result) },
     });
     document.body.dispatchEvent(event);
     // location.reload();
@@ -39,6 +27,9 @@ export function loadFromSaveFile(event) {
   //   };
   //@ts-ignore
 }
-
-//@ts-ignore
-document.getElementById("loadFromSaveFile").addEventListener("change", loadFromSaveFile);
+// more realiable way
+if (document.getElementById("loadFromSaveFile")) {
+  //@ts-ignore
+  document.getElementById("loadFromSaveFile").addEventListener("change", SaveFileLoader);
+  console.log("loader script loaded!");
+}

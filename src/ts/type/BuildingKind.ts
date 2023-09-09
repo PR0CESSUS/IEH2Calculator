@@ -18,7 +18,7 @@ export type BuildingKind = {
   [K in (typeof buildingKind)[number]]?: Building;
 };
 
-type Building = {
+export type Building = {
   effect: number;
   research: {
     stone: {

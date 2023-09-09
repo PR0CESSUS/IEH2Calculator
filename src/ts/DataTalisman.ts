@@ -1,8 +1,9 @@
 import { potionKind } from "./type/PotionKind";
 
-export class StatisticTalisman {
-  data = {};
-  passiveEffectValue = [
+export class DataTalisman {
+  Nothing;
+  MasonsTrowel;
+  #passiveEffectValue = [
     null,
     null,
     null,
@@ -74,7 +75,7 @@ export class StatisticTalisman {
     null,
     null,
   ];
-  passiveEffectMaxValue = [
+  #passiveEffectMaxValue = [
     null,
     null,
     null,
@@ -147,18 +148,31 @@ export class StatisticTalisman {
     null,
   ];
   constructor(data) {
-    for (let index = 32; index < potionKind.length; index++) {
-      const element = potionKind[index];
-      let passiveEffectValue = 0;
-      if (this.passiveEffectMaxValue[index]) {
-        passiveEffectValue = Math.min(this.passiveEffectMaxValue[index], data[index] * this.passiveEffectValue[index]);
-      } else {
-        passiveEffectValue = 1 + data[index] * this.passiveEffectValue[index];
+    this.initialization(data);
+  }
+  initialization(data) {
+    // data.pet.isInitialized = false;
+    // console.log("data.isInitialized:", data.isInitialized);
+    // console.log("data.upgrade.isInitialized:", data?.upgrade?.isInitialized);
+    if (data.isInitialized) {
+      for (const [key, value] of Object.entries(data.localStorage.talisman)) {
+        this[key] = value;
       }
-      this.data[element] = {
-        disassembled: data[index],
-        passiveEffectValue: passiveEffectValue,
-      };
+    } else if (data.source.lastTimeLocal) {
+      let disassembled = data.source.potionDisassembledNums;
+      for (let index = 32; index < potionKind.length; index++) {
+        const element = potionKind[index];
+        let passiveEffectValue = 0;
+        if (this.#passiveEffectMaxValue[index]) {
+          passiveEffectValue = Math.min(this.#passiveEffectMaxValue[index], disassembled[index] * this.#passiveEffectValue[index]);
+        } else {
+          passiveEffectValue = 1 + disassembled[index] * this.#passiveEffectValue[index];
+        }
+        this[element] = {
+          disassembled: disassembled[index],
+          passiveEffectValue: passiveEffectValue,
+        };
+      }
     }
   }
 }

@@ -1,3 +1,6 @@
+/*!***************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/default.css ***!
+  \***************************************************************************************************/
 body {
   font-family: "Noto Sans JP";
   font-size: 16px;
@@ -420,6 +423,42 @@ body .active {
   color: #f2e009;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-areas: none;
+}
+
+.htmx-indicator {
+  padding-top: 10px;
+  margin-top: 0px;
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+.htmx-request .htmx-indicator {
+  opacity: 1;
+}
+.htmx-request.htmx-indicator {
+  opacity: 1;
+}
+.htmx-settling {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+/* .htmx-settling {
+  opacity: 0;
+} */
+/* .htmx-indicator {
+  background-image: url("img/oval.svg");
+  background-position: center; 
+  background-repeat: no-repeat; 
+} */
+
+/*!***************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/buttons.css ***!
+  \***************************************************************************************************/
 .btn {
     font-family: 'Noto Sans JP';
     font-size: 15px;
@@ -480,20 +519,74 @@ body .active {
     border-right-color: #223e6a; 
 }
 
+/*!**************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/colors.css ***!
+  \**************************************************************************************************/
 .green {
     color: #01f304;
 }
-.research {
-    margin: 0px 0 0 0;
-    padding: 0px 0px 0px 0px;
-    float: right;
-    display: inline; 
-    /* background-image: linear-gradient(#383a3b, #2a2d2f); */
-    /* border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: #858585;  */
+/*!*************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/modal.css ***!
+  \*************************************************************************************************/
+/***** MODAL DIALOG ****/
+#modal {
+  /* Underlay covers entire screen. */
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
 
-} 
+  z-index: 1000;
+  /* color: black; */
+  /* Flexbox centers the .modal-content vertically and horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Animate when opening */
+  animation-name: fadeIn;
+  animation-duration: 150ms;
+  animation-timing-function: ease;
+}
+
+#modal > .modal-underlay {
+  /* underlay takes up the entire viewport. This is only
+	required if you want to click to dismiss the popup */
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+#modal > .modal-content {
+  /* Position visible dialog near the top of the window */
+  margin-top: 10vh;
+
+  /* Sizing for visible dialog */
+  width: 80%;
+  max-width: 600px;
+
+  /* Display properties for visible dialog*/
+  border: solid 1px #999;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+  background-color: #232c37;
+  /* background-image: linear-gradient(#39495e, #232c37); */
+  padding: 20px;
+
+  /* Animate when opening */
+  animation-name: zoomIn;
+  animation-duration: 150ms;
+  animation-timing-function: ease;
+}
+
+/*!*************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/index.css ***!
+  \*************************************************************************************************/
 .menu-button {
   border-width: 4px 4px 4px 4px;
   border-radius: 0px;
@@ -563,6 +656,9 @@ body .active {
   padding: 5px;
 }
 
+/*!*************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/icons.css ***!
+  \*************************************************************************************************/
 .lab-catalyst-icon {
     border-style: solid;
     border-width: 2px;
@@ -620,6 +716,9 @@ body .active {
     background-image: linear-gradient(#383a3b, #2a2d2f);
 
 }
+/*!*************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css/input.css ***!
+  \*************************************************************************************************/
 .input-size-3 {
   width: 2.5em;
 }
@@ -647,3 +746,5 @@ body .active {
     background: purple; 
   }  */
 
+
+/*# sourceMappingURL=styles-bundle.css.map*/

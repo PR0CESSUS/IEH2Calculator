@@ -1,7 +1,9 @@
 export function afterSettle(event) {
   // console.log(event.detail.pathInfo.requestPath);
 
-  history.pushState("", "", "#" + event.detail.pathInfo.requestPath.replace(/.*\/(.*)\.html$/, "$1"));
+  if (event.detail.pathInfo.requestPath != "data/default.json") {
+    history.pushState("", "", "#" + event.detail.pathInfo.requestPath.replace(/.*\/(.*)\.html$/, "$1"));
+  }
 
   // console.log(this);
   // console.log(event);

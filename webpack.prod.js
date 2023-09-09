@@ -29,7 +29,7 @@ module.exports = {
       path.resolve(__dirname, "./src/css/default.css"),
       path.resolve(__dirname, "./src/css/buttons.css"),
       path.resolve(__dirname, "./src/css/colors.css"),
-      path.resolve(__dirname, "./src/css/box.css"),
+      path.resolve(__dirname, "./src/css/modal.css"),
       path.resolve(__dirname, "./src/css/index.css"),
       path.resolve(__dirname, "./src/css/icons.css"),
       path.resolve(__dirname, "./src/css/input.css"),

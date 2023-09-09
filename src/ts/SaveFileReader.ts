@@ -1,120 +1,28 @@
 import { SaveFileDencrypt } from "./SaveFileDencrypt";
-import { PotionKind, potionKind } from "./type/PotionKind";
-import { buildingKind, BuildingKind } from "./type/BuildingKind";
-import { StatisticTown } from "./StatisticTown";
-import { StatisticTalisman } from "./StatisticTalisman";
-import { StatisticExpedition } from "./StatisticExpedition";
-import { ExpeditionKind } from "./type/ExpeditionKind";
-import { monsterColor, monsterSpecies } from "./type/MonsterKind";
 
 export class SaveFileReader {
   source: any;
-  clearedMission = 0;
-  pet = {
-    slime: {
-      normal: { level: 0, rank: 0, loyalty: 0 },
-      blue: { level: 0, rank: 0, loyalty: 0 },
-      yellow: { level: 0, rank: 0, loyalty: 0 },
-      red: { level: 0, rank: 0, loyalty: 0 },
-      green: { level: 0, rank: 0, loyalty: 0 },
-      purple: { level: 0, rank: 0, loyalty: 0 },
-    },
-    magicslime: {
-      normal: { level: 0, rank: 0, loyalty: 0 },
-      blue: { level: 0, rank: 0, loyalty: 0 },
-      yellow: { level: 0, rank: 0, loyalty: 0 },
-      red: { level: 0, rank: 0, loyalty: 0 },
-      green: { level: 0, rank: 0, loyalty: 0 },
-      purple: { level: 0, rank: 0, loyalty: 0 },
-    },
-    spider: {
-      normal: { level: 0, rank: 0, loyalty: 0 },
-      blue: { level: 0, rank: 0, loyalty: 0 },
-      yellow: { level: 0, rank: 0, loyalty: 0 },
-      red: { level: 0, rank: 0, loyalty: 0 },
-      green: { level: 0, rank: 0, loyalty: 0 },
-      purple: { level: 0, rank: 0, loyalty: 0 },
-    },
-    bat: {
-      normal: { level: 0, rank: 0, loyalty: 0 },
-      blue: { level: 0, rank: 0, loyalty: 0 },
-      yellow: { level: 0, rank: 0, loyalty: 0 },
-      red: { level: 0, rank: 0, loyalty: 0 },
-      green: { level: 0, rank: 0, loyalty: 0 },
-      purple: { level: 0, rank: 0, loyalty: 0 },
-    },
-    fairy: {
-      normal: { level: 0, rank: 0, loyalty: 0 },
-      blue: { level: 0, rank: 0, loyalty: 0 },
-      yellow: { level: 0, rank: 0, loyalty: 0 },
-      red: { level: 0, rank: 0, loyalty: 0 },
-      green: { level: 0, rank: 0, loyalty: 0 },
-      purple: { level: 0, rank: 0, loyalty: 0 },
-    },
-    fox: {
-      normal: { level: 0, rank: 0, loyalty: 0 },
-      blue: { level: 0, rank: 0, loyalty: 0 },
-      yellow: { level: 0, rank: 0, loyalty: 0 },
-      red: { level: 0, rank: 0, loyalty: 0 },
-      green: { level: 0, rank: 0, loyalty: 0 },
-      purple: { level: 0, rank: 0, loyalty: 0 },
-    },
-    devilfish: {
-      normal: { level: 0, rank: 0, loyalty: 0 },
-      blue: { level: 0, rank: 0, loyalty: 0 },
-      yellow: { level: 0, rank: 0, loyalty: 0 },
-      red: { level: 0, rank: 0, loyalty: 0 },
-      green: { level: 0, rank: 0, loyalty: 0 },
-      purple: { level: 0, rank: 0, loyalty: 0 },
-    },
-    treant: {
-      normal: { level: 0, rank: 0, loyalty: 0 },
-      blue: { level: 0, rank: 0, loyalty: 0 },
-      yellow: { level: 0, rank: 0, loyalty: 0 },
-      red: { level: 0, rank: 0, loyalty: 0 },
-      green: { level: 0, rank: 0, loyalty: 0 },
-      purple: { level: 0, rank: 0, loyalty: 0 },
-    },
-    flametiger: {
-      normal: { level: 0, rank: 0, loyalty: 0 },
-      blue: { level: 0, rank: 0, loyalty: 0 },
-      yellow: { level: 0, rank: 0, loyalty: 0 },
-      red: { level: 0, rank: 0, loyalty: 0 },
-      green: { level: 0, rank: 0, loyalty: 0 },
-      purple: { level: 0, rank: 0, loyalty: 0 },
-    },
-  };
-  town: BuildingKind;
-  talisman: PotionKind = {};
-  expedition: ExpeditionKind = {};
-
-  warriorActiveSet;
-  tamerActiveSet;
-  wizardActiveSet;
-  angelActiveSet;
-  thiefActiveSet;
-  archerActiveSet;
 
   constructor(data: any) {
     // this.source = data;
     this.source = new SaveFileDencrypt(data).data;
 
-    this.getClearedMission();
-    this.getBestiary();
+    // this.getClearedMission();
+    // this.getBestiary();
 
-    this.talisman = new StatisticTalisman(this.source.potionDisassembledNums).data;
-    this.expedition = new StatisticExpedition(this.source.expeditionLevels).data;
-    this.town = new StatisticTown(
-      this,
-      {
-        brick: this.expedition.Brick,
-        log: this.expedition.Log,
-        shard: this.expedition.Shard,
-      },
-      //@ts-ignore
-      this.talisman.MasonsTrowel.passiveEffectValue,
-      this.source.ascensionMilestoneLevelReached[0]
-    ).data;
+    // this.talisman = new StatisticTalisman(this.source.potionDisassembledNums).data;
+    // this.expedition = new StatisticExpedition(this.source.expeditionLevels).data;
+    // this.town = new StatisticTown(
+    //   this,
+    //   {
+    //     brick: this.expedition.Brick,
+    //     log: this.expedition.Log,
+    //     shard: this.expedition.Shard,
+    //   },
+    //   //@ts-ignore
+    //   this.talisman.MasonsTrowel.passiveEffectValue,
+    //   this.source.ascensionMilestoneLevelReached[0]
+    // ).data;
 
     // ascensionMilestoneLevelReached
     // PassiveEffectValue(long level) => 0.1 * (double) level * Math.Pow(2.0, ((double) level - 1.0) / 9.0)
@@ -150,109 +58,109 @@ export class SaveFileReader {
     // writeFileSync("D:/test/loader/test.json", JSON.stringify(this.source));
   }
 
-  private getClearedMission() {
-    let counter = 0;
+  // private getClearedMission() {
+  //   let counter = 0;
 
-    for (let index = 0; index < this.source.isClearedMission.length; index++) {
-      if (this.source.isClearedMission[index]) {
-        counter++;
-      }
-    }
-    this.clearedMission = counter;
-  }
+  //   for (let index = 0; index < this.source.isClearedMission.length; index++) {
+  //     if (this.source.isClearedMission[index]) {
+  //       counter++;
+  //     }
+  //   }
+  //   this.clearedMission = counter;
+  // }
 
-  private getBestiary() {
-    const kind = ["slime", "magicslime", "spider", "bat", "fairy", "fox", "devilfish", "treant", "flametiger"];
-    const color = ["normal", "blue", "yellow", "red", "green", "purple"];
-    let data = this.pet;
-    for (let index = 0; index < kind.length; index++) {
-      const multplier = index;
+  // private getBestiary() {
+  //   const kind = ["slime", "magicslime", "spider", "bat", "fairy", "fox", "devilfish", "treant", "flametiger"];
+  //   const color = ["normal", "blue", "yellow", "red", "green", "purple"];
+  //   let data = this.pet;
+  //   for (let index = 0; index < kind.length; index++) {
+  //     const multplier = index;
 
-      for (let index2 = 0; index2 < color.length; index2++) {
-        const id = multplier * 10 + index2;
-        this.pet[kind[index]][color[index2]] = {
-          level: this.source.monsterPetLevels[id],
-          rank: this.source.monsterPetRanks[id],
-          loyalty: this.source.monsterPetLoyalty[id],
-        };
-      }
-    }
-  }
+  //     for (let index2 = 0; index2 < color.length; index2++) {
+  //       const id = multplier * 10 + index2;
+  //       this.pet[kind[index]][color[index2]] = {
+  //         level: this.source.monsterPetLevels[id],
+  //         rank: this.source.monsterPetRanks[id],
+  //         loyalty: this.source.monsterPetLoyalty[id],
+  //       };
+  //     }
+  //   }
+  // }
 
-  private getTalisman() {
-    // for (const [key, value] of Object.entries(this.talisman)) {
-    //   for (let index = 0; index < potionKind.length; index++) {
-    //     const element = potionKind[index];
-    //     if (key == element) {
-    //       this.talisman[key].disassembled = this.source.potionDisassembledNums[index];
-    //     }
-    //   }
-    // }
-    let data = <any>[];
-    for (let index = 0; index < this.source.potionDisassembledNums.length; index++) {
-      const element = this.source.potionDisassembledNums[index];
-      data.push(element);
-    }
-    return data;
-  }
+  // private getTalisman() {
+  //   // for (const [key, value] of Object.entries(this.talisman)) {
+  //   //   for (let index = 0; index < potionKind.length; index++) {
+  //   //     const element = potionKind[index];
+  //   //     if (key == element) {
+  //   //       this.talisman[key].disassembled = this.source.potionDisassembledNums[index];
+  //   //     }
+  //   //   }
+  //   // }
+  //   let data = <any>[];
+  //   for (let index = 0; index < this.source.potionDisassembledNums.length; index++) {
+  //     const element = this.source.potionDisassembledNums[index];
+  //     data.push(element);
+  //   }
+  //   return data;
+  // }
 
-  getAreaMilestone(number: number) {
-    return number <= this.clearedMission;
-  }
+  // getAreaMilestone(number: number) {
+  //   return number <= this.clearedMission;
+  // }
 
-  getExpeditionLevel() {
-    return this.source.expeditionLevels.reduce((a, b) => a + b, 0);
-  }
+  // getExpeditionLevel() {
+  //   return this.source.expeditionLevels.reduce((a, b) => a + b, 0);
+  // }
 
-  getTalismanDisassembledNums(id: number) {
-    return this.source.potionDisassembledNums[id];
-  }
+  // getTalismanDisassembledNums(id: number) {
+  //   return this.source.potionDisassembledNums[id];
+  // }
 
-  getBuildingLevelBonus() {
-    let bonus = 0;
-    if (this.clearedMission >= 550) {
-      bonus += 10;
-    }
-    if (this.clearedMission >= 1350) {
-      bonus += 10;
-    }
-    if (this.clearedMission >= 2300) {
-      bonus += 10;
-    }
-    return bonus;
-  }
+  // getBuildingLevelBonus() {
+  //   let bonus = 0;
+  //   if (this.clearedMission >= 550) {
+  //     bonus += 10;
+  //   }
+  //   if (this.clearedMission >= 1350) {
+  //     bonus += 10;
+  //   }
+  //   if (this.clearedMission >= 2300) {
+  //     bonus += 10;
+  //   }
+  //   return bonus;
+  // }
 
-  getHeroActiveSet(hero = "warrior") {
-    let offset = this.getOffset(hero);
-    let setLimit = 72;
-    // let offset = 4840 + 24 + 24 + 15;
-    // let setLimit = 1;
-    let set = <any>[];
-    for (let index = 0; index < setLimit; index++) {
-      let id = this.source.equipmentId[offset + index];
-      // let item = ITEMS.find(({ kindNumeric }) => kindNumeric == data.equipmentKinds[id]) ?? {};
-      if (this.source.equipmentKinds[id] == 0) {
-        continue;
-      }
-      let item = {};
-      item["id"] = this.source.equipmentKinds[id];
-      item["anvilEffect"] = this.source.equipment4thForgeValues[id] ?? null;
-      item["anvilPurify"] = this.source.equipment5thForgeValues[id] ?? null;
-      item["anvilIncrement"] = this.source.equipment6thForgeValues[id] ?? null;
-      item["enchants"] = [];
-      // let enchant = ENCHANTS.find(({ kindNumeric }) => kindNumeric == data.equipment1stOptionEffectKinds[id]);
-      item["enchants"].push(this.source.equipment1stOptionEffectKinds[id]);
-      item["enchants"].push(this.source.equipment2ndOptionEffectKinds[id]);
-      item["enchants"].push(this.source.equipment3rdOptionEffectKinds[id]);
-      item["enchants"].push(this.source.equipment4thOptionEffectKinds[id]);
-      item["enchants"].push(this.source.equipment5thOptionEffectKinds[id]);
-      item["enchants"].push(this.source.equipment6thOptionEffectKinds[id]);
-      item["enchants"].push(this.source.equipment7thOptionEffectKinds[id]);
+  // getHeroActiveSet(hero = "warrior") {
+  //   let offset = this.getOffset(hero);
+  //   let setLimit = 72;
+  //   // let offset = 4840 + 24 + 24 + 15;
+  //   // let setLimit = 1;
+  //   let set = <any>[];
+  //   for (let index = 0; index < setLimit; index++) {
+  //     let id = this.source.equipmentId[offset + index];
+  //     // let item = ITEMS.find(({ kindNumeric }) => kindNumeric == data.equipmentKinds[id]) ?? {};
+  //     if (this.source.equipmentKinds[id] == 0) {
+  //       continue;
+  //     }
+  //     let item = {};
+  //     item["id"] = this.source.equipmentKinds[id];
+  //     item["anvilEffect"] = this.source.equipment4thForgeValues[id] ?? null;
+  //     item["anvilPurify"] = this.source.equipment5thForgeValues[id] ?? null;
+  //     item["anvilIncrement"] = this.source.equipment6thForgeValues[id] ?? null;
+  //     item["enchants"] = [];
+  //     // let enchant = ENCHANTS.find(({ kindNumeric }) => kindNumeric == data.equipment1stOptionEffectKinds[id]);
+  //     item["enchants"].push(this.source.equipment1stOptionEffectKinds[id]);
+  //     item["enchants"].push(this.source.equipment2ndOptionEffectKinds[id]);
+  //     item["enchants"].push(this.source.equipment3rdOptionEffectKinds[id]);
+  //     item["enchants"].push(this.source.equipment4thOptionEffectKinds[id]);
+  //     item["enchants"].push(this.source.equipment5thOptionEffectKinds[id]);
+  //     item["enchants"].push(this.source.equipment6thOptionEffectKinds[id]);
+  //     item["enchants"].push(this.source.equipment7thOptionEffectKinds[id]);
 
-      set.push(item);
-    }
-    return set;
-  }
+  //     set.push(item);
+  //   }
+  //   return set;
+  // }
 
   // getItem(offset) {
   //   // let offset = 4840 + 24 + 24 + 15;

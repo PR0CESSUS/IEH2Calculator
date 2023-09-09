@@ -1,1 +1,49 @@
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TEST</title><script src="https://unpkg.com/htmx.org@1.9.5"></script><link href="https://fonts.googleapis.com/css?family=Noto Sans JP" rel="stylesheet"><link rel="icon" type="image/x-icon" href="./favicon.ico"/><link href="./styles-bundle.css" rel="stylesheet"><script defer="defer" src="main.bundle.js?f5e93e5e21567c6b9cd4"></script></head><body><div class="wrapper"><div class="header"><h1 id="title">IEH2Calculator</h1></div><div class="sidebar" hx-target="#content"><button hx-get="html/equip.html" class="menu-button">Equip</button> <button hx-get="html/modal.html" class="menu-button">MODAL</button> <button hx-get="html/tab1.html" class="menu-button">Tab1</button> <button hx-get="html/tab2.html" class="menu-button">Tab2</button> <button hx-get="html/slimebank.html" class="menu-button">Slime Bank</button> <button hx-get="html/guild.html" class="menu-button">Guild</button> <button hx-get="html/settings.html" class="menu-button">Settings</button><hr/></div><div id="content" hx-get="html/tab1.html" hx-trigger="load"></div><div id="footer" class="footer">version: <span id="version">0.0.0</span> | <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a></div></div></body></html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TEST</title>
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <link href="https://fonts.googleapis.com/css?family=Noto Sans JP" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <!-- <script src="//unpkg.com/xhook@latest/dist/xhook.min.js"></script> -->
+    <!-- <script src="./script.js"></script> -->
+    <link href="./styles-bundle.css" rel="stylesheet">
+<script defer src="runtime.bundle.js?1bab05b97a535e9e7f66"></script><script defer src="main.bundle.js?1bab05b97a535e9e7f66"></script></head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="header">
+            <h1 id="title">IEH2Calculator <img id="spinner" class="htmx-indicator" src="img/three-dots.svg" /> </h1>
+            <button onclick="localStorage.clear(); location.reload()">CLEAR</button>
+        </div>
+
+        <div class="sidebar" hx-target="#content" hx-indicator="#title">
+
+            <button hx-get="html/equip.html" class="menu-button">Equip</button>
+            <button hx-get="html/modal.html" class="menu-button">MODAL</button>
+            <button hx-get="html/tab1.html" class="menu-button">Tab1</button>
+            <button hx-get="html/test.html" class="menu-button">Test</button>
+            <button hx-get="html/tab2.html" class="menu-button">Tab2</button>
+            <button hx-get="html/slimebank.html" class="menu-button">Slime Bank</button>
+            <button hx-get="html/guild.html" class="menu-button">Guild</button>
+            <button hx-get="html/settings.html" class="menu-button">Settings</button>
+            <button hx-get="html/expedition.html" class="menu-button">Expedition</button>
+            <button hx-get="html/anvil.html" class="menu-button">Anvil</button>
+
+            <button id="changelog" class="menu-button">Changelog</button>
+            <hr />
+        </div>
+
+        <div id="content" hx-get="html/test.html" hx-trigger="load"></div>
+        <!-- <div id="content" hx-get="html/tab1.html" hx-trigger="load"></div> -->
+        <div id="footer" class="footer">version: <span id="version">0.0.0</span> | <a
+                href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a></div>
+    </div>
+</body>
+
+
+
+</html>

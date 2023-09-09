@@ -5,7 +5,8 @@
   "main": "./src/main.ts",
   "scripts": {
     "start": "webpack serve --config webpack.config.js",
-    "test": "webpack --watch --config webpack.config.js",
+    "loader": "webpack serve --config webpack.config.loader.js",
+    "test": "mocha",
     "build": "webpack --config webpack.prod.js"
   },
   "repository": {
@@ -26,16 +27,23 @@
   },
   "homepage": "https://github.com/PR0CESSUS/IEH2Calculator#readme",
   "devDependencies": {
+    "@types/chai": "^4.3.6",
+    "@types/mocha": "^10.0.1",
+    "@types/sinon": "^10.0.16",
+    "chai": "^4.3.8",
     "copy-webpack-plugin": "^11.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.5.3",
     "ignore-emit-webpack-plugin": "^2.0.6",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.7.6",
+    "mocha": "^10.2.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nodemon": "^3.0.1",
+    "sinon": "^15.2.0",
     "ts-loader": "^9.4.4",
-    "unit.js": "^2.1.1",
+    "ts-node": "^10.9.1",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"

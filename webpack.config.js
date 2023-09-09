@@ -38,12 +38,12 @@ module.exports = {
   },
   entry: {
     main: path.resolve(__dirname, "src/main.ts"),
-    // settings: "./src/js/settings.js",
+    saveFileLoader: path.resolve(__dirname, "src/ts/SaveFileLoader.ts"),
     styles: [
       path.resolve(__dirname, "./src/css/default.css"),
       path.resolve(__dirname, "./src/css/buttons.css"),
       path.resolve(__dirname, "./src/css/colors.css"),
-      path.resolve(__dirname, "./src/css/box.css"),
+      path.resolve(__dirname, "./src/css/modal.css"),
       path.resolve(__dirname, "./src/css/index.css"),
       path.resolve(__dirname, "./src/css/icons.css"),
       path.resolve(__dirname, "./src/css/input.css"),
@@ -72,6 +72,12 @@ module.exports = {
           from: path.resolve(__dirname, "src", "favicon.ico"),
           to({ context, absoluteFilename }) {
             return "[name][ext]";
+          },
+        },
+        {
+          from: path.resolve(__dirname, "src/ts/data", "default.json"),
+          to({ context, absoluteFilename }) {
+            return "data/[name][ext]";
           },
         },
       ],

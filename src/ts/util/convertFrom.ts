@@ -3,7 +3,9 @@ export function convertFrom(input) {
   // console.log("convertFrom", input);
 
   // console.log("object !");
-
+  if (input >= 1e18) {
+    return input;
+  }
   // console.log(input);
   input = input.toString();
 

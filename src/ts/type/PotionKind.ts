@@ -75,5 +75,10 @@ export const potionKind = [
 
 // export type PotionKind = (typeof potionKind)[number];
 export type PotionKind = {
-  [K in (typeof potionKind)[number]]?: number;
+  [K in (typeof potionKind)[number]]?: Talisman;
+};
+
+type Talisman = {
+  disassembled: number;
+  passiveEffectValue: number;
 };

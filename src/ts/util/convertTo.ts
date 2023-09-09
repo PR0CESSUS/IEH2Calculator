@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { secondsToDhms } from "./secondsToDhms";
 
-export function convertTo(input, precision = 2, kind = null) {
+export function convertTo(input, precision = 2, kind: string | null = null) {
   input = parseFloat(input);
   let output = 0;
   let kindPercent = ["percent", "%"];

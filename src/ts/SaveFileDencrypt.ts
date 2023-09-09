@@ -124,6 +124,7 @@ export class SaveFileDencrypt {
       "equipmentIsMaxed", // maxed equipment
       "equipmentIsAuto",
       "areaIsUnlockedOnce",
+      "isVer01",
     ];
     // delete this.data.
     for (const [key, value] of Object.entries(this.data)) {
@@ -142,7 +143,13 @@ export class SaveFileDencrypt {
       //   console.log(key);
       // }
     }
-
+    delete this.data.expeditionCompletedNums;
+    delete this.data.expeditionMovedDistance;
+    delete this.data.expeditionProgress;
+    delete this.data.expeditionTimeId;
+    delete this.data.expeditionTimes;
+    delete this.data.isStartedExpedition;
+    // delete this.data.expedition;
     // console.log("clean data size: " + byteSize(JSON.stringify(this.data)));
     // writeFileSync("D:/test/test/test.json", JSON.stringify(this.data, null, 2));
     // console.log("file saved");

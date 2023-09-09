@@ -1,4 +1,4 @@
-export function onChange(event) {
+export function onChange(event: Event & { target: HTMLInputElement | HTMLSelectElement; srcElement: HTMLInputElement }) {
   if (event.target.tagName == "INPUT" && event.target.type == "text") {
     // console.log(this);
     //@ts-ignore
@@ -23,4 +23,13 @@ export function onChange(event) {
   }
   if (event.target.tagName == "INPUT" && event.target.type == "file") {
   }
+
+  if (event.target.tagName == "SELECT") {
+    // console.log(event.target.dataset);
+
+    // console.log(event.target.dataset.endpoint, event.target.value);
+    this.set(event.target.dataset.endpoint, event.target.value);
+    this.updateContent();
+  }
+  // console.log(event);
 }

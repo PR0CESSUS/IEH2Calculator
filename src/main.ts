@@ -1,7 +1,6 @@
-//@ts-nocheck
 // import { SaveFileReader } from "./SaveFileReader";
-
-import { saveFileData } from "../test/data";
+import { ITest, DataInitialization } from "./ts/type/TestType";
+import { saveFileData } from "../experiment/data";
 // import { SaveFileReader } from "./ts/SaveFileReader";
 import { CalculatorMainframe } from "./ts/CalculatorMainframe";
 // console.log(data.openedChestNum);

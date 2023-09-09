@@ -1,4 +1,4 @@
-import { Data } from "./Data";
+import { DATA } from "./Data";
 import { Events } from "./Events";
 import { Logics } from "./Logics";
 import { set, get } from "lodash";
@@ -8,21 +8,16 @@ import { convertFrom } from "./util/convertFrom";
 export class CalculatorMainframe {
   page;
   tab;
-  data;
+  data: DATA;
   logic: Logics;
   event: Events;
   _set = set;
   _get = get;
-  convertTo = convertTo;
+
   constructor() {
-    this.load();
-    // console.log(this.custom);
-
-    this.logic = new Logics(this);
+    this.data = new DATA();
     this.event = new Events();
-
-    // console.log(this._);
-
+    this.logic = new Logics(this);
     this.eventDispatcher();
   }
 
@@ -40,44 +35,45 @@ export class CalculatorMainframe {
     // document.body.addEventListener("htmx:configRequest", this.event.urlHashReload.bind(this), { once: true });
   }
 
-  get(endpoint, precision = 0, type = null) {
+  get(endpoint, precision = 0, type = "", base = 0) {
+    // if (endpoint == "upgrade.SlimeBank.SlimeCoinCap2.level") {
+    //   console.log("jest!");
+    //   console.log(this._get(this.data, "upgrade.SlimeBank.SlimeCoinCap2.level", 0));
+    //   console.log(this.data);
+    // }
     //secondsToDhms(time)
     if (precision || type) {
-      return convertTo(this._get(this.data, endpoint, 0), precision, type);
+      return convertTo(base + this._get(this.data, endpoint, 0), precision, type);
     } else {
       return this._get(this.data, endpoint, 0);
     }
   }
 
   set(endpoint, value) {
-    // === or == ? find a better way to fix this shit
-    // if (this.data == JSON.parse(localStorage.getItem("data"))) {
-    // console.log(endpoint, value);
-    // this._set(this.data, endpoint, convertFrom(value));
-    this._set(this.data, endpoint, value);
+    // console.log(endpoint, value, convertFrom(value));
+
+    let controller = endpoint.split(".")[0];
+    let lastElement = endpoint.split(".").slice(-1)[0];
+    if (controller == "custom" && lastElement == "name") {
+      // console.log(lastElement);
+      this._set(this.data, endpoint, value);
+    } else {
+      this._set(this.data, endpoint, convertFrom(value));
+    }
+
+    this.data.update(endpoint);
+    // this._set(this.data, endpoint, value);
 
     // save new value to localStorage
-    localStorage.setItem("data", JSON.stringify(this.data));
-    // } else {
-    //   console.log("data missmatch, replacing with localStorage, and continue");
-    //   this.data = JSON.parse(localStorage.getItem("data"));
-    //   this._set(this.data, endpoint, convertFrom(value));
-    //   localStorage.setItem("data", JSON.stringify(this.data));
-    // }
+    this.data.save();
   }
 
-  load() {
-    if (localStorage.getItem("data")) {
-      this.data = JSON.parse(localStorage.getItem("data"));
-      // console.log(this.data);
-    } else {
-      this.data = {};
-    }
-  }
+  load() {}
   updateContent() {
     // this.addTab();
     // .addEventListener("click", this.event.onTabChange.bind(this));
     this.logic.update();
+
     const elementType = ["warning", "custom", "data"];
     // change class savefilewarning to savefileok if there is data in store
 
@@ -102,30 +98,38 @@ export class CalculatorMainframe {
       }
       //@ts-ignore
 
+      switch (element.tagName) {
+        case "INPUT":
+          switch (element.type) {
+            case "checkbox":
+              let value = this.get(element.dataset.endpoint, precision, type);
+              element.checked = value >= element.dataset.test ? true : false;
+              break;
+            case "text":
+              element.value = this.get(element.dataset.endpoint, precision, type, base);
+              break;
+            default:
+              break;
+          }
+
+          break;
+        case "SELECT":
+          let value = this.get(element.dataset.endpoint, precision, type);
+          // console.log(value);
+          // console.log(element.id, element.value, value);
+          //@ts-ignore
+          document.getElementById(element.id).value = value;
+          // element.value = value;
+          break;
+        default:
+          // console.log("default");
+
+          element.innerHTML = this.get(element.dataset.endpoint, precision, type, base);
+          break;
+      }
+
       //@ts-ignore
       // console.log(this.data.version);
-      if (element.tagName == "INPUT" && element.type == "checkbox") {
-        // console.log("checkbox update");
-        // console.log(element);
-
-        let value = this.get(element.dataset.endpoint, precision, type);
-        // (element as HTMLInputElement).checked = value >= element.dataset.test ? true : false;
-        element.checked = value >= element.dataset.test ? true : false;
-
-        //@ts-ignore
-      } else if (element.tagName == "INPUT" && element.type == "text") {
-        element.value = base + this.get(element.dataset.endpoint, precision, type);
-
-        //@ts-ignore
-
-        // element.addEventListener("change", this.onChange);
-        //@ts-ignore
-        // console.log(this.getPath(element.dataset.endpoint));
-      } else {
-        //@ts-ignore
-        element.innerHTML = base + this.get(element.dataset.endpoint, precision, type);
-        // console.log("asd");
-      }
 
       //@ts-ignore
       // console.log(element.dataset.endpoint);

@@ -419,3 +419,36 @@ ul.tab li {
 body .active {
   color: #f2e009;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-areas: none;
+}
+
+.htmx-indicator {
+  padding-top: 10px;
+  margin-top: 0px;
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+.htmx-request .htmx-indicator {
+  opacity: 1;
+}
+.htmx-request.htmx-indicator {
+  opacity: 1;
+}
+.htmx-settling {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+/* .htmx-settling {
+  opacity: 0;
+} */
+/* .htmx-indicator {
+  background-image: url("img/oval.svg");
+  background-position: center; 
+  background-repeat: no-repeat; 
+} */
