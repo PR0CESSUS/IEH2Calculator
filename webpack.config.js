@@ -31,10 +31,7 @@ module.exports = {
         },
       },
     },
-    runtimeChunk: "single",
-    // runtimeChunk: {
-    //   name: (entrypoint) => `runtime~${entrypoint.name}`,
-    // },
+    // runtimeChunk: "single",
   },
   entry: {
     main: path.resolve(__dirname, "src/main.ts"),

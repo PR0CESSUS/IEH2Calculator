@@ -63,8 +63,7 @@ export class DataEquip {
 
   update() {
     // console.log(this.Warrior);
-
-    this.Warrior.update();
+    // this.Warrior.update();
   }
 
   getHeroActiveSet(data: DataType, hero = "Warrior") {
