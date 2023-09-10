@@ -21,6 +21,7 @@ export class LogicSettings {
       location.reload();
     });
 
+    document.getElementById("settings.saveToFileSource").addEventListener("click", this.downloadSourceData.bind(this));
     document.getElementById("settings.saveToFile").addEventListener("click", this.downloadCustomData.bind(this));
     document.getElementById("settings.loadFromFile").addEventListener("change", this.loadCustomData.bind(this));
     // console.log("script added");
@@ -84,6 +85,21 @@ export class LogicSettings {
       // location.reload();
     });
     reader.readAsText(file);
+  }
+
+  downloadSourceData() {
+    let text = JSON.stringify(this.app.data.source);
+
+    const element = document.createElement("a");
+    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+    element.setAttribute("download", "source.json");
+
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
   }
 
   update() {

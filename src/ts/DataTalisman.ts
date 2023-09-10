@@ -158,7 +158,7 @@ export class DataTalisman {
       for (const [key, value] of Object.entries(data.localStorage.talisman)) {
         this[key] = value;
       }
-    } else if (data.source.lastTimeLocal) {
+    } else if (data.source.isInitialized) {
       let disassembled = data.source.potionDisassembledNums;
       for (let index = 32; index < potionKind.length; index++) {
         const element = potionKind[index];
@@ -173,6 +173,9 @@ export class DataTalisman {
           passiveEffectValue: passiveEffectValue,
         };
       }
+
+      // cleaning up consumed data
+      delete data.source.potionDisassembledNums;
     }
   }
 }

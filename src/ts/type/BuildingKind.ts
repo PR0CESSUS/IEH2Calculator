@@ -19,6 +19,7 @@ export type BuildingKind = {
 };
 
 export type Building = {
+  level: number;
   effect: number;
   research: {
     stone: {

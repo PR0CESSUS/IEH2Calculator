@@ -23,7 +23,7 @@ export class DataUpgrade implements UpgradeKind {
       for (const [key, value] of Object.entries(data.localStorage.upgrade)) {
         this[key] = value;
       }
-    } else if (data.source.lastTimeLocal) {
+    } else if (data.source.isInitialized) {
       this.SlimeBank = this.getValue("SlimeBank", data.source.upgradeLevelsSlimebank);
       this.GoldCap = this.getValue("GoldCap", data.source.upgradeLevelsGoldCap);
       this.GoldGain = this.getValue("GoldGain", data.source.upgradeLevelsGoldGain);
@@ -32,7 +32,14 @@ export class DataUpgrade implements UpgradeKind {
       this.BasicStats = this.getValue("BasicStats", data.source.upgradeLevelsBasicStats);
       this.Resource = this.getValue("Resource", data.source.upgradeLevelsResource);
 
-      // console.log(data.source.upgradeLevelsGoldGain);
+      // cleaning up consumed data
+      delete data.source.upgradeLevelsSlimebank;
+      delete data.source.upgradeLevelsGoldCap;
+      delete data.source.upgradeLevelsGoldGain;
+      delete data.source.upgradeLevelsExpGain;
+      delete data.source.upgradeLevelsEquipmentInventory;
+      delete data.source.upgradeLevelsBasicStats;
+      delete data.source.upgradeLevelsResource;
     }
   }
 

@@ -15,10 +15,14 @@ export class DataMisc {
       for (const [key, value] of Object.entries(data.localStorage.misc)) {
         this[key] = value;
       }
-    } else if (data.source.lastTimeLocal) {
+    } else if (data.source.isInitialized) {
       this.ClearedMission = this.getClearedMission(data);
       this.BuildingLevelBonus = this.getBuildingLevelBonus();
       this.nitroSpeed = data.source.nitroSpeed;
+
+      // cleaning up consumed data
+      delete data.source.isClearedMission;
+      delete data.source.nitroSpeed;
     }
   }
 

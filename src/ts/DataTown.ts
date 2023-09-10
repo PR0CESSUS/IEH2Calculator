@@ -31,7 +31,7 @@ export class DataTown implements BuildingKind {
       for (const [key, value] of Object.entries(data.localStorage.town)) {
         this[key] = value;
       }
-    } else if (data.source.birthDate) {
+    } else if (data.source.isInitialized) {
       for (let index = 0; index < buildingKind.length; index++) {
         const name = buildingKind[index];
         let multiplierExpedition = 1;
@@ -51,6 +51,7 @@ export class DataTown implements BuildingKind {
         const level = data.source.buildingLevels[index] + data.misc.BuildingLevelBonus;
 
         this[name] = {
+          level: level,
           effect: 1 + level * this.#effect[index] * multiplierExpedition * multiplierWA * multiplierTalisman,
           research: {
             stone: {
@@ -68,6 +69,11 @@ export class DataTown implements BuildingKind {
           },
         };
       }
+      // cleaning up consumed data
+      delete data.source.buildingResearchLevelsLeaf;
+      delete data.source.buildingResearchLevelsCrystal;
+      delete data.source.buildingResearchLevelsStone;
+      delete data.source.buildingLevels;
     }
   }
 

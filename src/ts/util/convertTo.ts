@@ -7,6 +7,9 @@ export function convertTo(input, precision = 2, kind: string | null = null) {
   let kindPercent = ["percent", "%"];
   let kindRaw = ["MoveSpeedAdder"];
   let isNegative = false;
+  if (kind == "time-h") {
+    return input / 60 / 60 + "h";
+  }
   if (kind == "time") {
     return secondsToDhms(input);
   }

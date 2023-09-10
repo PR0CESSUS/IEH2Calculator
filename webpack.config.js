@@ -49,17 +49,23 @@ module.exports = {
       path.resolve(__dirname, "./src/css/input.css"),
     ],
   },
+  output: {
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    // clean: true,
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
       chunks: ["main"],
-      template: "src/index.html",
+      template: "src/index.ejs",
       hash: true,
     }),
+
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "src", "img"),
+          from: path.resolve(__dirname, "src/img"),
           to({ context, absoluteFilename }) {
             return "img/[name][ext]";
           },
@@ -69,7 +75,7 @@ module.exports = {
           to: path.resolve(__dirname, "dist/html"),
         },
         {
-          from: path.resolve(__dirname, "src", "favicon.ico"),
+          from: path.resolve(__dirname, "src/favicon.ico"),
           to({ context, absoluteFilename }) {
             return "[name][ext]";
           },
@@ -91,11 +97,7 @@ module.exports = {
       includeAliases: ["Buffer", "stream", "crypto"],
     }),
   ],
-  output: {
-    filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    // clean: true,
-  },
+
   resolve: {
     extensions: [".js", ".ts"],
   },

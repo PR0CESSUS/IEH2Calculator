@@ -11,6 +11,7 @@ import { DataTown } from "./DataTown";
 import { DataTalisman } from "./DataTalisman";
 import { DataPet } from "./DataPet";
 import { DataMisc } from "./DataMisc";
+import { DataEquip } from "./DataEquip";
 // import { isEqual } from "lodash";
 
 export class DATA implements DataType {
@@ -26,6 +27,7 @@ export class DATA implements DataType {
   expedition?: DataExpedition;
   expeditionTeams: any;
   misc: DataMisc;
+  equip: DataEquip;
 
   constructor() {
     this.load();
@@ -82,7 +84,7 @@ export class DATA implements DataType {
 
     //   // console.log(this.localStorage.source);
 
-    //   // console.log("this.source != localStorage");
+    //   // console.log("this.source != localStorage") ;
     // }
     let data = structuredClone(this);
     delete data.localStorage;
@@ -98,8 +100,12 @@ export class DATA implements DataType {
     this.upgrade = new DataUpgrade(this);
     this.talisman = new DataTalisman(this);
     this.expedition = new DataExpedition(this);
-    this.town = new DataTown(this);
+    this.town = new DataTown(this); // require expedition and talisman
     this.expeditionTeams = new DataExpeditionTeams(this);
+    this.equip = new DataEquip(this);
+    //
+
+    this.equip.update();
   }
 
   update(endpoint) {
@@ -107,7 +113,7 @@ export class DATA implements DataType {
     let controller = endpoint.split(".")[0];
 
     // console.log(endpoint, test);
-    // console.log(endpoint.split(".")[0]);
+    // console.log(endpoint.split(".")[0])     ;
 
     switch (controller) {
       case "upgrade":
@@ -118,6 +124,9 @@ export class DATA implements DataType {
         break;
       case "town":
         this.town.update(endpoint);
+        break;
+      case "expeditionTeams":
+        this.expeditionTeams.update(endpoint);
         break;
       default:
         break;

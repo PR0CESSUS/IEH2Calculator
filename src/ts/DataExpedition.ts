@@ -8,7 +8,7 @@ export class DataExpedition implements ExpeditionKind {
   #passiveEffectMultiplier = 1;
   totalLevel = 0;
   constructor(data: DataType) {
-    console.log(data);
+    // console.log(data);
     this.initialization(data);
   }
   initialization(data: DataType) {
@@ -16,7 +16,7 @@ export class DataExpedition implements ExpeditionKind {
       for (const [key, value] of Object.entries(data.localStorage.expedition)) {
         this[key] = value;
       }
-    } else if (data.source.lastTimeLocal) {
+    } else if (data.source.isInitialized) {
       this.totalLevel = data.source.expeditionLevels.reduce((a, b) => a + b, 0);
       // console.log(data);
 

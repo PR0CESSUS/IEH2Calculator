@@ -64,7 +64,7 @@ export class CalculatorMainframe {
     this.data.update(endpoint);
     // this._set(this.data, endpoint, value);
 
-    // save new value to localStorage
+    // save new value to localStora ge
     this.data.save();
   }
 

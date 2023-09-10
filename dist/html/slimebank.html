@@ -1,2 +1,15 @@
-<div id="tablist" hx-get="html/slimebank-tablist.html" hx-trigger="load" hx-swap="innerHTML"></div>
-<div id="tab-content" hx-get="html/slimebank-summary.html" hx-trigger="load" hx-swap="innerHTML"></div>
+<h3>SUMMARY</h3>
+<ul>
+    <li>
+        <p>Slime Coin Cap Total: <span id="slimeCoinCapTotal" data-endpoint="custom.slimeCoinCapTotal"
+                data-precision="2" style="float:right;"></span></p>
+    </li>
+    <li>
+        <p>Slime Coin Intrest: <span style="float:right;" id="slimeCoinIntrest"
+                data-endpoint="custom.slimeCoinCapIntrest" data-precision="2"></span></p>
+    </li>
+    <li>
+        <p>Multiplier: <span style="float:right;" id="slimeCoinCap1Multiplier"
+                data-endpoint="custom.slimeCoinCapMultiplier" data-precision="0"></span></p>
+    </li>
+</ul>

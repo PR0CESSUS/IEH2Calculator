@@ -51,6 +51,8 @@ export class SaveFileDencrypt {
         let pattern = new RegExp(element + "[0-9]");
 
         if (pattern.test(key)) {
+          // console.log(key);
+
           // console.log(this.data[key]);
 
           //@ts-ignore
@@ -59,6 +61,7 @@ export class SaveFileDencrypt {
         }
       }
       this.data[element] = data;
+      // console.log(this.data[element]);
     }
   }
 
@@ -93,7 +96,6 @@ export class SaveFileDencrypt {
       "isFavoriteQuest",
       "autoAbilityPointPresets",
       "autoAbilityPointMax",
-      "SkillTriggeredNum",
       "monsterMutantDefeatedNums",
       "monsterMutantCapturedNums",
       "SkillFor",
@@ -102,8 +104,6 @@ export class SaveFileDencrypt {
       "equipmentIsLocked",
       "rebirthPoints",
       "monsterCapturedNums",
-      "areaIsReceivedFirstReward",
-      "currentAreaLevels",
       "areaBestGolds",
       "isClearedQuestsGeneral",
       "isAcceptedQuests",
@@ -117,14 +117,43 @@ export class SaveFileDencrypt {
       "autoRebirth",
       "upgradeQueues",
       "upgradeIsSuperQueue",
-      "OptionLevels", // enchantments levels may be useful
-      "OptionEffect", // enchantments values may be useful
-      "equipmentOptionNums",
+      // "OptionLevels", // enchantments levels may be useful
+      // "OptionEffect", // enchantments values may be useful
+      // "equipmentOptionNums",
       "equipmentProficiency",
       "equipmentIsMaxed", // maxed equipment
       "equipmentIsAuto",
       "areaIsUnlockedOnce",
       "isVer01",
+      "Volume",
+      "TriggeredNum",
+      "swarm",
+      "regularChest",
+      "amwa",
+      "dailyQuest",
+      "questing",
+      "isDlc",
+      "movedDistance",
+      "MovedDistance",
+      "persistent",
+      "isReceived",
+      "areaIsReceived",
+      "current",
+      "purchasedNum",
+      "IEH1Achievement",
+      "NumEnchantFilter",
+      "enchantEffect",
+      "QuestClearedNum",
+      "isGot",
+      "CloudSave",
+      "GotServerTime",
+      "inAppPurchased",
+      "epicCoin",
+      "favorite",
+      "buildingResearchExps",
+      "IsBuildingResearch",
+      "playtimes",
+      "allTime",
     ];
     // delete this.data.
     for (const [key, value] of Object.entries(this.data)) {
@@ -149,6 +178,100 @@ export class SaveFileDencrypt {
     delete this.data.expeditionTimeId;
     delete this.data.expeditionTimes;
     delete this.data.isStartedExpedition;
+    delete this.data.monsterPetTamingPoints;
+    delete this.data.monsterPetLoyaltyExp;
+    delete this.data.monsterMilk;
+    delete this.data.monsterPetExps;
+    delete this.data.multibuyNums;
+    delete this.data.isGotFirstEQ;
+    delete this.data.currentTutorialArrow;
+    delete this.data.isFirstWelcomed;
+    delete this.data.isToggleOn;
+    delete this.data.combatRangeId;
+    delete this.data.heroLevel;
+    delete this.data.heroExp;
+    delete this.data.maxHeroLevelReached;
+    delete this.data.currentHero;
+    delete this.data.ascendTime;
+    delete this.data.isActiveBattle;
+    delete this.data.language;
+    delete this.data.isOnAMWA;
+    delete this.data.summonSpecies;
+    delete this.data.summonColor;
+    delete this.data.isSetSummonPet;
+    delete this.data.isScrollFilter;
+    delete this.data.numberFormatKind;
+    delete this.data.isAutoBuyBlessings;
+    delete this.data.blessingDurationLefts;
+    delete this.data.enchantIsLocked;
+    delete this.data.enchantForgeEffectKinds;
+    delete this.data.disassembledEquipmentNums;
+    delete this.data.townMatGainFromdisassemble;
+    delete this.data.potionIsLocked;
+    delete this.data.potionProductedNums;
+    delete this.data.craftEnchantScrollLevels;
+    delete this.data.essenceProgresses;
+    delete this.data.generalQuestClearNumsPerClass;
+    delete this.data.survivalNumQuestTitle;
+    delete this.data.initMovedDistanceQuestTitle;
+    delete this.data.multibuyId;
+    delete this.data.epicStorePurchasedNum;
+    delete this.data.totalEquipmentGained;
+    delete this.data.potionQueues;
+    delete this.data.potionIsSuperQueues;
+    delete this.data.isClearedChallenge;
+    delete this.data.isClearedQuestsDaily;
+    delete this.data.upgradeQueueExpGain;
+    delete this.data.isEnchantFilter;
+    delete this.data.enchantFilterLevel;
+    delete this.data.isUsedSimulationOnce;
+    delete this.data.isShowQuickAccess;
+    delete this.data.autoAreaProgressionTargetClearNums;
+    delete this.data.isLazyQuestingMode;
+    delete this.data.isAutoAbilityPointPresets;
+    delete this.data.isBestExpSecAreas;
+    delete this.data.isClearedQuestGeneralOnce;
+    delete this.data.isPersistentUnlockedQuestGeneral;
+    delete this.data.shopRestockTimecount;
+    delete this.data.lastSwarmPlaytime;
+    delete this.data.equipmentIsGotOnce;
+    delete this.data.isAutoRebirthOns;
+    delete this.data.skillLoadoutIds;
+    delete this.data.ascensionPlayTime;
+    delete this.data.ascensionPoints;
+    delete this.data.bestAscensionPlayTime;
+    delete this.data.totalSlimeCoin;
+    delete this.data.totalLeaf;
+    delete this.data.totalCrystal;
+    delete this.data.totalStone;
+    delete this.data.totalGold;
+    delete this.data.nitroConsumed;
+    delete this.data.nitro;
+    delete this.data.talismanFragement;
+    delete this.data.materials;
+    delete this.data.townMaterials;
+    delete this.data.gold;
+    delete this.data.slimeCoin;
+    delete this.data.resources;
+    delete this.data.achievementPlaytimes;
+    delete this.data.wasd;
+    delete this.data.lastDailyTime;
+    delete this.data.portalOrbNum;
+    delete this.data.openedChestNum;
+    delete this.data.bestRebirthPlaytimes;
+    delete this.data.totalAlchemyPointGained;
+    delete this.data.essences;
+    delete this.data.version;
+    delete this.data.lastTimeLocal;
+    delete this.data.birthDate;
+    delete this.data.monsterPetIsActives;
+    delete this.data.expeditionKinds;
+    delete this.data.buildingRanks;
+    delete this.data.dictionaryUpgradePoint;
+    delete this.data.guildAbilityPoint;
+    delete this.data.alchemyPoint;
+    delete this.data.mysteriousWaterProgress;
+
     // delete this.data.expedition;
     // console.log("clean data size: " + byteSize(JSON.stringify(this.data)));
     // writeFileSync("D:/test/test/test.json", JSON.stringify(this.data, null, 2));

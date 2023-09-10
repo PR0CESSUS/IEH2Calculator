@@ -1,4 +1,11 @@
 export type SourceKind = {
+  equipment1stOptionEffectKinds: number[];
+  equipment2ndOptionEffectKinds: number[];
+  equipment3rdOptionEffectKinds: number[];
+  equipment4thOptionEffectKinds: number[];
+  equipment5thOptionEffectKinds: number[];
+  equipment6thOptionEffectKinds: number[];
+  equipment7thOptionEffectKinds: number[];
   ascendTime: string;
   currentAreaKind: number[];
   currentAreaId: number[];
@@ -253,6 +260,7 @@ export type SourceKind = {
   isDlcGlobalSkillSlotPack: boolean;
   isDlcInventorySlotPack: boolean;
   currentHero: number;
+
   multibuyNums: number[];
   isUsedSimulationOnce: boolean;
   isShowQuickAccess: boolean;

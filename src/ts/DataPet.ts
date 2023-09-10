@@ -26,10 +26,9 @@ export class DataPet implements MonsterKind {
       for (const [key, value] of Object.entries(data.localStorage.pet)) {
         this[key] = value;
       }
-    } else if (data.source.lastTimeLocal) {
+    } else if (data.source.isInitialized) {
       // console.log(data.source);
 
-      const source = data.source;
       for (let index = 0; index < monsterSpecies.length; index++) {
         const species = monsterSpecies[index];
         const multplier = index;
@@ -37,11 +36,17 @@ export class DataPet implements MonsterKind {
         for (let index2 = 0; index2 < monsterColor.length; index2++) {
           const id = multplier * 10 + index2;
           const color = monsterColor[index2];
-          const effect = PetPassiveEffectValue(petPassiveEffect[id], source.monsterPetRanks[id]) * (1 + source.monsterPetLoyalty[id] / 100);
+          const level = data.source.monsterPetLevels[id];
+          const rank = data.source.monsterPetRanks[id];
+          const loyalty = data.source.monsterPetLoyalty[id];
+          const effect = PetPassiveEffectValue(petPassiveEffect[id], rank) * (1 + loyalty / 100);
+          //@ts-ignore
+          // console.log(id, species, color, petPassiveEffect[id], rank) * (1 + data.source.monsterPetLoyalty[id] / 100);
+
           this[species][color] = {
-            level: source.monsterPetLevels[id],
-            rank: source.monsterPetRanks[id],
-            loyalty: source.monsterPetLoyalty[id],
+            level: level,
+            rank: rank,
+            loyalty: loyalty,
             effectKind: petPassiveEffect[id],
             effect: effect,
           };
@@ -50,7 +55,12 @@ export class DataPet implements MonsterKind {
           //   console.log(this[species][color]);
           // }
         }
+
+        // cleaning up consumed data
       }
+      delete data.source.monsterPetRanks;
+      delete data.source.monsterPetLoyalty;
+      delete data.source.monsterPetLevels;
     }
   }
 
