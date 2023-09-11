@@ -130,6 +130,7 @@ export const enchantKind = [
   "BlessingEffectMultiplier",
   "PhysicalCriticalMultiplier",
   "MagicalCriticalMultiplier",
+  "ChallengeBossKnowledge",
 ] as const;
 
 export type EnchantKind = (typeof enchantKind)[number];

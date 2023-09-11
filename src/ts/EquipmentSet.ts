@@ -44,6 +44,9 @@ export class EquipmentSet {
         if (enchant == "Nothing") {
           continue;
         }
+        if (enchant === undefined) {
+          console.log(item, enchantKind[enchantments[index]], index);
+        }
 
         list.Enchantment[enchant] = list.Enchantment[enchant] ? list.Enchantment[enchant] + 1 : 1;
       }
