@@ -51,7 +51,7 @@ export class DATA implements DataType {
     //   this.source.ascensionMilestoneLevelReached[0]
     // ).data;
     // console.log(this);
-    document.getElementById("title").innerHTML += "| source: " + Object.keys(this.source).length + "  # 273";
+    // document.getElementById("title").innerHTML += "| source: " + Object.keys(this.source).length + "  # 273";
   }
 
   load() {
@@ -61,7 +61,7 @@ export class DATA implements DataType {
       if (this.localStorage?.isInitialized) {
         // console.log(this.localStorage.isInitialized);
         this.source = this.localStorage.source;
-        this.custom = this.localStorage.custom;
+        this.custom = this.localStorage.custom ?? {};
         this.isInitialized = true;
       }
       // this.isInitialized = this.localStorage.isInitialized ? this.localStorage.isInitialized : false;

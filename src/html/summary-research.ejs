@@ -1,0 +1,11 @@
+<%= require('html-loader!./ejs/summary-tablist.html').default %>
+    Slime Bank
+    <hr>
+    <img class="icon" src="./img/stone.png"> Stone Research
+    <input class="default-input warning" type="text" data-endpoint="town.SlimeBank.research.stone.level">
+    <span data-endpoint="town.SlimeBank.research.stone.effect" data-type="percent" data-precision="2"></span>
+    <br>
+    <img class="icon" src="./img/leaf.png"> Leaf Research
+    <input class="default-input warning" type="text" data-endpoint="town.SlimeBank.research.leaf.level" value="0">
+    <span data-endpoint="town.SlimeBank.research.leaf.effect" data-type="percent" data-precision="2"
+        data-base="1"></span>

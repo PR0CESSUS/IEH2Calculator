@@ -43,6 +43,20 @@ export class SaveFileDencrypt {
       "equipment5thOptionEffectKinds",
       "equipment6thOptionEffectKinds",
       "equipment7thOptionEffectKinds",
+      "equipment1stOptionEffectValues",
+      "equipment2ndOptionEffectValues",
+      "equipment3rdOptionEffectValues",
+      "equipment4thOptionEffectValues",
+      "equipment5thOptionEffectValues",
+      "equipment6thOptionEffectValues",
+      "equipment7thOptionEffectValues",
+      "equipment1stOptionLevels",
+      "equipment2ndOptionLevels",
+      "equipment3rdOptionLevels",
+      "equipment4thOptionLevels",
+      "equipment5thOptionLevels",
+      "equipment6thOptionLevels",
+      "equipment7thOptionLevels",
     ];
     for (let index = 0; index < mergeList.length; index++) {
       let data = [];
@@ -119,7 +133,7 @@ export class SaveFileDencrypt {
       "upgradeIsSuperQueue",
       // "OptionLevels", // enchantments levels may be useful
       // "OptionEffect", // enchantments values may be useful
-      // "equipmentOptionNums",
+      "equipmentOptionNums",
       "equipmentProficiency",
       "equipmentIsMaxed", // maxed equipment
       "equipmentIsAuto",

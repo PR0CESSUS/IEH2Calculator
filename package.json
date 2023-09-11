@@ -1,13 +1,13 @@
 {
   "name": "ieh2calculator",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Calculator for Incremental Epic Hero 2",
   "main": "./src/main.ts",
   "scripts": {
     "start": "webpack serve --config webpack.config.js",
-    "loader": "webpack serve --config webpack.config.loader.js",
     "test": "mocha",
-    "build": "npm --no-git-tag-version version patch && webpack --config webpack.config.js --mode=production"
+    "buildtest": "webpack --config webpack.config.js --env production",
+    "build": "npm --no-git-tag-version version patch && webpack --config webpack.config.js --env production"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
+    "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
     "ignore-emit-webpack-plugin": "^2.0.6",
     "lodash": "^4.17.21",

@@ -36,6 +36,17 @@ export class CalculatorMainframe {
   }
 
   get(endpoint, precision = 0, type = "", base = 0) {
+    let isFunction = this._get(this.data, endpoint, false);
+    if (isFunction instanceof Function) {
+      // hack for now
+      // let functionParent = endpoint.split(".").slice(0, -1).join(".");
+      let module = endpoint.split(".")[0];
+      let key = endpoint.split(".")[1];
+      let method = endpoint.split(".")[2];
+      // this._get(functionParent)[isFunction]()
+      // console.log("funkcja", this.data[module][key][method]());
+      return this.data[module][key][method]();
+    }
     // if (endpoint == "upgrade.SlimeBank.SlimeCoinCap2.level") {
     //   console.log("jest!");
     //   console.log(this._get(this.data, "upgrade.SlimeBank.SlimeCoinCap2.level", 0));

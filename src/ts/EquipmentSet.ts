@@ -4,7 +4,7 @@ import { enchantKind } from "./type/EnchantKind";
 
 export class EquipmentSet {
   set: Equipment[] = [];
-  itemList;
+  cookie = true;
   constructor(set = []) {
     // this.itemList = this.getItems();
     // talisman
@@ -15,14 +15,14 @@ export class EquipmentSet {
 
   addItem(item: Equipment) {
     this.set.push(item);
-    this.itemList = this.getItems();
+    // this.itemList = this.getItems();
   }
 
   update() {
-    this.itemList = this.getItems();
+    // this.itemList = this.getItems();
   }
 
-  getItems() {
+  itemList() {
     let list = {
       Equipment: {
         Weapon: {},
@@ -35,8 +35,15 @@ export class EquipmentSet {
       const item = this.set[index];
       const enchantments = this.set[index].enchants;
 
+      if (item.kind == "Nothing") {
+        continue;
+      }
+
       for (let index = 0; index < enchantments.length; index++) {
         const enchant = enchantKind[enchantments[index]];
+        if (enchant == "Nothing") {
+          continue;
+        }
 
         list.Enchantment[enchant] = list.Enchantment[enchant] ? list.Enchantment[enchant] + 1 : 1;
       }

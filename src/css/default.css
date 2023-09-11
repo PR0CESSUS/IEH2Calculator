@@ -226,7 +226,7 @@ li {
   -webkit-appearance: none; /*Removes default chrome and safari style*/
   -moz-appearance: none; /* Removes Default Firefox style*/
   appearance: none;
-  background: #797a79 url(../img/selectarrow.png) no-repeat 95% center;
+  background: #797a79 url(img/selectarrow.png) no-repeat 95% center;
   width: auto; /*Width of select dropdown to give space for arrow image*/
   text-indent: 0.01px;
   text-overflow: "";

@@ -1,9 +1,16 @@
 export function configRequest(event) {
   // console.log("-----------------------------------------------");
-  // console.log("tab-content", event.detail);
+
+  // this.tab = tab;
   let hash = location.hash ? location.hash.slice(1) : "";
+
   let page = hash.includes("-") ? hash.split("-")[0] : hash;
+
   let tab = hash.includes("-") ? hash.split("-")[1] : "";
+  // console.log(hash, "page:", page, this.page, "|", tab, this.tab);
+  // console.log(this);
+
+  // console.log("initial", event.detail.path, hash);
   // Import Required
   if (!this.data.isInitialized) {
     // console.log("configRequest : this.data.isInitialized:", this.data.isInitialized);
@@ -18,19 +25,33 @@ export function configRequest(event) {
       document.head.appendChild(script);
     }
   } else {
-    if (hash && event.detail.elt.id == "content") {
-      event.detail.path = "html/" + page + ".html";
+    if (event.detail.elt.id == "content") {
+      if (!hash) {
+        hash = "summary-overview";
+      }
+      // console.log("----- configRequest:content ----");
+      // console.log("hash:", hash);
+      // console.log("page:", page);
+      // console.log("tab:", tab);
+      event.detail.path = "html/" + hash + ".html";
+
+      // history.pushState("", "", "#" + page);
       // console.log("content target");
     }
-    if (tab && event.detail.elt.id == "tab-content") {
-      // console.log(event.detail);
-      // if (tab != "tablist") {
-      // }
-      event.detail.path = "html/" + hash + ".html";
-      // console.log("source tab-content");
-    }
-  }
 
+    // console.log(event.detail);
+  }
+  if (event.detail.path != "data/default.json") {
+    history.pushState("", "", "#" + event.detail.path.replace(/.*\/(.*)\.html$/, "$1"));
+    let hash = location.hash ? location.hash.slice(1) : "";
+    this.page = hash.includes("-") ? hash.split("-")[0] : hash;
+    this.tab = hash.includes("-") ? hash.split("-")[1] : "";
+  }
+  // if (event.detail.path != "data/default.json") {
+  //   history.pushState("", "", "#" + event.detail.path.replace(/.*\/(.*)\.html$/, "$1"));
+  //   this.page = page;
+  //   this.highlight();
+  // }
   // console.log("request hash", hash);
   // if (tab != "tablist") {
   //   console.log("not tablist", hash, event.detail.path, page, "[", tab, "]");
