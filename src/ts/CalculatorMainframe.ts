@@ -68,7 +68,7 @@ export class CalculatorMainframe {
 
     let controller = endpoint.split(".")[0];
     let lastElement = endpoint.split(".").slice(-1)[0];
-    if (controller == "custom" && lastElement == "name") {
+    if ((controller == "custom" && lastElement == "name") || lastElement == "rarity") {
       // console.log(lastElement);
       this._set(this.data, endpoint, value);
     } else {
@@ -128,6 +128,8 @@ export class CalculatorMainframe {
 
           break;
         case "SELECT":
+          // console.log("here", element.id);
+
           let value = this.get(element.dataset.endpoint, precision, type);
           // console.log(value);
           // console.log(element.id, element.value, value);

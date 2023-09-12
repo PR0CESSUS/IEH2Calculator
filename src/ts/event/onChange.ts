@@ -26,7 +26,9 @@ export function onChange(event: Event & { target: HTMLInputElement | HTMLSelectE
 
   if (event.target.tagName == "SELECT") {
     // console.log(event.target.dataset);
-
+    // if (event.target.id == "proficiency-rarity") {
+    //   console.log("mamy to", event.target.dataset.endpoint, event.target.value);
+    // }
     // console.log(event.target.dataset.endpoint, event.target.value);
     this.set(event.target.dataset.endpoint, event.target.value);
     this.updateContent();

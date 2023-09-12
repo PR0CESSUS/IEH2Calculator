@@ -3,6 +3,7 @@ import { LogicSettings } from "./logic/settings";
 import { LogicSlimeBank } from "./logic/slimebank";
 import { LogicAnvil } from "./logic/anvil";
 import { LogicExpedition } from "./logic/expedition";
+import { LogicProficiency } from "./logic/proficiency";
 
 export class Logics {
   app;
@@ -33,9 +34,10 @@ export class Logics {
         this.logic = new LogicSettings(this.app);
         break;
       case "expedition":
-        //
-
         this.logic = new LogicExpedition(this.app);
+        break;
+      case "proficiency":
+        this.logic = new LogicProficiency(this.app);
         break;
       default:
         break;
