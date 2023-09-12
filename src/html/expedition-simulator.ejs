@@ -1,0 +1,57 @@
+<%= require('html-loader!./ejs/expedition-tablist.html').default %>
+    <h3>Expedition Leveling Simulator</h3>
+    <p style="padding-left: 20px;"><img src="./img/nitro.png" class="icon"> Nitro Speed:
+        <input id="anvil.nitro.speed" type="text" data-endpoint="misc.nitroSpeed" class="default-input warning"> Max
+        Nitro:
+        <input type="text" data-endpoint="custom.nitroTotal" class="default-input custom">
+    </p>
+    <label for="expedition-playtimeHourPerDay">Playtime hour per day:</label>
+    <input id="expedition-playtimeHourPerDay" data-endpoint="custom.expedition.playtimeHourPerDay" type="text" value="0"
+        size="8" class="default-input custom"><br>
+
+    <label for="expedition-teams">Teams:</label>
+    <input id="expedition-teams" data-endpoint="custom.expedition.teams" type="text" value="0" size="8"
+        class="default-input custom"><br>
+    <label for="expedition-petPerTeam">Pet per Team:</label>
+    <input id="expedition-petPerTeam" data-endpoint="custom.expedition.petPerTeam" type="text" value="0" size="8"
+        class="default-input custom"><br>
+
+
+    <label for="expedition-currentLevel">Current Level:</label>
+    <input id="expedition-currentLevel" data-endpoint="custom.expedition.currentLevel" type="text" value="0" size="8"
+        class="default-input custom"><br>
+
+    <label for="expedition-targetLevel">Target Level:</label>
+    <input id="expedition-targetLevel" data-endpoint="custom.expedition.targetLevel" type="text" value="0" size="8"
+        class="default-input custom"><br>
+    Expedition Exp per sec:
+    <span data-endpoint="custom.expedition.expeditionExpPerSec"></span><br>
+
+
+
+    Expedition Exp per sec Team:
+    <span data-endpoint="custom.expedition.expeditionExpPerSecTeam"></span><br>
+
+
+
+    Expedition Exp per sec Total:
+    <span data-endpoint="custom.expedition.expeditionExpPerSecTotal"></span><br>
+
+    Expedition Exp per day:
+    <span data-endpoint="custom.expedition.expeditionExpPerDay" data-precision="2"></span><br>
+
+    Time per Nitro Sink:
+    <span data-endpoint="custom.expedition.nitroTime" data-type="time"></span><br>
+
+    Expedition Exp per Nitro Sink:
+    <span data-endpoint="custom.expedition.expeditionExpPerNitroSink" data-precision="2"></span><br>
+    Expedition Exp per Nitro Sink day:
+    <span data-endpoint="custom.expedition.expeditionExpPerNitroSinkDay" data-precision="2"></span><br>
+
+
+
+    Total Exp Required:
+    <span data-endpoint="custom.expedition.totalExp" data-precision="2"></span><br>
+    <hr>
+    days:
+    <span data-endpoint="custom.expedition.time" data-type="time"></span><br>

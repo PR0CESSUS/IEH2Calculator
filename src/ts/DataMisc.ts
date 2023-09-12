@@ -4,6 +4,8 @@ export class DataMisc {
   ClearedMission: number;
   BuildingLevelBonus: number;
   nitroSpeed: number;
+  nitroTotal: number;
+  fn: {};
   constructor(data) {
     this.initialization(data);
   }

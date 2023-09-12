@@ -43,6 +43,9 @@ export class CalculatorMainframe {
       let module = endpoint.split(".")[0];
       let key = endpoint.split(".")[1];
       let method = endpoint.split(".")[2];
+      if (module == "pet") {
+        return this.data[module][key]();
+      }
       // this._get(functionParent)[isFunction]()
       // console.log("funkcja", this.data[module][key][method]());
       return this.data[module][key][method]();

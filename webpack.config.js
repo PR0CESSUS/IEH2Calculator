@@ -29,6 +29,7 @@ module.exports = (env) => {
     devServer: {
       static: path.resolve(__dirname, "dist"),
       host: "127.0.0.1",
+      // port: 10000,
       open: false,
       hot: false,
       liveReload: true,

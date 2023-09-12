@@ -16,6 +16,7 @@ export class DataPet implements MonsterKind {
   Unicorn: MonsterColor;
   Mimic: MonsterColor;
   ChallengeBoss: MonsterColor;
+  fn;
   constructor(data: DataType) {
     this.initialization(data);
   }
@@ -32,7 +33,7 @@ export class DataPet implements MonsterKind {
       for (let index = 0; index < monsterSpecies.length; index++) {
         const species = monsterSpecies[index];
         const multplier = index;
-        this[species] = {};
+        this[species] = {} as MonsterColor;
         for (let index2 = 0; index2 < monsterColor.length; index2++) {
           const id = multplier * 10 + index2;
           const color = monsterColor[index2];
@@ -88,5 +89,21 @@ export class DataPet implements MonsterKind {
     //     // }
     //   }
     // }
+  }
+
+  totalRank() {
+    let totalRank = 0;
+    for (let index = 0; index < monsterSpecies.length; index++) {
+      const species = monsterSpecies[index];
+
+      // console.log("this[monsterSpecies[index]];:", this[monsterSpecies[index]]);
+
+      for (let index = 0; index < monsterColor.length; index++) {
+        const color = monsterColor[index];
+        // console.log();
+        totalRank += this[species][color].rank;
+      }
+    }
+    return totalRank;
   }
 }

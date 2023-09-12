@@ -89,7 +89,7 @@ export class DataExpeditionTeams {
   update(endpoint) {
     let path = endpoint.split(".").slice(0, -1).slice(1);
     let team = path[0];
-    console.log(endpoint, path, team);
+    // console.log(endpoint, path, team);
 
     this[team].speed = this.getSpeed(this[team].level);
     this[team].time = this.getBestTime(this[team].speed);

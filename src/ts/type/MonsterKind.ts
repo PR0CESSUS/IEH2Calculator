@@ -20,7 +20,7 @@ export type MonsterKind = {
 };
 
 export type MonsterColor = {
-  [keys in (typeof monsterColor)[number]]?: Monster;
+  [keys in (typeof monsterColor)[number]]: Monster;
 };
 
 type Monster = {

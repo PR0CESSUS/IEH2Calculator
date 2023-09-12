@@ -21,7 +21,7 @@ export class DATA implements DataType {
   upgrade: DataUpgrade;
   clearedMission?: number;
   custom?: any;
-  town?: DataTown;
+  town: DataTown;
   talisman?: DataTalisman;
   pet: DataPet;
   expedition?: DataExpedition;
@@ -36,7 +36,7 @@ export class DATA implements DataType {
 
     // console.log(this.source.isStartedExpedition);
 
-    // this.getClearedMission();
+    // this.getClearedMission() ;
 
     // this.expedition = new StatisticExpedition(this.source.expeditionLevels).data;
     // this.town = new StatisticTown(

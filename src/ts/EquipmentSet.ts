@@ -1,21 +1,50 @@
 import { Equipment } from "./type/Equipment";
 import { enchantKind } from "./type/EnchantKind";
+import { equipmentSetKind } from "./type/EquipmentSetKind";
 // import { Equipment } from "./type/Equipment";
 
 export class EquipmentSet {
   set: Equipment[] = [];
-  cookie = true;
+  setBonus = {
+    Slime: new Set(),
+    Magicslime: new Set(),
+    Spider: new Set(),
+    Bat: new Set(),
+    Fairy: new Set(),
+    Fox: new Set(),
+    Devilfish: new Set(),
+    Treant: new Set(),
+    Flametiger: new Set(),
+  };
   constructor(set = []) {
     // this.itemList = this.getItems();
     // talisman
     // pet
     // town
     this.update();
+    // console.log(equipmentSetKind.join(" : new Set(),\n"));
   }
 
   addItem(item: Equipment) {
     this.set.push(item);
+    if (item.setKind != "Nothing") {
+      this.setBonus[item.setKind].add(item.kind);
+    }
+    // console.log(this.setBonus.Flametiger.size);
+
     // this.itemList = this.getItems();
+  }
+
+  getSetBonus() {
+    const FlameTiger = new Set();
+    FlameTiger.add("FlametigerCostume");
+    FlameTiger.add("FlametigerVolcanicShield");
+    FlameTiger.add("FlametigerVolcanicShield");
+    // Delete any point with `x > 10`.
+
+    console.log(FlameTiger.size);
+    // Expected output: 1
+    FlameTiger.forEach((value, a2, a3) => console.log(value));
   }
 
   update() {

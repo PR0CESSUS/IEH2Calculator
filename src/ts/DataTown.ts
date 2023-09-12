@@ -67,7 +67,7 @@ export class DataTown implements BuildingKind {
               level: data.source.buildingResearchLevelsLeaf[index],
             },
           },
-        };
+        } as Building;
       }
       // cleaning up consumed data
       delete data.source.buildingResearchLevelsLeaf;
