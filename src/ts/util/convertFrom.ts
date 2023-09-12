@@ -9,7 +9,7 @@ export function convertFrom(input) {
   }
 
   // console.log("object !");
-  if (input >= 1e18) {
+  if (input >= 1e15) {
     return input;
   }
   // console.log(input);
