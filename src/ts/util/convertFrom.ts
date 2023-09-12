@@ -1,11 +1,13 @@
 //@ts-nocheck
 export function convertFrom(input) {
   // console.log("convertFrom", input);
-
-  if (input.includes("e+")) {
-    // console.log(input);
-    return input;
+  if (input instanceof String) {
+    if (input.includes("e+")) {
+      // console.log(input);
+      return input;
+    }
   }
+
   // console.log("object !");
   if (input >= 1e18) {
     return input;
