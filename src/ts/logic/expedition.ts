@@ -96,25 +96,25 @@ export class LogicExpedition {
   }
 
   timeSkip() {
-    if (this.expedition.totalExp > 0 && this.expedition.nitroTime > 0 && this.expedition.expeditionExpPerDay > 0) {
+    if (this.expedition.totalExp > 0 && this.expedition.expeditionExpPerDay > 0) {
       let expLeft = this.expedition.totalExp;
       let time = 0;
       // 86400 seconds in day
       if (this.expedition.totalExp < this.expedition.expeditionExpPerDay) {
-        return this.expedition.totalExp / this.expedition.expeditionExpPerSecTotal;
+        console.log("true", this.expedition.expeditionExpPerSecTotal * this.app.data.misc.nitroSpeed);
+        return expLeft / (this.expedition.expeditionExpPerSecTotal * this.app.data.misc.nitroSpeed);
       } else {
         while (true) {
+          if (expLeft - this.expedition.expeditionExpPerDay <= 0) {
+            time += expLeft / (this.expedition.expeditionExpPerSecTotal * this.app.data.misc.nitroSpeed);
+            break;
+          }
+          expLeft -= this.expedition.expeditionExpPerDay;
           expLeft -= this.expedition.expeditionExpPerNitroSink * 5;
           time += 86400;
           if (expLeft <= 0) {
             break;
           }
-          if (expLeft - this.expedition.expeditionExpPerDay <= 0) {
-            time += expLeft / this.expedition.expeditionExpPerSecTotal;
-            break;
-          }
-
-          expLeft -= this.expedition.expeditionExpPerDay;
         }
         return time;
       }
