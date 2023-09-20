@@ -17,7 +17,7 @@ let app = new App();
 
 if (process.env.NODE_ENV === "production") {
   // Code will only appear in production build.
-  console.log("production", app.data.calculator.slimeBank.html);
+  // console.log("production", app.data.calculator.slimeBank.html);
 }
 
 if (process.env.NODE_ENV === "development") {

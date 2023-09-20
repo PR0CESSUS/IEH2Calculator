@@ -63,7 +63,7 @@ export class CalculatorAnvil {
 
   html() {
     let html = "";
-    html += `<h3>Anvil</h3><table>
+    html += `<h3>Anvil Calculator</h3><table>
     <tr>
       <td>Dungeon</td>
       <td>Diff</td>
@@ -75,7 +75,7 @@ export class CalculatorAnvil {
       html += `<tr>`;
       html += `<td>
         <form class="dungeon-select">                
-          <select id="calculator.anvil.${index}.type" data-endpoint="calculator.anvil.custom[${index}].type">
+          <select id="calculator.anvil.${index}.type" data-endpoint="calculator.anvil.custom[${index}].type" class="custom">
   <option value="${dungeonReward.herolevel}">Spider 4 (Hero Level)</option>
   <option value="${dungeonReward.requiredability}">Bat 4 (Required Ability)</option>
   <option value="${dungeonReward.proficiencygain}">Fairy 4 (Proficiency Gain)</option>
@@ -88,7 +88,7 @@ export class CalculatorAnvil {
 </select>
     </form></td><td>
     <form class="dungeon-select">
-      <select id="calculator.anvil.${index}.difficulty" data-endpoint="calculator.anvil.custom[${index}].difficulty">
+      <select id="calculator.anvil.${index}.difficulty" data-endpoint="calculator.anvil.custom[${index}].difficulty" class="custom">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -102,7 +102,7 @@ export class CalculatorAnvil {
       </select>
     </form>
   </td>
-  <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[${index}].time" type="text" value="1" size="4" /></td>
+  <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[${index}].time" type="text" value="1" size="4" class="custom" /></td>
             <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[${index}].reward">value</td>
             <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[${index}].orbCost">orb</td>`;
       // html += `<td><input type='text' data-endpoint='pet.${species}.${color}.level'></td>`;

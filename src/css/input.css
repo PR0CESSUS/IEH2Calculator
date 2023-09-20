@@ -1,31 +1,6 @@
-.input-size-3 {
-  width: 2.5em;
-}
-
-.input-stone {
-  display: inline;
-}
-
-.input-stone:focus > #testicon {
-  background-color: yellow;
-  border-style: dashed;
-  border-width: 2px;
-}
-
-#container:hover > #cube {
-  background-color: yellow;
-}
-
-.input-stone:hover > .icon-stone {
-  background: yellow;
-}
-/* .input-stone:hover ~ .icon-stone {background-color: aqua;}    */
-
-/* body:has(.input-stone:focus) .icon-stone {
-    background: purple; 
-  }  */
-input[type="text"] {
-  /* font-size: 14px; */
+input {
+  font-size: 14px;
+  font-family: "NotoSansBlack";
   margin: 0;
   padding: 0;
   padding-left: 3px;
@@ -41,19 +16,40 @@ input[type="text"] {
   outline: none;
 }
 
-input[type="text"]:focus {
-  color: violet;
+input:focus {
+  color: rgb(255, 255, 255);
 }
-input[type="checkbox"] {
+
+input.warning {
+  background-color: rgb(206, 148, 137);
+  color: #141c25;
+}
+
+input.custom {
+  background-color: rgb(0, 95, 24);
+  color: #ffffff;
+  border-top-color: #00910c;
+  border-bottom-color: #706f70;
+  border-left-color: #008136;
+  border-right-color: #6d6f6d;
+}
+
+input.custom:focus {
+  color: #01f304;
+}
+
+input.checkbox {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
   -o-appearance: none;
   outline: none;
   content: none;
+  border: none;
+  background: none;
 }
 
-input[type="checkbox"]:before {
+input.checkbox:before {
   content: "+";
   font-size: 28px;
   text-align: center;
@@ -73,20 +69,11 @@ input[type="checkbox"]:before {
   border-left-color: #f2cb41;
   border-right-color: #947a1a;
 }
-input[type="text"].warning {
-  background-color: rgb(206, 148, 137);
-  color: #141c25;
-}
-
-input[type="text"].custom {
-  background-color: rgb(247, 231, 144);
-  color: #141c25;
-}
 
 input[type="file"] {
   display: none;
 }
-input[type="checkbox"]:checked:before {
+input.checkbox:checked:before {
   color: #ff0000 !important;
 }
 .input-plain {
@@ -146,6 +133,27 @@ select {
   /* background-color: #797a79; */
   border-top-color: #adadad;
   border-bottom-color: #706f70;
+  border-left-color: #666466;
+  border-right-color: #6d6f6d;
+}
+
+select.custom {
+  color: #ffffff;
+  background-color: rgb(0, 95, 24);
+  border-top-color: #00910c;
+  border-bottom-color: #706f70;
+  border-left-color: #008136;
+  border-right-color: #6d6f6d;
+}
+
+.default-input {
+  font-size: 14px;
+  background-color: #777777;
+  color: #01f304;
+  border-style: outset;
+  border-width: 2px;
+  border-top-color: #525252;
+  border-bottom-color: #5e5e5e;
   border-left-color: #666466;
   border-right-color: #6d6f6d;
 }

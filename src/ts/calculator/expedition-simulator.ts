@@ -45,10 +45,13 @@ export class CalculatorExpeditionSimulator {
   }
 
   get expeditionExpPerNitroSink() {
+    // console.log(this.nitroTime, this.expeditionExpPerSecTotal);
+
     return this.nitroTime * this.expeditionExpPerSecTotal;
   }
 
   get expeditionExpPerNitroSinkDay() {
+    // console.log("expeditionExpPerNitroSinkDay");
     return this.expeditionExpPerNitroSink * this.simulator.nitroSink;
   }
 
@@ -57,8 +60,10 @@ export class CalculatorExpeditionSimulator {
   }
 
   get nitroTime() {
-    let nitro = this.data.custom?.nitroTotal;
-
+    let nitro = this.data.custom?.nitroTotal ?? 0;
+    if (nitro == 0) {
+      return 0;
+    }
     let num = 0.0;
     for (let index = 1; index < 10; ++index) {
       if (nitro >= index * 86400) {
@@ -73,6 +78,7 @@ export class CalculatorExpeditionSimulator {
 
   get requiredExp() {
     let totalExp = 0;
+    if (this.simulator.currentLevel > this.simulator.targetLevel) return;
     for (let level = this.simulator.currentLevel; level < this.simulator.targetLevel; level++) {
       totalExp += 86400.0 * (1 + level + 0.25 * Math.pow(Math.max(0, level - 3), 2.0));
     }
@@ -85,13 +91,17 @@ export class CalculatorExpeditionSimulator {
       let time = 0;
       // 86400 seconds in day
       if (this.requiredExp < this.expeditionExpPerDay) {
-        console.log("requiredExp", this.requiredExp);
-        console.log("expeditionExpPerDay", this.expeditionExpPerDay);
-        console.log("requiredExp / ", this.requiredExp / this.expeditionExpPerSecTotal);
-        console.log("requiredExp", this.requiredExp, this.expeditionExpPerDay, this.requiredExp / this.expeditionExpPerSecTotal);
+        // console.log("requiredExp", this.requiredExp);
+        // console.log("expeditionExpPerDay", this.expeditionExpPerDay);
+        // console.log("requiredExp / ", this.requiredExp / this.expeditionExpPerSecTotal);
+        // console.log("requiredExp", this.requiredExp, this.expeditionExpPerDay, this.requiredExp / this.expeditionExpPerSecTotal);
         return expLeft / (this.expeditionExpPerSecTotal * this.data.misc.nitroSpeed);
       } else {
         while (true) {
+          if (expLeft > this.expeditionExpPerDay * 10000) {
+            return 0;
+          }
+
           if (expLeft - this.expeditionExpPerDay <= 0) {
             time += expLeft / (this.expeditionExpPerSecTotal * this.data.misc.nitroSpeed);
             break;
@@ -129,7 +139,7 @@ export class CalculatorExpeditionSimulator {
 
     html += `<tr>`;
     html += `<td>Playtime hour per day:</td>`;
-    html += `<td><input data-endpoint="custom.expedition.simulator.playtimeHourPerDay" type="text" class="default-input custom"></td>`;
+    html += `<td><input data-endpoint="custom.expedition.simulator.playtimeHourPerDay" type="text" class="custom"></td>`;
 
     html += `<td data-endpoint='calculator.expedition.simulator.expeditionExpPerSec'></td>`;
     html += `<td data-endpoint='calculator.expedition.simulator.expeditionExpPerSecTeam'></td>`;
@@ -140,30 +150,30 @@ export class CalculatorExpeditionSimulator {
     html += `</tr>`;
     html += `<tr>`;
     html += `<td>Pet per Team:</td>`;
-    html += `<td><input data-endpoint="custom.expedition.simulator.petPerTeam" type="text" class="default-input custom"></td>`;
+    html += `<td><input data-endpoint="custom.expedition.simulator.petPerTeam" type="text" class="custom"></td>`;
     html += `</tr>`;
     html += `<tr>`;
     html += `<td>Total Teams:</td>`;
-    html += `<td ><input data-endpoint="custom.expedition.simulator.teams" type="text" class="default-input custom"></td>`;
+    html += `<td ><input data-endpoint="custom.expedition.simulator.teams" type="text" class="custom"></td>`;
     html += `</tr>`;
     html += `<tr>`;
     html += `<td>Nitro Sink used:</td>`;
-    html += `<td ><input data-endpoint="custom.expedition.simulator.nitroSink" type="text" class="default-input custom"></td>`;
+    html += `<td ><input data-endpoint="custom.expedition.simulator.nitroSink" type="text" class="custom"></td>`;
     html += `</tr>`;
     html += `<tr>`;
     html += `<td>Current Level:</td>`;
-    html += `<td><input id="expedition-currentLevel" data-endpoint="custom.expedition.simulator.currentLevel" type="text" class="default-input custom"></td>`;
+    html += `<td><input id="expedition-currentLevel" data-endpoint="custom.expedition.simulator.currentLevel" type="text" class="custom"></td>`;
     html += `</tr>`;
     html += `<tr>`;
     html += `<td>Target Level:</td>`;
-    html += `<td><input id="expedition-targetLevel" data-endpoint="custom.expedition.simulator.targetLevel" type="text"class="default-input custom"></td>`;
+    html += `<td><input id="expedition-targetLevel" data-endpoint="custom.expedition.simulator.targetLevel" type="text"class="custom"></td>`;
     html += `</tr>`;
     html += "</table>";
 
     html += `<hr>`;
-    html += `nitroTime <span data-endpoint='calculator.expedition.simulator.nitroTime'  data-type="time"></span><br>`;
-    html += `requiredExp <span data-endpoint='calculator.expedition.simulator.requiredExp' data-precision='2'></span><br>`;
-    html += `timeSkip <span data-endpoint='calculator.expedition.simulator.timeSkip' data-type="time"></span><br>`;
+    html += `Time per Nitro Sink: <span data-endpoint='calculator.expedition.simulator.nitroTime'  data-type="time" class="green"></span><br>`;
+    html += `Required Exp: <span data-endpoint='calculator.expedition.simulator.requiredExp' data-precision='2' class="green"></span><br>`;
+    html += `Calculated time: <span data-endpoint='calculator.expedition.simulator.timeSkip' data-type="time" class="green"></span><br>`;
     html += `<hr>`;
 
     // for (let index = 0; index < this.data.source.expeditionPetIsSet.length / 5; index++) {
@@ -178,9 +188,9 @@ export class CalculatorExpeditionSimulator {
 
     html += `    
     <p style="padding-left: 20px;"><img src="./img/nitro.png" class="icon"> Nitro Speed:
-        <input id="anvil.nitro.speed" type="text" data-endpoint="misc.nitroSpeed" class="default-input warning"> Max
+        <input id="anvil.nitro.speed" type="text" data-endpoint="misc.nitroSpeed"> Max
         Nitro:
-        <input type="text" data-endpoint="custom.nitroTotal" class="default-input custom">
+        <input type="text" data-endpoint="custom.nitroTotal" class="custom">
     </p>
 `;
     // for (let index = 0; index < this.teams.length; index++) {

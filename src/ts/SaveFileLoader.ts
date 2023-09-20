@@ -21,5 +21,5 @@ export function SaveFileLoader(event) {
 if (document.getElementById("loadFromSaveFile")) {
   //@ts-ignore
   document.body.addEventListener("change", SaveFileLoader);
-  // console.log("loader script loaded!");
+  console.log("loader script Event Listener added!");
 }

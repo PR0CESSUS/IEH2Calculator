@@ -28,8 +28,8 @@ export function afterSettle(event) {
   // console.log(requestPath);
   if (this.page == "test") {
     const content = document.getElementById("content");
-    // if (content) content.innerHTML = this.data.town.html();
-    // if (content) console.log(this.data.town.html());
+    // if (content) content.innerHTML = this.data.calculator.expedition.simulator.html();
+    // if (content) console.log(this.data.calculator.expedition.simulator.html());
   }
   this.highlight();
   this.updateContent();

@@ -1,10 +1,11 @@
 <%= require('html-loader!./ejs/data-tablist.html').default %>
     <h3>Common</h3>
-    <p style="padding-left: 20px;"><img src="./img/nitro.png" class="icon"> Nitro Speed:
-        <input id="anvil.nitro.speed" type="text" data-endpoint="misc.nitroSpeed" class="default-input warning"> Max
-        Nitro:
-        <input type="text" data-endpoint="custom.nitroTotal" class="default-input custom">
-    </p>
-    <h3>Pet</h3>
-    Total Pet Rank: <span style="padding-left: 20px;" data-endpoint="pet.totalRank"></span><br>
     Total Cleared Mission: <span data-endpoint="misc.ClearedMission"></span><br>
+
+    <h3><img src="./img/nitro.png" class="icon"> Nitro</h3>
+    <p style="padding-left: 20px;">
+        Speed: <input id="anvil.nitro.speed" type="text" data-endpoint="misc.nitroSpeed"> Grey input will be overwriten
+        by Save File Data Import<br>
+        Max: <input type="text" data-endpoint="custom.nitroTotal" class="custom"> Green input will be overwriten
+        by Save Custom Data Import
+    </p>

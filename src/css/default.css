@@ -167,18 +167,6 @@ label {
   padding: 0;
 }
 
-.default-input {
-  font-size: 14px;
-  background-color: #777777;
-  color: #01f304;
-  border-style: outset;
-  border-width: 2px;
-  border-top-color: #525252;
-  border-bottom-color: #5e5e5e;
-  border-left-color: #666466;
-  border-right-color: #6d6f6d;
-}
-
 .default-table {
   font-size: 12px;
   margin: 10px;
