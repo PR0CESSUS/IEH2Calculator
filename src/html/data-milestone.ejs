@@ -1,0 +1,23 @@
+<%= require('html-loader!./ejs/data-tablist.html').default %>
+    <h3>Expedition Milestone</h3>
+    <ul>
+        <li>
+            <input type="checkbox" id="expeditionMilestone175" data-endpoint="expedition.totalLevel" data-test="175">
+            <label for="expeditionMilestone175">Expedition Levels 175 ( Expedition Speed + 25% )</label>
+        </li>
+        <li>
+            <input type="checkbox" id="expeditionMilestone225" data-endpoint="expedition.totalLevel" data-test="225">
+            <label for="expeditionMilestone225">Expedition Levels 225 ( Expedition Speed + 25% )</label>
+        </li>
+    </ul>
+    <h3>Mission Milestone</h3>
+    <ul>
+        <li>
+            <input type="checkbox" id="milestone1800" data-endpoint="misc.ClearedMission" data-test="1800">
+            <label for="milestone1800">Milestone 1800 ( Slime Coin Intrest + 2.5% )</label>
+        </li>
+        <li>
+            <input type="checkbox" id="milestone2700" data-endpoint="misc.ClearedMission" data-test="2700">
+            <label for="milestone2700">Milestone 2700 ( Slime Coin Intrest + 5.0% )</label>
+        </li>
+    </ul>

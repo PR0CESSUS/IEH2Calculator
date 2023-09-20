@@ -1,5 +1,11 @@
+@font-face {
+  font-family: NotoSansBlack;
+  src: url(font/NotoSansCJKjp-Black.ttf);
+}
+
 body {
-  font-family: "Noto Sans JP";
+  /* font-family: "Noto Sans JP"; */
+  font-family: "NotoSansBlack";
   font-size: 16px;
   font-weight: 700;
   font-style: normal;
@@ -12,15 +18,6 @@ body {
   /* filter: blur(0.4px); */
 }
 
-#sidetab-content {
-  color: #6e5d5d;
-}
-
-h1 {
-  margin: 4px;
-  color: #f3f3f6;
-}
-
 pre {
   margin: 10px;
   font-family: "Noto Sans JP";
@@ -29,10 +26,6 @@ pre {
   white-space: -pre-wrap; /* Opera 4-6 */
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word; /* Internet Explorer 5.5+ */
-}
-h4 {
-  margin: 0;
-  text-align: center;
 }
 
 a {
@@ -62,34 +55,6 @@ hr {
   border-bottom: 2px solid #000;
   border-radius: 0;
   background-clip: content-box;
-}
-
-h2 {
-  text-align: left;
-  margin: 0px;
-  padding: 10px;
-  /* font-family: monospace;     */
-}
-
-input[type="text"] {
-  /* font-size: 14px; */
-  margin: 0;
-  padding: 0;
-  padding-left: 3px;
-  height: 24px;
-  background-color: #777777;
-  color: #01f304;
-  border-style: outset;
-  border-width: 2px;
-  border-top-color: #525252;
-  border-bottom-color: #5e5e5e;
-  border-left-color: #666466;
-  border-right-color: #6d6f6d;
-  outline: none;
-}
-
-input[type="text"]:focus {
-  color: violet;
 }
 
 .container-box {
@@ -143,53 +108,6 @@ p {
   padding: 0;
 }
 
-.input-plain {
-  color: #eaebed;
-  background: transparent;
-  border: 0;
-  font-family: "noto-sans-cjk-jp", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 1px;
-  filter: blur(0.4px);
-  -webkit-filter: blur(0.4px);
-  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
-}
-
-.input-active {
-  display: inline;
-  margin: 0;
-  padding: 0;
-  width: 70px;
-  background: transparent;
-  border: none;
-  border-bottom-style: dashed;
-  border-bottom-color: #eaebed;
-  border-bottom-width: 1px;
-  font-weight: bold;
-  font-size: 16px;
-  /* background-color: #16253f; */
-  color: #01f304;
-  /* overflow: hidden; */
-}
-
-h3 {
-  margin: 10 10 10 0;
-  padding: 0 0 0 0;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-}
-
-h3::before {
-  position: relative;
-  content: "\25C6";
-  left: 0px;
-  top: 10px;
-  font-size: 11px;
-}
-
 ul {
   margin: 0 0 0 20;
   padding: 0;
@@ -220,71 +138,8 @@ li {
   border-right-color: #235cbd;
 }
 
-.dungeon-select select {
-  /* float: right; */
-  /* border: 0 !important;  Removes border */
-  -webkit-appearance: none; /*Removes default chrome and safari style*/
-  -moz-appearance: none; /* Removes Default Firefox style*/
-  appearance: none;
-  background: #797a79 url(img/selectarrow.png) no-repeat 95% center;
-  width: auto; /*Width of select dropdown to give space for arrow image*/
-  text-indent: 0.01px;
-  text-overflow: "";
-  color: #fff;
-  font-family: "Noto Sans JP";
-  text-align: left;
-  font-size: 16x;
-  font-weight: 500;
-  letter-spacing: 1.4px;
-  font-style: normal;
-  padding: 2 15 3 10;
-  /* text-align: center; */
-  margin: 0;
-  /* box-shadow: inset 0 0 5px rgba(000,000,000, 0.5); */
-  border-style: outset;
-  border-width: 2px;
-  /* background-color: #797a79; */
-  border-top-color: #adadad;
-  border-bottom-color: #706f70;
-  border-left-color: #666466;
-  border-right-color: #6d6f6d;
-}
-
 label {
   display: inline;
-}
-input[type="checkbox"] {
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -o-appearance: none;
-  outline: none;
-  content: none;
-}
-
-input[type="checkbox"]:before {
-  content: "+";
-  font-size: 28px;
-  text-align: center;
-  line-height: 22px;
-  color: transparent !important;
-  background: #fef2e0;
-  background-image: linear-gradient(#6e6b6c, #3b3838);
-  display: block;
-  width: 20px;
-  height: 20px;
-  margin-right: 7px;
-  border-style: solid;
-  border-radius: 4px;
-  border-width: 2px;
-  border-top-color: #f1d992;
-  border-bottom-color: #fadf84;
-  border-left-color: #f2cb41;
-  border-right-color: #947a1a;
-}
-
-input[type="checkbox"]:checked:before {
-  color: #ff0000 !important;
 }
 
 /* useful  */
@@ -332,19 +187,6 @@ input[type="checkbox"]:checked:before {
 
 .default-table td {
   padding: 0 5 5 5;
-}
-input[type="text"].warning {
-  background-color: rgb(206, 148, 137);
-  color: #141c25;
-}
-
-input[type="text"].custom {
-  background-color: rgb(247, 231, 144);
-  color: #141c25;
-}
-
-input[type="file"] {
-  display: none;
 }
 
 .grid {
@@ -452,6 +294,40 @@ body .active {
   background-position: center; 
   background-repeat: no-repeat; 
 } */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 720px;
+  background-color: black;
+  color: #fff;
+  /* text-align: center; */
+  border-radius: 6px;
+  padding: 5px;
+  white-space: pre-wrap;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+textarea {
+  text-align: left;
+  resize: none;
+  height: 250px;
+}
+
+.link {
+  color: #000;
+}
 
 .btn {
     font-family: 'Noto Sans JP';
@@ -578,7 +454,6 @@ body .active {
   border-color: #b6b6b6 #8f8f8f #9e9e9e #969696;
   background-clip: padding-box;
   background-color: #232c37;
-  font-family: "Noto Sans JP";
   font-size: 20px;
   width: 150px;
   height: 50px;
@@ -724,4 +599,158 @@ body .active {
 /* body:has(.input-stone:focus) .icon-stone {
     background: purple; 
   }  */
+input[type="text"] {
+  /* font-size: 14px; */
+  margin: 0;
+  padding: 0;
+  padding-left: 3px;
+  height: 24px;
+  background-color: #777777;
+  color: #01f304;
+  border-style: outset;
+  border-width: 2px;
+  border-top-color: #525252;
+  border-bottom-color: #5e5e5e;
+  border-left-color: #666466;
+  border-right-color: #6d6f6d;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  color: violet;
+}
+input[type="checkbox"] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -o-appearance: none;
+  outline: none;
+  content: none;
+}
+
+input[type="checkbox"]:before {
+  content: "+";
+  font-size: 28px;
+  text-align: center;
+  line-height: 22px;
+  color: transparent !important;
+  background: #fef2e0;
+  background-image: linear-gradient(#6e6b6c, #3b3838);
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin-right: 7px;
+  border-style: solid;
+  border-radius: 4px;
+  border-width: 2px;
+  border-top-color: #f1d992;
+  border-bottom-color: #fadf84;
+  border-left-color: #f2cb41;
+  border-right-color: #947a1a;
+}
+input[type="text"].warning {
+  background-color: rgb(206, 148, 137);
+  color: #141c25;
+}
+
+input[type="text"].custom {
+  background-color: rgb(247, 231, 144);
+  color: #141c25;
+}
+
+input[type="file"] {
+  display: none;
+}
+input[type="checkbox"]:checked:before {
+  color: #ff0000 !important;
+}
+.input-plain {
+  color: #eaebed;
+  background: transparent;
+  border: 0;
+  font-family: "noto-sans-cjk-jp", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 1px;
+  filter: blur(0.4px);
+  -webkit-filter: blur(0.4px);
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+
+.input-active {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  width: 70px;
+  background: transparent;
+  border: none;
+  border-bottom-style: dashed;
+  border-bottom-color: #eaebed;
+  border-bottom-width: 1px;
+  font-weight: bold;
+  font-size: 16px;
+  /* background-color: #16253f; */
+  color: #01f304;
+  /* overflow: hidden; */
+}
+
+select {
+  /* float: right; */
+  /* border: 0 !important;  Removes border */
+  -webkit-appearance: none; /*Removes default chrome and safari style*/
+  -moz-appearance: none; /* Removes Default Firefox style*/
+  appearance: none;
+  background: #797a79 url(img/selectarrow.png) no-repeat 95% center;
+  width: auto; /*Width of select dropdown to give space for arrow image*/
+  text-indent: 0.01px;
+  text-overflow: "";
+  color: #fff;
+  text-align: left;
+  font-size: 16x;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+  font-style: normal;
+  padding: 2 15 3 10;
+  /* text-align: center; */
+  margin: 0;
+  /* box-shadow: inset 0 0 5px rgba(000,000,000, 0.5); */
+  border-style: outset;
+  border-width: 2px;
+  /* background-color: #797a79; */
+  border-top-color: #adadad;
+  border-bottom-color: #706f70;
+  border-left-color: #666466;
+  border-right-color: #6d6f6d;
+}
+
+h1 {
+  margin: 4px;
+  color: #f3f3f6;
+}
+h2 {
+  text-align: left;
+  margin: 0px;
+  padding: 10px;
+  /* font-family: monospace;     */
+}
+h3 {
+  margin: 10 10 10 0;
+  padding: 0 0 0 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+h3::before {
+  position: relative;
+  content: "\25C6";
+  left: 0px;
+  top: 10px;
+  font-size: 11px;
+}
+h4 {
+  margin: 0;
+  text-align: center;
+}
 

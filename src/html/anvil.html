@@ -1,8 +1,5 @@
 <div id="anvil-calculator" class="container-box">
-
-
-
-
+    <h3>Anvil</h3>
     <table>
         <tr>
             <td>Dungeon</td>
@@ -14,22 +11,22 @@
         <tr>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.0.name" data-endpoint="custom.dungeon[0].name">
-                        <option value="herolevel">Spider 4 (Hero Level)</option>
-                        <option value="requiredability">Bat 4 (Required Ability)</option>
-                        <option value="proficiencygain">Fairy 4 (Proficiency Gain)</option>
-                        <option value="equipmenteffect">Fox 4 (Equipment Effect)</option>
-                        <option value="herolevel2">Treant 3 (Hero Level)</option>
-                        <option value="requiredability2">Treant 4 (Required Ability)</option>
-                        <option value="proficiencygain2">Flametiger 1 (Proficiency Gain)</option>
-                        <option value="equipmenteffect2">Flametiger 3 (Equipment Effect)</option>
-                        <option value="purifyofcursedeffect">Flametiger 4 (Purify of Cursed Effect)</option>
+                    <select id="calculator.anvil.0.type" data-endpoint="calculator.anvil.custom[0].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
                     </select>
                 </form>
             </td>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.0.diff" data-endpoint="custom.dungeon[0].diff">
+                    <select id="calculator.anvil.0.difficulty" data-endpoint="calculator.anvil.custom[0].difficulty">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -43,31 +40,30 @@
                     </select>
                 </form>
             </td>
-            <td>
-                <input id="anvil.dungeon.0.time" data-endpoint="custom.dungeon[0].time" type="text" value="1" size="4">
-            </td>
-            <td id="anvil.dungeon.0.reward" data-endpoint="custom.dungeon[0].reward">value</td>
-            <td id="anvil.dungeon.0.orb" data-endpoint="custom.dungeon[0].orb">orb</td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[0].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[0].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[0].orbCost">orb</td>
         </tr>
         <tr>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.1.name" data-endpoint="custom.dungeon[1].name">
-                        <option value="herolevel">Spider 4 (Hero Level)</option>
-                        <option value="requiredability">Bat 4 (Required Ability)</option>
-                        <option value="proficiencygain">Fairy 4 (Proficiency Gain)</option>
-                        <option value="equipmenteffect">Fox 4 (Equipment Effect)</option>
-                        <option value="herolevel2">Treant 3 (Hero Level)</option>
-                        <option value="requiredability2">Treant 4 (Required Ability)</option>
-                        <option value="proficiencygain2">Flametiger 1 (Proficiency Gain)</option>
-                        <option value="equipmenteffect2">Flametiger 3 (Equipment Effect)</option>
-                        <option value="purifyofcursedeffect">Flametiger 4 (Purify of Cursed Effect)</option>
+                    <select id="calculator.anvil.1.type" data-endpoint="calculator.anvil.custom[1].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
                     </select>
                 </form>
             </td>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.1.diff" data-endpoint="custom.dungeon[1].diff">
+                    <select id="calculator.anvil.1.difficulty" data-endpoint="calculator.anvil.custom[1].difficulty">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -81,31 +77,30 @@
                     </select>
                 </form>
             </td>
-            <td>
-                <input id="anvil.dungeon.1.time" data-endpoint="custom.dungeon[1].time" type="text" value="1" size="4">
-            </td>
-            <td id="anvil.dungeon.1.reward" data-endpoint="custom.dungeon[1].reward">value</td>
-            <td id="anvil.dungeon.1.orb" data-endpoint="custom.dungeon[1].orb">orb</td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[1].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[1].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[1].orbCost">orb</td>
         </tr>
         <tr>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.2.name" data-endpoint="custom.dungeon[2].name">
-                        <option value="herolevel">Spider 4 (Hero Level)</option>
-                        <option value="requiredability">Bat 4 (Required Ability)</option>
-                        <option value="proficiencygain">Fairy 4 (Proficiency Gain)</option>
-                        <option value="equipmenteffect">Fox 4 (Equipment Effect)</option>
-                        <option value="herolevel2">Treant 3 (Hero Level)</option>
-                        <option value="requiredability2">Treant 4 (Required Ability)</option>
-                        <option value="proficiencygain2">Flametiger 1 (Proficiency Gain)</option>
-                        <option value="equipmenteffect2">Flametiger 3 (Equipment Effect)</option>
-                        <option value="purifyofcursedeffect">Flametiger 4 (Purify of Cursed Effect)</option>
+                    <select id="calculator.anvil.2.type" data-endpoint="calculator.anvil.custom[2].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
                     </select>
                 </form>
             </td>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.2.diff" data-endpoint="custom.dungeon[2].diff">
+                    <select id="calculator.anvil.2.difficulty" data-endpoint="calculator.anvil.custom[2].difficulty">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -119,31 +114,30 @@
                     </select>
                 </form>
             </td>
-            <td>
-                <input id="anvil.dungeon.2.time" data-endpoint="custom.dungeon[2].time" type="text" value="1" size="4">
-            </td>
-            <td id="anvil.dungeon.2.reward" data-endpoint="custom.dungeon[2].reward">value</td>
-            <td id="anvil.dungeon.2.orb" data-endpoint="custom.dungeon[2].orb">orb</td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[2].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[2].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[2].orbCost">orb</td>
         </tr>
         <tr>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.3.name" data-endpoint="custom.dungeon[3].name">
-                        <option value="herolevel">Spider 4 (Hero Level)</option>
-                        <option value="requiredability">Bat 4 (Required Ability)</option>
-                        <option value="proficiencygain">Fairy 4 (Proficiency Gain)</option>
-                        <option value="equipmenteffect">Fox 4 (Equipment Effect)</option>
-                        <option value="herolevel2">Treant 3 (Hero Level)</option>
-                        <option value="requiredability2">Treant 4 (Required Ability)</option>
-                        <option value="proficiencygain2">Flametiger 1 (Proficiency Gain)</option>
-                        <option value="equipmenteffect2">Flametiger 3 (Equipment Effect)</option>
-                        <option value="purifyofcursedeffect">Flametiger 4 (Purify of Cursed Effect)</option>
+                    <select id="calculator.anvil.3.type" data-endpoint="calculator.anvil.custom[3].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
                     </select>
                 </form>
             </td>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.3.diff" data-endpoint="custom.dungeon[3].diff">
+                    <select id="calculator.anvil.3.difficulty" data-endpoint="calculator.anvil.custom[3].difficulty">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -157,31 +151,30 @@
                     </select>
                 </form>
             </td>
-            <td>
-                <input id="anvil.dungeon.3.time" data-endpoint="custom.dungeon[3].time" type="text" value="1" size="4">
-            </td>
-            <td id="anvil.dungeon.3.reward" data-endpoint="custom.dungeon[3].reward">value</td>
-            <td id="anvil.dungeon.3.orb" data-endpoint="custom.dungeon[3].orb">orb</td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[3].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[3].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[3].orbCost">orb</td>
         </tr>
         <tr>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.4.name" data-endpoint="custom.dungeon[4].name">
-                        <option value="herolevel">Spider 4 (Hero Level)</option>
-                        <option value="requiredability">Bat 4 (Required Ability)</option>
-                        <option value="proficiencygain">Fairy 4 (Proficiency Gain)</option>
-                        <option value="equipmenteffect">Fox 4 (Equipment Effect)</option>
-                        <option value="herolevel2">Treant 3 (Hero Level)</option>
-                        <option value="requiredability2">Treant 4 (Required Ability)</option>
-                        <option value="proficiencygain2">Flametiger 1 (Proficiency Gain)</option>
-                        <option value="equipmenteffect2">Flametiger 3 (Equipment Effect)</option>
-                        <option value="purifyofcursedeffect">Flametiger 4 (Purify of Cursed Effect)</option>
+                    <select id="calculator.anvil.4.type" data-endpoint="calculator.anvil.custom[4].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
                     </select>
                 </form>
             </td>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.4.diff" data-endpoint="custom.dungeon[4].diff">
+                    <select id="calculator.anvil.4.difficulty" data-endpoint="calculator.anvil.custom[4].difficulty">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -195,31 +188,30 @@
                     </select>
                 </form>
             </td>
-            <td>
-                <input id="anvil.dungeon.4.time" data-endpoint="custom.dungeon[4].time" type="text" value="1" size="4">
-            </td>
-            <td id="anvil.dungeon.4.reward" data-endpoint="custom.dungeon[4].reward">value</td>
-            <td id="anvil.dungeon.4.orb" data-endpoint="custom.dungeon[4].orb">orb</td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[4].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[4].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[4].orbCost">orb</td>
         </tr>
         <tr>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.5.name" data-endpoint="custom.dungeon[5].name">
-                        <option value="herolevel">Spider 4 (Hero Level)</option>
-                        <option value="requiredability">Bat 4 (Required Ability)</option>
-                        <option value="proficiencygain">Fairy 4 (Proficiency Gain)</option>
-                        <option value="equipmenteffect">Fox 4 (Equipment Effect)</option>
-                        <option value="herolevel2">Treant 3 (Hero Level)</option>
-                        <option value="requiredability2">Treant 4 (Required Ability)</option>
-                        <option value="proficiencygain2">Flametiger 1 (Proficiency Gain)</option>
-                        <option value="equipmenteffect2">Flametiger 3 (Equipment Effect)</option>
-                        <option value="purifyofcursedeffect">Flametiger 4 (Purify of Cursed Effect)</option>
+                    <select id="calculator.anvil.5.type" data-endpoint="calculator.anvil.custom[5].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
                     </select>
                 </form>
             </td>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.5.diff" data-endpoint="custom.dungeon[5].diff">
+                    <select id="calculator.anvil.5.difficulty" data-endpoint="calculator.anvil.custom[5].difficulty">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -233,31 +225,30 @@
                     </select>
                 </form>
             </td>
-            <td>
-                <input id="anvil.dungeon.5.time" data-endpoint="custom.dungeon[5].time" type="text" value="1" size="4">
-            </td>
-            <td id="anvil.dungeon.5.reward" data-endpoint="custom.dungeon[5].reward">value</td>
-            <td id="anvil.dungeon.5.orb" data-endpoint="custom.dungeon[5].orb">orb</td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[5].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[5].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[5].orbCost">orb</td>
         </tr>
         <tr>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.6.name" data-endpoint="custom.dungeon[6].name">
-                        <option value="herolevel">Spider 4 (Hero Level)</option>
-                        <option value="requiredability">Bat 4 (Required Ability)</option>
-                        <option value="proficiencygain">Fairy 4 (Proficiency Gain)</option>
-                        <option value="equipmenteffect">Fox 4 (Equipment Effect)</option>
-                        <option value="herolevel2">Treant 3 (Hero Level)</option>
-                        <option value="requiredability2">Treant 4 (Required Ability)</option>
-                        <option value="proficiencygain2">Flametiger 1 (Proficiency Gain)</option>
-                        <option value="equipmenteffect2">Flametiger 3 (Equipment Effect)</option>
-                        <option value="purifyofcursedeffect">Flametiger 4 (Purify of Cursed Effect)</option>
+                    <select id="calculator.anvil.6.type" data-endpoint="calculator.anvil.custom[6].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
                     </select>
                 </form>
             </td>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.6.diff" data-endpoint="custom.dungeon[6].diff">
+                    <select id="calculator.anvil.6.difficulty" data-endpoint="calculator.anvil.custom[6].difficulty">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -271,31 +262,30 @@
                     </select>
                 </form>
             </td>
-            <td>
-                <input id="anvil.dungeon.6.time" data-endpoint="custom.dungeon[6].time" type="text" value="1" size="4">
-            </td>
-            <td id="anvil.dungeon.6.reward" data-endpoint="custom.dungeon[6].reward">value</td>
-            <td id="anvil.dungeon.6.orb" data-endpoint="custom.dungeon[6].orb">orb</td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[6].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[6].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[6].orbCost">orb</td>
         </tr>
         <tr>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.7.name" data-endpoint="custom.dungeon[7].name">
-                        <option value="herolevel">Spider 4 (Hero Level)</option>
-                        <option value="requiredability">Bat 4 (Required Ability)</option>
-                        <option value="proficiencygain">Fairy 4 (Proficiency Gain)</option>
-                        <option value="equipmenteffect">Fox 4 (Equipment Effect)</option>
-                        <option value="herolevel2">Treant 3 (Hero Level)</option>
-                        <option value="requiredability2">Treant 4 (Required Ability)</option>
-                        <option value="proficiencygain2">Flametiger 1 (Proficiency Gain)</option>
-                        <option value="equipmenteffect2">Flametiger 3 (Equipment Effect)</option>
-                        <option value="purifyofcursedeffect">Flametiger 4 (Purify of Cursed Effect)</option>
+                    <select id="calculator.anvil.7.type" data-endpoint="calculator.anvil.custom[7].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
                     </select>
                 </form>
             </td>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.7.diff" data-endpoint="custom.dungeon[7].diff">
+                    <select id="calculator.anvil.7.difficulty" data-endpoint="calculator.anvil.custom[7].difficulty">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -309,31 +299,30 @@
                     </select>
                 </form>
             </td>
-            <td>
-                <input id="anvil.dungeon.7.time" data-endpoint="custom.dungeon[7].time" type="text" value="1" size="4">
-            </td>
-            <td id="anvil.dungeon.7.reward" data-endpoint="custom.dungeon[7].reward">value</td>
-            <td id="anvil.dungeon.7.orb" data-endpoint="custom.dungeon[7].orb">orb</td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[7].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[7].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[7].orbCost">orb</td>
         </tr>
         <tr>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.8.name" data-endpoint="custom.dungeon[8].name">
-                        <option value="herolevel">Spider 4 (Hero Level)</option>
-                        <option value="requiredability">Bat 4 (Required Ability)</option>
-                        <option value="proficiencygain">Fairy 4 (Proficiency Gain)</option>
-                        <option value="equipmenteffect">Fox 4 (Equipment Effect)</option>
-                        <option value="herolevel2">Treant 3 (Hero Level)</option>
-                        <option value="requiredability2">Treant 4 (Required Ability)</option>
-                        <option value="proficiencygain2">Flametiger 1 (Proficiency Gain)</option>
-                        <option value="equipmenteffect2">Flametiger 3 (Equipment Effect)</option>
-                        <option value="purifyofcursedeffect">Flametiger 4 (Purify of Cursed Effect)</option>
+                    <select id="calculator.anvil.8.type" data-endpoint="calculator.anvil.custom[8].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
                     </select>
                 </form>
             </td>
             <td>
                 <form class="dungeon-select">
-                    <select id="anvil.dungeon.8.diff" data-endpoint="custom.dungeon[8].diff">
+                    <select id="calculator.anvil.8.difficulty" data-endpoint="calculator.anvil.custom[8].difficulty">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -347,13 +336,47 @@
                     </select>
                 </form>
             </td>
-            <td>
-                <input id="anvil.dungeon.8.time" data-endpoint="custom.dungeon[8].time" type="text" value="1" size="4">
-            </td>
-            <td id="anvil.dungeon.8.reward" data-endpoint="custom.dungeon[8].reward">value</td>
-            <td id="anvil.dungeon.8.orb" data-endpoint="custom.dungeon[8].orb">orb</td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[8].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[8].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[8].orbCost">orb</td>
         </tr>
-
-
+        <tr>
+            <td>
+                <form class="dungeon-select">
+                    <select id="calculator.anvil.9.type" data-endpoint="calculator.anvil.custom[9].type">
+                        <option value="0">Spider 4 (Hero Level)</option>
+                        <option value="1">Bat 4 (Required Ability)</option>
+                        <option value="4">Fairy 4 (Proficiency Gain)</option>
+                        <option value="5">Fox 4 (Equipment Effect)</option>
+                        <option value="2">Treant 3 (Hero Level)</option>
+                        <option value="3">Treant 4 (Required Ability)</option>
+                        <option value="7">Flametiger 1 (Proficiency Gain)</option>
+                        <option value="8">Flametiger 3 (Equipment Effect)</option>
+                        <option value="6">Flametiger 4 (Purify of Cursed Effect)</option>
+                    </select>
+                </form>
+            </td>
+            <td>
+                <form class="dungeon-select">
+                    <select id="calculator.anvil.9.difficulty" data-endpoint="calculator.anvil.custom[9].difficulty">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </form>
+            </td>
+            <td><input id="anvil.dungeon.0.time" data-endpoint="calculator.anvil.custom[9].time" type="text" value="1"
+                    size="4" /></td>
+            <td id="anvil.dungeon.0.reward" data-endpoint="calculator.anvil.dungeon[9].reward">value</td>
+            <td id="anvil.dungeon.0.orb" data-endpoint="calculator.anvil.dungeon[9].orbCost">orb</td>
+        </tr>
     </table>
 </div>

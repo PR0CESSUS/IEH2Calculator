@@ -4,20 +4,29 @@ import { PotionKind } from "./type/PotionKind";
 import { MonsterKind } from "./type/MonsterKind";
 import { ExpeditionKind } from "./type/ExpeditionKind";
 import { SourceKind } from "./type/SourceKind";
-import { DataUpgrade } from "./DataUpgrade";
-import { DataExpedition } from "./DataExpedition";
-import { DataExpeditionTeams } from "./DataExpeditionTeams";
-import { DataTown } from "./DataTown";
-import { DataTalisman } from "./DataTalisman";
-import { DataPet } from "./DataPet";
-import { DataMisc } from "./DataMisc";
-import { DataEquip } from "./DataEquip";
+import { DataUpgrade } from "./data/DataUpgrade";
+import { DataExpedition } from "./data/DataExpedition";
+// import { DataExpeditionTeams } from "./DataExpeditionTeams";
+import { DataTown } from "./data/DataTown";
+import { DataTalisman } from "./data/DataTalisman";
+import { DataDefault } from "./data/DataDefault";
+import { DataGuild } from "./data/DataGuild";
+import { DataPet } from "./data/DataPet";
+import { DataMisc } from "./data/DataMisc";
+import { DataEquip } from "./data/DataEquip";
+import { DataStatistic } from "./data/DataStatistic";
+import { CalculatorExpeditionTeams } from "./calculator/expedition-teams";
+import { CalculatorExpeditionSimulator } from "./calculator/expedition-simulator";
+import { CalculatorSlimeBank } from "./calculator/slimebank";
+import { CalculatorProficiency } from "./calculator/proficiency";
+import { CalculatorGuild } from "./calculator/guild";
+import { CalculatorAnvil } from "./calculator/anvil";
+import { DataQuest } from "./data/DataQuest";
+
 // import { isEqual } from "lodash";
 
 export class DATA implements DataType {
-  localStorage;
-  isInitialized: boolean = false;
-  source: SourceKind = {} as SourceKind;
+  source: SourceKind;
   upgrade: DataUpgrade;
   clearedMission?: number;
   custom?: any;
@@ -28,13 +37,53 @@ export class DATA implements DataType {
   expeditionTeams: any;
   misc: DataMisc;
   equip: DataEquip;
+  stat: DataStatistic;
+  quest;
+  guild;
+  calculator;
 
   constructor() {
     this.load();
-    this.initialization();
+    // console.log(this);
+    // this.stat = new DataStatistic(this);
+    // this.quest = new DataQuest(this);
+    this.guild = new DataGuild(this);
+    this.misc = new DataMisc(this);
+    this.pet = new DataPet(this);
+    this.upgrade = new DataUpgrade(this);
+    this.talisman = new DataTalisman(this);
+    this.expedition = new DataExpedition(this);
+    this.town = new DataTown(this); // require expedition and talisman
+    // this.expeditionTeams = new DataExpeditionTeams(this);
+    this.equip = new DataEquip(this);
+    //
+    this.calculator = {
+      expedition: {
+        teams: new CalculatorExpeditionTeams(this),
+        simulator: new CalculatorExpeditionSimulator(this),
+      },
+      slimeBank: new CalculatorSlimeBank(this),
+      proficiency: new CalculatorProficiency(this),
+      guild: new CalculatorGuild(this),
+      anvil: new CalculatorAnvil(this),
+    };
+
+    //
     this.save();
 
-    // console.log(this.source.isStartedExpedition);
+    // console.log(this.talisman.html());
+    // console.log(this.source.equipmentLevelsWarrior);
+
+    // console.log(this.source.expeditionPetSpecies);
+    // let test = new DataDefault();
+
+    // let test = Array(6).fill(0);
+    // let test2 = Array(4).fill(1);
+    // console.log(test);
+    // console.log(test2);
+    // console.log([...test, ...test2]);
+
+    // console.log(this.talisman);
 
     // this.getClearedMission() ;
 
@@ -55,57 +104,23 @@ export class DATA implements DataType {
   }
 
   load() {
-    if (localStorage.getItem("data")) {
-      this.localStorage = JSON.parse(localStorage.getItem("data"));
-      // console.log(this.localStorage);
-      if (this.localStorage?.isInitialized) {
-        // console.log(this.localStorage.isInitialized);
-        this.source = this.localStorage.source;
-        this.custom = this.localStorage.custom ?? {};
-        this.isInitialized = true;
-      }
-      // this.isInitialized = this.localStorage.isInitialized ? this.localStorage.isInitialized : false;
+    if (localStorage.getItem("CustomData") && localStorage.getItem("CustomData") != "undefined") {
+      this.custom = JSON.parse(localStorage.getItem("CustomData"));
     } else {
-      // this.localStorage = { isInitialized: false };
+      this.custom = {};
+    }
+    // load source
+    if (localStorage.getItem("SaveFileData") && localStorage.getItem("SaveFileData") != "undefined") {
+      this.source = JSON.parse(localStorage.getItem("SaveFileData"));
+    } else {
+      this.source = new DataDefault();
+      // load empty source and save it
     }
   }
 
   save() {
-    // let olddata = JSON.parse(localStorage.getItem("data"));
-
-    // if (this.source?.birthDate) {
-    //   console.log(this.source?.birthDate, this.birthDate);
-
-    //   this.initialization();
-    //   this.isInitialized = true;
-    //   //@ts-ignore
-    //   // console.log("różne birthDate");
-    //   // console.log(this.source?.birthDate, this.localStorage?.source?.birthDate);
-
-    //   // console.log(this.localStorage.source);
-
-    //   // console.log("this.source != localStorage") ;
-    // }
-    let data = structuredClone(this);
-    delete data.localStorage;
-    // console.log(data);
-
-    localStorage.setItem("data", JSON.stringify(data));
-  }
-
-  initialization() {
-    // console.log(this);
-    this.misc = new DataMisc(this);
-    this.pet = new DataPet(this);
-    this.upgrade = new DataUpgrade(this);
-    this.talisman = new DataTalisman(this);
-    this.expedition = new DataExpedition(this);
-    this.town = new DataTown(this); // require expedition and talisman
-    this.expeditionTeams = new DataExpeditionTeams(this);
-    this.equip = new DataEquip(this);
-    //
-
-    this.equip.update();
+    localStorage.setItem("SaveFileData", JSON.stringify(this.source));
+    localStorage.setItem("CustomData", JSON.stringify(this.custom));
   }
 
   update(endpoint) {
@@ -116,15 +131,9 @@ export class DATA implements DataType {
     // console.log(endpoint.split(".")[0])     ;
 
     switch (controller) {
-      case "upgrade":
-        this.upgrade.update(endpoint);
-        break;
-      case "pet":
-        this.pet.update(endpoint);
-        break;
-      case "town":
-        this.town.update(endpoint);
-        break;
+      // case "slimebank":
+      //   this.s.update(endpoint);
+      //   break;
       case "expeditionTeams":
         this.expeditionTeams.update(endpoint);
         break;

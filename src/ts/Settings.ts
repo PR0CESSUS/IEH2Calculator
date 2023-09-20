@@ -1,5 +1,4 @@
 import { SaveFileDencrypt } from "./SaveFileDencrypt";
-import { SaveFileReader } from "./SaveFileReader";
 
 export class Settings {
   constructor() {
@@ -36,6 +35,7 @@ export class Settings {
         console.log("succes");
       });
     });
+    //@ts-ignore
     document.getElementById("settings.saveToFile").addEventListener("click", this.exportFile);
     // Export File button
   }

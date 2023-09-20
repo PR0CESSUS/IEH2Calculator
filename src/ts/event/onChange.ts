@@ -1,27 +1,31 @@
 export function onChange(event: Event & { target: HTMLInputElement | HTMLSelectElement; srcElement: HTMLInputElement }) {
   if (event.target.tagName == "INPUT" && event.target.type == "text") {
     // console.log(this);
-    //@ts-ignore
-    // let endpoint = this.get(event.target.dataset.endpoint);
-    // console.log("before", endpoint);
-
-    // endpoint = event.target.value;
-    // console.log(event.target);
-
-    // console.log("after", endpoint);
-    // console.log(this.data.source.guildLevel);
-    // console.log(event.target.type);
 
     this.set(event.target.dataset.endpoint, event.target.value);
     this.updateContent();
-    // add precision and type
-    // event.target.value = this.convertTo(event.target.value);
-    // update based on current page logic
-    // console.log(event.target.tagName);
-    // console.log(event.target.dataset.endpoint);
-    // console.log(event.target.value);
   }
   if (event.target.tagName == "INPUT" && event.target.type == "file") {
+    // console.log("change form input file");
+    //@ts-ignore
+    // console.log(event.target.files);
+    //@ts-ignore
+    // console.log(event.target.files[0]);
+  }
+  if (event.target.tagName == "INPUT" && event.target.type == "checkbox") {
+    // console.log(this);
+
+    // console.log("checkbox change", event.target.checked);
+    //@ts-ignore
+    if (event.target.checked) {
+      // console.log("checked");
+      this.set(event.target.dataset.endpoint, event.target.dataset.test);
+    } else {
+      // console.log("unckecked");
+      this.set(event.target.dataset.endpoint, 0);
+    }
+
+    this.updateContent();
   }
 
   if (event.target.tagName == "SELECT") {
@@ -33,5 +37,7 @@ export function onChange(event: Event & { target: HTMLInputElement | HTMLSelectE
     this.set(event.target.dataset.endpoint, event.target.value);
     this.updateContent();
   }
+
+  if (event.target.id == "settings.loadFromFile") this.event.uploadCustomData(event);
   // console.log(event);
 }

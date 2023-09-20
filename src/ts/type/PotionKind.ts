@@ -80,5 +80,5 @@ export type PotionKind = {
 
 type Talisman = {
   disassembled: number;
-  passiveEffectValue: number;
+  effect: number;
 };

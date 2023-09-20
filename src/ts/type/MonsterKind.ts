@@ -24,11 +24,14 @@ export type MonsterColor = {
 };
 
 type Monster = {
+  expeditionList: number | null[];
+  id: number;
   level: number;
   rank: number;
   loyalty: number;
   effect: number;
   effectKind: (typeof petPassiveEffectKind)[number];
+  team: number;
 };
 
 export const petPassiveEffectKind = [

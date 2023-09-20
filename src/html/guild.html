@@ -1,17 +1,20 @@
 <h3>Guild</h3>
 
 <div>
+    <img src="./img/nitro.png" class="icon"> Nitro Speed:<br>
+    <input id="anvil.nitro.speed" type="text" data-endpoint="misc.nitroSpeed" class="default-input warning">
     <p>
         <label>Guild EXP per hour:</label>
-        <input type="text" id="guild.expPerHour" class="default-input custom" data-endpoint="custom.guildexpPerHour"
-            data-precision="2">
+        <input type="text" id="guild.expPerHour" class="default-input custom"
+            data-endpoint="calculator.guild.custom.expPerHour" data-precision="2">
     </p>
     <p> <label>Target Level:</label>
-        <input type="text" id="guild.levelTarget" class="default-input custom" data-endpoint="custom.guildLevelTarget">
+        <input type="text" id="guild.levelTarget" class="default-input custom"
+            data-endpoint="calculator.guild.custom.targetLevel">
     </p>
     <p>
         <label for="source.guildLevel">Current Level:</label>
-        <input id="source.guildLevel" type="text" data-endpoint="source.guildLevel" class="default-input warning">
+        <input id="source.guildLevel" type="text" data-endpoint="guild.level" class="default-input warning">
 
     </p>
     <p>
@@ -23,7 +26,7 @@
 
     <p>
         <label>Time Needed:</label>
-        <span id="guild.time" data-endpoint="custom.guildtime" data-type="time" class="data"></span>
+        <span id="guild.time" data-endpoint="calculator.guild.requiredTime" data-type="time"></span>
 
     </p>
 

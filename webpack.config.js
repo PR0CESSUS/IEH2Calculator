@@ -62,6 +62,7 @@ module.exports = (env) => {
         path.resolve(__dirname, "./src/css/index.css"),
         path.resolve(__dirname, "./src/css/icons.css"),
         path.resolve(__dirname, "./src/css/input.css"),
+        path.resolve(__dirname, "./src/css/heading.css"),
       ],
     },
     output: {
@@ -96,9 +97,9 @@ module.exports = (env) => {
             },
           },
           {
-            from: path.resolve(__dirname, "src/ts/data", "default.json"),
+            from: path.resolve(__dirname, "src/font"),
             to({ context, absoluteFilename }) {
-              return "data/[name][ext]";
+              return "font/[name][ext]";
             },
           },
         ],

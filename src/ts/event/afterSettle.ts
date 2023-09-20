@@ -13,8 +13,6 @@ export function afterSettle(event) {
   // console.log("hash", location.hash);
   // console.log(requestPath);
 
-  let page = requestPath.includes("-") ? requestPath.split("-")[0] : requestPath;
-
   // console.log("afterSettle ------------------");
   // console.log(this.page);
   // console.log(this.tab);
@@ -28,7 +26,11 @@ export function afterSettle(event) {
   //   // console.log();
   // }
   // console.log(requestPath);
+  if (this.page == "test") {
+    const content = document.getElementById("content");
+    // if (content) content.innerHTML = this.data.town.html();
+    // if (content) console.log(this.data.town.html());
+  }
   this.highlight();
-  this.logic.switchLogic(page);
   this.updateContent();
 }

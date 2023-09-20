@@ -20,6 +20,7 @@ export type BuildingKind = {
 
 export type Building = {
   level: number;
+  levelTotal: number;
   effect: number;
   research: {
     stone: {

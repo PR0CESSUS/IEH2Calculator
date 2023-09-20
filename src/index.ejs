@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TEST</title>
     <script src="https://unpkg.com/htmx.org@1.9.5"></script>
-    <link href="https://fonts.googleapis.com/css?family=Noto Sans JP" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <!-- <link href="https://fonts.googleapis.com/css?family=Noto Sans JP" rel="stylesheet"> -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link href="./styles-bundle.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -21,7 +22,7 @@
         </div>
 
         <div class="sidebar" hx-target="#content" hx-indicator="#title">
-            <button hx-get="html/summary-overview.html" class="menu-button">Summary</button>
+            <button hx-get="html/data-overview.html" class="menu-button">Data</button>
             <button hx-get="html/anvil.html" class="menu-button">Anvil</button>
             <button hx-get="html/equip-warrior.html" class="menu-button">Equip</button>
             <!-- <button hx-get="html/modal.html" class="menu-button">MODAL</button> -->
@@ -38,7 +39,7 @@
             <hr />
         </div>
 
-        <div id="content" hx-get="html/summary-overview.html" hx-trigger="load"></div>
+        <div id="content" hx-get="html/data-overview.html" hx-trigger="load"></div>
         <!-- <div id="content" hx-get="html/tab1.html" hx-trigger="load"></div> -->
         <% const package=require('../package.json'); %>
             <div id="footer" class="footer">version: <span id="version">
