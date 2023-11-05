@@ -3,175 +3,189 @@ import { Events } from "./Events";
 import { set, get } from "lodash";
 import { convertTo } from "./util/convertTo";
 import { convertFrom } from "./util/convertFrom";
+import { Router } from "./Router";
+import { CalculatorExpedition } from "./page/expedition";
+import { Test } from "./page/test";
 
 export class App {
-  page;
-  tab;
   data: DATA;
   event: Events;
+  router: Router;
+  page = [];
+
   _set = set;
   _get = get;
 
   constructor() {
-    this.data = new DATA();
+    this.router = new Router(this);
+
     this.event = new Events(this);
+    // this.router.register("", this.html);
+
+    this.data = new DATA(this);
+    this.page = [new CalculatorExpedition(this), new Test(this)];
+    // this.page = [];
+    this.router.initialization();
+
+    // console.log(this);
   }
 
-  get(endpoint, precision = 0, type = "", base = 0) {
-    let isFunction = this._get(this.data, endpoint, false);
-    if (isFunction instanceof Function) {
-      // hack for now
-      // let functionParent = endpoint.split(".").slice(0, -1).join(".");
-      let module = endpoint.split(".")[0];
-      let key = endpoint.split(".")[1];
-      let method = endpoint.split(".")[2];
-      if (module == "pet" || module == "misc") {
-        return this.data[module][key]();
-      }
-      // this._get(functionParent)[isFunction]()
-      // console.log("funkcja", this.data[module][key][method]());
-      return this.data[module][key][method]();
-    }
-    // if (endpoint == "upgrade.SlimeBank.SlimeCoinCap2.level") {
-    //   console.log("jest!");
-    //   console.log(this._get(this.data, "upgrade.SlimeBank.SlimeCoinCap2.level", 0));
-    //   console.log(this.data);
-    // }
-    //secondsToDhms(time)
-    if (precision || type) {
-      return convertTo(base + this._get(this.data, endpoint, 0), precision, type);
-    } else {
-      // console.log("_get", endpoint);
-      return this._get(this.data, endpoint, 0);
+  get(element: HTMLElement & HTMLInputElement) {
+    // console.log(element.dataset);
+
+    const value = this._get(this.data, element.dataset.endpoint, undefined);
+    const endpoint = element.dataset.endpoint;
+    const part = element.dataset.part as "Armor" | "Weapon" | "Jewelry" | "Utility";
+    const prefix = element.dataset.prefix;
+    const suffix = element.dataset.suffix;
+    const type = element.dataset.type;
+    const base = element.dataset.base ?? 0;
+    const precision: any = element.dataset.precision ?? 2;
+    // console.log(`
+    // endpoint: ${endpoint},
+    // value: ${value},
+    // type: ${type}
+    // `);
+    // console.log(endpoint, type, endpointData);
+    switch (type) {
+      case "object":
+        const getCircularReplacer = () => {
+          const seen = new WeakSet();
+          return (key, value) => {
+            if (key == "data") return undefined;
+            if (typeof value === "object" && value !== null) {
+              if (seen.has(value)) {
+                return;
+              }
+              seen.add(value);
+            }
+            return value;
+          };
+        };
+
+        return JSON.stringify(this._get(this.data, endpoint, 0), getCircularReplacer(), 0);
+      case "array":
+        let string = "";
+        this._get(this.data, endpoint, []).forEach((element) => {
+          // console.log(element);
+          string += JSON.stringify(element);
+          string += "\n";
+        });
+        return string;
+
+      case "equipment":
+      // return this.data.calculator.equipment.item(value, part, false);
+      case "equipment-edit":
+      // return this.data.calculator.equipment.item(value, part, true);
+      case "time":
+      case "percent":
+      case "number":
+      case "time-h":
+        // console.log(base + value, precision, type);
+
+        return convertTo(base + value, precision, type);
+      case "image":
+        return prefix + value + suffix;
+      default:
+        // console.log("get default", endpoint);
+
+        return value;
     }
   }
 
-  set(endpoint, value) {
-    // console.log(endpoint, value);
+  set(element: HTMLElement & HTMLInputElement) {
+    // console.log(element.value);
 
-    let controller = endpoint.split(".")[0];
-    let lastElement = endpoint.split(".").slice(-1)[0];
-    if ((controller == "custom" && lastElement == "name") || lastElement == "rarity" || lastElement == "team") {
-      // console.log(lastElement);
-      this._set(this.data, endpoint, value);
-    } else {
-      this._set(this.data, endpoint, convertFrom(value));
+    const endpoint = element.dataset.endpoint;
+    const type = element.dataset.type;
+    let value: any = element.value;
+
+    if (element.type == "checkbox") value = element.checked;
+
+    // console.log(endpoint, type, value, convertFrom(value));
+
+    const controller = endpoint.split(".")[0];
+    // const type = endpoint.split(".").slice(-1)[0];
+
+    switch (element.tagName) {
+      case "SELECT":
+        this._set(this.data, endpoint, convertFrom(value));
+        break;
+
+      default:
+        switch (type) {
+          case "rarity":
+          case "completed":
+          case "name":
+          case "checkbox":
+          case "team":
+            this._set(this.data, endpoint, value);
+            // console.log(endpoint, value);
+            break;
+          case "array":
+          case "number":
+            this._set(this.data, endpoint, convertFrom(value));
+            break;
+          default:
+            this._set(this.data, endpoint, value);
+            break;
+        }
+        break;
     }
 
-    this.data.update(endpoint);
-    // this._set(this.data, endpoint, value);
-
+    // console.log("save");
     // save new value to localStora ge
     this.data.save();
+    this.update();
     // console.log("CalculatorMainframe after data.save()");
     // console.log(this.data.source.monsterPetLevels[81]);
   }
 
-  updateContent() {
-    // this.addTab();
-    // .addEventListener("click", this.event.onTabChange.bind(this));
-
-    const elementType = ["warning", "custom", "data"];
-    // change class savefilewarning to savefileok if there is data in store
-
-    let children: NodeListOf<HTMLElement> = document.querySelectorAll("[data-endpoint]");
-    // console.log(children);
-
-    for (let index = 0; index < children.length; index++) {
-      const element = children[index] as HTMLInputElement;
-      let precision = 0;
-      let type = null;
-      let base = 0;
-
-      if (element.dataset.precision) {
-        precision = parseInt(element.dataset.precision);
-      }
-
-      if (element.dataset.type) {
-        type = element.dataset.type;
-      }
-      if (element.dataset.base) {
-        base = parseInt(element.dataset.base);
-      }
-      //@ts-ignore
-
+  update() {
+    document.querySelectorAll("[data-endpoint]").forEach((element: HTMLElement & HTMLInputElement) => {
+      const value = this.get(element);
       switch (element.tagName) {
         case "INPUT":
-          switch (element.type) {
-            case "checkbox":
-              let value = this.get(element.dataset.endpoint, precision, type);
-              element.checked = value >= element.dataset.test ? true : false;
-              break;
-            case "text":
-              element.value = this.get(element.dataset.endpoint, precision, type, base);
-              break;
-            default:
-              break;
-          }
-
-          break;
         case "SELECT":
-          // console.log("here", element.id);
-
-          let value = this.get(element.dataset.endpoint, precision, type);
-          // console.log(value);
-          // console.log(element.id, element.value, value);
-          //@ts-ignore
-          document.getElementById(element.id).value = value;
-          // element.value = value;
+          element.type == "checkbox" ? (element.checked = value) : (element.value = value);
+          break;
+        case "IMG":
+          element.src = value;
           break;
         default:
-          // console.log("default");
-
-          element.innerHTML = this.get(element.dataset.endpoint, precision, type, base);
+          element.innerHTML = value;
           break;
       }
 
-      //@ts-ignore
-      // console.log(this.data.version);
-
-      //@ts-ignore
-      // console.log(element.dataset.endpoint);
-    }
-
-    // console.log("equ");
-    // console.log(document.getElementById("content").children);
-    //@ts-ignore
-
-    // console.log(event.detail.requestConfig.elt.innerHTML);
+      // if (element.tagName == "IMG") element.src = this.get(element);
+      // if (element.value) element.value = this.get(element);
+      // console.log(element, element.value);
+    });
   }
 
-  highlight() {
-    let pageChildren = document.getElementsByClassName("sidebar")[0].children;
-    // console.log(pageChildren);
+  get html() {
+    return "Welcome Page";
+  }
 
-    for (let index = 0; index < pageChildren.length; index++) {
-      const element = pageChildren[index];
-
-      if (element.textContent.toLowerCase().replace(" ", "") == this.page) {
-        element.classList.add("active");
-      } else {
-        element.classList.contains("active");
-        element.classList.remove("active");
-      }
+  get htmlSettings() {
+    if (!document.getElementById("saveFileloader")) {
+      var script = document.createElement("script");
+      script.src = "SaveFileLoader.bundle.js";
+      script.id = "saveFileloader";
+      document.head.appendChild(script);
     }
-
-    if (document.getElementsByClassName("tablist").length) {
-      // console.log(document.getElementsByClassName("tablist"));
-
-      let children = document.getElementsByClassName("tablist")[0].children;
-      // console.log(children);
-
-      for (let index = 0; index < children.length; index++) {
-        const element = children[index];
-        // console.log(element.textContent.toLowerCase(), this.tab);
-        if (element.textContent.toLowerCase() == this.tab) {
-          element.classList.add("active");
-        } else {
-          element.classList.contains("active");
-          element.classList.remove("active");
-        }
-      }
-    }
+    return /*html*/ ` <h3>Options</h3>
+    <form id="settings">
+      <br>
+      <label for="saveFileImport" class="btn btn-orange">Import Save File</label>
+      <input type="file" id="saveFileImport" accept=".txt" />
+      <label for="customDataImport" class="btn btn-orange">Import Custom Data</label>
+      <input type="file" id="customDataImport" accept=".json" /><br>
+      <br>
+      <button id="data-restart" type="reset" class="btn btn-gray">Hard Reset</button>
+      <button type="button" id="customDataExport" class="btn btn-orange">Export Custom Data</button>
+      <!-- <input type="button" id="settings.saveToFileSource" value="Export Source Data" class="button-orange" /> -->
+      <br>
+    </form>`;
   }
 }

@@ -6,13 +6,15 @@
 body {
   /* font-family: "Noto Sans JP"; */
   font-family: "NotoSansBlack";
-  font-size: 16px;
-  font-weight: 700;
-  font-style: normal;
+  font-size: 14px;
+  /* font-weight: 400; */
+  /* font-style: normal; */
   /* font-weight: bold; */
   /* background-color: #232c37; */
   /* background-image: linear-gradient(#39495e, #232c37); */
   background-image: linear-gradient(#39495e, #232c37);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   margin: 0;
   letter-spacing: 1px;
   /* filter: blur(0.4px); */
@@ -51,8 +53,8 @@ hr {
   margin: 0;
   padding: 0;
   border: 0;
-  background-color: #000;
-  border-bottom: 2px solid #000;
+  background-color: #ffffff;
+  border-bottom: 2px solid #ffffff;
   border-radius: 0;
   background-clip: content-box;
 }
@@ -104,7 +106,7 @@ i {
 
 p {
   color: #eaebed;
-  margin: 3 0 0 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -184,10 +186,10 @@ label {
   grid-gap: 5px;
 }
 
-label::after {
+/* label::after {
   content: "\A";
   white-space: pre;
-}
+} */
 
 ul.tab {
   background-color: #235cbd;
@@ -246,7 +248,7 @@ ul.tab li {
   border-right-color: #235cbd;
 }
 
-body .active {
+body .highlight {
   color: #f2e009;
 }
 
@@ -283,36 +285,139 @@ body .active {
   background-repeat: no-repeat; 
 } */
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 720px;
-  background-color: black;
-  color: #fff;
-  /* text-align: center; */
-  border-radius: 6px;
-  padding: 5px;
-  white-space: pre-wrap;
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
 textarea {
   text-align: left;
   resize: none;
-  height: 250px;
+  background-color: #235cbd;
+  color: #fff;
 }
 
 .link {
   color: #000;
+}
+
+#debug {
+  background-color: #01036e;
+  width: 100%;
+  color: #cccccc;
+  position: fixed;
+  z-index: 100;
+  transition: all 0.5s ease-in-out;
+  padding: 0;
+  margin: 0;
+}
+
+#debug p {
+  margin: 0;
+}
+table.equipment {
+  display: inline-block;
+}
+
+table.equipment td {
+  /* background-color: red; */
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(143, 0, 0);
+  font-size: 11px;
+  line-height: 1em;
+  padding: 0;
+}
+
+table.equipment td:hover {
+  border-color: #01f304;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  /* display: table-cell; */
+  /* border-bottom: 1px dotted black; */
+  padding: 0;
+  margin: 0;
+}
+.tooltip .tooltip-text {
+  position: absolute;
+
+  /* vertically center */
+  top: 50%;
+  transform: translateY(-50%);
+  visibility: hidden;
+  /* move to right */
+  left: 100%;
+  margin-left: 15px; /* and add a small left margin */
+  /* opacity: 0.6; */
+  /* basic styles */
+  width: 700px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #000;
+  color: #fff;
+  text-align: left;
+  z-index: 1;
+  display: none; /* hide by default */
+}
+
+.tooltip .tooltip-text:before {
+}
+
+.tooltip:hover .tooltip-text {
+  display: block;
+  visibility: visible;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.tooltip .tooltip-text td {
+  text-align: left;
+  vertical-align: top;
+  border-style: none;
+  border-width: 1px;
+  border-color: rgb(108, 241, 20);
+}
+.tooltip .tooltip-text table {
+  /* filter: none;
+  opacity: 1;
+  background-color: #01036e;
+  z-index: 12; */
+}
+.tooltip .tooltip-text .equipment-heading {
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+#overlay {
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 100;
+  background-color: #01036e;
+  width: 100%;
+  height: 100%;
+}
+
+#input {
+  color: #000;
+  background-color: #fff;
+  width: 100%;
+  height: 500px;
+}
+
+.amount {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  text-align: right;
+  color: #01f304;
+  -webkit-text-stroke: 0.5px black; /* width and color */
+}
+
+img:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background-image: url(img/equip/EquipLock.png);
 }

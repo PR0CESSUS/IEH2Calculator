@@ -1,54 +1,38 @@
+<!DOCTYPE html>
 <html lang="en">
+<% const package=require('../package.json'); %>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TEST</title>
-    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
-    <!-- <link href="https://fonts.googleapis.com/css?family=Noto Sans JP" rel="stylesheet"> -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link href="./styles-bundle.css" rel="stylesheet">
+    <head>
 
-</head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TEST</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link href="./styles-bundle.css" rel="stylesheet">
 
-<body>
+    </head>
 
-    <div class="wrapper">
-        <div class="header">
-            <h1 id="title">IEH2Calculator <img id="spinner" class="htmx-indicator" src="img/three-dots.svg" />
-                <!-- <button onclick="localStorage.clear(); location.reload()">CLEAR</button> -->
-            </h1>
+    <body>
 
-        </div>
+        <div class="wrapper">
+            <div class="header">
+                <h1 id="title">IEH2Calculator</h1>
+                <div id="settings"> <label for="saveFileImport" class="btn btn-orange">Import Save File</label>
+                    <input type="file" id="saveFileImport" accept=".txt" />
+                    <button id="data-restart" type="reset" class="btn btn-gray">Hard Reset</button>
+                </div>
 
-        <div class="sidebar" hx-target="#content" hx-indicator="#title">
-            <button hx-get="html/data-overview.html" class="menu-button">Data</button>
-            <button hx-get="html/anvil.html" class="menu-button">Anvil</button>
-            <button hx-get="html/equip-warrior.html" class="menu-button">Equip</button>
-            <!-- <button hx-get="html/modal.html" class="menu-button">MODAL</button> -->
-            <button hx-get="html/proficiency.html" class="menu-button">Proficiency</button>
-            <button hx-get="html/test.html" class="menu-button">Test</button>
-            <!-- <button hx-get="html/tab2.html" class="menu-button">Tab2</button> -->
-            <button hx-get="html/slimebank.html" class="menu-button">Slime Bank</button>
-            <button hx-get="html/guild.html" class="menu-button">Guild</button>
+            </div>
 
-            <button hx-get="html/expedition-teams.html" class="menu-button">Expedition</button>
-            <button hx-get="html/settings.html" class="menu-button">Settings</button>
+            <div class="sidebar" id="menu"></div>
+            <div id="content"></div>
 
-            <!-- <button id="changelog" class="menu-button">Changelog</button> -->
-            <hr />
-        </div>
-
-        <div id="content" hx-get="html/data-overview.html" hx-trigger="load"></div>
-        <!-- <div id="content" hx-get="html/tab1.html" hx-trigger="load"></div> -->
-        <% const package=require('../package.json'); %>
             <div id="footer" class="footer">version: <span id="version">
                     <%= package.version %>
-
-
                 </span> | <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a></div>
-    </div>
-</body>
+        </div>
+
+    </body>
 
 
 

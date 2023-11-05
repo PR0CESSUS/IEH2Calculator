@@ -1,6 +1,6 @@
 {
   "name": "ieh2calculator",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Calculator for Incremental Epic Hero 2",
   "main": "./src/main.ts",
   "scripts": {
@@ -43,9 +43,11 @@
     "mocha": "^10.2.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "nodemon": "^3.0.1",
+    "pdfreader": "^3.0.2",
     "sinon": "^15.2.0",
     "ts-loader": "^9.4.4",
     "ts-node": "^10.9.1",
+    "tsx": "^3.13.0",
     "typescript": "^5.2.2",
     "typescript-lit-html-plugin": "^0.9.0",
     "webpack": "^5.88.2",

@@ -2,13 +2,14 @@
   "compilerOptions": {
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-    "target": "ES2021",
+    "target": "ES2022",
     "module": "NodeNext",
     "outDir": "./dist",
     "moduleResolution": "NodeNext",
     "sourceMap": true
   },
   // "include": ["src/**/*.ts"],
-  "include": ["src/*.ts"],
-  "exclude": ["dist", "node_modules", "**/*.spec.ts", "main.js"]
+  "include": ["src/*.ts", "src/ts/Page.ts"],
+  "exclude": ["dist", "node_modules", "**/*.spec.ts", "main.js"],
+  "files": ["global.d.ts"]
 }

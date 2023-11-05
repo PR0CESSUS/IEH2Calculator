@@ -4,22 +4,22 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
-const fs = require("fs");
+// const fs = require("fs");
 
-const dirCont = fs.readdirSync(path.resolve(__dirname, "src/html"));
-const files = dirCont.filter((elm) => elm.match(/.*\.(ejs?)/gi));
+// const dirCont = fs.readdirSync(path.resolve(__dirname, "src/html"));
+// const files = dirCont.filter((elm) => elm.match(/.*\.(ejs?)/gi));
 
 // console.log(files);
 
-let htmlPageNames = ["equip-warrior", "equip-wizard", "tab2"];
-let multipleHtmlPlugins = files.map((name) => {
-  name = name.slice(0, -4);
-  // console.log(name);
-  return new HtmlWebpackPlugin({
-    template: `./src/html/${name}.ejs`, // relative path to the HTML files
-    filename: `html/${name}.html`, // output HTML files
-  });
-});
+// let htmlPageNames = ["equip-warrior", "equip-wizard", "tab2"];
+// let multipleHtmlPlugins = files.map((name) => {
+//   name = name.slice(0, -4);
+//   // console.log(name);
+//   return new HtmlWebpackPlugin({
+//     template: `./src/html/${name}.ejs`, // relative path to the HTML files
+//     filename: `html/${name}.html`, // output HTML files
+//   });
+// });
 
 module.exports = (env) => {
   const config = {
@@ -57,7 +57,6 @@ module.exports = (env) => {
     },
     entry: {
       main: path.resolve(__dirname, "src/main.ts"),
-      saveFileLoader: path.resolve(__dirname, "src/ts/SaveFileLoader.ts"),
       styles: [
         path.resolve(__dirname, "./src/css/default.css"),
         path.resolve(__dirname, "./src/css/buttons.css"),
@@ -85,14 +84,7 @@ module.exports = (env) => {
         patterns: [
           {
             from: path.resolve(__dirname, "src/img"),
-            to({ context, absoluteFilename }) {
-              return "img/[name][ext]";
-            },
-          },
-          {
-            from: "*.html",
-            to: path.resolve(__dirname, "dist/html"),
-            context: path.resolve(__dirname, "src/html"),
+            to: "img",
           },
           {
             from: path.resolve(__dirname, "src/favicon.ico"),
@@ -116,7 +108,7 @@ module.exports = (env) => {
       new NodePolyfillPlugin({
         includeAliases: ["Buffer", "stream", "crypto"],
       }),
-    ].concat(multipleHtmlPlugins),
+    ],
 
     resolve: {
       extensions: [".js", ".ts"],

@@ -1,57 +1,89 @@
 .lab-catalyst-icon {
-    border-style: solid;
-    border-width: 2px;
-    height: 64px;
+  border-style: solid;
+  border-width: 2px;
+  height: 64px;
 }
 
 .icon {
-    /* position: relative; */
-    width: 24px;
-    height: 24px; 
-    padding: 0;
-    padding-bottom: 0px;
-    margin: 0;
-    vertical-align: middle;
+  /* position: relative; */
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
 }
 
 .icon2 {
-    position: relative;
-    left: 0px;
-    width: 32px;
-    height: 32px; 
-    padding: 0;
-    padding-bottom: 0px;
-    margin: 0;
-    vertical-align: middle;
-    border-style: dashed;
-    border-width: 0px;
+  position: relative;
+  left: 0px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
+  border-style: dashed;
+  border-width: 0px;
 }
 
+.icon48 {
+  position: relative;
+  left: 0px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
+  border-style: dashed;
+  border-width: 0px;
+}
+
+.found {
+  border-style: solid;
+  border-width: 1px;
+  border-color: red;
+}
+
+.icon96 {
+  position: relative;
+  left: 0px;
+  width: 96px;
+  height: 96px;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: #c2a500;
+  border-right-color: #c2a500;
+}
 .icon-box {
-    /* padding-top: 5px; */
-    width: 22px;
-    height: 21px; 
-    border-style: outset;
-    border-width: 1px;
-    border-color: #383a3b;
-    border-top-color: #6b6b6b;      
-    border-top-width: 2px;       
-    background-image: linear-gradient(#555555, #494949);
+  /* padding-top: 5px; */
+  width: 22px;
+  height: 21px;
+  border-style: outset;
+  border-width: 1px;
+  border-color: #383a3b;
+  border-top-color: #6b6b6b;
+  border-top-width: 2px;
+  background-image: linear-gradient(#555555, #494949);
 }
 
 .icon-research {
-    margin: 0;
-    padding: 0px;
-    vertical-align: middle;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #2b2b2b;
-    border-top-color: #757575;
-    background-color: #01f304;
-    /* position: relative; */
-    width: 24px;
-    height: 24px;
-    padding-bottom: 3px;
-    background-image: linear-gradient(#383a3b, #2a2d2f);
-
+  margin: 0;
+  padding: 0px;
+  vertical-align: middle;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #2b2b2b;
+  border-top-color: #757575;
+  background-color: #01f304;
+  /* position: relative; */
+  width: 24px;
+  height: 24px;
+  padding-bottom: 3px;
+  background-image: linear-gradient(#383a3b, #2a2d2f);
 }

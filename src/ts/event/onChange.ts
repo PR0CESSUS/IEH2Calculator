@@ -1,43 +1,27 @@
-export function onChange(event: Event & { target: HTMLInputElement | HTMLSelectElement; srcElement: HTMLInputElement }) {
-  if (event.target.tagName == "INPUT" && event.target.type == "text") {
-    // console.log(this);
+import { SaveFileDencrypt } from "../SaveFileDencrypt";
 
-    this.set(event.target.dataset.endpoint, event.target.value);
-    this.updateContent();
-  }
-  if (event.target.tagName == "INPUT" && event.target.type == "file") {
-    // console.log("change form input file");
-    //@ts-ignore
-    // console.log(event.target.files);
-    //@ts-ignore
-    // console.log(event.target.files[0]);
-  }
-  if (event.target.tagName == "INPUT" && event.target.type == "checkbox") {
-    // console.log(this);
+export function onChange(event: Event & { target: HTMLInputElement }) {
+  if (event.target.dataset.endpoint) this.set(event.target);
 
-    // console.log("checkbox change", event.target.checked);
-    //@ts-ignore
-    if (event.target.checked) {
-      // console.log("checked");
-      this.set(event.target.dataset.endpoint, event.target.dataset.test);
-    } else {
-      // console.log("unckecked");
-      this.set(event.target.dataset.endpoint, 0);
-    }
-
-    this.updateContent();
-  }
-
-  if (event.target.tagName == "SELECT") {
-    // console.log(event.target.dataset);
-    // if (event.target.id == "proficiency-rarity") {
-    //   console.log("mamy to", event.target.dataset.endpoint, event.target.value);
-    // }
-    // console.log(event.target.dataset.endpoint, event.target.value);
-    this.set(event.target.dataset.endpoint, event.target.value);
-    this.updateContent();
-  }
-
-  if (event.target.id == "settings.loadFromFile") this.event.uploadCustomData(event);
+  if (event.target.id == "customDataImport") this.event.customDataImport(event);
   // console.log(event);
+
+  if (event.target.id == "find") {
+    this.data.test.find = event.target.value;
+    localStorage.setItem("find", JSON.stringify(event.target.value));
+    // console.log(this.data.test.find);
+  }
+
+  if (event.target.id == "saveFileImport") {
+    if (!event.target.files) return;
+
+    const filereader = new FileReader();
+    filereader.readAsText(event.target.files[0]);
+    filereader.onloadend = () => {
+      this.data.source = new SaveFileDencrypt(filereader.result as string).data;
+      this.data.save();
+      window.alert("Save File loaded!");
+      location.reload();
+    };
+  }
 }

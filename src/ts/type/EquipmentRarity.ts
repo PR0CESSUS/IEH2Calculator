@@ -1,3 +1,7 @@
-export const equipmentRarity = ["Common", "Uncommon", "Rare", "SuperRare", "Epic"] as const;
-
-export type EquipmentRarity = (typeof equipmentRarity)[number];
+export enum EquipmentRarity {
+  Common,
+  Uncommon,
+  Rare,
+  SuperRare,
+  Epic,
+}

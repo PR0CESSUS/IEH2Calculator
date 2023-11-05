@@ -135,7 +135,6 @@ export class SaveFileDencrypt {
       // "OptionEffect", // enchantments values may be useful
       "equipmentOptionNums",
       "equipmentProficiency",
-      "equipmentIsMaxed", // maxed equipment
       "equipmentIsAuto",
       "areaIsUnlockedOnce",
       "isVer01",
@@ -161,7 +160,6 @@ export class SaveFileDencrypt {
       "isGot",
       "CloudSave",
       "GotServerTime",
-      "inAppPurchased",
       "epicCoin",
       "favorite",
       "buildingResearchExps",
@@ -171,20 +169,12 @@ export class SaveFileDencrypt {
     ];
     // delete this.data.
     for (const [key, value] of Object.entries(this.data)) {
-      // for (let index = 0; index < monsterColor.length; index++) {
-      //   const element = monsterColor[index];
-      //   let name = key +
       for (let index = 0; index < cleanList.length; index++) {
         if (key.includes(cleanList[index])) {
           delete this.data[key];
           // console.log(key);
         }
       }
-      // }
-      // if (key.includes("accomplished")) {
-      //   // delete this.data[key];
-      //   console.log(key);
-      // }
     }
     delete this.data.expeditionCompletedNums;
     delete this.data.expeditionMovedDistance;
@@ -229,11 +219,10 @@ export class SaveFileDencrypt {
     delete this.data.survivalNumQuestTitle;
     delete this.data.initMovedDistanceQuestTitle;
     delete this.data.multibuyId;
-    delete this.data.epicStorePurchasedNum;
     delete this.data.totalEquipmentGained;
     delete this.data.potionQueues;
     delete this.data.potionIsSuperQueues;
-    delete this.data.isClearedChallenge;
+    // delete this.data.isClearedChallenge;
     delete this.data.isClearedQuestsDaily;
     delete this.data.upgradeQueueExpGain;
     delete this.data.isEnchantFilter;
@@ -279,13 +268,19 @@ export class SaveFileDencrypt {
     delete this.data.lastTimeLocal;
     delete this.data.birthDate;
     delete this.data.monsterPetIsActives;
-    delete this.data.expeditionKinds;
     delete this.data.buildingRanks;
     delete this.data.dictionaryUpgradePoint;
     delete this.data.guildAbilityPoint;
     delete this.data.alchemyPoint;
     delete this.data.mysteriousWaterProgress;
-
+    delete this.data.isInitialized;
+    delete this.data.abilityPoints;
+    delete this.data.ascensionNum;
+    delete this.data.abilityPoints;
+    delete this.data.enchantId;
+    delete this.data.enchantKinds;
+    delete this.data.expeditionExps; // maby for upgrading simulator
+    delete this.data.inAppPurchasedNum_ver01011401;
     // delete this.data.expedition;
     // console.log("clean data size: " + byteSize(JSON.stringify(this.data)));
     // writeFileSync("D:/test/test/test.json", JSON.stringify(this.data, null, 2));

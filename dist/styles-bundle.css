@@ -6,13 +6,15 @@
 body {
   /* font-family: "Noto Sans JP"; */
   font-family: "NotoSansBlack";
-  font-size: 16px;
-  font-weight: 700;
-  font-style: normal;
+  font-size: 14px;
+  /* font-weight: 400; */
+  /* font-style: normal; */
   /* font-weight: bold; */
   /* background-color: #232c37; */
   /* background-image: linear-gradient(#39495e, #232c37); */
   background-image: linear-gradient(#39495e, #232c37);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   margin: 0;
   letter-spacing: 1px;
   /* filter: blur(0.4px); */
@@ -51,8 +53,8 @@ hr {
   margin: 0;
   padding: 0;
   border: 0;
-  background-color: #000;
-  border-bottom: 2px solid #000;
+  background-color: #ffffff;
+  border-bottom: 2px solid #ffffff;
   border-radius: 0;
   background-clip: content-box;
 }
@@ -104,7 +106,7 @@ i {
 
 p {
   color: #eaebed;
-  margin: 3 0 0 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -184,10 +186,10 @@ label {
   grid-gap: 5px;
 }
 
-label::after {
+/* label::after {
   content: "\A";
   white-space: pre;
-}
+} */
 
 ul.tab {
   background-color: #235cbd;
@@ -246,7 +248,7 @@ ul.tab li {
   border-right-color: #235cbd;
 }
 
-body .active {
+body .highlight {
   color: #f2e009;
 }
 
@@ -283,103 +285,197 @@ body .active {
   background-repeat: no-repeat; 
 } */
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 720px;
-  background-color: black;
-  color: #fff;
-  /* text-align: center; */
-  border-radius: 6px;
-  padding: 5px;
-  white-space: pre-wrap;
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
 textarea {
   text-align: left;
   resize: none;
-  height: 250px;
+  background-color: #235cbd;
+  color: #fff;
 }
 
 .link {
   color: #000;
 }
 
+#debug {
+  background-color: #01036e;
+  width: 100%;
+  color: #cccccc;
+  position: fixed;
+  z-index: 100;
+  transition: all 0.5s ease-in-out;
+  padding: 0;
+  margin: 0;
+}
+
+#debug p {
+  margin: 0;
+}
+table.equipment {
+  display: inline-block;
+}
+
+table.equipment td {
+  /* background-color: red; */
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(143, 0, 0);
+  font-size: 11px;
+  line-height: 1em;
+  padding: 0;
+}
+
+table.equipment td:hover {
+  border-color: #01f304;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  /* display: table-cell; */
+  /* border-bottom: 1px dotted black; */
+  padding: 0;
+  margin: 0;
+}
+.tooltip .tooltip-text {
+  position: absolute;
+
+  /* vertically center */
+  top: 50%;
+  transform: translateY(-50%);
+  visibility: hidden;
+  /* move to right */
+  left: 100%;
+  margin-left: 15px; /* and add a small left margin */
+  /* opacity: 0.6; */
+  /* basic styles */
+  width: 700px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #000;
+  color: #fff;
+  text-align: left;
+  z-index: 1;
+  display: none; /* hide by default */
+}
+
+.tooltip .tooltip-text:before {
+}
+
+.tooltip:hover .tooltip-text {
+  display: block;
+  visibility: visible;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.tooltip .tooltip-text td {
+  text-align: left;
+  vertical-align: top;
+  border-style: none;
+  border-width: 1px;
+  border-color: rgb(108, 241, 20);
+}
+.tooltip .tooltip-text table {
+  /* filter: none;
+  opacity: 1;
+  background-color: #01036e;
+  z-index: 12; */
+}
+.tooltip .tooltip-text .equipment-heading {
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+#overlay {
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 100;
+  background-color: #01036e;
+  width: 100%;
+  height: 100%;
+}
+
+#input {
+  color: #000;
+  background-color: #fff;
+  width: 100%;
+  height: 500px;
+}
+
+.amount {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  text-align: right;
+  color: #01f304;
+  -webkit-text-stroke: 0.5px black; /* width and color */
+}
+
+img:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background-image: url(img/equip/EquipLock.png);
+}
+
 .btn {
-    font-family: 'Noto Sans JP';
-    font-size: 15px;
-    font-weight: 500;
-    font-style: normal;
-    color:aliceblue;
-    padding: 5px;
-    border-style: solid;
-    border-style: outset;
-    border-width: 3px;
-    filter: blur(0.3px);
-    -webkit-filter: blur(0.3px);
-    margin-left: 2px; 
-    padding: 2px 15px 5px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  color: aliceblue;
+  border-style: outset;
+  border-width: 3px;
+  -webkit-filter: blur(0.3px);
+  filter: blur(0.3px);
+  margin-left: 2px;
+  padding: 2px 15px 5px 15px;
 }
 
-.btn:hover { 
-    box-shadow: inset 0 0 0 1000px rgba(255,255,255,.1);  
+.btn-gray {
+  background-image: linear-gradient(#656565, #4a4a4a);
+  background-color: #1a2c4d;
+  border-top-color: #939393;
+  border-bottom-color: #3f3f3f;
+  border-left-color: #474747;
+  border-right-color: #4e4e4e;
+}
+.btn:hover {
+  box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.1);
 }
 
-.button-grey {
-    background-image: linear-gradient(#656565, #4a4a4a);
-    background-color: #1a2c4d;
-    border-top-color: #939393;
-    border-bottom-color: #3f3f3f;
-    border-left-color:  #474747;
-    border-right-color: #4e4e4e;
-}
-
-.button-orange {
-    font-family: 'Noto Sans JP';
-    font-size: 15px;
-    font-weight: 500;
-    font-style: normal;
-    color:aliceblue;
-    padding: 5px;
-    border-style: solid;
-    background-image: linear-gradient(#b45514, #884110);
-    margin-left: 2px; 
-    padding: 2px 15px 5px 15px;
-    background-color: #1a2c4d;
-    border-style: outset;
-    border-width: 3px;
-    border-top-color: #dc8540;
-    border-bottom-color: #693816;
-    border-left-color:  #873e0c;
-    border-right-color: #98460f;
-    filter: blur(0.3px);
-    -webkit-filter: blur(0.3px);
+.btn-orange {
+  background-image: linear-gradient(#b45514, #884110);
+  background-color: #1a2c4d;
+  border-top-color: #dc8540;
+  border-bottom-color: #693816;
+  border-left-color: #873e0c;
+  border-right-color: #98460f;
 }
 
 .btn-blue {
-    background-image: linear-gradient(#2b487f, #203860);
-    background-color: #2b487f;
-    border-top-color: #5476ae;
-    border-bottom-color: #202f4e;
-    border-left-color:  #1b3763;
-    border-right-color: #223e6a; 
+  background-image: linear-gradient(#2b487f, #203860);
+  background-color: #2b487f;
+  border-top-color: #5476ae;
+  border-bottom-color: #202f4e;
+  border-left-color: #1b3763;
+  border-right-color: #223e6a;
 }
 
 .green {
-    color: #01f304;
+  color: #01f304;
 }
+
+.orange {
+  color: orange;
+}
+
+.red {
+  color: red;
+}
+
 /***** MODAL DIALOG ****/
 #modal {
   /* Underlay covers entire screen. */
@@ -420,7 +516,7 @@ textarea {
 
   /* Sizing for visible dialog */
   width: 80%;
-  max-width: 600px;
+  max-width: 75%;
 
   /* Display properties for visible dialog*/
   border: solid 1px #999;
@@ -504,63 +600,105 @@ textarea {
   padding: 5px;
 }
 
+#title {
+  display: inline-block;
+}
+
+#settings {
+  float: right;
+  padding-top: 15px;
+}
+
 .lab-catalyst-icon {
-    border-style: solid;
-    border-width: 2px;
-    height: 64px;
+  border-style: solid;
+  border-width: 2px;
+  height: 64px;
 }
 
 .icon {
-    /* position: relative; */
-    width: 24px;
-    height: 24px; 
-    padding: 0;
-    padding-bottom: 0px;
-    margin: 0;
-    vertical-align: middle;
+  /* position: relative; */
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
 }
 
 .icon2 {
-    position: relative;
-    left: 0px;
-    width: 32px;
-    height: 32px; 
-    padding: 0;
-    padding-bottom: 0px;
-    margin: 0;
-    vertical-align: middle;
-    border-style: dashed;
-    border-width: 0px;
+  position: relative;
+  left: 0px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
+  border-style: dashed;
+  border-width: 0px;
 }
 
+.icon48 {
+  position: relative;
+  left: 0px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
+  border-style: dashed;
+  border-width: 0px;
+}
+
+.found {
+  border-style: solid;
+  border-width: 1px;
+  border-color: red;
+}
+
+.icon96 {
+  position: relative;
+  left: 0px;
+  width: 96px;
+  height: 96px;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: #c2a500;
+  border-right-color: #c2a500;
+}
 .icon-box {
-    /* padding-top: 5px; */
-    width: 22px;
-    height: 21px; 
-    border-style: outset;
-    border-width: 1px;
-    border-color: #383a3b;
-    border-top-color: #6b6b6b;      
-    border-top-width: 2px;       
-    background-image: linear-gradient(#555555, #494949);
+  /* padding-top: 5px; */
+  width: 22px;
+  height: 21px;
+  border-style: outset;
+  border-width: 1px;
+  border-color: #383a3b;
+  border-top-color: #6b6b6b;
+  border-top-width: 2px;
+  background-image: linear-gradient(#555555, #494949);
 }
 
 .icon-research {
-    margin: 0;
-    padding: 0px;
-    vertical-align: middle;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #2b2b2b;
-    border-top-color: #757575;
-    background-color: #01f304;
-    /* position: relative; */
-    width: 24px;
-    height: 24px;
-    padding-bottom: 3px;
-    background-image: linear-gradient(#383a3b, #2a2d2f);
-
+  margin: 0;
+  padding: 0px;
+  vertical-align: middle;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #2b2b2b;
+  border-top-color: #757575;
+  background-color: #01f304;
+  /* position: relative; */
+  width: 24px;
+  height: 24px;
+  padding-bottom: 3px;
+  background-image: linear-gradient(#383a3b, #2a2d2f);
 }
+
 input {
   font-size: 14px;
   font-family: "NotoSansBlack";
@@ -678,7 +816,7 @@ select {
   -moz-appearance: none; /* Removes Default Firefox style*/
   appearance: none;
   background: #797a79 url(img/selectarrow.png) no-repeat 95% center;
-  width: auto; /*Width of select dropdown to give space for arrow image*/
+  width: auto;
   text-indent: 0.01px;
   text-overflow: "";
   color: #fff;
@@ -687,9 +825,10 @@ select {
   font-weight: 500;
   letter-spacing: 1.4px;
   font-style: normal;
-  padding: 2 15 3 10;
+  padding-left: 5px;
   /* text-align: center; */
-  margin: 0;
+  margin: 5;
+  height: 30px;
   /* box-shadow: inset 0 0 5px rgba(000,000,000, 0.5); */
   border-style: outset;
   border-width: 2px;
