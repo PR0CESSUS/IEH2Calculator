@@ -73,10 +73,26 @@ export class DataDefault implements SourceKind {
   potionKinds: number[];
   potionStackNums: number[];
   potionLevels: number[];
-  expeditionKinds?: number[];
+  expeditionKinds: number[];
+  abilityPointsAgility: number[];
+  abilityPointsIntelligence: number[];
+  abilityPointsLuck: number[];
+  abilityPointsStrength: number[];
+  abilityPointsVitality: number[];
+  abilityPoints: number[];
+  heroLevel: number[];
+  isReceivedRewardsChallenge: boolean[];
 
   sdGemLevels: number[];
   constructor() {
+    this.isReceivedRewardsChallenge = Array(1080).fill(false);
+    this.heroLevel = Array(6).fill(0);
+    this.abilityPoints = Array(6).fill(0);
+    this.abilityPointsVitality = Array(6).fill(0);
+    this.abilityPointsStrength = Array(6).fill(0);
+    this.abilityPointsLuck = Array(6).fill(0);
+    this.abilityPointsIntelligence = Array(6).fill(0);
+    this.abilityPointsAgility = Array(6).fill(0);
     this.expeditionKinds = Array(100).fill(0);
     this.sdGemLevels = Array(15).fill(0);
     this.potionLevels = Array(70).fill(0);

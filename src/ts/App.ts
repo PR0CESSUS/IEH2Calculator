@@ -1,39 +1,65 @@
 import { DATA } from "./Data";
 import { Events } from "./Events";
 import { set, get } from "lodash";
-import { convertTo } from "./util/convertTo";
-import { convertFrom } from "./util/convertFrom";
+import { convertTo } from "./Util/convertTo";
+import { convertFrom } from "./Util/convertFrom";
 import { Router } from "./Router";
-import { CalculatorExpedition } from "./page/expedition";
-import { Test } from "./page/test";
+import { CalculatorExpedition } from "./page/Expedition";
+import { Test } from "./page/Test";
+import { Equipment } from "./page/Equipment";
+import { RubyShard } from "./page/RubyShard";
+import { Page } from "./page/Page";
+import component from "./component";
 
 export class App {
   data: DATA;
   event: Events;
   router: Router;
-  page = [];
+  page = {};
 
   _set = set;
   _get = get;
 
   constructor() {
+    globalThis.app = this;
     this.router = new Router(this);
-
     this.event = new Events(this);
-    // this.router.register("", this.html);
-
     this.data = new DATA(this);
-    this.page = [new CalculatorExpedition(this), new Test(this)];
+    // this.page.push(new CalculatorExpedition(this));
+    // this.page.push(new Test(this));
+    // this.page.push(new Equipment(this));
+    this.addPage(new CalculatorExpedition(this));
+    this.addPage(new Test(this));
+    this.addPage(new Equipment(this));
+    this.addPage(new RubyShard(this));
+
     // this.page = [];
     this.router.initialization();
-
+    component();
+    // this.Save();
     // console.log(this);
+  }
+
+  Save() {
+    this.data.save();
+    console.log();
+    Object.keys(this.page).forEach((page) => {
+      this.page[page].Save();
+      // console.log(this.page[page]);
+    });
+    // this.page.save()
+  }
+
+  addPage(page: Page) {
+    this.page[page.url.slice(1)] = page;
   }
 
   get(element: HTMLElement & HTMLInputElement) {
     // console.log(element.dataset);
 
-    const value = this._get(this.data, element.dataset.endpoint, undefined);
+    const value = this._get(this, element.dataset.endpoint, undefined);
+    // console.log(value);
+
     const endpoint = element.dataset.endpoint;
     const part = element.dataset.part as "Armor" | "Weapon" | "Jewelry" | "Utility";
     const prefix = element.dataset.prefix;
@@ -142,6 +168,7 @@ export class App {
   }
 
   update() {
+    return;
     document.querySelectorAll("[data-endpoint]").forEach((element: HTMLElement & HTMLInputElement) => {
       const value = this.get(element);
       switch (element.tagName) {

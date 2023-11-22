@@ -1,13 +1,12 @@
-import { App } from "../App";
+import { App } from "../../App";
 import { Page } from "../Page";
-import { ExpeditionKind } from "../type/ExpeditionKind";
-import { convertTo } from "../util/convertTo";
-import { secondsToDhms } from "../util/secondsToDhms";
+import { ExpeditionKind } from "../../type/ExpeditionKind";
+import { convertTo } from "../../Util/convertTo";
+import { secondsToDhms } from "../../Util/secondsToDhms";
 
 export class CalculatorExpedition extends Page {
   minExpeditiontTimeSeconds = 900;
   times = [0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 24.0, 48.0, 72.0, 120.0, 240.0, 480.0, 960.0, 1920.0, 3840.0];
-  speed = 12;
   teams = Array(20).fill(0);
 
   constructor(app: App) {
@@ -18,7 +17,7 @@ export class CalculatorExpedition extends Page {
     // console.log(app.data.source.expeditionPetColors);
     // console.log(app.data.source.expeditionLevels);
     // console.log(app.data.source.expeditionKinds);
-    this.minExpeditiontTimeSeconds = 900 - app.data.source.sdGemLevels[7] * 2;
+    this.minExpeditiontTimeSeconds = this.app.data.expedition.lowerLimitTime.value;
     // console.log(this.minExpeditiontTimeSeconds);
     let i = 0;
     for (let index = 0; index < app.data.source.expeditionPetIsSet.length; index++) {
@@ -88,15 +87,24 @@ export class CalculatorExpedition extends Page {
   }
 
   getReward(timeHour) {
-    return Math.max(0.55478474, Math.pow(timeHour, 0.85 + this.app.data.source.sdGemLevels[8] * 0.001));
+    return Math.max(0.55478474, Math.pow(timeHour, this.app.data.expedition.rewardModifierPerHour.value));
   }
 
   get html() {
     let html = `
-    <p>Hackmanite lv ${this.app.data.source.sdGemLevels[7]}: effect: -${secondsToDhms(this.app.data.source.sdGemLevels[7] * 2)}</p>
-    <p>Turquoise lv ${this.app.data.source.sdGemLevels[8]}: effect: ${0.85 + this.app.data.source.sdGemLevels[8] * 0.001}</p>
+    <p>Hackmanite: <user-input data-endpoint="data.source.sdGemLevels[7]"></user-input> effect: -${secondsToDhms(
+      900 - this.app.data.expedition.lowerLimitTime.value
+    )}</p>
+    <p>Turquoise lv <user-input data-endpoint="data.source.sdGemLevels[8]"></user-input> effect: ${
+      this.app.data.expedition.rewardModifierPerHour.value
+    }</p>
     <p>Expedition Speed Multiplier: ${convertTo(this.app.data.expedition.speedMultiplier.Value(), 2, "%")}</p>
+    <p>Hackmanite: <user-input data-endpoint="data.source.sdGemLevels[7]"></user-input> effect: -${
+      this.app.data.expedition.lowerLimitTime.value
+    }</p>
     
+    
+  
     <table>
     <th>
     <tr>

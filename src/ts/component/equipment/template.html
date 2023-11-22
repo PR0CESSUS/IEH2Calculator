@@ -1,0 +1,56 @@
+<template id="equipment-info">
+  <style>
+    @import "/styles-bundle.css";
+  </style>
+  <div class="tooltip">
+    <img class="icon48">
+
+
+    <div class="tooltip-text">
+      <div class="content">
+        <table>
+          <tr>
+            <td><img class="icon96 icon-border"></td>
+            <td style="vertical-align: top;">
+              <select name="kind" style="width: 350px;" disabled="true">
+                <option value="0">Nothing</option>
+              </select> &lt; <span class="green" name="level"></span> &gt;<br><br>
+              <p name="stack"></p>
+            </td>
+          </tr>
+        </table>
+        <p name="effect"></p>
+        <p style="text-decoration: underline;">Information</p>
+        <p>-Type : <span name="part">${equipment.part}</span></p>
+        <p>-Rarity : <span name="rarity">${equipment.rarity}</span></p>
+        <p>-Unique : <span name="setKind">${equipment.setKind}</span></p>
+        <br>
+        <p style="text-decoration: underline;">Effect</p>
+        <div name="effects">list</div>
+        <div name="optionEffects"></div>
+
+
+        <br>
+        <p style="text-decoration: underline;">Forged Effect</p>
+        <div name="forgeEffects"></div>
+        <br>
+        <p style="text-decoration: underline;">Proficiency</p>
+        <p>-Warrior &lt; <span class="green" name="proficiency-level-Warrior">Lv ${level}</span> &gt;: <span
+            class="green" name="proficiency-effect-Warrior">[${effect}]</span>
+        <p>-Wizard &lt; <span class="green" name="proficiency-level-Wizard">Lv ${level}</span> &gt;: <span class="green"
+            name="proficiency-effect-Wizard">[${effect}]</span>
+        <p>-Angel &lt; <span class="green" name="proficiency-level-Angel">Lv ${level}</span> &gt;: <span class="green"
+            name="proficiency-effect-Angel">[${effect}]</span>
+        <p>-Thief &lt; <span class="green" name="proficiency-level-Thief">Lv ${level}</span> &gt;: <span class="green"
+            name="proficiency-effect-Thief">[${effect}]</span>
+        <p>-Archer &lt; <span class="green" name="proficiency-level-Archer">Lv ${level}</span> &gt;: <span class="green"
+            name="proficiency-effect-Archer">[${effect}]</span>
+        <p>-Tamer &lt; <span class="green" name="proficiency-level-Tamer">Lv ${level}</span> &gt;: <span class="green"
+            name="proficiency-effect-Tamer">[${effect}]</span>
+      </div>
+    </div>
+
+  </div>
+
+
+</template>

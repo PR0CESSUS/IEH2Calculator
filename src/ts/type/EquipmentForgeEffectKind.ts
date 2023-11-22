@@ -5,4 +5,5 @@ export enum EquipmentForgeEffectKind {
   IncreaseEffect,
   PurifyCurseEffect,
   IncreaseEffectIncrement,
+  EqLevel,
 }

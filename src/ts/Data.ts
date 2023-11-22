@@ -20,61 +20,87 @@ import { DataSkill } from "./data/Skill";
 import { DataGuild } from "./data/Guild";
 import { DataAscension } from "./data/WorldAscension";
 import { DataMission } from "./data/Mission";
+import { SuperDungeonGlobalController } from "./data/SuperDungeon";
+import { DataNitro } from "./data/Nitro";
+import { Enums } from "./Enums";
+import { BATTLE_CONTROLLER } from "./data/Battle";
+import { HeroKind } from "./type/HeroKind";
 
 export class DATA {
+  currentHero: HeroKind = 0;
   source: SourceKind;
-  custom: any;
   ascension: DataAscension;
   skill = new DataSkill();
-  potion = new DataPotion();
+  potion: DataPotion;
   alchemy = new DataAlchemy();
-  expedition = new DataExpedition();
-  town;
-  stats = new DataStats();
+  expedition: DataExpedition;
+  town: DataTown;
+  stats: DataStats;
   area = new DataArea();
-  battle;
+  battles: BATTLE_CONTROLLER[] = Array(Enums.HeroKind);
+  superStats;
   guild = new DataGuild();
-  monster = new DataMonster();
+  monster: DataMonster;
   resource = new DataResource();
-  equipment = new DataEquipment();
+  equipment: DataEquipment;
   craft = new DataCraft();
-  inventory = new DataInventory();
-  challenge = new DataChallenge();
+  inventory: DataInventory;
+  challenge: DataChallenge;
   shop = new DataShop();
   rebirth = new DataRebirth();
   blessingInfo = new DataBlessingInfo();
   mission: DataMission;
+  sdg: SuperDungeonGlobalController;
+  nitro: DataNitro;
+  app: App;
   constructor(app: App) {
+    this.app = app;
     this.load();
-    globalThis.data = this;
-    globalThis.app = app;
+    this.potion = new DataPotion();
+    this.challenge = new DataChallenge();
     this.town = new DataTown();
     this.ascension = new DataAscension();
     this.mission = new DataMission();
-    this.save();
+    this.stats = new DataStats();
+    this.expedition = new DataExpedition();
+    this.inventory = new DataInventory();
+    this.equipment = new DataEquipment();
+    this.monster = new DataMonster();
+    this.sdg = new SuperDungeonGlobalController();
+    this.nitro = new DataNitro();
 
-    // console.log(this.source);
-    // console.log(defaultData);
+    for (let index = 0; index < this.battles.length; index++) {
+      this.battles[index] = new BATTLE_CONTROLLER(index);
+    }
+
+    // console.log(globalThis.data.challenge.permanentRewardMultiplier);
     this.Start();
+    // console.log(globalThis.data.source.abilityPoints);
+    // console.log(globalThis.data.source.superDungeonMaxFloorsReached);
+    // console.log(globalThis.data.source.maxModifierCleareds);
+  }
+
+  get battle() {
+    return this.battles[this.currentHero];
   }
 
   Start() {
+    this.challenge.Start();
     this.expedition.Start();
     this.town.Start();
     this.potion.Start();
     this.ascension.Start();
     this.mission.Start();
+    this.inventory.Start();
+    this.monster.Start();
+    this.sdg.Start();
   }
 
   load() {
-    if (localStorage.getItem("CustomData") && localStorage.getItem("CustomData") != "undefined") {
-      this.custom = JSON.parse(localStorage.getItem("CustomData"));
-    } else {
-      this.custom = {};
-    }
     if (localStorage.getItem("SaveFileData") && localStorage.getItem("SaveFileData") != "undefined") {
       this.source = { ...new DataDefault(), ...JSON.parse(localStorage.getItem("SaveFileData")) };
       globalThis.data = this;
+      this.save();
     } else {
       this.source = new DataDefault();
     }
@@ -82,7 +108,6 @@ export class DATA {
 
   save() {
     localStorage.setItem("SaveFileData", JSON.stringify(this.source));
-    localStorage.setItem("CustomData", JSON.stringify(this.custom));
   }
 
   get menu() {

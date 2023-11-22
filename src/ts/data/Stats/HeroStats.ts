@@ -9,6 +9,7 @@ import { Debuff } from "../../type/Debuff";
 import { AbilityKind } from "../../type/AbilityKind";
 import { Enums, Enum } from "../../Enums";
 import { Parameter } from "../../Parameter";
+import { HeroAbility } from "./HeroAbility";
 
 export class HeroStats {
   basicStats: Multiplier[] = Array(Enums.BasicStatsKind);
@@ -42,13 +43,24 @@ export class HeroStats {
   heroKind: HeroKind;
   level;
   exp;
-  abilities = Array[Enum.GetNames(typeof AbilityKind).Length];
+  abilities = Array(Enums.AbilityKind);
+  abilityPointLeft;
 
   constructor(kind: HeroKind) {
     this.heroKind = kind;
-    // console.log(this.stats);
+    this.level = globalThis.data.source.heroLevel[this.heroKind];
+    // console.log(this.level, globalThis.data.source.heroLevel);
 
+    this.abilityPointLeft = this.AbilityPointLeft(this.heroKind);
+    // console.log(this.stats);
+    for (let kind1 = 0; kind1 < this.abilities.length; kind1++) this.abilities[kind1] = new HeroAbility(kind, kind1, this.abilityPointLeft);
     this.SetStats();
+  }
+
+  AbilityPointLeft(heroKind) {
+    // console.log(globalThis.data);
+
+    return globalThis.data.source.abilityPoints[heroKind];
   }
 
   Ability(kind: AbilityKind) {

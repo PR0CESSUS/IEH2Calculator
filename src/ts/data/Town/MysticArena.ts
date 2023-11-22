@@ -12,6 +12,8 @@ export class MysticArena extends BUILDING {
   }
 
   SetResearch() {
+    // console.log(globalThis.data.challenge);
+
     globalThis.data.inventory.equipInventoryUnlockedNum.RegisterMultiplier(new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Add, () => this.ResearchLevel(ResourceKind.Stone)));
     globalThis.data.challenge.permanentRewardMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Crystal) * 0.025));
     globalThis.data.alchemy.alchemyPointGainMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Leaf) * 0.025));

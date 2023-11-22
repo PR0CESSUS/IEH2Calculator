@@ -65,7 +65,9 @@ export class DataArea {
   //     for (let index = 0; index < this.areas[areaKind].length; index++) num += this.areas[areaKind][index].TotalClearedMissionNum(thisAscension);
   //     return num;
   //   }
-
+  SetEffectDungeonClearCount(info: MultiplierInfo) {
+    for (let index = 0; index < this.dungeonClearCountBonusClass.length; index++) this.dungeonClearCountBonusClass[index].RegisterMultiplier(info);
+  }
   TotalClearedMissionNum() {
     return globalThis.data.source.isClearedMission.filter(Boolean).length;
   }

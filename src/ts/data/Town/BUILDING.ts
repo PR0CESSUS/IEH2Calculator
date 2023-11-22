@@ -1,4 +1,5 @@
 import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { ResourceKind } from "../../type/ResourceKind";
 
 export class BUILDING {
   townCtrl;
@@ -10,11 +11,12 @@ export class BUILDING {
   passiveEffectList;
   passiveRankEffectList;
   levelBonus: Multiplier;
-  researchLevels: any[] = [globalThis.data.source.buildingResearchLevelsStone, globalThis.data.source.buildingResearchLevelsCrystal, globalThis.data.source.buildingResearchLevelsLeaf];
+  researchLevels: any[];
   researchExps: any[] = [];
 
   constructor() {
     this.townCtrl = globalThis.data.town;
+    this.researchLevels = [globalThis.data.source.buildingResearchLevelsStone, globalThis.data.source.buildingResearchLevelsCrystal, globalThis.data.source.buildingResearchLevelsLeaf];
     this.levelBonus = new Multiplier();
     this.SetEffect();
     this.SetResearch();
@@ -38,9 +40,9 @@ export class BUILDING {
 
   SetResearch() {}
 
-  ResearchLevel(kind) {
-    console.log(kind);
+  ResearchLevel(kind: ResourceKind) {
+    // console.log(this.researchLevels[kind]);
 
-    return this.researchLevels[kind].value;
+    return this.researchLevels[kind][this.kind];
   }
 }

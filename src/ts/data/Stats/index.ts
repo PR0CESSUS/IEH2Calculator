@@ -14,9 +14,9 @@ import { HeroStats } from "./HeroStats";
 
 export class DataStats {
   heroLevelIncrementLimit: Multiplier;
-  globalStats: Multiplier[] = Array(Enum.GetNames(typeof GlobalStats).length);
+  globalStats: Multiplier[] = Array(Enums.GlobalStats);
   globalSkillSlotNum: Multiplier;
-  heroes: HeroStats[] = Array(Enum.GetNames(typeof HeroKind).length);
+  heroes: HeroStats[] = Array(Enums.HeroKind);
 
   constructor() {
     for (let kind = 0; kind < this.heroes.length; kind++) this.heroes[kind] = new HeroStats(kind);
@@ -202,9 +202,9 @@ export class DataStats {
   //   return num;
   // }
 
-  // Level(heroKind: HeroKind) {
-  //   return this.heroes[heroKind].Level()
-  //   }
+  Level(heroKind: HeroKind) {
+    return this.heroes[heroKind].Level();
+  }
 
   //  HeroLevel(heroKind: HeroKind) => this.heroes[heroKind].level;
 

@@ -39,7 +39,7 @@ export class DataTown {
     );
 
   maxResearchNum: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-  researchEffectMultipliers: Multiplier[] = Array(3);
+  researchEffectMultipliers: Multiplier[] = [new Multiplier(), new Multiplier(), new Multiplier()];
 
   constructor() {
     // globalThis.data.stat.townCtrl = this;

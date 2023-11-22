@@ -36,6 +36,7 @@ export class SaveFileDencrypt {
       "equipment4thForgeValues",
       "equipment5thForgeValues",
       "equipment6thForgeValues",
+      "equipment7thForgeValues",
       "equipment1stOptionEffectKinds",
       "equipment2ndOptionEffectKinds",
       "equipment3rdOptionEffectKinds",
@@ -149,7 +150,6 @@ export class SaveFileDencrypt {
       "movedDistance",
       "MovedDistance",
       "persistent",
-      "isReceived",
       "areaIsReceived",
       "current",
       "purchasedNum",
@@ -192,7 +192,6 @@ export class SaveFileDencrypt {
     delete this.data.isFirstWelcomed;
     delete this.data.isToggleOn;
     delete this.data.combatRangeId;
-    delete this.data.heroLevel;
     delete this.data.heroExp;
     delete this.data.maxHeroLevelReached;
     delete this.data.currentHero;
@@ -274,9 +273,7 @@ export class SaveFileDencrypt {
     delete this.data.alchemyPoint;
     delete this.data.mysteriousWaterProgress;
     delete this.data.isInitialized;
-    delete this.data.abilityPoints;
     delete this.data.ascensionNum;
-    delete this.data.abilityPoints;
     delete this.data.enchantId;
     delete this.data.enchantKinds;
     delete this.data.expeditionExps; // maby for upgrading simulator

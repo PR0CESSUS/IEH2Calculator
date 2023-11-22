@@ -2,39 +2,73 @@ import { Multiplier, MultiplierInfo } from "../../Multiplier";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { EquipmentKind } from "../../type/EquipmentKind";
+import { EquipmentSetKind } from "../../type/EquipmentSetKind";
 import { HeroKind } from "../../type/HeroKind";
 import { Enums } from "../../Enums";
+import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
+import { EquipmentParameter } from "./EquipmentParameter";
 
 export class DataEquipment {
-  globalInformations = [];
-  setItemArray = [];
-  dictionaryUpgradeEffectMultiplier: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+  globalInformations: EquipmentGlobalInformation[] = Array(Enums.EquipmentKind);
+  setItemArray: EquipmentKind[][] = Array(Enums.EquipmentSetKind);
+  dictionaryUpgradeEffectMultiplier: Multiplier;
   equipments = [];
-  dictionaryUpgradeMaxLevel: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 50.0));
+  activeEquipments = Array(Enums.HeroKind);
+  dictionaryUpgradeMaxLevel: Multiplier;
   dictionaryPointLeft;
   dictionaryUpgrades = [];
-  artifactChance: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.01));
-  sdEnchantChance: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-  loadoutUnlockedNum: Multiplier = new Multiplier();
-  effectMultiplier: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-  effectMultiplierModifierForArtifact: Multiplier = new Multiplier();
-  forgeEffectCapAdderEQEffect: Multiplier = new Multiplier();
-  forgeEffectCapAdderEffectIncrement: Multiplier = new Multiplier();
-  forgeEffectCapAdderEQLevel: Multiplier = new Multiplier();
+  artifactChance: Multiplier;
+  sdEnchantChance: Multiplier;
+  loadoutUnlockedNum: Multiplier;
+  effectMultiplier: Multiplier;
+  effectMultiplierModifierForArtifact: Multiplier;
+  forgeEffectCapAdderEQEffect: Multiplier;
+  forgeEffectCapAdderEffectIncrement: Multiplier;
+  forgeEffectCapAdderEQLevel: Multiplier;
   maxLevels: Multiplier[] = Array(Enums.HeroKind);
-  disassembleMultiplier: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-  autoDisassembleAvailableNum: Multiplier = new Multiplier();
+  disassembleMultiplier: Multiplier;
+  autoDisassembleAvailableNum: Multiplier;
   dictionaryEquipmentArray: EquipmentKind[];
 
   constructor() {
-    for (let kind = 0; kind < this.globalInformations.length; kind++)
-      // this.globalInformations[kind] = new EquipmentGlobalInformation((EquipmentKind) kind);
+    for (let kind = 0; kind < this.globalInformations.length; kind++) this.globalInformations[kind] = new EquipmentGlobalInformation(kind);
+    this.autoDisassembleAvailableNum = new Multiplier();
+    this.forgeEffectCapAdderEQLevel = new Multiplier();
+    this.forgeEffectCapAdderEffectIncrement = new Multiplier();
+    this.forgeEffectCapAdderEQEffect = new Multiplier();
+    this.loadoutUnlockedNum = new Multiplier();
+    this.dictionaryUpgradeEffectMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.dictionaryUpgradeMaxLevel = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 50.0));
+    this.effectMultiplierModifierForArtifact = new Multiplier();
+    this.effectMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.disassembleMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.artifactChance = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.01));
+    this.sdEnchantChance = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    for (let index = 0; index < this.maxLevels.length; index++)
+      this.maxLevels[index] = new Multiplier(
+        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => EquipmentParameter.maxLevelForEachHero)
+      );
+    for (let index = 0; index < Enums.EquipmentSetKind; index++) {
+      this.setItemArray[index] = this.SetItemList(index);
+    }
+  }
 
-      this.artifactChance;
-    this.sdEnchantChance;
+  SetItemList(kind: EquipmentSetKind) {
+    let equipmentKindList: EquipmentKind[] = [];
+    for (let index = 0; index < this.globalInformations.length; index++) {
+      if (this.globalInformations[index].setKind == kind) equipmentKindList.push(this.globalInformations[index].kind);
+    }
+    return equipmentKindList;
   }
 
   Start() {
     // for (let index = 0; index < this.equipments.length; index++) this.equipments[index].Start();
+  }
+  EffectMultiplier(heroKind: HeroKind) {
+    return this.effectMultiplier.Value();
+  }
+
+  ArtifactEffectMultiplier(heroKind: HeroKind) {
+    return 1.0 + (this.EffectMultiplier(heroKind) - 1.0) * this.effectMultiplierModifierForArtifact.Value();
   }
 }

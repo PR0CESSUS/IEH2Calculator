@@ -31,7 +31,7 @@ export class Router {
     if (location.hash) {
       document.querySelectorAll("[data-url]").forEach((element) => element.classList.remove("highlight"));
       document.querySelectorAll(`[data-url="${location.hash}"]`).forEach((element) => element.classList.add("highlight"));
-      if (location.hash.includes("-")) document.querySelector(`[data-url="${location.hash.split("-")[0]}"]`).classList.add("highlight");
+      // if (location.hash.includes("-")) document.querySelector(`[data-url="${location.hash.split("-")[0]}"]`).classList.add("highlight");
     }
   }
 
@@ -47,8 +47,10 @@ export class Router {
   load(url: string = location.hash) {
     // console.log(url);
     history.pushState("", "", url);
+
     let html = `Welcome Page`;
     let name = ``;
+    if (url != "") this.app.page[url.slice(1)].Load();
     this.routes.forEach((route) => {
       if (route.url() == location.hash) {
         html = route.html();

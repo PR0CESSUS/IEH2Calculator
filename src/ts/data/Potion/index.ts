@@ -72,6 +72,7 @@ import { PotionKind } from "../../type/PotionKind";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { Potion } from "./Potion";
 
 export class DataPotion {
   potions: any[] = [
@@ -174,7 +175,7 @@ export class DataPotion {
     this.availableQueue = new Multiplier();
   }
 
-  GlobalInfo(potionKind) {
+  GlobalInfo(potionKind): Potion {
     for (let index = 0; index < this.globalInformations.length; index++) {
       if (this.globalInformations[index].kind == potionKind) return this.globalInformations[index];
     }
@@ -208,7 +209,16 @@ export class DataPotion {
       </tr>
     </thead>`;
 
-    const noPercent = ["EnchantedAlembic", "SlimeBadge", "MagicslimeBadge", "SpiderBadge", "BatBadge", "FairyBadge", "FoxBadge", "MinorHealthPotion"];
+    const noPercent = [
+      "EnchantedAlembic",
+      "SlimeBadge",
+      "MagicslimeBadge",
+      "SpiderBadge",
+      "BatBadge",
+      "FairyBadge",
+      "FoxBadge",
+      "MinorHealthPotion",
+    ];
     for (let index = 0; index < Object.entries(PotionKind).length / 2; index++) {
       const potion = PotionKind[index];
       html += `<tr>`;

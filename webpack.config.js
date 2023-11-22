@@ -66,6 +66,7 @@ module.exports = (env) => {
         path.resolve(__dirname, "./src/css/icons.css"),
         path.resolve(__dirname, "./src/css/input.css"),
         path.resolve(__dirname, "./src/css/heading.css"),
+        path.resolve(__dirname, "./src/css/tooltip.css"),
       ],
     },
     output: {
@@ -112,6 +113,7 @@ module.exports = (env) => {
 
     resolve: {
       extensions: [".js", ".ts"],
+      roots: [path.resolve(__dirname, "dist")],
     },
     module: {
       rules: [
@@ -140,6 +142,18 @@ module.exports = (env) => {
               },
             },
           ],
+        },
+        {
+          test: /\.html$/,
+          exclude: /node_modules/,
+          use: { loader: "html-loader" },
+        },
+        {
+          test: /\.(jpe?g|png|gif)$/,
+          type: "asset/resource",
+          // generator: {
+          //   filename: 'img/[hash][ext]'
+          // }
         },
         // {
         //   test: /\.ejs$/i,

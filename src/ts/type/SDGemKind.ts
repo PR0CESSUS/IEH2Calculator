@@ -1,0 +1,17 @@
+export enum SDGemKind {
+  Sunstone,
+  Morganite,
+  Tanzanite,
+  Heliodor,
+  Peridot,
+  Obsidian,
+  Amber,
+  Hackmanite,
+  Turquoise,
+  Kunzite,
+  Carnelian,
+  BlueTourmaline,
+  Diamond,
+  Almandine,
+  Emerald,
+}

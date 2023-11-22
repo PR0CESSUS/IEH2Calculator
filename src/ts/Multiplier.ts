@@ -1,41 +1,77 @@
 import { MultiplierKind } from "./type/MultiplierKind";
 import { MultiplierType } from "./type/MultiplierType";
-import { convertTo } from "./util/convertTo";
+import { convertTo } from "./Util/convertTo";
 
 export class Multiplier {
-  isDirty: boolean;
+  isDirty: boolean = true;
   modifiers: MultiplierInfo[] = [];
   additiveKind: { [key in keyof typeof MultiplierKind]: number } = {} as any;
   multiplicativeKind: { [key in keyof typeof MultiplierKind]: number } = {} as any;
   additive = 0;
   multiplicative = 1;
-  maxValue: Function | null;
-  minValue: Function | null;
-  constructor(multiplier: MultiplierInfo = new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0), maxValue: Function = null, minValue: Function = null) {
+  maxValue: Function;
+  minValue: Function;
+  constructor(
+    multiplier: MultiplierInfo = new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
+    maxValue: Function = () => {
+      return null;
+    },
+    minValue: Function = () => {
+      return null;
+    }
+  ) {
     // Func<double> maxValue = null, Func<double> minValue = null
+    this.maxValue = maxValue;
+    this.minValue = minValue;
 
     this.RegisterMultiplier(multiplier);
   }
 
   get value() {
-    if (this.isDirty) this.calculate();
-    return this.additive * this.multiplicative;
+    this.isDirty = true;
+    return this.Value();
   }
+
   Value() {
-    if (this.isDirty) this.calculate();
-    return this.additive * this.multiplicative;
+    if (this.isDirty) this.Calculate();
+    // console.log(this);
+
+    // console.log(this.maxValue());
+    if (this.maxValue() != null) {
+      return Math.min(this.maxValue(), this.additive * this.multiplicative);
+    } else {
+      return this.additive * this.multiplicative;
+    }
   }
 
   RegisterMultiplier(modifier: MultiplierInfo) {
+    modifier.index = this.modifiers.length;
     this.modifiers.push(modifier);
+    this.isDirty = true;
+    return () => this.UnregisterMultplier(modifier.index);
+  }
+
+  UnregisterMultplier(index) {
+    if (index) console.log(`Multiplier # removing index ${index} `);
+    if (index > -1) this.modifiers.splice(index, 1);
     this.isDirty = true;
   }
 
-  calculate() {
+  After() {
+    console.log("after multiplier");
+    return 0;
+  }
+
+  Calculate() {
+    if (this.isDirty == false) return;
     this.additiveKind = {} as any;
     this.multiplicativeKind = {} as any;
     for (let index = 0; index < this.modifiers.length; index++) {
       const modifier = this.modifiers[index];
+      if (modifier.kind == 24) {
+        // console.log(modifier.value);
+      }
+      if (modifier.trigger() == false) continue;
       // if (modifier.kind == 10) console.log(modifier.value());
 
       switch (modifier.type) {
@@ -63,7 +99,7 @@ export class Multiplier {
   }
 
   get html() {
-    if (this.isDirty) this.calculate();
+    if (this.isDirty) this.Calculate();
     let str = "";
     str += /*html*/ `<table>`;
     str += /*html*/ `<tr><td class="equipment-heading">Additive:</td> <td></td></tr>`;
@@ -88,13 +124,20 @@ export class MultiplierInfo {
   kind: MultiplierKind;
   type: MultiplierType;
   value: Function;
-  constructor(kind: MultiplierKind, type: MultiplierType, value: Function) {
+  trigger: Function;
+  index: number;
+  constructor(kind: MultiplierKind, type: MultiplierType, value: Function, trigger: Function = () => true) {
     this.kind = kind;
     this.type = type;
     this.value = value;
+    this.trigger = trigger;
   }
 
   get Value() {
     return this.value();
+  }
+
+  get info() {
+    return `kind: ${MultiplierKind[this.kind]}, type: ${MultiplierType[this.type]}, trigger: ${this.trigger()}, value: ${this.Value}`;
   }
 }

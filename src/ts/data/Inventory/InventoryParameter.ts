@@ -8,7 +8,7 @@ export const InventoryParameter = {
   equipmentLoadoutSlotNumPerHero: 720,
   equipInventorySlotId: 4840,
   equipSlotsPerHero: 72,
-  allEquipmentSlotId: 29472,
+  allEquipmentSlotId: 5272,
   enchantSlotId: 130,
   potionSlotId: 260,
   equipPotionSlotId: 6,
