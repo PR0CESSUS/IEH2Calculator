@@ -31,7 +31,7 @@ export default class equipmentInfo extends HTMLElement {
     this.attachShadow({ mode: "open" }).appendChild(
       (document.getElementById("equipment-info") as HTMLTemplateElement).content.cloneNode(true)
     );
-    (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `/img/equip/${this.slotKind[this.data.kind]}.png`;
+    (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${this.slotKind[this.data.kind]}.png`;
     this.shadowRoot.querySelector(".icon48").addEventListener("click", this.openEdit.bind(this));
     this.shadowRoot.querySelector(".icon48").addEventListener("mouseover", this.initialRender.bind(this), { once: true });
     this.shadowRoot.querySelector('[name="kind"]').addEventListener("change", this.changeKind.bind(this));
@@ -105,8 +105,8 @@ export default class equipmentInfo extends HTMLElement {
 
   render(edit: boolean = false) {
     if (edit == false && this.data.kind == 0) return;
-    (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `/img/equip/${this.slotKind[this.data.kind]}.png`;
-    (this.shadowRoot.querySelector(".icon96") as HTMLImageElement).src = `/img/equip/${this.slotKind[this.data.kind]}.png`;
+    (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${this.slotKind[this.data.kind]}.png`;
+    (this.shadowRoot.querySelector(".icon96") as HTMLImageElement).src = `./img/equip/${this.slotKind[this.data.kind]}.png`;
 
     const kind = this.shadowRoot.querySelector('[name="kind"]') as HTMLSelectElement;
     const level = this.shadowRoot.querySelector('[name="level"]');
