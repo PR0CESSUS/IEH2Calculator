@@ -25,6 +25,7 @@ import { DataNitro } from "./data/Nitro";
 import { Enums } from "./Enums";
 import { BATTLE_CONTROLLER } from "./data/Battle";
 import { HeroKind } from "./type/HeroKind";
+import { SuperStatsController } from "./data/SuperStats";
 
 export class DATA {
   currentHero: HeroKind = 0;
@@ -38,7 +39,7 @@ export class DATA {
   stats: DataStats;
   area = new DataArea();
   battles: BATTLE_CONTROLLER[] = Array(Enums.HeroKind);
-  superStats;
+  superStats: SuperStatsController;
   guild = new DataGuild();
   monster: DataMonster;
   resource = new DataResource();
@@ -68,10 +69,13 @@ export class DATA {
     this.monster = new DataMonster();
     this.sdg = new SuperDungeonGlobalController();
     this.nitro = new DataNitro();
+    this.superStats = new SuperStatsController();
 
     for (let index = 0; index < this.battles.length; index++) {
       this.battles[index] = new BATTLE_CONTROLLER(index);
     }
+
+    // console.log(this.source.superAbilityPointsAgility);
 
     // console.log(globalThis.data.challenge.permanentRewardMultiplier);
     this.Start();
@@ -94,16 +98,19 @@ export class DATA {
     this.inventory.Start();
     this.monster.Start();
     this.sdg.Start();
+    this.superStats.Start();
   }
 
   load() {
     if (localStorage.getItem("SaveFileData") && localStorage.getItem("SaveFileData") != "undefined") {
       this.source = { ...new DataDefault(), ...JSON.parse(localStorage.getItem("SaveFileData")) };
-      globalThis.data = this;
+
       this.save();
     } else {
       this.source = new DataDefault();
     }
+
+    globalThis.data = this;
   }
 
   save() {

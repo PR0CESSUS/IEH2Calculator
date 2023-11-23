@@ -1,51 +1,62 @@
 import { App } from "../App";
 
 export class Page {
-  app: App;
   name: string = "";
   url: string = "";
-  custom: any;
-  constructor(app: App) {
-    this.app = app;
-    app.router.register(
+  logic: any;
+  constructor(url: string = "", name: string = "", logic) {
+    this.url = url;
+    this.name = name;
+    this.logic = logic;
+    this.logic.endpoint = `page['${this.url.slice(1)}'].logic`;
+    // console.log(this.logic);
+    this.Load();
+
+    globalThis.app.router.register(
       () => this.url,
       () => this.name,
       () => this.html
     );
-    // this.Load();
   }
 
   get html() {
-    return "Missing html";
+    return this.logic.html;
   }
 
   Load() {
-    let data = localStorage.getItem("CustomData");
+    let data = localStorage.getItem(`CustomData-${this.url.slice(1)}`);
+    // console.log(data, `CustomData-${this.url.slice(1)}`);
 
-    // console.log(data);
-
-    if (data && data != "undefined") {
-      data = JSON.parse(localStorage.getItem("CustomData"));
-      this.custom = data[this.url.slice(1)];
+    if (data == null && this.logic.custom != undefined) {
+      localStorage.setItem(`CustomData-${this.url.slice(1)}`, JSON.stringify(this.logic.custom));
     } else {
-      this.Initialization();
+      this.logic.custom = JSON.parse(data);
     }
-  }
-
-  Initialization() {
-    this.custom = {};
+    // this.Initialization();
+    // // console.log(data);
+    // if (data && data != "undefined") {
+    //   data = JSON.parse(localStorage.getItem("CustomData"));
+    //   this.custom = { ...this.custom, ...data[this.url.slice(1)] };
+    // } else {
+    // }
   }
 
   Save() {
-    let data = localStorage.getItem("CustomData");
-
-    if (data == null) localStorage.setItem("CustomData", JSON.stringify({}));
-
-    data = JSON.parse(data);
-    data[this.url.slice(1)] = this.custom;
-    localStorage.setItem("CustomData", JSON.stringify(data));
+    if (this.logic.custom != undefined) localStorage.setItem(`CustomData-${this.url.slice(1)}`, JSON.stringify(this.logic.custom));
+    // let data = localStorage.getItem("CustomData");
+    // if (data == null) {
+    //   let custom = {
+    //     [this.url.slice(1)]: this.custom,
+    //   };
+    //   console.log(custom);
+    //   localStorage.setItem("CustomData", JSON.stringify(custom));
+    // }
+    // data = JSON.parse(data);
+    // if (data[this.url.slice(1)] == undefined || data[this.url.slice(1)] == "undefined" || data[this.url.slice(1)] == null)
+    //   data[this.url.slice(1)] = {};
+    // data[this.url.slice(1)] = this.custom;
+    // localStorage.setItem("CustomData", JSON.stringify(data));
     // console.log("asd", data[this.url.slice(1)]);
-
     //
   }
 }

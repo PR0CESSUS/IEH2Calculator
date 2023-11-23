@@ -73,7 +73,7 @@ export class EquipmentSet {
   }
 
   get html() {
-    const endpoint = `globalThis.app.page['equipment'].set.${this.hero}.items`;
+    const endpoint = `page['equipment'].logic.set.${this.hero}.items`;
     let html = ``;
 
     // weapons
@@ -89,7 +89,7 @@ export class EquipmentSet {
 
         const equipment = this.items[part][index];
         // console.log(index, equipment);
-        html += `<td><equipment-info data-endpoint="page['equipment'].set.${this.hero}.items.${part}[${index}]"  data-slot="${part}"></equipment-info></td>`;
+        html += `<td><equipment-info data-endpoint="${endpoint}.${part}[${index}]"  data-slot="${part}"></equipment-info></td>`;
 
         if (index % 4 == 3) html += "</tr>";
       }
@@ -100,7 +100,7 @@ export class EquipmentSet {
     html += `<table class="equipment"><thead><tr><th style="font-size: 13px;">Utility</th></tr></thead><tbody>`;
     for (let index = 0; index < this.items.Utility.length; index++) {
       if (index % 2 == 0) html += `<tr style="height: 8px;"></tr>`;
-      html += `<tr><td><equipment-info data-endpoint="page['equipment'].set.${this.hero}.items.Utility[${index}]" data-slot="Utility"></equipment-info>`;
+      html += `<tr><td><equipment-info data-endpoint="${endpoint}.Utility[${index}]" data-slot="Utility"></equipment-info>`;
     }
 
     html += `</td></tr>`;

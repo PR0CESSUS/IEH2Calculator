@@ -5,7 +5,7 @@ import { HeroKind } from "../../type/HeroKind";
 import { EquipmentPart } from "../../type/EquipmentPart";
 import { Util } from "../../Util";
 
-export class Equipment extends Page {
+export class Equipment {
   set: {
     Custom: EquipmentSet;
     Warrior: EquipmentSet;
@@ -15,12 +15,7 @@ export class Equipment extends Page {
     Archer: EquipmentSet;
     Tamer: EquipmentSet;
   };
-  constructor(app: App) {
-    super(app);
-    this.url = "#equipment";
-    this.name = "Equipment";
-    if (this.custom == undefined) this.custom = { test: "hello" };
-
+  constructor() {
     this.set = {
       Custom: new EquipmentSet("Custom"),
       Warrior: new EquipmentSet("Warrior"),

@@ -4,15 +4,15 @@ import { ExpeditionKind } from "../../type/ExpeditionKind";
 import { convertTo } from "../../Util/convertTo";
 import { secondsToDhms } from "../../Util/secondsToDhms";
 
-export class CalculatorExpedition extends Page {
+export class CalculatorExpedition {
+  app;
   minExpeditiontTimeSeconds = 900;
   times = [0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 24.0, 48.0, 72.0, 120.0, 240.0, 480.0, 960.0, 1920.0, 3840.0];
   teams = Array(20).fill(0);
 
-  constructor(app: App) {
-    super(app);
-    this.name = "Expedition";
-    this.url = "#expedition";
+  constructor() {
+    this.app = globalThis.app;
+
     // console.log(app.data.source.expeditionPetIsSet);
     // console.log(app.data.source.expeditionPetColors);
     // console.log(app.data.source.expeditionLevels);

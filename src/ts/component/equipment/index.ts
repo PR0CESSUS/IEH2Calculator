@@ -23,7 +23,9 @@ export default class equipmentInfo extends HTMLElement {
 
   constructor() {
     super();
-    this.data = get(globalThis.app, this.dataset.endpoint, null);
+    this.data = get(globalThis.app, this.dataset.endpoint, 0);
+    // console.log(this.data);
+
     this.slotType = this.dataset.slot;
 
     this.attachShadow({ mode: "open" }).appendChild(

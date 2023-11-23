@@ -2,21 +2,18 @@ import { App } from "../../App";
 import { Util } from "../../Util";
 import { Page } from "../Page";
 
-export class RubyShard extends Page {
-  constructor(app: App) {
-    super(app);
-
-    this.url = "#ruby-shard";
-    this.name = "Ruby Shard";
-  }
+export class RubyShard {
+  endpoint = "";
+  custom = {
+    shard: 0,
+    ticket: 0,
+    reset: 0,
+    failure: 0,
+  };
+  constructor() {}
 
   Initialization(): void {
-    this.custom = {
-      shard: 0,
-      ticket: 0,
-      reset: 0,
-      failure: 0,
-    };
+    this.custom;
   }
 
   runsNum() {
@@ -38,10 +35,10 @@ export class RubyShard extends Page {
 
   get html() {
     let html = ``;
-    html += `Shard per Dungeon : <user-input data-endpoint="page['ruby-shard'].custom.shard"></user-input><br>`;
-    html += `Failure Rate % : <user-input data-endpoint="page['ruby-shard'].custom.failure"></user-input><br>`;
-    html += `Tickets : <user-input data-endpoint="page['ruby-shard'].custom.ticket"></user-input><br>`;
-    html += `Reset Value : <user-input data-endpoint="page['ruby-shard'].custom.reset"></user-input><br>`;
+    html += `Shard per Dungeon : <user-input data-endpoint="${this.endpoint}.custom.shard"></user-input><br>`;
+    html += `Failure Rate % : <user-input data-endpoint="${this.endpoint}.custom.failure"></user-input><br>`;
+    html += `Tickets : <user-input data-endpoint="${this.endpoint}.custom.ticket"></user-input><br>`;
+    html += `Reset Value : <user-input data-endpoint="${this.endpoint}.custom.reset"></user-input><br>`;
     html += `Runs Cost ${this.costPerTicket() * this.custom.ticket}<br>`;
     html += `Runs ${this.runsNum() * 5 * this.custom.ticket}<br>`;
     let shard = this.runsNum() * 5 * this.custom.ticket * this.custom.shard;

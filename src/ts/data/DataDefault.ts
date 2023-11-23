@@ -83,6 +83,8 @@ export class DataDefault implements SourceKind {
   heroLevel: number[];
   isReceivedRewardsChallenge: boolean[];
 
+  //ascensionMilestoneLevelReached
+
   sdGemLevels: number[];
   constructor() {
     this.isReceivedRewardsChallenge = Array(1080).fill(false);

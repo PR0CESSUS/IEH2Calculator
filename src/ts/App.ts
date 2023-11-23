@@ -28,10 +28,10 @@ export class App {
     // this.page.push(new CalculatorExpedition(this));
     // this.page.push(new Test(this));
     // this.page.push(new Equipment(this));
-    this.addPage(new CalculatorExpedition(this));
-    this.addPage(new Test(this));
-    this.addPage(new Equipment(this));
-    this.addPage(new RubyShard(this));
+    this.addPage(new Page("#expedition", "Expedition", new CalculatorExpedition()));
+    this.addPage(new Page("#test", "Test", new Test()));
+    this.addPage(new Page("#equipment", "Equipment", new Equipment()));
+    this.addPage(new Page("#ruby-shard", "Ruby Shard", new RubyShard()));
 
     // this.page = [];
     this.router.initialization();
@@ -42,9 +42,12 @@ export class App {
 
   Save() {
     this.data.save();
-    console.log();
+    // console.log();
+    let custom = {};
     Object.keys(this.page).forEach((page) => {
       this.page[page].Save();
+      // console.log(page);
+
       // console.log(this.page[page]);
     });
     // this.page.save()

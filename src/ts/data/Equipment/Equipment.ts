@@ -297,13 +297,13 @@ export class Equipment {
       : this.requiredLevel;
   }
 
-  IsEnoughLevel(heroKind: HeroKind, isGrade) {
-    return isGrade
-      ? this.RequiredLevel(false, true) <= 0 ||
-          globalThis.data.superStats.Hero(heroKind).GradeForEquipment() >= this.RequiredLevel(false, true)
-      : this.RequiredLevel(false, false) <= 0 ||
-          globalThis.data.stats.LevelForEquipment(heroKind).Value() >= this.RequiredLevel(false, false);
-  }
+  // IsEnoughLevel(heroKind: HeroKind, isGrade) {
+  //   return isGrade
+  //     ? this.RequiredLevel(false, true) <= 0 ||
+  //         globalThis.data.superStats.Hero(heroKind).GradeForEquipment() >= this.RequiredLevel(false, true)
+  //     : this.RequiredLevel(false, false) <= 0 ||
+  //         globalThis.data.stats.LevelForEquipment(heroKind).Value() >= this.RequiredLevel(false, false);
+  // }
 
   isSetItem() {
     return this.globalInfo.setKind != 0;

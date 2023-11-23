@@ -50,7 +50,7 @@ export class Router {
 
     let html = `Welcome Page`;
     let name = ``;
-    if (url != "") this.app.page[url.slice(1)].Load();
+    // if (url != "") this.app.page[url.slice(1)].Load();
     this.routes.forEach((route) => {
       if (route.url() == location.hash) {
         html = route.html();
