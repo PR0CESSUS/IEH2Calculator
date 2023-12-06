@@ -1,6 +1,7 @@
 .tooltip {
   position: relative;
   display: inline-block;
+
   /* display: table-cell; */
   /* border-bottom: 1px dotted black; */
   padding: 0;
@@ -62,4 +63,8 @@
   border-bottom-style: solid;
   border-bottom-color: #fff;
   border-bottom-width: 1px;
+}
+
+.TEST {
+  /* border-radius: 2px; */
 }

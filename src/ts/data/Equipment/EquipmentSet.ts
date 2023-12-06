@@ -21,93 +21,58 @@ import { InventoryParameter } from "../Inventory/InventoryParameter";
 import { Equipment } from "./Equipment";
 import { EquipmentPotion } from "./EquipmentPotion";
 
+export type EquipmentSetData = {
+  Weapon: Equipment[];
+  Armor: Equipment[];
+  Jewelry: Equipment[];
+  Utility: EquipmentPotion[];
+};
+
 export class EquipmentSet {
-  items: {
-    Weapon: Equipment[];
-    Armor: Equipment[];
-    Jewelry: Equipment[];
-    Utility: EquipmentPotion[];
-  } = {
+  items: EquipmentSetData = {
     Weapon: Array(24),
     Armor: Array(24),
     Jewelry: Array(24),
     Utility: Array(6),
   };
-  hero;
+  itemsList = Array(72);
+  heroKind: HeroKind;
+  setBonus = Array(Enums.EquipmentSetKind);
   isEffectRegistered: boolean[] = Array(Enums.HeroKind);
   isMasteryEffectRegistered;
   isOptionEffectRegistered: boolean[] = Array(Enums.HeroKind).fill([]);
 
-  constructor(hero, set = null) {
-    this.hero = hero;
+  constructor(heroKind: HeroKind, set) {
+    this.heroKind = heroKind;
+    this.items = set;
 
-    if (set == null) {
-      for (let index = 0; index < 24; index++) {
-        this.items.Weapon[index] = new Equipment({ kind: 0, forgeEffects: Array(7).fill(0), optionEffects: Array(7).fill([0, 0, 0]) });
+    for (let index = 0; index < 24; index++) {
+      this.items.Weapon[index].set = this;
+      this.items.Armor[index].set = this;
+      this.items.Jewelry[index].set = this;
 
-        this.items.Armor[index] = new Equipment({ kind: 157, forgeEffects: Array(7).fill(0), optionEffects: Array(7).fill([0, 0, 0]) });
-
-        this.items.Jewelry[index] = new Equipment({ kind: 0, forgeEffects: Array(7).fill(0), optionEffects: Array(7).fill([0, 0, 0]) });
-
-        if (index < 6) {
-          this.items.Utility[index] = new EquipmentPotion(this, 1, 1);
-          this.items.Utility[index].index = index;
-        }
-      }
-    } else {
-      for (let index = 0; index < 24; index++) {
-        this.items.Weapon[index] = set.Weapon[index];
-
-        this.items.Armor[index] = set.Armor[index];
-
-        this.items.Jewelry[index] = set.Jewelry[index];
-
-        if (index < 6) {
-          this.items.Utility[index] = new EquipmentPotion(this, 1, 1);
-          this.items.Utility[index].index = index;
-        }
-      }
+      if (index < 6) this.items.Utility[index].index = index;
     }
 
+    this.itemsList = [...this.items.Weapon, ...this.items.Armor, ...this.items.Jewelry];
+
+    // if (heroKind == HeroKind.Archer) console.log(this);
+    this.getSetBonus();
+    // console.log(this.setBonus[5].size);
     //
   }
 
-  get html() {
-    const endpoint = `page['equipment'].logic.set.${this.hero}.items`;
-    let html = ``;
-
-    // weapons
-
-    for (let i = 0; i < Enums.EquipmentPart; i++) {
-      const part = EquipmentPart[i];
-      // console.log(part);
-
-      html += `<table class="equipment"><thead><tr><th colspan="4">${part}</th></tr></thead><tbody>`;
-      for (let index = 0; index < 24; index++) {
-        if (index % 8 == 0) html += `<tr style="height: 8px;"></tr>`;
-        if (index % 4 == 0) html += `<tr>`;
-
-        const equipment = this.items[part][index];
-        // console.log(index, equipment);
-        html += `<td><equipment-info data-endpoint="${endpoint}.${part}[${index}]"  data-slot="${part}"></equipment-info></td>`;
-
-        if (index % 4 == 3) html += "</tr>";
-      }
-      html += "</tbody></table>";
+  getSetBonus() {
+    for (let index = 0; index < this.setBonus.length; index++) {
+      this.setBonus[index] = new Set();
     }
 
-    // Utility
-    html += `<table class="equipment"><thead><tr><th style="font-size: 13px;">Utility</th></tr></thead><tbody>`;
-    for (let index = 0; index < this.items.Utility.length; index++) {
-      if (index % 2 == 0) html += `<tr style="height: 8px;"></tr>`;
-      html += `<tr><td><equipment-info data-endpoint="${endpoint}.Utility[${index}]" data-slot="Utility"></equipment-info>`;
+    for (let index = 0; index < this.itemsList.length; index++) {
+      if (this.itemsList[index].setKind == undefined) continue;
+      // console.log(this.itemsList[index].setKind);
+
+      this.setBonus[this.itemsList[index].setKind].add(EquipmentKind[this.itemsList[index].kind]);
     }
-
-    html += `</td></tr>`;
-
-    html += "</tbody></table>";
-
-    return html;
   }
 
   Edit() {}

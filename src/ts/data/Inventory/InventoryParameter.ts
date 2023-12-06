@@ -12,5 +12,5 @@ export const InventoryParameter = {
   enchantSlotId: 130,
   potionSlotId: 260,
   equipPotionSlotId: 6,
-  allPotionSlotId: 1596,
+  allPotionSlotId: 296,
 };

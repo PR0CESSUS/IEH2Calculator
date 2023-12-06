@@ -51,7 +51,11 @@ export class SuperDungeonGlobalController {
     this.dungeonCoinBonus = new Multiplier();
     this.dodgeTimesec = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 10.0));
     // this.unlockFlexibleDodge = new Unlock();
-    // this.powerupShowNum = new Multiplier((() => 5.0), (() => 2.0));
+    this.powerupShowNum = new Multiplier(
+      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0),
+      () => 5.0,
+      () => 2.0
+    );
     // this.unlockPowerupBoostStart = new Unlock();
     // this.unlockBoostStartGoodRNG = new Unlock();
     this.autoBuyPowerupsTimesEveryFloor = new Multiplier();
@@ -74,8 +78,10 @@ export class SuperDungeonGlobalController {
   }
 
   SetPowerupGlobalEffect() {
-    for (let index = 0; index < globalThis.data.battle.superDungeonCtrl.powerupList.length; index++)
+    for (let index = 0; index < Enums.SuperDungeonPowerupKind; index++) {
       globalThis.data.battle.superDungeonCtrl.powerupList[index].SetGlobalEffect();
+    }
+    // console.log(globalThis.data.stats.heroes[0].basicStats[0]);
   }
 
   Start() {
@@ -83,7 +89,7 @@ export class SuperDungeonGlobalController {
     this.upgradeCtrl.Start();
 
     this.sdGemRitualCtrl.Start();
-    // this.SetPowerupGlobalEffect();
+    this.SetPowerupGlobalEffect();
     // this.modifierMilestoneCtrl.Start();
   }
 

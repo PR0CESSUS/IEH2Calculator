@@ -16,6 +16,7 @@ import { EquipmentParameter } from "./EquipmentParameter";
 import { EquipmentOptionEffect, EquipmentOptionEffectData } from "./EquipmentOptionEffect";
 import { EquipmentForgeEffect } from "./EquipmentForgeEffect";
 import { InventoryParameter } from "../Inventory/InventoryParameter";
+import { EquipmentSet } from "./EquipmentSet";
 
 export type EquipmentData = {
   kind: EquipmentKind;
@@ -43,6 +44,7 @@ export class Equipment {
   info: MultiplierInfo;
   activateCondition;
   optionNum = 4;
+  set: EquipmentSet;
 
   constructor(data: EquipmentData) {
     this.data = data;
@@ -81,6 +83,10 @@ export class Equipment {
 
   get kind() {
     return this.data.kind;
+  }
+
+  get setKind() {
+    return this.globalInfo.setKind;
   }
 
   set kind(value) {
@@ -197,6 +203,9 @@ export class Equipment {
 
         this.SetEffectBase(index);
         this.SetMasteryEffect();
+        console.log("set again");
+        globalThis.app.router.load();
+
         break;
       }
     }
@@ -304,14 +313,14 @@ export class Equipment {
   //     : this.RequiredLevel(false, false) <= 0 ||
   //         globalThis.data.stats.LevelForEquipment(heroKind).Value() >= this.RequiredLevel(false, false);
   // }
-
-  isSetItem() {
-    return this.globalInfo.setKind != 0;
+  get isSetItem() {
+    return this.globalInfo.setKind != 0 && this.globalInfo.setKind != undefined;
   }
-
   EffectMultiplierFromSetItem(heroKind: HeroKind) {
-    return 1;
-    if (!this.isSetItem) return 1.0;
+    // BUG
+
+    if (!this.isSetItem || this.isSetItem == undefined) return 1;
+
     switch (globalThis.data.inventory.SetItemEquippedNum(this.globalInfo.setKind, heroKind)) {
       case 2:
         return 1.05;

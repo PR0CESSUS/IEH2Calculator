@@ -26,6 +26,7 @@ import { Enums } from "./Enums";
 import { BATTLE_CONTROLLER } from "./data/Battle";
 import { HeroKind } from "./type/HeroKind";
 import { SuperStatsController } from "./data/SuperStats";
+import { QuestController } from "./data/Quest";
 
 export class DATA {
   currentHero: HeroKind = 0;
@@ -45,6 +46,7 @@ export class DATA {
   resource = new DataResource();
   equipment: DataEquipment;
   craft = new DataCraft();
+  quest: QuestController;
   inventory: DataInventory;
   challenge: DataChallenge;
   shop = new DataShop();
@@ -70,12 +72,13 @@ export class DATA {
     this.sdg = new SuperDungeonGlobalController();
     this.nitro = new DataNitro();
     this.superStats = new SuperStatsController();
+    this.quest = new QuestController();
 
     for (let index = 0; index < this.battles.length; index++) {
       this.battles[index] = new BATTLE_CONTROLLER(index);
     }
 
-    // console.log(this.source.superAbilityPointsAgility);
+    // console.log(this.source.skillLoadoutIds);
 
     // console.log(globalThis.data.challenge.permanentRewardMultiplier);
     this.Start();
@@ -99,6 +102,10 @@ export class DATA {
     this.monster.Start();
     this.sdg.Start();
     this.superStats.Start();
+    for (let index = 0; index < this.battles.length; index++) {
+      this.battles[index].Start();
+    }
+    this.quest.Start();
   }
 
   load() {

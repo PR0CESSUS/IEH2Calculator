@@ -7,7 +7,9 @@ export class Multiplier {
   modifiers: MultiplierInfo[] = [];
   additiveKind: { [key in keyof typeof MultiplierKind]: number } = {} as any;
   multiplicativeKind: { [key in keyof typeof MultiplierKind]: number } = {} as any;
+  afterKind: { [key in keyof typeof MultiplierKind]: number } = {} as any;
   additive = 0;
+  after = 0;
   multiplicative = 1;
   maxValue: Function;
   minValue: Function;
@@ -25,11 +27,25 @@ export class Multiplier {
     this.minValue = minValue;
 
     this.RegisterMultiplier(multiplier);
+    this.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Mul, () => 0));
   }
 
   get value() {
     this.isDirty = true;
     return this.Value();
+  }
+
+  Snapshot() {
+    if (this.isDirty) this.Calculate();
+    return {
+      additive: this.additive,
+      multiplicative: this.multiplicative,
+      after: this.after,
+      multiplicativeKind: this.multiplicativeKind,
+      additiveKind: this.additiveKind,
+      afterKind: this.afterKind,
+      value: this.value,
+    };
   }
 
   Value() {
@@ -58,14 +74,15 @@ export class Multiplier {
   }
 
   After() {
-    console.log("after multiplier");
-    return 0;
+    if (this.isDirty) this.Calculate();
+    return Math.log10(this.additive * this.multiplicative) + this.after;
   }
 
   Calculate() {
     if (this.isDirty == false) return;
     this.additiveKind = {} as any;
     this.multiplicativeKind = {} as any;
+    this.afterKind = {} as any;
     for (let index = 0; index < this.modifiers.length; index++) {
       const modifier = this.modifiers[index];
       if (modifier.kind == 24) {
@@ -90,6 +107,14 @@ export class Multiplier {
             this.multiplicativeKind[MultiplierKind[modifier.kind]] = 1 + modifier.value();
           }
           this.multiplicative = Object.values(this.multiplicativeKind).reduce((a, b) => a * b);
+          break;
+        case MultiplierType.After:
+          if (this.afterKind[MultiplierKind[modifier.kind]]) {
+            this.afterKind[MultiplierKind[modifier.kind]] += modifier.value();
+          } else {
+            this.afterKind[MultiplierKind[modifier.kind]] = modifier.value();
+          }
+          this.after = Object.values(this.afterKind).reduce((a, b) => a + b, 0);
           break;
         default:
           break;

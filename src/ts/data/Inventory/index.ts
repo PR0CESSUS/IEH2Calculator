@@ -7,6 +7,7 @@ import { EquipmentSetKind } from "../../type/EquipmentSetKind";
 import { HeroKind } from "../../type/HeroKind";
 import { Equipment } from "../Equipment/Equipment";
 import { EquipmentPart } from "../../type/EquipmentPart";
+import { EquipmentPotion } from "../Equipment/EquipmentPotion";
 
 export class DataInventory {
   //   isCalledUpdateSetItemEquippedNumInThisSec: boolean[] = Array(Enums.heroKindLength);
@@ -19,7 +20,7 @@ export class DataInventory {
   lastPotionSlotUIActionTime = -1.0;
   equipmentSlots: Equipment[] = Array(InventoryParameter.allEquipmentSlotId);
   //   EnchantSlot[] enchantSlots = new EnchantSlot[InventoryParameter.enchantSlotId];
-  //   PotionSlot[] potionSlots = new PotionSlot[InventoryParameter.allPotionSlotId];
+  potionSlots = Array(InventoryParameter.allPotionSlotId);
   equipInventoryUnlockedNum: Multiplier;
   equipWeaponUnlockedNum: Multiplier[] = Array(Enums.HeroKind);
   equipArmorUnlockedNum: Multiplier[] = Array(Enums.HeroKind);
@@ -115,6 +116,15 @@ export class DataInventory {
 
       this.equipmentSlots[index].slotId = index;
     }
+
+    for (let index = 0; index < this.potionSlots.length; index++) {
+      const id = globalThis.data.source.potionId[index] as number;
+      let potion = {
+        kind: globalThis.data.source.potionKinds[id],
+        stack: globalThis.data.source.potionStackNums[id],
+      };
+      this.potionSlots[index] = new EquipmentPotion(potion);
+    }
     // for (let index = 0; index < this.potionSlots.length; index++)
     //   this.potionSlots[index].Start();
     // this.UpdateCanCreatePotion();
@@ -132,11 +142,36 @@ export class DataInventory {
     return this.equipmentSlots.slice(offset, offset + 24);
   }
 
-  getSet(heroKind: HeroKind) {
+  getPotionOffset(heroKind: HeroKind) {
+    switch (heroKind) {
+      case HeroKind.Warrior:
+        return 260;
+      case HeroKind.Wizard:
+        return 266;
+      case HeroKind.Angel:
+        return 272;
+      case HeroKind.Thief:
+        return 278;
+      case HeroKind.Archer:
+        return 284;
+      case HeroKind.Tamer:
+        return 290;
+      default:
+        return 260;
+    }
+  }
+
+  getPotion(heroKind: HeroKind) {
+    const offset = this.getPotionOffset(heroKind);
+    return this.potionSlots.slice(offset, offset + 6);
+  }
+
+  getLoadout(heroKind: HeroKind) {
     return {
       Weapon: this.getSetPart(heroKind, EquipmentPart.Weapon),
       Armor: this.getSetPart(heroKind, EquipmentPart.Armor),
       Jewelry: this.getSetPart(heroKind, EquipmentPart.Jewelry),
+      Utility: this.getPotion(heroKind),
     };
   }
 

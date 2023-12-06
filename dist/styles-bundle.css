@@ -516,6 +516,7 @@ img:before {
 
   border-left: #fff 1px solid;
   color: #f3f3f6;
+  padding-bottom: 300px;
 }
 
 .header {
@@ -848,6 +849,7 @@ h4 {
 .tooltip {
   position: relative;
   display: inline-block;
+
   /* display: table-cell; */
   /* border-bottom: 1px dotted black; */
   padding: 0;
@@ -909,5 +911,9 @@ h4 {
   border-bottom-style: solid;
   border-bottom-color: #fff;
   border-bottom-width: 1px;
+}
+
+.TEST {
+  /* border-radius: 2px; */
 }
 

@@ -57,6 +57,8 @@ export class CalculatorExpedition {
   //   return speedBase * (this.data.town.AdventuringParty.effect * speedMultiplier);
   // }
 
+  Initialization() {}
+
   getSpeed(team) {
     let totalLevel = this.teams[team];
     let kind = this.app.data.source.expeditionKinds[team];

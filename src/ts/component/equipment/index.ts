@@ -32,6 +32,8 @@ export default class equipmentInfo extends HTMLElement {
       (document.getElementById("equipment-info") as HTMLTemplateElement).content.cloneNode(true)
     );
     (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${this.slotKind[this.data.kind]}.png`;
+
+    if (this.dataset.disabled) (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).classList.add("disabled");
     this.shadowRoot.querySelector(".icon48").addEventListener("click", this.openEdit.bind(this));
     this.shadowRoot.querySelector(".icon48").addEventListener("mouseover", this.initialRender.bind(this), { once: true });
     this.shadowRoot.querySelector('[name="kind"]').addEventListener("change", this.changeKind.bind(this));
@@ -111,6 +113,13 @@ export default class equipmentInfo extends HTMLElement {
     const kind = this.shadowRoot.querySelector('[name="kind"]') as HTMLSelectElement;
     const level = this.shadowRoot.querySelector('[name="level"]');
     const effect = this.shadowRoot.querySelector('[name="effect"]');
+    const isSetKind = this.shadowRoot.querySelector('[name="isSetKind"]') as HTMLParagraphElement;
+
+    if (this.data.setKind == undefined || this.data.setKind == 0) {
+      isSetKind.style.display = "none";
+    } else {
+      isSetKind.style.display = "block";
+    }
 
     level.innerHTML = `Lv ${this.data.level}`;
     // effect.innerHTML = `Effect : ${globalThis.data.potion.GlobalInfo(this.data.kind).effectValue}`;
@@ -125,10 +134,18 @@ export default class equipmentInfo extends HTMLElement {
         EquipmentPart[globalThis.data.equipment.globalInformations[this.data.kind].part];
       this.shadowRoot.querySelector('[name="rarity"]').innerHTML =
         EquipmentRarity[globalThis.data.equipment.globalInformations[this.data.kind].rarity];
-      this.shadowRoot.querySelector('[name="setKind"]').innerHTML =
-        EquipmentSetKind[globalThis.data.equipment.globalInformations[this.data.kind].setKind];
 
-      // const effects = globalThis.data.equipment.globalInformations[this.data.kind].effects;
+      if (this.data.setKind != 0 && this.data.setKind != undefined) {
+        this.shadowRoot.querySelector('[name="setKind"]').innerHTML = `${
+          EquipmentSetKind[globalThis.data.equipment.globalInformations[this.data.kind].setKind]
+        } Set`;
+        // this.shadowRoot.querySelector('[name="setBonus"]').innerHTML = `[Effect Bonus ${
+        //   (this.data.EffectMultiplierFromSetItem() - 1) * 100
+        // }%]`;
+        // const effects = globalThis.data.equipment.globalInformations[this.data.kind].effects;
+        // this.shadowRoot.querySelector('[name="setAmount"]').innerHTML = `${this.data.set.setBonus[this.data.setKind].size}`;
+      }
+
       let string = "";
       this.getEffects();
       this.getOptionEffects();
@@ -217,7 +234,8 @@ export default class equipmentInfo extends HTMLElement {
     let string = "";
 
     effects.forEach((effect, index) => {
-      const value = this.data.EffectValue(this.data.OriginalEffectValue(index), HeroKind.Warrior);
+      // console.log(this.data.OriginalEffectValue(index));
+      const value = this.data.EffectValue(this.data.OriginalEffectValue(index), HeroKind.Angel);
       let sign = ``;
       let negative = ``;
       if (value > 0) sign = `+`;

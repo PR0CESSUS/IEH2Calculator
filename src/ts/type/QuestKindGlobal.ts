@@ -1,4 +1,4 @@
-export enum questKindGlobal {
+export enum QuestKindGlobal {
   AbilityVIT,
   ClearGeneralQuest,
   ClearTitleQuest,
@@ -61,4 +61,21 @@ export enum questKindGlobal {
   Capture10,
   Capture11,
   Capture12,
+  Upgrade14,
+  Upgrade15,
+  Upgrade16,
+  Upgrade17,
+  Upgrade18,
+  Capture13,
+  Capture14,
+  Capture15,
+  Capture16,
+  SD1,
+  SD2,
+  SD3,
+  SD4,
+  SD5,
+  SD6,
+  SD7,
+  SD8,
 }

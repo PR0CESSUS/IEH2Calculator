@@ -5,6 +5,7 @@ import { EquipmentPart } from "../type/EquipmentPart";
 import { EquipmentKind } from "../type/EquipmentKind";
 import { PotionKind } from "../type/PotionKind";
 import { Localization } from "../localization";
+import { MultiplierKind } from "../type/MultiplierKind";
 
 export const render = {
   Statistic(multiplier: Multiplier, name: string, type = null) {
@@ -14,13 +15,13 @@ export const render = {
     html += /*html*/ `<div class="tooltip-text"><table>`;
     html += /*html*/ `<tr><td class="equipment-heading">Additive:</td> <td></td></tr>`;
     for (const [key, value] of Object.entries(multiplier.additiveKind)) {
-      html += `<tr><td>-${key}</td> <td>${convertTo(value, 2, type)}</td></tr>`;
+      html += `<tr><td>-${Localization.StatsBreakdown(MultiplierKind[key])}</td> <td>${convertTo(value, 2, type)}</td></tr>`;
     }
     html += /*html*/ `<tr><td></td></tr>`;
     html += /*html*/ `<tr><td></td></tr>`;
     html += /*html*/ `<tr><td class="equipment-heading">Multiplicative:</td> <td></td></tr>`;
     for (const [key, value] of Object.entries(multiplier.multiplicativeKind)) {
-      html += `<tr><td>-${key}</td> <td>${convertTo(value, 2, "%")}</td></tr>`;
+      html += `<tr><td>-${Localization.StatsBreakdown(MultiplierKind[key])}</td> <td>${convertTo(value, 2, "%")}</td></tr>`;
     }
     html += /*html*/ `<tr><td></td></tr>`;
     html += /*html*/ `<tr><td></td></tr>`;

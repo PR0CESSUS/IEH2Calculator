@@ -16,6 +16,10 @@ export class SuperDungeonShop {
     return globalThis.data.source.superDungeonShopPurchasedNums[this.id];
   }
 
+  set purchasedNum(value) {
+    globalThis.data.source.superDungeonShopPurchasedNums[this.id] = value;
+  }
+
   Start() {
     this.SetEffect();
   }

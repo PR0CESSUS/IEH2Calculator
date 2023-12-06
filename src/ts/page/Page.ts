@@ -11,6 +11,7 @@ export class Page {
     this.logic.endpoint = `page['${this.url.slice(1)}'].logic`;
     // console.log(this.logic);
     this.Load();
+    this.logic.Initialization();
 
     globalThis.app.router.register(
       () => this.url,
@@ -31,6 +32,7 @@ export class Page {
       localStorage.setItem(`CustomData-${this.url.slice(1)}`, JSON.stringify(this.logic.custom));
     } else {
       this.logic.custom = JSON.parse(data);
+      // if (this.url == "#equipment") console.log(data);
     }
     // this.Initialization();
     // // console.log(data);

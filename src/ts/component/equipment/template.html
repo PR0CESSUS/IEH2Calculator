@@ -1,6 +1,14 @@
 <template id="equipment-info">
   <style>
     @import "./styles-bundle.css";
+
+
+
+    .disabled {
+      height: 100%;
+      opacity: 0.4;
+      /* Change the color and opacity as needed */
+    }
   </style>
   <div class="tooltip">
     <img class="icon48">
@@ -23,7 +31,10 @@
         <p style="text-decoration: underline;">Information</p>
         <p>-Type : <span name="part">${equipment.part}</span></p>
         <p>-Rarity : <span name="rarity">${equipment.rarity}</span></p>
-        <p>-Unique : <span name="setKind">${equipment.setKind}</span></p>
+        <p name="isSetKind">-Unique : <span name="setKind">${equipment.setKind}</span>
+          <span name="setBonus" class="green">Effect Bonus 0%</span> Equipping <span name="setAmount"
+            class="green">0</span> / 8
+        </p>
         <br>
         <p style="text-decoration: underline;">Effect</p>
         <div name="effects">list</div>

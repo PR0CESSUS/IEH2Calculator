@@ -16,6 +16,8 @@ import { EquipmentKind } from "./type/EquipmentKind";
 import { EquipmentPart } from "./type/EquipmentPart";
 import { PotionKind } from "./type/PotionKind";
 import { SuperDungeonPowerupKind } from "./type/SuperDungeonPowerupKind";
+import { MultiplierKind } from "./type/MultiplierKind";
+import { TitleKind } from "./type/TitleKind";
 
 export const Enums = {
   HeroKind: Object.entries(HeroKind).length / 2,
@@ -36,6 +38,8 @@ export const Enums = {
   EquipmentPart: Object.entries(EquipmentPart).length / 2,
   SuperDungeonPowerupKind: Object.entries(SuperDungeonPowerupKind).length / 2,
   PotionKind: Object.entries(PotionKind).length / 2,
+  MultiplierKind: Object.entries(MultiplierKind).length / 2,
+  TitleKind: Object.entries(TitleKind).length / 2,
 };
 
 export const Enum = {
