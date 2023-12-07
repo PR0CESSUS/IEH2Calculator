@@ -203,8 +203,8 @@ export class Equipment {
 
         this.SetEffectBase(index);
         this.SetMasteryEffect();
-        console.log("set again");
-        globalThis.app.router.load();
+        // console.log("set again");
+        // globalThis.app.router.load();
 
         break;
       }

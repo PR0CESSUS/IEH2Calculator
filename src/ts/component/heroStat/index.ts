@@ -39,6 +39,7 @@ export default class heroStat extends HTMLElement {
     (this.shadowRoot.querySelector('[name="add"]') as HTMLButtonElement).onclick = this.xxx.bind(this);
 
     this.render();
+    // console.log("heroStat constructor");
 
     //   <div id="modal">
     //   <div class="modal-underlay" onclick="window.app.router.load()"></div>
@@ -148,6 +149,8 @@ export default class heroStat extends HTMLElement {
     this.getMultiplierInfo("hpRegenerate").data = this.data.hpRegenerate;
     this.getMultiplierInfo("mpRegenerate").data = this.data.mpRegenerate;
     // attack tab
+
+    // console.log(this.dataSD.damageMultiplier);
 
     // this.data.monsterDamages.forEach((element, index) => {
     //   const name = `Damage to ${startCase(MonsterSpecies[index])} `;

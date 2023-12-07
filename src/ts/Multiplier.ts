@@ -44,12 +44,13 @@ export class Multiplier {
       multiplicativeKind: this.multiplicativeKind,
       additiveKind: this.additiveKind,
       afterKind: this.afterKind,
-      value: this.value,
+      Value: this.Value(),
+      After: this.After(),
     };
   }
 
   Value() {
-    if (this.isDirty) this.Calculate();
+    this.Calculate();
     // console.log(this);
 
     // console.log(this.maxValue());
@@ -74,12 +75,12 @@ export class Multiplier {
   }
 
   After() {
-    if (this.isDirty) this.Calculate();
+    this.Calculate();
     return Math.log10(this.additive * this.multiplicative) + this.after;
   }
 
   Calculate() {
-    if (this.isDirty == false) return;
+    // if (this.isDirty == false) return;
     this.additiveKind = {} as any;
     this.multiplicativeKind = {} as any;
     this.afterKind = {} as any;

@@ -42,6 +42,7 @@ export class Multiplier_Info extends HTMLElement {
 
   set data(value: Multiplier) {
     this.#data = value;
+    // value.Calculate();
     this.render();
   }
 
@@ -59,7 +60,7 @@ export class Multiplier_Info extends HTMLElement {
 
       if (snapshot < current) {
         if (snapshot == 0) snapshot = 1;
-        const diff = Util.convertTo(current / snapshot - 1, 2, type);
+        const diff = Util.convertTo(current / snapshot - 1, 2, "%");
         return `<span class="green">(+${diff}) ${Util.convertTo(current, 2, type)}</span>`;
       }
     }
@@ -82,8 +83,8 @@ export class Multiplier_Info extends HTMLElement {
     ///
     this.shadowRoot.querySelector('[name="value-total"]').innerHTML =
       this.dataset.superdungeon == "true"
-        ? this.compare(this.data.After(), this.snapshot?.value, this.dataset.type ? this.dataset.type : "%")
-        : this.compare(this.data.value, this.snapshot?.value, this.dataset.type ? this.dataset.type : "%");
+        ? this.compare(this.data.After(), this.snapshot?.After, this.dataset.type ? this.dataset.type : "%")
+        : this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%");
 
     ///
     this.shadowRoot.querySelector('[name="after-total"]').innerHTML = this.compare(
@@ -151,8 +152,8 @@ export class Multiplier_Info extends HTMLElement {
       // console.log(this.shadowRoot.querySelector('[name="value"]').innerHTML);
       this.shadowRoot.querySelector('[name="value"]').innerHTML =
         this.dataset.superdungeon == "true"
-          ? this.compare(this.data.After(), this.snapshot?.value, this.dataset.type ? this.dataset.type : "%")
-          : this.compare(this.data.value, this.snapshot?.value, this.dataset.type ? this.dataset.type : "%");
+          ? this.compare(this.data.After(), this.snapshot?.After, this.dataset.type ? this.dataset.type : "%")
+          : this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%");
       this.renderTooltip();
     }
     // const main = this.shadowRoot.querySelector('[name="main"]');
