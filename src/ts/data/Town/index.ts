@@ -32,7 +32,9 @@ export class DataTown {
     .map(
       (_, index) =>
         new Multiplier(
-          new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => Math.log10(10.0 + globalThis.data.resource.Resource(index).value)),
+          new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () =>
+            Math.log10(10.0 + globalThis.data.resource.Resource(index).value)
+          ),
           () => 1e20,
           () => 1.0
         )
@@ -64,10 +66,12 @@ export class DataTown {
     this.buildings[8] = new ArcaneResearcher();
     this.buildings[2] = new AlchemistsHut();
     this.buildings[11] = new AdventuringParty();
+    // this.SetEffectLevelBonusForAllBuilding()
   }
 
   SetEffectTownMatGain(info) {
-    for (let index = 0; index < this.townMaterialGainMultiplier.length; index++) this.townMaterialGainMultiplier[index].RegisterMultiplier(info);
+    for (let index = 0; index < this.townMaterialGainMultiplier.length; index++)
+      this.townMaterialGainMultiplier[index].RegisterMultiplier(info);
   }
 
   TotalBuildingLevel() {

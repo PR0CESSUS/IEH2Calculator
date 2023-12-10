@@ -132,10 +132,18 @@ export class Multiplier_Info extends HTMLElement {
       }
 
       if (valueAfter) {
-        const value = this.compare(valueAfter, this.snapshot?.afterKind[MultiplierKind[index]], "normal");
+        const value = this.compare(
+          valueAfter,
+          this.snapshot?.afterKind[MultiplierKind[index]],
+          this.dataset.type ? this.dataset.type : "%"
+        );
         afterList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
       } else if (this.snapshot?.afterKind[MultiplierKind[index]]) {
-        const value = this.compare(valueAfter, this.snapshot?.afterKind[MultiplierKind[index]], "normal");
+        const value = this.compare(
+          valueAfter,
+          this.snapshot?.afterKind[MultiplierKind[index]],
+          this.dataset.type ? this.dataset.type : "%"
+        );
         afterList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
       }
     }

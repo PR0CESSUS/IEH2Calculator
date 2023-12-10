@@ -57,7 +57,7 @@ export class Multiplier {
     if (this.maxValue() != null) {
       return Math.min(this.maxValue(), this.additive * this.multiplicative);
     } else {
-      return this.additive * this.multiplicative;
+      return this.additive * this.multiplicative + this.after;
     }
   }
 

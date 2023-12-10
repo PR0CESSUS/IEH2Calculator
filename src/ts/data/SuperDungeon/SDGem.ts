@@ -18,6 +18,10 @@ export class SDGem {
     return globalThis.data.source.sdGemLevels[this.kind];
   }
 
+  set level(value) {
+    globalThis.data.source.sdGemLevels[this.kind] = value;
+  }
+
   get kind() {
     return SDGemKind.Sunstone;
   }

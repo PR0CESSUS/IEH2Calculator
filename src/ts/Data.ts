@@ -94,8 +94,8 @@ export class DATA {
   Start() {
     this.challenge.Start();
     this.expedition.Start();
-    this.town.Start();
     this.potion.Start();
+    this.town.Start();
     this.ascension.Start();
     this.mission.Start();
     this.inventory.Start();

@@ -149,7 +149,7 @@ export default class equipmentInfo extends HTMLElement {
       let string = "";
       this.getEffects();
       this.getOptionEffects();
-      this.getForgeEffects();
+      this.getForgeEffects(edit);
       this.getProficiency();
 
       //
@@ -198,14 +198,19 @@ export default class equipmentInfo extends HTMLElement {
     //
   }
 
-  getForgeEffects() {
+  getForgeEffects(edit: boolean = false) {
     const forgeEffects = this.shadowRoot.querySelector('[name="forgeEffects"]');
     let string = "";
     let counter = 0;
-    this.data.forgeEffects.forEach((slot) => {
+    this.data.forgeEffects.forEach((slot, index) => {
+      const input = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.data.slotId}].forgeEffects[${index}].effectValue"></user-input>`;
+      // if (this.data.slotId == 5128) {
+      //   console.log(slot);
+      // }
+
       if (slot.IsForged()) {
         counter++;
-        string += `<p class="orange">- ${slot.html}</p>`;
+        string += `<p class="orange">- ${slot.html} ${edit ? input : ""}</p>`;
       }
     });
 

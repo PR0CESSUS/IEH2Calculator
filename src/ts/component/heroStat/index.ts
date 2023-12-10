@@ -48,17 +48,27 @@ export default class heroStat extends HTMLElement {
   }
 
   xxx() {
+    const offset = 4840 + this.hero * 72 + 0;
+    // console.log(globalThis.data.inventory.equipmentSlots[offset].globalInfo.effects);
+    console.log(globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered);
+
+    if (globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered) {
+      for (let index = 0; index < globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered.length; index++) {
+        const element = globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered[index];
+        // console.log(element);
+        element();
+      }
+    }
     // console.log("before", this.data.basicStats[0].value);
-    this.data.basicStats[0].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Achievement, MultiplierType.Add, () => 1500000000));
+    // this.data.basicStats[0].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Achievement, MultiplierType.Add, () => 1500000000));
     // this.data.basicStats[0].Calculate();
     globalThis.app.router.load();
-    // console.log("after", this.data.basicStats[0].value);
   }
 
   createSnapshot() {
     // let data =
     // if (data == undefined) console.log("click");
-    let snapshot = { basicStats: [], stats: [], elementDamages: [], SD: { damageMultiplier: 0 } };
+    let snapshot = { basicStats: [], stats: [], elementDamages: [], SD: { damageMultiplier: 0 }, monsterDamages: [] };
     this.data.basicStats.forEach((element, index) => {
       snapshot.basicStats[index] = element.Snapshot();
     });
@@ -67,6 +77,9 @@ export default class heroStat extends HTMLElement {
     });
     this.data.elementDamages.forEach((element, index) => {
       snapshot.elementDamages[index] = element.Snapshot();
+    });
+    this.data.monsterDamages.forEach((element, index) => {
+      snapshot.monsterDamages[index] = element.Snapshot();
     });
     const SD = [
       "armoredFury",
@@ -122,6 +135,12 @@ export default class heroStat extends HTMLElement {
     this.data.elementDamages.forEach((element, index) => {
       let html = this.getMultiplierInfo(`elementDamages${index}`);
       if (snapshot != undefined && snapshot["elementDamages"] != undefined) html.snapshot = snapshot["elementDamages"][index];
+      html.data = element;
+    });
+
+    this.data.monsterDamages.forEach((element, index) => {
+      let html = this.getMultiplierInfo(`monsterDamages${index}`);
+      if (snapshot != undefined && snapshot["monsterDamages"] != undefined) html.snapshot = snapshot["monsterDamages"][index];
       html.data = element;
     });
 

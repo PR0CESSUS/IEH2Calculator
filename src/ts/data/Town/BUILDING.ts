@@ -16,7 +16,11 @@ export class BUILDING {
 
   constructor() {
     this.townCtrl = globalThis.data.town;
-    this.researchLevels = [globalThis.data.source.buildingResearchLevelsStone, globalThis.data.source.buildingResearchLevelsCrystal, globalThis.data.source.buildingResearchLevelsLeaf];
+    this.researchLevels = [
+      globalThis.data.source.buildingResearchLevelsStone,
+      globalThis.data.source.buildingResearchLevelsCrystal,
+      globalThis.data.source.buildingResearchLevelsLeaf,
+    ];
     this.levelBonus = new Multiplier();
     this.SetEffect();
     this.SetResearch();

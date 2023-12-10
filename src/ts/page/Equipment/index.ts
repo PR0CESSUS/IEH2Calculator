@@ -27,7 +27,20 @@ export class Equipment {
 
     // this.set.Weapon[6].SetAgainAllEffect();
     // this.set.Weapon[7].SetAgainAllEffect();
-    const offset = 5128;
+
+    // console.log(this);
+  }
+
+  // SetAgainAllEffect() {
+  //   this.set.Weapon.forEach((weapon) => {
+  //     weapon.SetAgainAllEffect();
+  //   });
+  // }
+
+  Initialization() {
+    const offset = 4840 + this.custom.hero * 72;
+    // console.log(offset);
+
     globalThis.data.inventory.equipmentSlots[offset].SetAgainAllEffect();
     globalThis.data.inventory.equipmentSlots[offset + 1].SetAgainAllEffect();
     globalThis.data.inventory.equipmentSlots[offset + 2].SetAgainAllEffect();
@@ -39,16 +52,7 @@ export class Equipment {
     globalThis.data.inventory.equipmentSlots[offset + 48].SetAgainAllEffect();
     globalThis.data.inventory.equipmentSlots[offset + 48 + 1].SetAgainAllEffect();
     globalThis.data.inventory.equipmentSlots[offset + 48 + 2].SetAgainAllEffect();
-    // console.log(this);
   }
-
-  // SetAgainAllEffect() {
-  //   this.set.Weapon.forEach((weapon) => {
-  //     weapon.SetAgainAllEffect();
-  //   });
-  // }
-
-  Initialization() {}
 
   isDisabled(part: EquipmentPart, value) {
     if (this.custom.isSuperDungeon == false) return false;
@@ -76,6 +80,9 @@ export class Equipment {
     const endpoint = `page['equipment'].logic.set`;
     html += `AE :<user-input data-endpoint="data.sdg.shopCtrl.itemList[0].purchasedNum"></user-input><br>`;
     html += `Floor Reward: <user-input data-endpoint="data.sdg.shopCtrl.itemList[1].purchasedNum"></user-input><br>`;
+    html += `Diamond: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[12].level"></user-input><br>`;
+    html += `Emerald: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[14].level"></user-input><br>`;
+    // html += `Floor Reward: <user-input data-endpoint="data.sdg.shopCtrl.itemList[1].purchasedNum"></user-input><br>`;
     html += `<custom-select data-type="HeroKind" data-endpoint="page['equipment'].logic.custom.hero">${this.custom.hero}</custom-select>`;
     html += `<custom-checkbox data-endpoint="page['equipment'].logic.custom.isSuperDungeon">Super Dungeon</custom-checkbox>`;
     html += "<div>";
