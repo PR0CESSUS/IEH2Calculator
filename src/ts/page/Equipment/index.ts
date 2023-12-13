@@ -119,7 +119,7 @@ export class Equipment {
 
     html += "</tbody></table>";
     html += `</div>`;
-    html += `<sd-simulator data-hero="${this.custom.hero}"></sd-simulator>`;
+    // html += `<sd-simulator data-hero="${this.custom.hero}"></sd-simulator>`;
     html += `<hero-stat data-hero="${this.custom.hero}" data-superdungeon="${this.custom.isSuperDungeon}"></hero-stat>`;
     // html += `<div data-endpoint="page.${this.url.slice(1)}.set.Custom.html"></div>`;
     // html += `<button onclick="globalThis.app.page.${this.url.slice(1)}.Save()">Save</button>`;
