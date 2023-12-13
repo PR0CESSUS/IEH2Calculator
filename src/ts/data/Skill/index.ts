@@ -2,6 +2,8 @@ import { Multiplier, MultiplierInfo } from "../../Multiplier";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { Enums } from "../../Enums";
+import { ClassSkill } from "./ClassSkill";
+import { AngelSkill } from "./AngelSkill";
 
 export class DataSkill {
   ladyEmeldaEffectMultiplier: Multiplier[] = Array(Enums.HeroKind);
@@ -19,6 +21,8 @@ export class DataSkill {
   globalSkillProfGainRate: Multiplier;
   baseAttackPoisonChance: Multiplier[] = Array(Enums.HeroKind);
   baseAttackSlimeBall: Multiplier[] = Array(Enums.HeroKind);
+  classSkills: ClassSkill[] = Array(Enums.HeroKind);
+  isLog = Array(Enums.HeroKind);
 
   constructor() {
     for (let index = 0; index < this.skillRankCostFactors.length; index++)
@@ -74,5 +78,7 @@ export class DataSkill {
     for (let index = 0; index < this.baseAttackPoisonChance.length; index++) this.baseAttackPoisonChance[index] = new Multiplier();
     for (let index = 0; index < this.baseAttackSlimeBall.length; index++) this.baseAttackSlimeBall[index] = new Multiplier();
     this.globalSkillProfGainRate = new Multiplier();
+
+    this.classSkills[2] = new AngelSkill();
   }
 }

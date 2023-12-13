@@ -51,6 +51,7 @@ export class Multiplier_Info extends HTMLElement {
   }
 
   compare(current, snapshot = 0, type = "%") {
+    if (current == 0 || snapshot == 0) return Util.convertTo(current, 2, type);
     if (this.snapshot) {
       if (snapshot > current) {
         if (current == 0) current = 1;

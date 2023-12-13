@@ -8,6 +8,7 @@ import { MultiplierKind } from "../../type/MultiplierKind";
 import { SuperDungeonPowerupKind } from "../../type/SuperDungeonPowerupKind";
 import { SuperDungeonUpgradeController } from "./SuperDungeonUpgradeController";
 import { SuperDungeonShopController } from "./SuperDungeonShopController";
+import { SDModifierMilestoneController } from "./SDModifierMilestoneController";
 
 export class SuperDungeonGlobalController {
   //   dungeonCoinPermanent: DungeonCoinPermanent;
@@ -27,7 +28,7 @@ export class SuperDungeonGlobalController {
   lootGainOnDie: Multiplier;
   //   unlockRubyShopTab: Unlock;
   //   unlockGemRitualTab: Unlock;
-  //   modifierMilestoneCtrl: SDModifierMilestoneController;
+  modifierMilestoneCtrl: SDModifierMilestoneController;
   modifierLoadoutSlot: Multiplier;
   shopCtrl: SuperDungeonShopController;
   sdGemRitualCtrl: SDGemRitual;
@@ -62,7 +63,7 @@ export class SuperDungeonGlobalController {
     this.additionalTimeLimit = new Multiplier();
     this.lootGainOnDie = new Multiplier();
     this.powerupMaxRank = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 50.0));
-    // this.powerupFilterSlot = new Multiplier((() => Enum.GetNames(typeof (SuperDungeonPowerupKind)).length), (() => 0.0));
+    this.powerupFilterSlot = new Multiplier();
     this.powerupFilterLoadoutSlot = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     for (let index = 0; index < this.powerupEffectMultiplier.length; index++)
       this.powerupEffectMultiplier[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
@@ -73,7 +74,7 @@ export class SuperDungeonGlobalController {
     this.shopCtrl = new SuperDungeonShopController();
     this.sdGemRitualCtrl = new SDGemRitual();
     // this.unlockLeaveAndRetry = new Unlock();
-    // this.modifierMilestoneCtrl = new SDModifierMilestoneController();
+    this.modifierMilestoneCtrl = new SDModifierMilestoneController();
     this.modifierLoadoutSlot = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
   }
 
@@ -90,7 +91,7 @@ export class SuperDungeonGlobalController {
 
     this.sdGemRitualCtrl.Start();
     this.SetPowerupGlobalEffect();
-    // this.modifierMilestoneCtrl.Start();
+    this.modifierMilestoneCtrl.Start();
   }
 
   PowerupEffectMultiplier(kind: SuperDungeonPowerupKind) {

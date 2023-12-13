@@ -8,6 +8,9 @@ import { SkillType } from "../../type/SkillType";
 import { HeroKind } from "../../type/HeroKind";
 import { Element } from "../../type/Element";
 import { SkillPassiveEffect } from "./SkillPassiveEffect";
+import { SkillParameter } from "./SkillParameter";
+import { BATTLE } from "../Battle/BATTLE";
+import { BasicStatsKind } from "../../type/BasicStatsKind";
 
 export class SKILL {
   heroKind: HeroKind;
@@ -15,8 +18,6 @@ export class SKILL {
   passiveEffectLists: SkillPassiveEffect[] = [];
   throwSpeed = 2000;
   attackLists = Array(Enums.HeroKind);
-  rank: number;
-  level: number;
   //   proficiency: SkillProficiency;
 
   mp = Array(Enums.HeroKind);
@@ -39,16 +40,57 @@ export class SKILL {
     //   this.proficiency = new SkillProficiency(heroKind, id, new Func<long, double>(this.RequiredProficiency), this.level);
   }
 
+  get level() {
+    switch (this.heroKind) {
+      case HeroKind.Warrior:
+        return globalThis.data.source.warriorSkillLevel[this.id];
+      case HeroKind.Wizard:
+        return globalThis.data.source.wizardSkillLevel[this.id];
+      case HeroKind.Angel:
+        return globalThis.data.source.angelSkillLevel[this.id];
+      case HeroKind.Thief:
+        return globalThis.data.source.thiefSkillLevel[this.id];
+      case HeroKind.Archer:
+        return globalThis.data.source.archerSkillLevel[this.id];
+      case HeroKind.Tamer:
+        return globalThis.data.source.tamerSkillLevel[this.id];
+      default:
+        return 0;
+    }
+  }
+
+  get rank() {
+    switch (this.heroKind) {
+      case HeroKind.Warrior:
+        return globalThis.data.source.warriorSkillRank[this.id];
+      case HeroKind.Wizard:
+        return globalThis.data.source.wizardSkillRank[this.id];
+      case HeroKind.Angel:
+        return globalThis.data.source.angelSkillRank[this.id];
+      case HeroKind.Thief:
+        return globalThis.data.source.thiefSkillRank[this.id];
+      case HeroKind.Archer:
+        return globalThis.data.source.archerSkillRank[this.id];
+      case HeroKind.Tamer:
+        return globalThis.data.source.tamerSkillRank[this.id];
+      default:
+        return 0;
+    }
+  }
   //     for (let index = 0; index < this.attackLists.length; index++)
   //       this.attackLists[index] = [];
 
   //   }
 
-  //   get classSkill() {return globalThis.data.skill.classSkills[this.heroKind];}
+  get classSkill() {
+    return globalThis.data.skill.classSkills[this.heroKind];
+  }
 
   //   get type() {return SkillType.Attack;}
 
-  //   get element() {return Element.Physical;}
+  get element() {
+    return Element.Physical;
+  }
 
   //   get effectCenter() {return SkillEffectCenter.Target;}
 
@@ -60,19 +102,29 @@ export class SKILL {
 
   //   get baseCost() {return SkillParameter.skillCosts[this.heroKind][this.id][1];}
 
-  //   get initDamage() {return SkillParameter.skillFactors[this.heroKind][this.id][0];}
+  get initDamage() {
+    return SkillParameter.skillFactors[this.heroKind][this.id][0];
+  }
 
-  //   get incrementDamage() {return SkillParameter.skillFactors[this.heroKind][this.id][1];}
+  get incrementDamage() {
+    return SkillParameter.skillFactors[this.heroKind][this.id][1];
+  }
 
-  //   get initMpGain() {return SkillParameter.skillFactors[this.heroKind][this.id][2];}
+  get initMpGain() {
+    return SkillParameter.skillFactors[this.heroKind][this.id][2];
+  }
 
-  //   get incrementMpGain() {return SkillParameter.skillFactors[this.heroKind][this.id][3];}
+  get incrementMpGain() {
+    return SkillParameter.skillFactors[this.heroKind][this.id][3];
+  }
 
   //   get initMpConsume() {return SkillParameter.skillFactors[this.heroKind][this.id][4];}
 
   //   get incrementMpConsume() {return SkillParameter.skillFactors[this.heroKind][this.id][5];}
 
-  //   get initInterval() {return SkillParameter.skillFactors[this.heroKind][this.id][6];}
+  get initInterval() {
+    return SkillParameter.skillFactors[this.heroKind][this.id][6];
+  }
 
   //   get profDifficulty() {return SkillParameter.skillFactors[this.heroKind][this.id][7];}
 
@@ -90,13 +142,21 @@ export class SKILL {
 
   //   get maxDebuffChance() {return SkillParameter.skillFactors[this.heroKind][this.id][14];}
 
-  //   get initHitCount() {return SkillParameter.skillFactors[this.heroKind][this.id][15];}
+  get initHitCount() {
+    return SkillParameter.skillFactors[this.heroKind][this.id][15];
+  }
 
-  //   get incrementHitCount() {return SkillParameter.skillFactors[this.heroKind][this.id][16];}
+  get incrementHitCount() {
+    return SkillParameter.skillFactors[this.heroKind][this.id][16];
+  }
 
-  //   get maxHitCount() {return SkillParameter.skillFactors[this.heroKind][this.id][17];}
+  get maxHitCount() {
+    return SkillParameter.skillFactors[this.heroKind][this.id][17];
+  }
 
-  //   get isLog() {return globalThis.data.skill.isLog[this.heroKind];}
+  get isLog() {
+    return globalThis.data.skill.isLog[this.heroKind];
+  }
 
   //   IsUnlocked() {
   //     if (this.Rank() > 0)
@@ -110,40 +170,68 @@ export class SKILL {
 
   //   CanEquip() {return this.Rank() > 0 && this.IsUnlocked();}
 
-  //   IsEquipped(heroKind: HeroKind) {
-  //     skillSet: SkillSet = globalThis.data.battles[heroKind].skillSet;
-  //     if (!skillSet.IsEquipped(this))
-  //       return false;
-  //     return this.heroKind == heroKind ? Array.IndexOf<SKILL>(skillSet.currentSkillSet, this) < skillSet.currentEquippingNum : Array.IndexOf<SKILL>(skillSet.currentGlobalSkillSet, this) < skillSet.currentGlobalEquippingNum;
-  //   }
+  IsEquipped(heroKind: HeroKind) {
+    return false;
+    // let skillSet: SkillSet = globalThis.data.battles[heroKind].skillSet;
+    // if (!skillSet.IsEquipped(this))
+    //   return false;
+    // return this.heroKind == heroKind ? Array.IndexOf<SKILL>(skillSet.currentSkillSet, this) < skillSet.currentEquippingNum : Array.IndexOf<SKILL>(skillSet.currentGlobalSkillSet, this) < skillSet.currentGlobalEquippingNum;
+  }
 
-  //   IsActiveBuff(heroKind: HeroKind) {return this.IsEquipped(heroKind) && this.mp[heroKind] > 0.0;}
+  // IsActiveBuff(heroKind: HeroKind) {return this.IsEquipped(heroKind) && this.mp[heroKind] > 0.0;}
+  IsActiveBuff(heroKind: HeroKind) {
+    return true;
+  }
 
   //   Description() {return "";}
 
-  //   get levelBonus() {return globalThis.data.skill.skillLevelBonusValue[this.heroKind] + globalThis.data.skill.skillLevelBonusFromHolyArch[this.heroKind].Value();}
+  get levelBonus() {
+    if (this.isLog) {
+      return (
+        globalThis.data.skill.skillLevelBonus[this.heroKind].After() +
+        globalThis.data.skill.skillLevelBonusFromHolyArch[this.heroKind].Value()
+      );
+    } else {
+      return 0;
+    }
+  }
 
-  //   Level() {return this.Rank() <= 0 ? 0 : this.level + this.levelBonus;}
+  Level() {
+    return this.Rank() <= 0 ? 0 : this.level + this.levelBonus;
+  }
 
-  //   Rank() {return this.rank.value;}
+  Rank() {
+    return this.rank;
+  }
 
   //   MaxLevel() {return this.Rank() * 5;}
 
-  //   IncrementDamagePerLevel() {return this.incrementDamage * this.Rank();}
+  IncrementDamagePerLevel() {
+    return this.incrementDamage * this.Rank();
+  }
 
-  //   Damage() {return this.initDamage + this.IncrementDamagePerLevel() * this.Level();}
+  Damage() {
+    return this.initDamage + this.IncrementDamagePerLevel() * this.Level();
+  }
 
-  //   Interval() {return this.initInterval * Math.max(0.5, 1.0 - 0.0001 * this.Level());}
+  Interval() {
+    return this.initInterval * Math.max(0.5, 1.0 - 0.0001 * this.Level());
+  }
 
-  //   IncrementMpGainPerLevel() {return this.incrementMpGain * this.Rank();}
+  IncrementMpGainPerLevel() {
+    return this.incrementMpGain * this.Rank();
+  }
 
-  //   GainMp() {return this.initMpGain + this.IncrementMpGainPerLevel() * this.Level();}
+  GainMp() {
+    const value = this.initMpGain + this.IncrementMpGainPerLevel() * this.Level();
+    return this.isLog ? Math.log10(Math.max(1.0, value)) * this.HitCount() * (1.0 / Math.pow(0.1, 0.8)) : value;
+  }
 
-  //   GainMp(heroKind: HeroKind) {
-  //     if (this.GainMp() < 1.0)
-  //       return 0.0;
-  //     return this.isLog ? Math.log(Math.max(1.0, this.GainMp()), Multiplier.logBase) * this.HitCount() * (1.0 / Math.pow(this.Interval((BATTLE) globalThis.data.battles[heroKind].hero), 0.8)) : this.GainMp();
-  //   }
+  // GainMp(heroKind: HeroKind) {
+  //   if (this.GainMp() < 1.0)
+  //     return 0.0;
+  //   return this.isLog ? Math.log10(Math.max(1.0, this.GainMp())) * this.HitCount() * (1.0 / Math.pow(this.Interval( globalThis.data.battles[heroKind].hero), 0.8)) : this.GainMp();
+  // }
 
   //   ConsumeMp() {return this.type == SkillType.Buff ? 0.0 : this.initMpConsume + this.incrementMpConsume * this.Level();}
 
@@ -159,7 +247,12 @@ export class SKILL {
   //     return this.isLog ? 1.0 + 1.5 * Math.log(Math.max(1.0, this.initMpConsume + this.incrementMpConsume * this.Level()), 2.0) * (2.0 / this.Interval()) : this.initMpConsume + this.incrementMpConsume * this.Level();
   //   }
 
-  //   HitCount() {return Math.min(this.maxHitCount, (this.initHitCount + this.incrementHitCount * this.level)) + globalThis.data.skill.extraSkillHitCount[this.heroKind].Value();}
+  HitCount() {
+    return (
+      Math.min(this.maxHitCount, this.initHitCount + this.incrementHitCount * this.level) +
+      globalThis.data.skill.extraSkillHitCount[this.heroKind].Value()
+    );
+  }
 
   //   HitCountForPetAttack(heroKind: HeroKind) {
   //     if (globalThis.data.stats.heroes[heroKind].summonPetSlot.Value() < 1.0)
@@ -182,14 +275,26 @@ export class SKILL {
 
   //   RequiredProficiency() {return this.RequiredProficiency(this.level);}
 
-  //   Damage(myself: BATTLE, isDisplay = false) {
-  //     this.tempDamage[myself.heroKind] = !this.isLog ? (this.element != Element.Physical ? this.Damage() * myself.matk : this.Damage() * myself.atk) : (this.element != Element.Physical ? Math.log(Math.max(1.0, this.Damage()), Multiplier.logBase) + myself.matk : Math.log(Math.max(1.0, this.Damage()), Multiplier.logBase) + myself.atk);
-  //     this.tempDamage[myself.heroKind] *= globalThis.data.skill.ladyEmeldaEffectMultiplier[myself.heroKind].Value();
-  //     if (isDisplay)
-  //       return this.tempDamage[myself.heroKind] * globalThis.data.stats.ElementDamage(myself.heroKind, this.element).Value();
-  //     this.tempDamage[myself.heroKind] *= this.skillAbuseMpPercents[myself.heroKind];
-  //     return this.tempDamage[myself.heroKind];
-  //   }
+  Damage2(isDisplay = true) {
+    let myself = {
+      heroKind: this.heroKind,
+      matk: globalThis.data.stats.heroes[this.heroKind].basicStats[BasicStatsKind.MDEF].After(),
+      atk: globalThis.data.stats.heroes[this.heroKind].basicStats[BasicStatsKind.DEF].After(),
+    };
+    this.tempDamage[myself.heroKind] = !this.isLog
+      ? this.element != Element.Physical
+        ? this.Damage() * myself.matk
+        : this.Damage() * myself.atk
+      : this.element != Element.Physical
+      ? Math.log10(Math.max(1.0, this.Damage())) + myself.matk
+      : Math.log10(Math.max(1.0, this.Damage())) + myself.atk;
+    this.tempDamage[myself.heroKind] *= globalThis.data.skill.ladyEmeldaEffectMultiplier[myself.heroKind].Value();
+    // console.log(globalThis.data.stats.ElementDamage(myself.heroKind, this.element).Value());
+
+    if (isDisplay) return this.tempDamage[myself.heroKind] * globalThis.data.stats.ElementDamage(myself.heroKind, this.element).After();
+    // this.tempDamage[myself.heroKind] *= this.skillAbuseMpPercents[myself.heroKind];
+    return this.tempDamage[myself.heroKind];
+  }
 
   //   IncrementDamagePerLevel(myself: BATTLE, isDisplay = false) {
   //     num1 = this.IncrementDamagePerLevel();
@@ -203,9 +308,13 @@ export class SKILL {
 
   //   IncrementHealPointPerLevel() {return this.incrementDamage * this.Rank();}
 
-  //   BuffPercent() {return this.initDamage + this.IncrementBuffPercentPerLevel() * this.Level();}
+  BuffPercent() {
+    return this.initDamage + this.IncrementBuffPercentPerLevel() * this.Level();
+  }
 
-  //   IncrementBuffPercentPerLevel() {return this.incrementDamage * this.Rank();}
+  IncrementBuffPercentPerLevel() {
+    return this.incrementDamage * this.Rank();
+  }
 
   //   EffectValue() {return this.Damage();}
 

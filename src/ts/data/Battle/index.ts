@@ -7,6 +7,7 @@ import { EquipmentKind } from "../../type/EquipmentKind";
 
 import { Element } from "../../type/Element";
 import { SuperDungeonController } from "../SuperDungeon/SuperDungeonController";
+import { BATTLE } from "./BATTLE";
 
 export class BATTLE_CONTROLLER {
   heroKind: HeroKind;
@@ -16,7 +17,7 @@ export class BATTLE_CONTROLLER {
   //   monsters: MONSTER_BATTLE[] = new MONSTER_BATTLE[Parameter.maxMonsterSpawnNum];
   //   challengeMonsters: CHALLENGE_BATTLE[] = Array(Enums.ChallengeMonsterKind);
   heroesList = [];
-  //   monstersList: BATTLE[] = [];
+  monstersList: BATTLE[] = [];
   //   heroListArray: BATTLE[];
   //   monsterListArray: BATTLE[];
   //   areaBattle: AREA_BATTLE;
@@ -29,8 +30,9 @@ export class BATTLE_CONTROLLER {
   isSuperDungeon = true;
 
   constructor(heroKind: HeroKind) {
-    this.superDungeonCtrl = new SuperDungeonController(this);
     this.heroKind = heroKind;
+    this.superDungeonCtrl = new SuperDungeonController(this);
+    this.monstersList.push(new BATTLE(this));
     // if (this.heroKind == HeroKind.Warrior) {
 
     // }

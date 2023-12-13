@@ -32,7 +32,7 @@ export class DATA {
   currentHero: HeroKind = 0;
   source: SourceKind;
   ascension: DataAscension;
-  skill = new DataSkill();
+  skill: DataSkill;
   potion: DataPotion;
   alchemy = new DataAlchemy();
   expedition: DataExpedition;
@@ -73,12 +73,13 @@ export class DATA {
     this.nitro = new DataNitro();
     this.superStats = new SuperStatsController();
     this.quest = new QuestController();
+    this.skill = new DataSkill();
 
     for (let index = 0; index < this.battles.length; index++) {
       this.battles[index] = new BATTLE_CONTROLLER(index);
     }
 
-    // console.log(this.source.skillLoadoutIds);
+    // console.log(this.source.maxModifierCleareds);
 
     // console.log(globalThis.data.challenge.permanentRewardMultiplier);
     this.Start();

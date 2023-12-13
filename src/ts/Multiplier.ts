@@ -55,7 +55,7 @@ export class Multiplier {
 
     // console.log(this.maxValue());
     if (this.maxValue() != null) {
-      return Math.min(this.maxValue(), this.additive * this.multiplicative);
+      return Math.min(this.maxValue(), this.additive * this.multiplicative + this.after);
     } else {
       return this.additive * this.multiplicative + this.after;
     }
@@ -76,7 +76,10 @@ export class Multiplier {
 
   After() {
     this.Calculate();
-    return Math.log10(this.additive * this.multiplicative) + this.after;
+
+    const value = Math.log10(Math.max(this.additive * this.multiplicative, 1)) + this.after;
+    // if (this.modifiers[2].kind == 27) console.log("kind27 value", value);
+    return value >= 0 ? value : 0;
   }
 
   Calculate() {

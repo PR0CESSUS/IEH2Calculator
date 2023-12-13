@@ -14,28 +14,23 @@ export class SkillPassiveEffect {
   level: number;
   requiredLevel;
   effectKind: SkillPassiveEffectKind;
-  basicStatsKind: BasicStatsKind;
-  statsKind: Stats;
-  globalStatsKind: GlobalStats;
+  // basicStatsKind: BasicStatsKind;
+  // statsKind: Stats;
+  // globalStatsKind: GlobalStats;
   multiplierType: MultiplierType;
   value;
+  kind: number;
 
-  //   SkillPassiveEffect(
-  //     skill: SKILL,
-  //     requiredLevel,
-  //     basicStatsKind: BasicStatsKind,
-  //     multiplierType: MultiplierType,
-  //     value)
-  //   {
-  //     this.effectKind = SkillPassiveEffectKind.BasicStats;
-  //     this.skill = skill;
-  //     this.level = skill.level;
-  //     this.requiredLevel = requiredLevel;
-  //     this.basicStatsKind = basicStatsKind;
-  //     this.multiplierType = multiplierType;
-  //     this.value = value;
-  //     this.SetEffect();
-  //   }
+  constructor(skill: SKILL, requiredLevel, type: SkillPassiveEffectKind, kind: number, multiplierType: MultiplierType, value) {
+    this.effectKind = type;
+    this.skill = skill;
+    this.level = skill.level;
+    this.requiredLevel = requiredLevel;
+    this.kind = kind;
+    this.multiplierType = multiplierType;
+    this.value = value;
+    this.SetEffect();
+  }
 
   //   SkillPassiveEffect(
   //     skill: SKILL,
@@ -105,7 +100,7 @@ export class SkillPassiveEffect {
             () => this.EffectValue(index),
             () => this.IsActivated
           );
-          globalThis.data.stats.BasicStats(index, this.basicStatsKind).RegisterMultiplier(multiplierInfo);
+          globalThis.data.stats.BasicStats(index, this.kind).RegisterMultiplier(multiplierInfo);
         }
         break;
       case SkillPassiveEffectKind.HeroStats:
@@ -116,7 +111,7 @@ export class SkillPassiveEffect {
             () => this.EffectValue(index),
             () => this.IsActivated
           );
-          globalThis.data.stats.HeroStats(index, this.statsKind).RegisterMultiplier(multiplierInfo);
+          globalThis.data.stats.HeroStats(index, this.kind).RegisterMultiplier(multiplierInfo);
         }
         break;
       case SkillPassiveEffectKind.GlobalStats:
@@ -126,7 +121,7 @@ export class SkillPassiveEffect {
           () => this.value * globalThis.data.skill.skillPassiveShareFactors[this.skill.heroKind].Value(),
           () => this.IsActivated()
         );
-        globalThis.data.stats.globalStats[this.globalStatsKind].RegisterMultiplier(multiplierInfo1);
+        globalThis.data.stats.globalStats[this.kind].RegisterMultiplier(multiplierInfo1);
         break;
     }
   }

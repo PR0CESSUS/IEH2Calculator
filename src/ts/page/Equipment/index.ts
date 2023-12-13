@@ -10,6 +10,7 @@ export class Equipment {
   custom = {
     hero: 0,
     isSuperDungeon: false,
+    statsTab: "main",
   };
   set;
 
@@ -77,7 +78,7 @@ export class Equipment {
     // this.set = globalThis.data.inventory.getLoadout(this.custom.hero);
     // this.SetAgainAllEffect();
     // this.set.Weapon[0].SetAgainAllEffect();
-    const endpoint = `page['equipment'].logic.set`;
+
     html += `AE :<user-input data-endpoint="data.sdg.shopCtrl.itemList[0].purchasedNum"></user-input><br>`;
     html += `Floor Reward: <user-input data-endpoint="data.sdg.shopCtrl.itemList[1].purchasedNum"></user-input><br>`;
     html += `Diamond: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[12].level"></user-input><br>`;
@@ -118,6 +119,7 @@ export class Equipment {
 
     html += "</tbody></table>";
     html += `</div>`;
+    html += `<sd-simulator data-hero="${this.custom.hero}"></sd-simulator>`;
     html += `<hero-stat data-hero="${this.custom.hero}" data-superdungeon="${this.custom.isSuperDungeon}"></hero-stat>`;
     // html += `<div data-endpoint="page.${this.url.slice(1)}.set.Custom.html"></div>`;
     // html += `<button onclick="globalThis.app.page.${this.url.slice(1)}.Save()">Save</button>`;

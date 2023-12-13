@@ -31,7 +31,7 @@ export class Page {
     if (data == null && this.logic.custom != undefined) {
       localStorage.setItem(`CustomData-${this.url.slice(1)}`, JSON.stringify(this.logic.custom));
     } else {
-      this.logic.custom = JSON.parse(data);
+      this.logic.custom = { ...this.logic.custom, ...JSON.parse(data) };
       // if (this.url == "#equipment") console.log(data);
     }
     // this.Initialization();

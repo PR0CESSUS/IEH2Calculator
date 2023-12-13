@@ -71,7 +71,8 @@ export class DataStats {
 
   ModifiedExpGain(heroKind: HeroKind, areaKind) {
     return (
-      (this.HeroStats(heroKind, Stats.ExpGain).Value() / (1.0 + globalThis.data.area.expBonuses[globalThis.data.battle[heroKind].areaBattle.CurrentArea().kind].Value())) *
+      (this.HeroStats(heroKind, Stats.ExpGain).Value() /
+        (1.0 + globalThis.data.area.expBonuses[globalThis.data.battle[heroKind].areaBattle.CurrentArea().kind].Value())) *
       (1.0 + globalThis.data.area.expBonuses[areaKind].Value())
     );
   }
