@@ -1,0 +1,106 @@
+<template id="data-overview">
+    <style>
+        /* @import "./styles-bundle.css"; */
+        div {
+            margin: 0;
+            padding: 0;
+        }
+
+
+        ul {
+            display: inline-block;
+            margin-bottom: 20px;
+            margin-top: 0px;
+            margin-left: 0;
+            padding: 0;
+            font-size: 0;
+        }
+
+        li {
+            display: inline;
+            font-size: 14px;
+            background-color: yellowgreen;
+            background-image: linear-gradient(#1d3157, #16253f);
+            /* width: 310px; */
+            margin-left: 0px;
+            /* margin-bottom: 50px; */
+            padding: 5px 5px 10px 10px;
+            background-color: #1a2c4d;
+            border-style: outset;
+            border-width: 2px;
+
+            border-top-color: #5473ae;
+            border-bottom-color: #28457c;
+            border-left-color: #1b355d;
+            border-right-color: #235cbd;
+        }
+
+        .active {
+            color: yellow;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <div>
+
+
+        <ul>
+            <li name="main">Main</li>
+            <li name="gemritual">Gem Ritual</li>
+            <li name="rubyshop">Ruby Shop</li>
+            <li name="sdupgrade">SD Upgrade 1</li>
+
+        </ul>
+        <div name="main-content" class="hidden">
+            main
+        </div>
+        <div name="gemritual-content" class="hidden">
+
+            Sunstone: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[0].level"></user-input><br>
+            Morganite: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[1].level"></user-input><br>
+            Tanzanite: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[2].level"></user-input><br>
+            Heliodor: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[3].level"></user-input><br>
+            Peridot: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[4].level"></user-input><br>
+            Obsidian: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[5].level"></user-input><br>
+            Hackmanite: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[6].level"></user-input><br>
+            Turquoise: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[7].level"></user-input><br>
+            Kunzite: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[8].level"></user-input><br>
+            Carnelian: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[9].level"></user-input><br>
+            Blue Tarmaline: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[10].level"></user-input><br>
+            Amber: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[11].level"></user-input><br>
+            Diamond: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[12].level"></user-input><br>
+            Almadine: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[13].level"></user-input><br>
+            Emerald: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[14].level"></user-input><br>
+        </div>
+        <div name="rubyshop-content" class="hidden">
+            <div>
+                Artifact Effect :<user-input
+                    data-endpoint="data.sdg.shopCtrl.itemStatBonusList[0].purchasedNum"></user-input><br>
+                SD Max Floor Reward Multiplier: <user-input
+                    data-endpoint="data.sdg.shopCtrl.itemStatBonusList[1].purchasedNum"></user-input><br>
+                Gold Cap: <user-input
+                    data-endpoint="data.sdg.shopCtrl.itemStatBonusList[2].purchasedNum"></user-input><br>
+                Gold Gain: <user-input
+                    data-endpoint="data.sdg.shopCtrl.itemStatBonusList[3].purchasedNum"></user-input><br>
+                Slime Coin Cap: <user-input
+                    data-endpoint="data.sdg.shopCtrl.itemStatBonusList[4].purchasedNum"></user-input><br>
+                Guild EXP Gain: <user-input
+                    data-endpoint="data.sdg.shopCtrl.itemStatBonusList[5].purchasedNum"></user-input><br>
+                Taming Point Gain: <user-input
+                    data-endpoint="data.sdg.shopCtrl.itemStatBonusList[6].purchasedNum"></user-input><br>
+                Loyalty Point Gain: <user-input
+                    data-endpoint="data.sdg.shopCtrl.itemStatBonusList[7].purchasedNum"></user-input><br>
+                Town Research Power: <user-input
+                    data-endpoint="data.sdg.shopCtrl.itemStatBonusList[8].purchasedNum"></user-input><br>
+            </div>
+        </div>
+        <div name="content"></div>
+
+    </div>
+
+
+
+
+</template>

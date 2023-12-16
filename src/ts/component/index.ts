@@ -5,6 +5,7 @@ import { customSelect } from "./Select";
 import { customCheckbox } from "./Checkbox";
 import { Multiplier_Info, Multiplier_Info_Template } from "./multiplier";
 import { ComponentSDSimulator } from "./SDSimulator";
+import { ComponentDataOverview } from "./Data-Overview";
 
 export default function () {
   document.body.innerHTML += Multiplier_Info_Template;
@@ -15,4 +16,5 @@ export default function () {
   customElements.define("user-input", userInput);
   customElements.define("custom-select", customSelect);
   customElements.define("custom-checkbox", customCheckbox);
+  customElements.define("data-overview", ComponentDataOverview);
 }

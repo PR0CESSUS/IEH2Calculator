@@ -181,6 +181,7 @@ export type SourceKind = {
   equipment4thForgeValues: number[];
   equipment5thForgeValues: number[];
   equipment6thForgeValues: number[];
+  equipment7thForgeValues: number[];
   equipmentLevelsWarrior: number[];
   equipmentLevelsWizard: number[];
   equipmentLevelsAngel: number[];

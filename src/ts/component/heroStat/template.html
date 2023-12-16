@@ -1,8 +1,25 @@
 <template id="hero-stat">
     <style>
-        @import "./styles-bundle.css";
+        /* @import "./styles-bundle.css"; */
+
+        h3 {
+            margin-bottom: 10px;
+            margin-block-start: 0;
+            padding: 0;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+        }
+
+        h3::before {
+            position: relative;
+            content: "\25C6";
+            left: 0px;
+            top: 10px;
+            font-size: 11px;
+        }
 
         ul {
+            display: inline-block;
             margin-bottom: 20px;
             margin-top: 10px;
             margin-left: 0;
@@ -39,8 +56,7 @@
     </style>
     <div>
 
-        <button name="createSnapshot">Create Stat Snapshot</button>
-        <button name="add">Remove Equipment Enchantment</button>
+
         <ul>
             <li name="main">Main</li>
             <li name="attack">Attack</li>
@@ -51,7 +67,8 @@
             <li name="regions">Regions</li>
 
         </ul>
-
+        <button name="createSnapshot">Create Stat Snapshot</button>
+        <button name="add">Remove Equipment Enchantment</button>
         <div name="main-content" class="hidden">
             <h3>Main Stats</h3>
             <div style="width: 350px; display: inline-block; padding-right: 15px;">
@@ -69,7 +86,7 @@
                 <multiplier-info name="multiplier6">Equipment 3rd Enchantment Slot Chance</multiplier-info>
                 <multiplier-info name="equipment.effectMultiplier">Equipment Effect</multiplier-info>
             </div>
-            <div style="width: 350px; display: inline-block;" class="hidden">
+            <div style="width: 350px; display: inline-block; vertical-align: top;" class="hidden">
                 <multiplier-info name="hpRegenerate">HP Regeneration</multiplier-info>
                 <multiplier-info name="mpRegenerate">MP Regeneration</multiplier-info>
                 <multiplier-info name="blessingInfo.effectMultiplier">Blessing Effect</multiplier-info>

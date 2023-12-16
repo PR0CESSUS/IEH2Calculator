@@ -44,7 +44,8 @@ export class Page {
   }
 
   Save() {
-    if (this.logic.custom != undefined) localStorage.setItem(`CustomData-${this.url.slice(1)}`, JSON.stringify(this.logic.custom));
+    if (this.logic.custom != undefined && Object.keys(this.logic.custom).length != 0)
+      localStorage.setItem(`CustomData-${this.url.slice(1)}`, JSON.stringify(this.logic.custom));
     // let data = localStorage.getItem("CustomData");
     // if (data == null) {
     //   let custom = {

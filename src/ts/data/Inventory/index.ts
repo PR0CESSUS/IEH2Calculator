@@ -109,7 +109,7 @@ export class DataInventory {
           globalThis.data.source.equipment4thForgeValues[id],
           globalThis.data.source.equipment5thForgeValues[id],
           globalThis.data.source.equipment6thForgeValues[id],
-          globalThis.data.source.equipment6thForgeValues[id],
+          globalThis.data.source.equipment7thForgeValues[id],
         ],
       };
       this.equipmentSlots[index] = new Equipment(item);

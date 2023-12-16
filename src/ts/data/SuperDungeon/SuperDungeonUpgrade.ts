@@ -20,7 +20,9 @@ export class SuperDungeonUpgrade {
   get level() {
     return globalThis.data.source.superDungeonUpgradeLevels[this.kind];
   }
-
+  set level(value) {
+    globalThis.data.source.superDungeonUpgradeLevels[this.kind] = Math.min(value, this.maxLevel);
+  }
   Start() {
     this.SetEffect();
   }

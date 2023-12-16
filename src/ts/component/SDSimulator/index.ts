@@ -30,7 +30,7 @@ export class ComponentSDSimulator extends HTMLElement {
     this.hero = parseInt(this.dataset.hero);
     // console.log(this.dataset.hero);
 
-    this.dataStorage = new DataStorage(this, {
+    this.dataStorage = new DataStorage(this, "ComponentSDSimulator", {
       dungeon: 0,
       multiplier: 0,
       powerup: [0, 0, 0, 0, 0, 0, 0, 0],

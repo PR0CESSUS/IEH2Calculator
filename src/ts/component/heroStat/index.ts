@@ -26,7 +26,7 @@ export class ComponentHeroStat extends HTMLElement {
     this.hero = parseInt(this.dataset.hero);
     // console.log(this.dataset.hero);
 
-    this.dataStorage = new DataStorage(this, {
+    this.dataStorage = new DataStorage(this, "ComponentHeroStat", {
       tab: "main",
     });
 

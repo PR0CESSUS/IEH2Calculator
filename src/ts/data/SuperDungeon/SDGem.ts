@@ -19,7 +19,7 @@ export class SDGem {
   }
 
   set level(value) {
-    globalThis.data.source.sdGemLevels[this.kind] = value;
+    globalThis.data.source.sdGemLevels[this.kind] = Math.min(value, this.maxLevel);
   }
 
   get kind() {

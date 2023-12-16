@@ -56,6 +56,9 @@ export class DATA {
   sdg: SuperDungeonGlobalController;
   nitro: DataNitro;
   app: App;
+  custom = {
+    isSuperDungeon: false,
+  };
   constructor(app: App) {
     this.app = app;
     this.load();
@@ -110,6 +113,9 @@ export class DATA {
   }
 
   load() {
+    if (localStorage.getItem("CustomData") && localStorage.getItem("CustomData") != "undefined") {
+      this.custom = JSON.parse(localStorage.getItem("CustomData"));
+    }
     if (localStorage.getItem("SaveFileData") && localStorage.getItem("SaveFileData") != "undefined") {
       this.source = { ...new DataDefault(), ...JSON.parse(localStorage.getItem("SaveFileData")) };
 
@@ -123,6 +129,7 @@ export class DATA {
 
   save() {
     localStorage.setItem("SaveFileData", JSON.stringify(this.source));
+    localStorage.setItem("CustomData", JSON.stringify(this.custom));
   }
 
   get menu() {

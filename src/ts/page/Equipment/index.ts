@@ -53,6 +53,7 @@ export class Equipment {
     globalThis.data.inventory.equipmentSlots[offset + 48].SetAgainAllEffect();
     globalThis.data.inventory.equipmentSlots[offset + 48 + 1].SetAgainAllEffect();
     globalThis.data.inventory.equipmentSlots[offset + 48 + 2].SetAgainAllEffect();
+    globalThis.data.inventory.equipmentSlots[offset + 48 + 3].SetAgainAllEffect();
   }
 
   isDisabled(part: EquipmentPart, value) {
@@ -79,18 +80,19 @@ export class Equipment {
     // this.SetAgainAllEffect();
     // this.set.Weapon[0].SetAgainAllEffect();
 
-    html += `AE :<user-input data-endpoint="data.sdg.shopCtrl.itemList[0].purchasedNum"></user-input><br>`;
-    html += `Floor Reward: <user-input data-endpoint="data.sdg.shopCtrl.itemList[1].purchasedNum"></user-input><br>`;
-    html += `Diamond: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[12].level"></user-input><br>`;
-    html += `Emerald: <user-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[14].level"></user-input><br>`;
     // html += `Floor Reward: <user-input data-endpoint="data.sdg.shopCtrl.itemList[1].purchasedNum"></user-input><br>`;
+
     html += `<custom-select data-type="HeroKind" data-endpoint="page['equipment'].logic.custom.hero">${this.custom.hero}</custom-select>`;
-    html += `<custom-checkbox data-endpoint="page['equipment'].logic.custom.isSuperDungeon">Super Dungeon</custom-checkbox>`;
+    html += this.custom.isSuperDungeon
+      ? `Grade: ${globalThis.data.superStats.heroes[this.custom.hero].grade}`
+      : `Level: ${globalThis.data.stats.heroes[this.custom.hero].level}`;
+    // html += `<custom-checkbox data-endpoint="page['equipment'].logic.custom.isSuperDungeon">Super Dungeon</custom-checkbox>`;
+    html += `<custom-checkbox data-endpoint="data.custom.isSuperDungeon">Super Dungeon</custom-checkbox>`;
     html += "<div>";
     // weapons
     for (let i = 0; i < Enums.EquipmentPart; i++) {
       const part = EquipmentPart[i];
-      html += `<table class="equipment"><thead><tr><th colspan="4">${part}</th></tr></thead><tbody>`;
+      html += `<table class="equipment"><tbody>`;
       for (let index = 0; index < 24; index++) {
         let isDisabled = this.isDisabled(i, index) ? 'data-disabled="true"' : "";
 
@@ -107,7 +109,7 @@ export class Equipment {
     }
 
     // Utility
-    html += `<table class="equipment"><thead><tr><th style="font-size: 13px;">Utility</th></tr></thead><tbody>`;
+    html += `<table class="equipment"><tbody>`;
     for (let index = 0; index < 6; index++) {
       if (index % 2 == 0) html += `<tr style="height: 8px;"></tr>`;
       html += `<tr><td><equipment-info data-endpoint="data.inventory.potionSlots[${

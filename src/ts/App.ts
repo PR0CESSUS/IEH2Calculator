@@ -9,6 +9,7 @@ import { Test } from "./page/Test";
 import { Equipment } from "./page/Equipment";
 import { RubyShard } from "./page/RubyShard";
 import { Page } from "./page/Page";
+import { PageData } from "./page/Data";
 import component from "./component";
 
 export class App {
@@ -28,6 +29,7 @@ export class App {
     // this.page.push(new CalculatorExpedition(this));
     // this.page.push(new Test(this));
     // this.page.push(new Equipment(this));
+    this.addPage(new Page("#data", "Data", new PageData()));
     this.addPage(new Page("#expedition", "Expedition", new CalculatorExpedition()));
     this.addPage(new Page("#test", "Test", new Test()));
     this.addPage(new Page("#equipment", "Equipment", new Equipment()));

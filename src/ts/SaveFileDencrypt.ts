@@ -14,6 +14,7 @@ export class SaveFileDencrypt {
       ...JSON.parse(this.dencrypt(dataArray[1])),
       ...JSON.parse(this.dencrypt(dataArray[2])),
     };
+    // console.log(this.data);
     this.merge();
     this.cleanFile();
   }
@@ -88,7 +89,13 @@ export class SaveFileDencrypt {
     }
     let position = this.position;
 
-    let bytes = pbkdf2Sync(Buffer.from(decoder.decode(this.key)), decoder.decode(this.salt), this.iterationCount, position + byteCount, "sha1");
+    let bytes = pbkdf2Sync(
+      Buffer.from(decoder.decode(this.key)),
+      decoder.decode(this.salt),
+      this.iterationCount,
+      position + byteCount,
+      "sha1"
+    );
     this.position += byteCount;
     let result = Buffer.alloc(byteCount);
     for (let i = 0; i < byteCount; i++) {
