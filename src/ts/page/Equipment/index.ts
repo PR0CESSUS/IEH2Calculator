@@ -9,8 +9,6 @@ import { Enums } from "../../Enums";
 export class Equipment {
   custom = {
     hero: 0,
-    isSuperDungeon: false,
-    statsTab: "main",
   };
   set;
 
@@ -57,7 +55,7 @@ export class Equipment {
   }
 
   isDisabled(part: EquipmentPart, value) {
-    if (this.custom.isSuperDungeon == false) return false;
+    if (globalThis.data.custom.isSuperDungeon == false) return false;
     switch (part) {
       case EquipmentPart.Weapon:
         return globalThis.data.battles[this.custom.hero].superDungeonCtrl.eqWeaponSlotNum.value <= value;
@@ -83,7 +81,7 @@ export class Equipment {
     // html += `Floor Reward: <user-input data-endpoint="data.sdg.shopCtrl.itemList[1].purchasedNum"></user-input><br>`;
 
     html += `<custom-select data-type="HeroKind" data-endpoint="page['equipment'].logic.custom.hero">${this.custom.hero}</custom-select>`;
-    html += this.custom.isSuperDungeon
+    html += globalThis.data.custom.isSuperDungeon
       ? `Grade: ${globalThis.data.superStats.heroes[this.custom.hero].grade}`
       : `Level: ${globalThis.data.stats.heroes[this.custom.hero].level}`;
     // html += `<custom-checkbox data-endpoint="page['equipment'].logic.custom.isSuperDungeon">Super Dungeon</custom-checkbox>`;
@@ -122,7 +120,7 @@ export class Equipment {
     html += "</tbody></table>";
     html += `</div>`;
     // html += `<sd-simulator data-hero="${this.custom.hero}"></sd-simulator>`;
-    html += `<hero-stat data-hero="${this.custom.hero}" data-superdungeon="${this.custom.isSuperDungeon}"></hero-stat>`;
+    html += `<hero-stat data-hero="${this.custom.hero}" data-superdungeon="${globalThis.data.custom.isSuperDungeon}"></hero-stat>`;
     // html += `<div data-endpoint="page.${this.url.slice(1)}.set.Custom.html"></div>`;
     // html += `<button onclick="globalThis.app.page.${this.url.slice(1)}.Save()">Save</button>`;
     return html;
