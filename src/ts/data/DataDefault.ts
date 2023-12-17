@@ -82,11 +82,24 @@ export class DataDefault implements SourceKind {
   abilityPoints: number[];
   heroLevel: number[];
   isReceivedRewardsChallenge: boolean[];
-
+  angelSkillLevel: number[];
+  wizardSkillLevel: number[];
+  warriorSkillLevel: number[];
+  tamerSkillLevel: number[];
+  archerSkillLevel: number[];
+  thiefSkillLevel: number[];
+  maxModifierCleareds: number[];
   //ascensionMilestoneLevelReached
 
   sdGemLevels: number[];
   constructor() {
+    this.maxModifierCleareds = Array(200).fill(0);
+    this.warriorSkillLevel = Array(10).fill(0);
+    this.wizardSkillLevel = Array(10).fill(0);
+    this.angelSkillLevel = Array(10).fill(0);
+    this.thiefSkillLevel = Array(10).fill(0);
+    this.archerSkillLevel = Array(10).fill(0);
+    this.tamerSkillLevel = Array(10).fill(0);
     this.isReceivedRewardsChallenge = Array(1080).fill(false);
     this.heroLevel = Array(6).fill(0);
     this.abilityPoints = Array(6).fill(0);
