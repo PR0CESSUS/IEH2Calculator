@@ -89,10 +89,32 @@ export class DataDefault implements SourceKind {
   archerSkillLevel: number[];
   thiefSkillLevel: number[];
   maxModifierCleareds: number[];
+  superDungeonShopPurchasedNums: number[];
+  superDungeonUpgradeLevels: number[];
+  superDungeonMaxFloorsReached: number[];
+  superDungeonPowerupPurchasedNums: number[];
+  isClearedQuestsTitleWarrior: boolean[];
+  isClearedQuestsTitleWizard: boolean[];
+  isClearedQuestsTitleAngel: boolean[];
+  isClearedQuestsTitleThief: boolean[];
+  isClearedQuestsTitleArcher: boolean[];
+  isClearedQuestsTitleTamer: boolean[];
+  heroGrade: number[];
   //ascensionMilestoneLevelReached
 
   sdGemLevels: number[];
   constructor() {
+    this.heroGrade = Array(6).fill(0);
+    this.isClearedQuestsTitleWarrior = Array(139).fill(false);
+    this.isClearedQuestsTitleWizard = Array(139).fill(false);
+    this.isClearedQuestsTitleAngel = Array(139).fill(false);
+    this.isClearedQuestsTitleThief = Array(139).fill(false);
+    this.isClearedQuestsTitleArcher = Array(139).fill(false);
+    this.isClearedQuestsTitleTamer = Array(139).fill(false);
+    this.superDungeonPowerupPurchasedNums = Array(21).fill(0);
+    this.superDungeonMaxFloorsReached = Array(100).fill(0);
+    this.superDungeonUpgradeLevels = Array(61).fill(0);
+    this.superDungeonShopPurchasedNums = Array(200).fill(0);
     this.maxModifierCleareds = Array(200).fill(0);
     this.warriorSkillLevel = Array(10).fill(0);
     this.wizardSkillLevel = Array(10).fill(0);
