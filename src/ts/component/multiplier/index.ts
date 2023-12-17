@@ -81,6 +81,16 @@ export class Multiplier_Info extends HTMLElement {
       this.data.multiplicative,
       this.snapshot?.multiplicative
     );
+    this.shadowRoot.querySelector('[name="temporary-total"]').innerHTML = this.compare(
+      this.data.temp,
+      this.snapshot?.temp,
+      this.dataset.type ? this.dataset.type : "%"
+    );
+    this.shadowRoot.querySelector('[name="temporary-total-log"]').innerHTML = this.compare(
+      this.data.log,
+      this.snapshot?.log,
+      this.dataset.type ? this.dataset.type : "%"
+    );
     ///
     this.shadowRoot.querySelector('[name="value-total"]').innerHTML =
       this.dataset.superdungeon == "true"
@@ -96,6 +106,10 @@ export class Multiplier_Info extends HTMLElement {
 
     const afterValue = this.data.after > 0 || this.snapshot?.after > 0;
     if (!afterValue) (this.shadowRoot.querySelector('[name="after"]') as HTMLDivElement).style.display = "none";
+
+    if (this.dataset.superdungeon == "true") {
+      (this.shadowRoot.querySelector('[name="superdungeon"]') as HTMLDivElement).style.display = "block";
+    }
 
     ////
     const additiveList = this.shadowRoot.querySelector('[name="additive-list"]');

@@ -83,11 +83,12 @@ import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { Multiplier, MultiplierInfo } from "../../Multiplier";
 import { Potion } from "./Potion";
+import { Talisman } from "./Talisman";
 
 export class DataPotion {
   potions: any[];
   traps: any[];
-  talismans: any[];
+  talismans: Talisman[];
   globalInformations;
   maxStackNum: Multiplier;
   preventConsumeChance: Multiplier;

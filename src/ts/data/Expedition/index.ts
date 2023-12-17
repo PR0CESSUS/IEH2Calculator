@@ -10,7 +10,7 @@ import { Expedition_PetRank } from "./Expedition_PetRank";
 import { Expedition_WalkDistance } from "./Expedition_WalkDistance";
 import { ExpeditionGlobalInformation } from "./ExpeditionGlobalInformation";
 export class DataExpedition {
-  expeditions: any[] = [];
+  expeditions: ExpeditionGlobalInformation[] = [];
   expGainMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
   petExpGainMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
   speedMultiplier: Multiplier;
@@ -32,12 +32,12 @@ export class DataExpedition {
 
   constructor() {
     this.speedMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-    this.expeditions.push(new Expedition_Shard(this));
     this.expeditions.push(new Expedition_Brick(this));
-    this.expeditions.push(new Expedition_Equipment(this));
     this.expeditions.push(new Expedition_Log(this));
-    this.expeditions.push(new Expedition_PetExp(this));
+    this.expeditions.push(new Expedition_Shard(this));
     this.expeditions.push(new Expedition_PetRank(this));
+    this.expeditions.push(new Expedition_Equipment(this));
+    this.expeditions.push(new Expedition_PetExp(this));
     this.expeditions.push(new Expedition_WalkDistance(this));
   }
   TotalLevel() {

@@ -79,7 +79,19 @@ export class ComponentDataOverview extends HTMLElement {
           str += `<tr><td>${localization.name}: </td><td><user-input data-endpoint="data.sdg.upgradeCtrl.upgrade1ist[${index}].level"></user-input></td></tr>`;
         });
         break;
+      case "talisman":
+        globalThis.data.potion.talismans.forEach((upgrade, index) => {
+          const localization = Localization.PotionName(upgrade.kind);
+          str += `<tr><td>${localization}: </td><td><user-input data-endpoint="data.potion.talismans[${index}].disassembledNum"></user-input></td></tr>`;
+        });
+        break;
+      case "expedition":
+        globalThis.data.expedition.expeditions.forEach((expedition, index) => {
+          const localization = Localization.ExpeditionGlobalInformationString(expedition);
 
+          str += `<tr><td>${localization.name}: </td><td><user-input data-endpoint="data.expedition.expeditions[${index}].level"></user-input></td></tr>`;
+        });
+        break;
       default:
         break;
     }

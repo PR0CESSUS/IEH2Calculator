@@ -10,10 +10,16 @@ export class ExpeditionGlobalInformation {
     this.SetEffect();
   }
 
-  get level() {
+  get level(): number {
+    // if (this.kind == 0) console.log(globalThis.data.source.expeditionLevels[this.kind]);
+
     return globalThis.data.source.expeditionLevels[this.kind];
   }
+  set level(value: any) {
+    // console.log("set level expedition", this.kind, value);
 
+    globalThis.data.source.expeditionLevels[this.kind] = parseInt(value);
+  }
   // ExpGainPerSecPerPet() => 1.0 * this.expeditionCtrl.expGainMultiplier.Value();
 
   // PetExpGainPerSec() => 5.0 * (1.0 + 0.5 * this.level.value) * this.expeditionCtrl.petExpGainMultiplier.Value() * globalThis.data.stat.statsCtrl.MaxPetEXPGainAmongHeroes();

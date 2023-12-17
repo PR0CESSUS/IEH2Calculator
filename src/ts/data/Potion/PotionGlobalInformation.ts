@@ -55,7 +55,9 @@ export class PotionGlobalInformation {
   get disassembledNum() {
     return globalThis.data.source.potionDisassembledNums[this.kind];
   }
-
+  set disassembledNum(value) {
+    globalThis.data.source.potionDisassembledNums[this.kind] = value;
+  }
   constructor() {
     this.SetInfo();
   }

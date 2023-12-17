@@ -10,6 +10,8 @@ export class Multiplier {
   afterKind: { [key in keyof typeof MultiplierKind]: number } = {} as any;
   additive = 0;
   after = 0;
+  temp = 0;
+  log = 0;
   multiplicative = 1;
   maxValue: Function;
   minValue: Function;
@@ -36,7 +38,7 @@ export class Multiplier {
   }
 
   Snapshot() {
-    if (this.isDirty) this.Calculate();
+    this.Calculate();
     return {
       additive: this.additive,
       multiplicative: this.multiplicative,
@@ -46,6 +48,7 @@ export class Multiplier {
       afterKind: this.afterKind,
       Value: this.Value(),
       After: this.After(),
+      temp: this.temp,
     };
   }
 
@@ -77,9 +80,13 @@ export class Multiplier {
   After() {
     this.Calculate();
 
-    const value = Math.log10(Math.max(this.additive * this.multiplicative, 1)) + this.after;
+    const value = this.log + this.after;
     // if (this.modifiers[2].kind == 27) console.log("kind27 value", value);
-    return value >= 0 ? value : 0;
+    if (this.maxValue() != null) {
+      return Math.min(this.maxValue(), value);
+    } else {
+      return value;
+    }
   }
 
   Calculate() {
@@ -124,6 +131,11 @@ export class Multiplier {
           break;
       }
     }
+
+    this.temp = this.additive * this.multiplicative;
+
+    // TODO
+    this.log = this.modifiers[0].Value + Math.log10(this.temp);
     this.isDirty = false;
   }
 

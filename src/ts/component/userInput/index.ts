@@ -44,7 +44,7 @@ export default class userInput extends HTMLElement {
 
   inputChange(event: Event & { target: HTMLInputElement }) {
     // console.log(, this);
-    set(globalThis.app, this.dataset.endpoint, event.target.value);
+    set(globalThis.app, this.dataset.endpoint, parseFloat(event.target.value));
     globalThis.app.Save();
     // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;
     // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;

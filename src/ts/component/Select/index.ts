@@ -1,6 +1,7 @@
 import { Enums } from "../../Enums";
 import { Equipment } from "../../data/Equipment/Equipment";
 import { EquipmentPotion } from "../../data/Equipment/EquipmentPotion";
+import { Localization } from "../../localization";
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
 import { EquipmentKind } from "../../type/EquipmentKind";
 import { EquipmentPart } from "../../type/EquipmentPart";
@@ -44,8 +45,21 @@ export class customSelect extends HTMLElement {
   createOption() {
     let options = ``;
     if (this.dataset.type) {
-      for (let index = 0; index < Enums[this.dataset.type]; index++) {
-        options += `<option value="${index}" ${parseInt(this.innerHTML) == index ? "selected" : ""}>${this.type[index]}</option>`;
+      switch (this.dataset.type) {
+        case "HeroKind":
+          for (let index = 0; index < Enums[this.dataset.type]; index++) {
+            options += `<option value="${index}" ${parseInt(this.innerHTML) == index ? "selected" : ""}>${this.type[index]}</option>`;
+          }
+          break;
+        case "SDdungeon":
+          for (let index = 0; index < 5; index++) {
+            const isSelected = parseInt(this.innerHTML) == index ? "selected" : "";
+            options += `<option value="${index}" ${isSelected}>${Localization.SDName(index)}</option>`;
+          }
+
+          break;
+        default:
+          break;
       }
     } else {
       options = `<option value="0">Nothing</option>`;
@@ -68,7 +82,7 @@ export class customSelect extends HTMLElement {
     // console.log(, this);
     // console.log(event.target.value);
 
-    set(globalThis.app, this.dataset.endpoint, event.target.value);
+    set(globalThis.app, this.dataset.endpoint, parseInt(event.target.value));
     globalThis.app.Save();
     // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;
     // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;

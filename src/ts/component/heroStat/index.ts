@@ -85,7 +85,14 @@ export class ComponentHeroStat extends HTMLElement {
   createSnapshot() {
     // let data =
     // if (data == undefined) console.log("click");
-    let snapshot = { basicStats: [], stats: [], elementDamages: [], SD: { damageMultiplier: 0 }, monsterDamages: [] };
+    let snapshot = {
+      basicStats: [],
+      stats: [],
+      elementDamages: [],
+      SD: { damageMultiplier: 0 },
+      monsterDamages: [],
+      equipment: { effectMultiplier: undefined },
+    };
     this.data.basicStats.forEach((element, index) => {
       snapshot.basicStats[index] = element.Snapshot();
     });
@@ -111,6 +118,9 @@ export class ComponentHeroStat extends HTMLElement {
     SD.forEach((element) => {
       snapshot.SD[element] = this.dataSD[element].Snapshot();
     });
+
+    snapshot.equipment.effectMultiplier = globalThis.data.equipment.effectMultiplier.Snapshot();
+
     localStorage.setItem("snapshotStat", JSON.stringify(snapshot));
     globalThis.app.router.load();
   }
@@ -185,11 +195,16 @@ export class ComponentHeroStat extends HTMLElement {
     });
 
     this.getMultiplierInfo("blessingInfo.effectMultiplier").data = globalThis.data.blessingInfo.effectMultipliers[this.hero];
+    if (snapshot != undefined && snapshot?.equipment?.effectMultiplier != undefined)
+      this.getMultiplierInfo("equipment.effectMultiplier").snapshot = snapshot.equipment.effectMultiplier;
     this.getMultiplierInfo("equipment.effectMultiplier").data = globalThis.data.equipment.effectMultiplier;
     this.getMultiplierInfo("extraAfterDamage").data = this.data.extraAfterDamage;
 
     this.getMultiplierInfo("hpRegenerate").data = this.data.hpRegenerate;
     this.getMultiplierInfo("mpRegenerate").data = this.data.mpRegenerate;
+    this.getMultiplierInfo("optionEffectChance0").data = this.data.optionEffectChance[0];
+    this.getMultiplierInfo("optionEffectChance1").data = this.data.optionEffectChance[1];
+    this.getMultiplierInfo("optionEffectChance2").data = this.data.optionEffectChance[2];
     // attack tab
 
     // console.log(this.dataSD.damageMultiplier);
