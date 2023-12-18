@@ -139,7 +139,7 @@ export class ComponentHeroStat extends HTMLElement {
       // console.log(name, source);
       if (Array.isArray(element)) {
         element.forEach((stat, index) => {
-          this.renderMultiplier(`${name}${index}`, stat, snapshotData[index]);
+          this.renderMultiplier(`${name}${index}`, stat, snapshotData ? snapshotData[index] : undefined);
         });
       } else {
         // console.log(entry, snapshotData);
