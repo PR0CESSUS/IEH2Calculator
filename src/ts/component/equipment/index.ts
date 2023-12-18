@@ -139,11 +139,16 @@ export default class equipmentInfo extends HTMLElement {
         this.shadowRoot.querySelector('[name="setKind"]').innerHTML = `${
           EquipmentSetKind[globalThis.data.equipment.globalInformations[this.data.kind].setKind]
         } Set`;
-        // this.shadowRoot.querySelector('[name="setBonus"]').innerHTML = `[Effect Bonus ${
-        //   (this.data.EffectMultiplierFromSetItem() - 1) * 100
-        // }%]`;
+        this.shadowRoot.querySelector('[name="setBonus"]').innerHTML = `[Effect Bonus ${Util.convertTo(
+          this.data.EffectMultiplierFromSetItem(this.data.heroKind) - 1,
+          2,
+          "%"
+        )}]`;
         // const effects = globalThis.data.equipment.globalInformations[this.data.kind].effects;
-        // this.shadowRoot.querySelector('[name="setAmount"]').innerHTML = `${this.data.set.setBonus[this.data.setKind].size}`;
+        this.shadowRoot.querySelector('[name="setAmount"]').innerHTML = `${globalThis.data.inventory.SetItemEquippedNum(
+          this.data.setKind,
+          this.data.heroKind
+        )}`;
       }
 
       let string = "";

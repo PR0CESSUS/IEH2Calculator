@@ -94,6 +94,22 @@ export class Equipment {
     this.data.kind = value;
   }
 
+  get heroKind() {
+    if (this.slotId >= 4840 && this.slotId < 4912) {
+      return HeroKind.Warrior;
+    } else if (this.slotId >= 4912 && this.slotId < 4984) {
+      return HeroKind.Wizard;
+    } else if (this.slotId >= 4984 && this.slotId < 5056) {
+      return HeroKind.Angel;
+    } else if (this.slotId >= 4984 && this.slotId < 5056) {
+      return HeroKind.Thief;
+    } else if (this.slotId >= 5056 && this.slotId < 5128) {
+      return HeroKind.Archer;
+    } else if (this.slotId >= 5128 && this.slotId < 5200) {
+      return HeroKind.Tamer;
+    }
+  }
+
   Start() {
     // this.CalculateRequiredLevel();
     // this.CalculateRequiredAbilityPoint();

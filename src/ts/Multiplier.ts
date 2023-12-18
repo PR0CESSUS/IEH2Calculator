@@ -1,3 +1,4 @@
+import { ConvertType } from "./type/ConvertType";
 import { MultiplierKind } from "./type/MultiplierKind";
 import { MultiplierType } from "./type/MultiplierType";
 import { convertTo } from "./Util/convertTo";
@@ -12,17 +13,15 @@ export class Multiplier {
   after = 0;
   temp = 0;
   log = 0;
+  isLog: boolean = false;
+  numberType: ConvertType = ConvertType.Percent;
   multiplicative = 1;
   maxValue: Function;
   minValue: Function;
   constructor(
     multiplier: MultiplierInfo = new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
-    maxValue: Function = () => {
-      return null;
-    },
-    minValue: Function = () => {
-      return null;
-    }
+    maxValue: Function = () => 1e300,
+    minValue: Function = () => 0
   ) {
     // Func<double> maxValue = null, Func<double> minValue = null
     this.maxValue = maxValue;
@@ -54,14 +53,12 @@ export class Multiplier {
 
   Value() {
     this.Calculate();
-    // console.log(this);
 
-    // console.log(this.maxValue());
-    if (this.maxValue() != null) {
-      return Math.min(this.maxValue(), this.additive * this.multiplicative + this.after);
-    } else {
-      return this.additive * this.multiplicative + this.after;
-    }
+    return Math.max(this.minValue(), Math.min(this.maxValue(), this.TotalValue()));
+  }
+
+  TotalValue() {
+    return this.BeforeTotalValue(this.isLog) + this.After();
   }
 
   RegisterMultiplier(modifier: MultiplierInfo) {
@@ -80,13 +77,7 @@ export class Multiplier {
   After() {
     this.Calculate();
 
-    const value = this.log + this.after;
-    // if (this.modifiers[2].kind == 27) console.log("kind27 value", value);
-    if (this.maxValue() != null) {
-      return Math.min(this.maxValue(), value);
-    } else {
-      return value;
-    }
+    return this.after;
   }
 
   Calculate() {
@@ -132,11 +123,32 @@ export class Multiplier {
       }
     }
 
-    this.temp = this.additive * this.multiplicative;
+    this.temp = this.BeforeTotalValue(false);
+    this.log = this.BeforeTotalValue(true);
+    // TODO liczenie log dla normal i procent
 
-    // TODO
-    this.log = this.modifiers[0].Value + Math.log10(this.temp);
     this.isDirty = false;
+  }
+
+  BeforeTotalValue(isLog: boolean) {
+    if (isLog) {
+      let a = this.additive * this.multiplicative;
+      switch (this.numberType) {
+        case ConvertType.Normal:
+          return a < 1.0 ? a : this.modifiers[0].Value + Math.log10(a);
+        case ConvertType.Percent:
+          return this.modifiers[0].Value >= 1.0
+            ? a < 1.0
+              ? a
+              : this.modifiers[0].Value + Math.log10(a)
+            : a < 0.01
+            ? a
+            : this.modifiers[0].Value + Math.log10(a * 100.0) / 100.0;
+        case ConvertType.Meter:
+          return a < 100.0 ? a : this.modifiers[0].Value + Math.log10(a / 100.0) * 100.0;
+      }
+    }
+    return this.additive * this.multiplicative;
   }
 
   get html() {

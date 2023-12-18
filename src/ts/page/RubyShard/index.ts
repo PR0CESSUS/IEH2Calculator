@@ -55,7 +55,7 @@ export class RubyShard {
     html += `Modifier: <user-input data-endpoint="${this.endpoint}.custom.modifier"></user-input>`;
     html += `Floors Cleared: <user-input data-endpoint="${this.endpoint}.custom.floor"></user-input>`;
     html += `<br>`;
-    html += `Shard per Dungeon : ${this.getShardsGain()}<br>`;
+    html += `Ruby Shard per Dungeon : ${this.getShardsGain()}<br>`;
     html += `Failure Rate % : <user-input data-endpoint="${this.endpoint}.custom.failure"></user-input> (Total Ruby Shards = Total Ruby Shards - Total Ruby Shards * failure rate)<br>`;
     html += `Tickets : <user-input data-endpoint="${this.endpoint}.custom.ticket"></user-input><br>`;
     html += `Reset Value : <user-input data-endpoint="${this.endpoint}.custom.reset"></user-input><br>`;

@@ -104,6 +104,7 @@ export class DataDefault implements SourceKind {
 
   sdGemLevels: number[];
   constructor() {
+    // TODO marge with sourceType
     this.heroGrade = Array(6).fill(0);
     this.isClearedQuestsTitleWarrior = Array(139).fill(false);
     this.isClearedQuestsTitleWizard = Array(139).fill(false);

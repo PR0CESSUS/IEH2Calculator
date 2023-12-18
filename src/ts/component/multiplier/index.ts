@@ -18,6 +18,7 @@ export const Multiplier_Info_Template = template;
 export class Multiplier_Info extends HTMLElement {
   #data: Multiplier;
   #snapshot;
+  #isLog: boolean;
   constructor() {
     super();
 
@@ -42,6 +43,8 @@ export class Multiplier_Info extends HTMLElement {
 
   set data(value: Multiplier) {
     this.#data = value;
+
+    this.#data.isLog = this.dataset.islog == "false" ? false : this.dataset.superdungeon == "true" ? true : false;
     // value.Calculate();
     this.render();
   }
@@ -94,7 +97,7 @@ export class Multiplier_Info extends HTMLElement {
     ///
     this.shadowRoot.querySelector('[name="value-total"]').innerHTML =
       this.dataset.superdungeon == "true"
-        ? this.compare(this.data.After(), this.snapshot?.After, this.dataset.type ? this.dataset.type : "%")
+        ? this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%")
         : this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%");
 
     ///
@@ -175,7 +178,7 @@ export class Multiplier_Info extends HTMLElement {
       // console.log(this.shadowRoot.querySelector('[name="value"]').innerHTML);
       this.shadowRoot.querySelector('[name="value"]').innerHTML =
         this.dataset.superdungeon == "true"
-          ? this.compare(this.data.After(), this.snapshot?.After, this.dataset.type ? this.dataset.type : "%")
+          ? this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%")
           : this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%");
       this.renderTooltip();
     }

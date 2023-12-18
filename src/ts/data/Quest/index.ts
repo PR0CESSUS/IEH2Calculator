@@ -790,7 +790,7 @@ export class QuestController {
             MultiplierType.Add,
             () => this.TitleEffectValue(index, kind).main
           );
-          // TODO
+          // TODO backgroundGainRate
           //   globalThis.data.guild.Member(index).backgroundGainRate.RegisterMultiplier(multiplierInfo);
         }
         break;
