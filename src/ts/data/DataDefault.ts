@@ -103,10 +103,20 @@ export class DataDefault implements SourceKind {
   heroGrade: number[];
   superDungeonPowerupIsUnlocked: boolean[];
   //ascensionMilestoneLevelReached
-
+  rebirthUpgradeLevelsWarrior?: number[];
+  rebirthUpgradeLevelsWizard?: number[];
+  rebirthUpgradeLevelsAngel?: number[];
+  rebirthUpgradeLevelsArcher?: number[];
+  rebirthUpgradeLevelsTamer?: number[];
   sdGemLevels: number[];
   constructor() {
     // TODO marge with sourceType
+    this.rebirthUpgradeLevelsWarrior = Array(52).fill(0);
+    this.rebirthUpgradeLevelsWizard = Array(52).fill(0);
+    this.rebirthUpgradeLevelsAngel = Array(52).fill(0);
+    this.rebirthUpgradeLevelsTamer = Array(52).fill(0);
+    this.rebirthUpgradeLevelsArcher = Array(52).fill(0);
+    this.rebirthUpgradeLevelsTamer = Array(52).fill(0);
     this.heroGrade = Array(6).fill(0);
     this.superDungeonPowerupIsUnlocked = Array(Enums.SuperDungeonPowerupKind).fill(false);
     this.isClearedQuestsTitleWarrior = Array(139).fill(false);
