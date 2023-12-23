@@ -92,6 +92,7 @@ export class Equipment {
 
   set kind(value) {
     this.data.kind = value;
+    this.SetAgainAllEffect();
   }
 
   get heroKind() {
@@ -111,7 +112,7 @@ export class Equipment {
   }
 
   Start() {
-    // this.CalculateRequiredLevel();
+    this.CalculateRequiredLevel();
     // this.CalculateRequiredAbilityPoint();
   }
 
@@ -207,6 +208,12 @@ export class Equipment {
 
   IsEffectRegisteredClear() {
     // TODO
+    // console.log(this.isEffectRegistered);
+
+    this.isEffectRegistered.forEach((effect) => {
+      effect();
+    });
+    this.isEffectRegistered = [];
     // clearing alredy set enchatments
     // for (let index = 0; index < this.isEffectRegistered.length; index++) this.isEffectRegistered[index] = false;
     // this.isMasteryEffectRegistered = false;
@@ -222,7 +229,7 @@ export class Equipment {
         // console.log("s", index, this.IsEquipped(index), this.slotId);
 
         this.SetEffectBase(index);
-        this.SetMasteryEffect();
+        this.SetMasteryEffect(index);
         // console.log("set again");
         // globalThis.app.router.load();
 
@@ -267,30 +274,34 @@ export class Equipment {
         return false;
     }
   }
-  SetMasteryEffect() {
-    if (this.kind == EquipmentKind.Nothing || this.isMasteryEffectRegistered) return;
-    for (let index1 = 0; index1 < Enums.HeroKind; index1++) {
-      for (let index2 = 0; index2 < this.globalInfo.levelMaxEffects.length; index2++) {
-        let count = index2;
+  SetMasteryEffect(heroKind: HeroKind) {
+    if (this.kind == EquipmentKind.Nothing) return;
+
+    for (let index = 0; index < this.globalInfo.levelMaxEffects.length; index++) {
+      if (this.globalInfo.levelMaxEffects[index].kind == 0) continue;
+      this.isEffectRegistered.push(
         this.SetEffect(
-          index1,
-          this.globalInfo.levelMaxEffects[count].kind,
-          () => this.globalInfo.levelMaxEffects[count].EffectValue(0),
-          () => this.globalInfo.levels[count].isMaxed
-        );
-      }
+          heroKind,
+          this.globalInfo.levelMaxEffects[index].kind,
+          () => this.globalInfo.levelMaxEffects[index].EffectValue(0),
+          () => this.globalInfo.levels[index].isMaxed
+        )
+      );
     }
-    this.isMasteryEffectRegistered = true;
   }
 
   SetEffectBase(heroKind: HeroKind) {
-    if (this.kind == EquipmentKind.Nothing || this.isEffectRegistered[heroKind]) return;
+    if (this.kind == EquipmentKind.Nothing) return;
     for (let index = 0; index < this.globalInfo.effects.length; index++) {
       // this.SetEffect(heroKind, this.globalInfo.effects[index].kind, () => this.OriginalEffectValue(index));
       this.isEffectRegistered.push(this.SetEffect(heroKind, this.globalInfo.effects[index].kind, () => this.OriginalEffectValue(index)));
     }
     for (let index = 0; index < this.optionEffects.length; index++) {
-      this.SetEffect(heroKind, this.optionEffects[index].kind, () => this.optionEffects[index].effectValue);
+      if (this.optionEffects[index].kind != 0)
+        this.isEffectRegistered.push(this.SetEffect(heroKind, this.optionEffects[index].kind, () => this.optionEffects[index].effectValue));
+
+      //
+      // this.SetEffect(heroKind, this.optionEffects[index].kind, () => this.optionEffects[index].effectValue);
     }
     // this.isEffectRegistered[heroKind] = true;
     // console.log(this.isEffectRegistered[heroKind]);
@@ -372,4 +383,23 @@ export class Equipment {
   }
 
   SetEffect = SetEffect;
+
+  CalculateRequiredLevel() {
+    let val2_1 = 0;
+    if (this.globalInfo.isArtifact) val2_1 = this.globalInfo.requiredAbilities[0].requiredValue;
+    for (let index = 0; index < this.optionEffects.length; index++) {
+      if (this.optionEffects[index].isAfter) val2_1 += this.optionEffects[index].RequiredLevelIncrement();
+    }
+    this.requiredGradeWithoutForge = Math.max(0, val2_1);
+    if (this.globalInfo.isArtifact) val2_1 -= this.forgeEffects[0].EffectValue();
+    this.requiredGrade = Math.max(0, val2_1);
+    let val2_2 = 0;
+    if (!this.globalInfo.isArtifact) val2_2 = this.globalInfo.requiredAbilities[0].requiredValue;
+    for (let index = 0; index < this.optionEffects.length; index++) {
+      if (!this.optionEffects[index].isAfter) val2_2 += this.optionEffects[index].RequiredLevelIncrement();
+    }
+    this.requiredLevelWithoutForge = Math.max(0, val2_2);
+    if (!this.globalInfo.isArtifact) val2_2 -= this.forgeEffects[0].EffectValue();
+    this.requiredLevel = Math.max(0, val2_2);
+  }
 }

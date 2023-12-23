@@ -31,7 +31,24 @@ export default class equipmentInfo extends HTMLElement {
     this.attachShadow({ mode: "open" }).appendChild(
       (document.getElementById("equipment-info") as HTMLTemplateElement).content.cloneNode(true)
     );
-    (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${this.slotKind[this.data.kind]}.png`;
+
+    if (this.data.kind == 0) {
+      switch (this.slotType) {
+        case "Weapon":
+          (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/EquipSlotWeapon.png`;
+          break;
+        case "Armor":
+          (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/EquipSlotArmor.png`;
+          break;
+        case "Jewelry":
+          (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/EquipSlotJewelry.png`;
+          break;
+        default:
+          break;
+      }
+    } else {
+      (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${this.slotKind[this.data.kind]}.png`;
+    }
 
     if (this.dataset.disabled) (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).classList.add("disabled");
     this.shadowRoot.querySelector(".icon48").addEventListener("click", this.openEdit.bind(this));
@@ -60,6 +77,7 @@ export default class equipmentInfo extends HTMLElement {
   }
 
   openEdit() {
+    if (this.dataset.disabled == "true") return;
     this.render(true);
     const modal = document.createElement("div");
     modal.id = "modal";
@@ -71,6 +89,7 @@ export default class equipmentInfo extends HTMLElement {
       this.shadowRoot.getElementById("modal").remove();
       (this.shadowRoot.querySelector('[name="kind"]') as HTMLSelectElement).disabled = true;
       // this.parentElement.remove();
+      globalThis.app.router.load();
     };
     const content = document.createElement("div");
     content.classList.add("modal-content");
@@ -194,9 +213,31 @@ export default class equipmentInfo extends HTMLElement {
       this.shadowRoot.querySelector(`[name="proficiency-level-${HeroKind[index]}"]`).innerHTML = `Lv ${
         globalThis.data.equipment.globalInformations[this.data.kind].levels[index].value
       }`;
+
+      let enchantSlot = 0;
+      switch (this.data.globalInfo.rarity) {
+        case EquipmentRarity.Epic:
+          enchantSlot = 3;
+          break;
+        case EquipmentRarity.Rare:
+        case EquipmentRarity.SuperRare:
+          enchantSlot = 2;
+          break;
+        default:
+          enchantSlot = 1;
+          break;
+      }
+
+      globalThis.data.equipment.globalInformations[this.data.kind].levelMaxEffects[index].kind == 0
+        ? value
+        : Util.convertTo(value, 2, effect.valueKind);
       this.shadowRoot.querySelector(`[name="proficiency-effect-${HeroKind[index]}"]`).innerHTML = `[${Localization.EquipmentEffectName(
         globalThis.data.equipment.globalInformations[this.data.kind].levelMaxEffects[index].kind
-      )} + ${Util.convertTo(value, 2, effect.valueKind)}] 
+      )} + ${
+        globalThis.data.equipment.globalInformations[this.data.kind].levelMaxEffects[index].kind == 0
+          ? enchantSlot
+          : Util.convertTo(value, 2, effect.valueKind)
+      }] 
         `;
     });
 
@@ -209,13 +250,28 @@ export default class equipmentInfo extends HTMLElement {
     let counter = 0;
     this.data.forgeEffects.forEach((slot, index) => {
       const input = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.data.slotId}].forgeEffects[${index}].effectValue"></user-input>`;
+      const forgeEffect = globalThis.data.inventory.equipmentSlots[this.data.slotId].forgeEffects[index];
       // if (this.data.slotId == 5128) {
       //   console.log(slot);
       // }
 
       if (slot.IsForged()) {
         counter++;
-        string += `<p class="orange">- ${slot.html} ${edit ? input : ""}</p>`;
+        globalThis.data.inventory.equipmentSlots[this.data.slotId].CalculateRequiredLevel();
+        if (this.data.slotId == 4984) {
+          console.log(
+            this.data.requiredLevel,
+            this.data.requiredGrade,
+            this.data.requiredGradeWithoutForge,
+            this.data.requiredLevelWithoutForge
+          );
+        }
+        string += `<p class="orange">- ${Localization.ForgeEffectString(
+          forgeEffect.kind,
+          forgeEffect.effectValue,
+          globalThis.data.inventory.equipmentSlots[this.data.slotId].RequiredLevel(true, false),
+          globalThis.data.inventory.equipmentSlots[this.data.slotId].globalInfo.isArtifact
+        )} ${edit ? input : ""}</p>`;
       }
     });
 

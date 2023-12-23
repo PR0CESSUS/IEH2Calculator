@@ -137,6 +137,36 @@ export class DataInventory {
     // this.setItemEquippedNums[0][0] = 7;
   }
 
+  getHeroBySlotId(slotId) {
+    if (slotId >= 4840 && slotId < 4912) {
+      return HeroKind.Warrior;
+    } else if (slotId >= 4912 && slotId < 4984) {
+      return HeroKind.Wizard;
+    } else if (slotId >= 4984 && slotId < 5056) {
+      return HeroKind.Angel;
+    } else if (slotId >= 5056 && slotId < 5128) {
+      return HeroKind.Thief;
+    } else if (slotId >= 5128 && slotId < 5200) {
+      return HeroKind.Archer;
+    } else if (slotId >= 5200 && slotId < 5272) {
+      return HeroKind.Tamer;
+    }
+  }
+
+  getPartBySlotId(slotId) {
+    const heroKind = this.getHeroBySlotId(slotId);
+    const slot = slotId - this.getOffset(heroKind);
+    // console.log(slotId, this.getOffset(heroKind), slot);
+
+    if (slot < 24) {
+      return EquipmentPart.Weapon;
+    } else if (slot >= 24 && slot < 48) {
+      return EquipmentPart.Armor;
+    } else {
+      return EquipmentPart.Jewelry;
+    }
+  }
+
   getSetPart(heroKind: HeroKind = HeroKind.Warrior, part: EquipmentPart = EquipmentPart.Weapon) {
     let offset = this.getOffset(heroKind) + this.getPartOffset(part);
     return this.equipmentSlots.slice(offset, offset + 24);

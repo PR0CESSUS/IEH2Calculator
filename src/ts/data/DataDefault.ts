@@ -1,3 +1,4 @@
+import { Enums } from "../Enums";
 import { SourceKind } from "../type/SourceKind";
 
 export class DataDefault implements SourceKind {
@@ -100,12 +101,14 @@ export class DataDefault implements SourceKind {
   isClearedQuestsTitleArcher: boolean[];
   isClearedQuestsTitleTamer: boolean[];
   heroGrade: number[];
+  superDungeonPowerupIsUnlocked: boolean[];
   //ascensionMilestoneLevelReached
 
   sdGemLevels: number[];
   constructor() {
     // TODO marge with sourceType
     this.heroGrade = Array(6).fill(0);
+    this.superDungeonPowerupIsUnlocked = Array(Enums.SuperDungeonPowerupKind).fill(false);
     this.isClearedQuestsTitleWarrior = Array(139).fill(false);
     this.isClearedQuestsTitleWizard = Array(139).fill(false);
     this.isClearedQuestsTitleAngel = Array(139).fill(false);

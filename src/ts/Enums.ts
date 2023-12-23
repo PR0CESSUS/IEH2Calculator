@@ -20,6 +20,7 @@ import { MultiplierKind } from "./type/MultiplierKind";
 import { TitleKind } from "./type/TitleKind";
 import { SkillKindWarrior } from "./type/SkillKindWarrior";
 import { EquipmentEffectKind } from "./type/EquipmentEffectKind";
+import { RebirthUpgradeKind } from "./type/RebirthUpgradeKind";
 
 export const Enums = {
   HeroKind: Object.entries(HeroKind).length / 2,
@@ -44,6 +45,7 @@ export const Enums = {
   TitleKind: Object.entries(TitleKind).length / 2,
   SkillKindWarrior: Object.entries(SkillKindWarrior).length / 2,
   EquipmentEffectKind: Object.entries(EquipmentEffectKind).length / 2,
+  RebirthUpgradeKind: Object.entries(RebirthUpgradeKind).length / 2,
 };
 
 export const Enum = {

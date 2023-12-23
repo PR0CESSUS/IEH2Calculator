@@ -27,6 +27,7 @@ import { BATTLE_CONTROLLER } from "./data/Battle";
 import { HeroKind } from "./type/HeroKind";
 import { SuperStatsController } from "./data/SuperStats";
 import { QuestController } from "./data/Quest";
+import { DataEpicStore } from "./data/EpicStore";
 
 export class DATA {
   currentHero: HeroKind = 0;
@@ -35,6 +36,7 @@ export class DATA {
   skill: DataSkill;
   potion: DataPotion;
   alchemy = new DataAlchemy();
+  epicStore: DataEpicStore;
   expedition: DataExpedition;
   town: DataTown;
   stats: DataStats;
@@ -77,6 +79,7 @@ export class DATA {
     this.superStats = new SuperStatsController();
     this.quest = new QuestController();
     this.skill = new DataSkill();
+    this.epicStore = new DataEpicStore();
 
     for (let index = 0; index < this.battles.length; index++) {
       this.battles[index] = new BATTLE_CONTROLLER(index);
@@ -89,6 +92,12 @@ export class DATA {
     // console.log(globalThis.data.source.abilityPoints);
     // console.log(globalThis.data.source.superDungeonMaxFloorsReached);
     // console.log(globalThis.data.source.maxModifierCleareds);
+    // const HERO = HeroKind.Angel;
+    // console.log(HeroKind[HERO]);
+    // console.log("equipWeaponUnlockedNum ", globalThis.data.inventory.equipWeaponUnlockedNum[HERO].Value());
+    // console.log("equipArmorUnlockedNum ", globalThis.data.inventory.equipArmorUnlockedNum[HERO].Value());
+    // console.log("equipJewelryUnlockedNum ", globalThis.data.inventory.equipJewelryUnlockedNum[HERO].Value());
+    // console.log("eqWeaponSlotNum ", globalThis.data.battles[HERO].superDungeonCtrl.eqWeaponSlotNum.Value());
   }
 
   get battle() {
@@ -110,6 +119,7 @@ export class DATA {
       this.battles[index].Start();
     }
     this.quest.Start();
+    this.rebirth.Start();
   }
 
   load() {

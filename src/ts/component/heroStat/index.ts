@@ -56,7 +56,8 @@ export class ComponentHeroStat extends HTMLElement {
     // console.log(this.data);
     // console.log(this.dataSD);
     (this.shadowRoot.querySelector('[name="createSnapshot"]') as HTMLButtonElement).onclick = this.createSnapshot.bind(this);
-    (this.shadowRoot.querySelector('[name="add"]') as HTMLButtonElement).onclick = this.xxx.bind(this);
+    (this.shadowRoot.querySelector('[name="add"]') as HTMLButtonElement).onclick = this.testAdd.bind(this);
+    (this.shadowRoot.querySelector('[name="remove"]') as HTMLButtonElement).onclick = this.testRemove.bind(this);
 
     this.render();
     // console.log("heroStat constructor after render");
@@ -75,8 +76,43 @@ export class ComponentHeroStat extends HTMLElement {
     this.dataStorage.Save();
     // console.log(this.dataStorage.data.tab);
   }
+  testRemove() {
+    console.log("test Remove");
 
-  xxx() {
+    const offset = 4840 + this.heroKind * 72;
+    // console.log(offset);
+    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered.reverse();
+    // console.log(globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered);
+    // console.log(globalThis.data.inventory.equipmentSlots[offset].globalInfo.levelMaxEffects);
+    globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered[0]();
+    // console.log();
+
+    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered.forEach((effect) => {
+    //   effect();
+    // });
+    // console.log(globalThis.data.stats.heroes[this.heroKind].basicStats[BasicStatsKind.DEF]);
+
+    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered = [];
+    // console.log(globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered);
+    // console.log("modifiers.length", globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.modifiers.length);
+    // console.log("modifiers.length", globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier);
+    globalThis.app.router.load();
+  }
+  testAdd() {
+    console.log("test Add");
+    const offset = 4840 + this.heroKind * 72;
+    globalThis.data.inventory.equipmentSlots[offset].SetAgainAllEffect();
+    // console.log(offset);
+    // console.log(globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered);
+    // console.log(globalThis.data.inventory.equipmentSlots[offset].globalInfo.levelMaxEffects);
+
+    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered.forEach((effect) => {
+    //   effect();
+    // });
+    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered = [];
+    // console.log(globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered);
+    // console.log("modifiers.length", globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.modifiers.length);
+    // console.log("modifiers.length", globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier);
     globalThis.app.router.load();
   }
 
@@ -112,10 +148,10 @@ export class ComponentHeroStat extends HTMLElement {
       }
     });
 
-    console.log(snapshot);
+    // console.log(snapshot);
 
     localStorage.setItem("snapshotStat", JSON.stringify(snapshot));
-    // globalThis.app.router.load();
+    globalThis.app.router.load();
   }
 
   render(edit: boolean = false) {

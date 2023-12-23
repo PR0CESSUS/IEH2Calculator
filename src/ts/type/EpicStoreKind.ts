@@ -1,4 +1,4 @@
-export enum epicStoreKind {
+export enum EpicStoreKind {
   Nothing,
   NitroMaxCharger,
   AbilityReset,

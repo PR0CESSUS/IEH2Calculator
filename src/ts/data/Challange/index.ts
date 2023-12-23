@@ -35,6 +35,13 @@ import { ChallengeSuperDungeon_Spider } from "./ChallengeSuperDungeon_Spider";
 import { ChallengeSuperDungeon_BatTreant } from "./ChallengeSuperDungeon_BatTreant";
 import { ChallengeSuperDungeon_FairyFlametiger } from "./ChallengeSuperDungeon_FairyFlametiger";
 import { ChallengeSuperDungeon_SlimeMslime } from "./ChallengeSuperDungeon_SlimeMslime";
+import { ChallengeSoloBoss_ArachnettaLv150 } from "./data/ChallengeSoloBoss_ArachnettaLv150";
+import { ChallengeSoloBoss_FlorzporbLv100 } from "./data/ChallengeSoloBoss_FlorzporbLv100";
+import { ChallengeSoloBoss_GuardianKorLv200 } from "./data/ChallengeSoloBoss_GuardianKorLv200";
+import { ChallengeSoloBoss_LadyEmeldaLv300 } from "./data/ChallengeSoloBoss_LadyEmeldaLv300";
+import { ChallengeSoloBoss_NariSuneLv350 } from "./data/ChallengeSoloBoss_NariSuneLv350";
+import { ChallengeSoloBoss_NostroLv250 } from "./data/ChallengeSoloBoss_NostroLv250";
+import { ChallengeSoloBoss_OctobaddieLv400 } from "./data/ChallengeSoloBoss_OctobaddieLv400";
 
 export class DataChallenge {
   raidbossList = [];
@@ -49,6 +56,13 @@ export class DataChallenge {
     this.permanentRewardMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.sdStatRewardMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     // console.log(globalThis.data.challenge);
+    // this.solobossList.push(new ChallengeSoloBoss_ArachnettaLv150());
+    this.solobossList.push(new ChallengeSoloBoss_FlorzporbLv100());
+    this.solobossList.push(new ChallengeSoloBoss_GuardianKorLv200());
+    this.solobossList.push(new ChallengeSoloBoss_LadyEmeldaLv300());
+    this.solobossList.push(new ChallengeSoloBoss_NariSuneLv350());
+    this.solobossList.push(new ChallengeSoloBoss_NostroLv250());
+    this.solobossList.push(new ChallengeSoloBoss_OctobaddieLv400());
     this.handicapList.push(new ChallengeHandicap_FlorzporbLv100());
     this.handicapList.push(new ChallengeHandicap_FlorzporbLv200());
     this.handicapList.push(new ChallengeHandicap_FlorzporbLv300());
@@ -89,6 +103,9 @@ export class DataChallenge {
       challange.Start();
     });
     this.superdungeonList.forEach((challange) => {
+      challange.Start();
+    });
+    this.solobossList.forEach((challange) => {
       challange.Start();
     });
   }

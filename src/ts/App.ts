@@ -33,7 +33,7 @@ export class App {
     this.addPage(new Page("#equipment", "Equipment", new Equipment()));
     // this.addPage(new Page("#expedition", "Expedition", new CalculatorExpedition()));
     this.addPage(new Page("#ruby-shard", "Ruby Shard", new RubyShard()));
-    // this.addPage(new Page("#test", "Test", new Test()));
+    this.addPage(new Page("#test", "Test", new Test()));
 
     // this.page = [];
     this.router.initialization();

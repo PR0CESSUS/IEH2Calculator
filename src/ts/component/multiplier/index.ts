@@ -13,6 +13,7 @@ import { Multiplier } from "../../Multiplier";
 import { Localization } from "../../localization";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { Enums } from "../../Enums";
+import { ConvertType } from "../../type/ConvertType";
 
 export const Multiplier_Info_Template = template;
 export class Multiplier_Info extends HTMLElement {
@@ -45,6 +46,7 @@ export class Multiplier_Info extends HTMLElement {
     this.#data = value;
 
     this.#data.isLog = this.dataset.islog == "false" ? false : this.dataset.superdungeon == "true" ? true : false;
+    if (this.dataset.type == "normal") this.#data.numberType = ConvertType.Normal;
     // value.Calculate();
     this.render();
   }

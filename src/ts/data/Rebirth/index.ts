@@ -5,6 +5,7 @@ import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { HeroKind } from "../../type/HeroKind";
 import { Rebirth } from "./Rebirth";
+import { SetRebirthBonuses } from "./SetRebirthBonuses";
 export class DataRebirth {
   isVisitedFavoriteAreaAfterLazyQuestingThisRebirth: boolean[] = Array(Enums.HeroKind);
   rebirth = Array(Enums.HeroKind);
@@ -15,8 +16,12 @@ export class DataRebirth {
     () => 100.0,
     () => 0.0
   );
-  tier1AbilityPointBonusLevelCap = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => RebirthParameter.tierHeroLevel[1]));
-  tier2AbilityPointBonusLevelCap = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => RebirthParameter.tierHeroLevel[2]));
+  tier1AbilityPointBonusLevelCap = new Multiplier(
+    new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => RebirthParameter.tierHeroLevel[1])
+  );
+  tier2AbilityPointBonusLevelCap = new Multiplier(
+    new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => RebirthParameter.tierHeroLevel[2])
+  );
 
   constructor() {
     for (let index = 0; index < Enums.HeroKind; index++) {
@@ -25,6 +30,10 @@ export class DataRebirth {
       this.rebirth[index][1] = new Rebirth(this, 1, index);
       this.rebirth[index][2] = new Rebirth(this, 2, index);
     }
+  }
+
+  Start() {
+    SetRebirthBonuses();
   }
 
   Rebirth(heroKind: HeroKind, tier) {

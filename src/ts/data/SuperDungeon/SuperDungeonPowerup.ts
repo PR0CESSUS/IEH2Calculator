@@ -13,7 +13,7 @@ export class SuperDungeonPowerup {
   // rankTransaction: Transaction;
   // unlockTransaction: SpecifiedTransaction;
   // isShow;
-  isUnlocked = true;
+
   constructor(ctrl: SuperDungeonController) {
     this.ctrl = ctrl;
     this.heroKind = ctrl.heroKind;
@@ -22,6 +22,10 @@ export class SuperDungeonPowerup {
   }
   get sdgCtrl() {
     return globalThis.data.sdg;
+  }
+
+  get isUnlocked() {
+    return globalThis.data.source.superDungeonPowerupIsUnlocked[this.kind];
   }
 
   get kind() {

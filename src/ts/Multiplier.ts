@@ -62,16 +62,14 @@ export class Multiplier {
   }
 
   RegisterMultiplier(modifier: MultiplierInfo) {
-    modifier.index = this.modifiers.length;
     this.modifiers.push(modifier);
-    this.isDirty = true;
-    return () => this.UnregisterMultplier(modifier.index);
+    return () => this.UnregisterMultplier(modifier);
   }
 
-  UnregisterMultplier(index) {
-    if (index) console.log(`Multiplier # removing index ${index} `);
-    if (index > -1) this.modifiers.splice(index, 1);
-    this.isDirty = true;
+  UnregisterMultplier(modifier: MultiplierInfo) {
+    for (let index = 0; index < this.modifiers.length; index++) {
+      if (this.modifiers[index] == modifier) this.modifiers.splice(index, 1);
+    }
   }
 
   After() {
@@ -149,27 +147,6 @@ export class Multiplier {
       }
     }
     return this.additive * this.multiplicative;
-  }
-
-  get html() {
-    if (this.isDirty) this.Calculate();
-    let str = "";
-    str += /*html*/ `<table>`;
-    str += /*html*/ `<tr><td class="equipment-heading">Additive:</td> <td></td></tr>`;
-    for (const [key, value] of Object.entries(this.additiveKind)) {
-      str += `<tr><td>-${key}</td> <td>${convertTo(value, 2, "%")}</td></tr>`;
-    }
-    str += /*html*/ `<tr><td></td></tr>`;
-    str += /*html*/ `<tr><td></td></tr>`;
-    str += /*html*/ `<tr><td class="equipment-heading">Multiplicative:</td> <td></td></tr>`;
-    for (const [key, value] of Object.entries(this.multiplicativeKind)) {
-      str += `<tr><td>-${key}</td> <td>${convertTo(value, 2, "%")}</td></tr>`;
-    }
-    str += /*html*/ `<tr><td></td></tr>`;
-    str += /*html*/ `<tr><td></td></tr>`;
-    str += /*html*/ `<tr><td class="equipment-heading">Total:</td> <td>${convertTo(this.Value(), 2, "%")}</td></tr>`;
-    str += /*html*/ `</table>`;
-    return str;
   }
 }
 

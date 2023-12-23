@@ -7,6 +7,7 @@ import { SDGemString } from "./SDGemString";
 import { PotionName } from "./PotionName";
 import { ExpeditionGlobalInformationString } from "./ExpeditionGlobalInformationString";
 import { SDName } from "./SDName";
+import { ForgeEffectString } from "./ForgeEffectString";
 
 export const Localization = {
   EquipmentEffectName: EquipmentEffectName,
@@ -18,4 +19,5 @@ export const Localization = {
   PotionName: PotionName,
   ExpeditionGlobalInformationString: ExpeditionGlobalInformationString,
   SDName: SDName,
+  ForgeEffectString: ForgeEffectString,
 };
