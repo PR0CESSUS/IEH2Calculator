@@ -1766,7 +1766,7 @@ export const EquipmentParameter = {
   },
 
   RequiredLevelIncrement(kind: EquipmentEffectKind, level) {
-    return kind == EquipmentEffectKind.Nothing ? 0 : (25 / this.MaxLevel(kind)) * level * this.RarityFactor(kind);
+    return kind == EquipmentEffectKind.Nothing ? 0 : Math.floor(25 / this.MaxLevel(kind)) * level * this.RarityFactor(kind);
   },
 
   IsAfter(kind: EquipmentEffectKind) {
