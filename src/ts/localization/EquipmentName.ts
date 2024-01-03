@@ -2,6 +2,8 @@ import { EquipmentKind } from "../type/EquipmentKind";
 
 export function EquipmentName(kind: EquipmentKind) {
   switch (kind) {
+    case EquipmentKind.Nothing:
+      return "Nothing";
     case EquipmentKind.DullSword:
       return "Dull Sword";
     case EquipmentKind.BrittleStaff:

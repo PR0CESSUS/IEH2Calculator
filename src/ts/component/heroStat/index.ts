@@ -41,7 +41,8 @@ export class ComponentHeroStat extends HTMLElement {
   constructor() {
     super();
 
-    this.heroKind = parseInt(this.dataset.hero);
+    // this.heroKind = parseInt(this.dataset.hero);
+    this.heroKind = globalThis.data.source.currentHero;
     // console.log(this.dataset.hero);
 
     this.dataStorage = new DataStorage(this, "ComponentHeroStat", {
@@ -56,8 +57,8 @@ export class ComponentHeroStat extends HTMLElement {
     // console.log(this.data);
     // console.log(this.dataSD);
     (this.shadowRoot.querySelector('[name="createSnapshot"]') as HTMLButtonElement).onclick = this.createSnapshot.bind(this);
-    (this.shadowRoot.querySelector('[name="add"]') as HTMLButtonElement).onclick = this.testAdd.bind(this);
-    (this.shadowRoot.querySelector('[name="remove"]') as HTMLButtonElement).onclick = this.testRemove.bind(this);
+    // (this.shadowRoot.querySelector('[name="add"]') as HTMLButtonElement).onclick = this.testAdd.bind(this);
+    // (this.shadowRoot.querySelector('[name="remove"]') as HTMLButtonElement).onclick = this.testRemove.bind(this);
 
     this.render();
     // console.log("heroStat constructor after render");
@@ -75,45 +76,6 @@ export class ComponentHeroStat extends HTMLElement {
     this.dataStorage.data.tab = name;
     this.dataStorage.Save();
     // console.log(this.dataStorage.data.tab);
-  }
-  testRemove() {
-    console.log("test Remove");
-
-    const offset = 4840 + this.heroKind * 72;
-    // console.log(offset);
-    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered.reverse();
-    // console.log(globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered);
-    // console.log(globalThis.data.inventory.equipmentSlots[offset].globalInfo.levelMaxEffects);
-    globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered[0]();
-    // console.log();
-
-    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered.forEach((effect) => {
-    //   effect();
-    // });
-    // console.log(globalThis.data.stats.heroes[this.heroKind].basicStats[BasicStatsKind.DEF]);
-
-    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered = [];
-    // console.log(globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered);
-    // console.log("modifiers.length", globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.modifiers.length);
-    // console.log("modifiers.length", globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier);
-    globalThis.app.router.load();
-  }
-  testAdd() {
-    console.log("test Add");
-    const offset = 4840 + this.heroKind * 72;
-    globalThis.data.inventory.equipmentSlots[offset].SetAgainAllEffect();
-    // console.log(offset);
-    // console.log(globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered);
-    // console.log(globalThis.data.inventory.equipmentSlots[offset].globalInfo.levelMaxEffects);
-
-    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered.forEach((effect) => {
-    //   effect();
-    // });
-    // globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered = [];
-    // console.log(globalThis.data.inventory.equipmentSlots[offset].isEffectRegistered);
-    // console.log("modifiers.length", globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.modifiers.length);
-    // console.log("modifiers.length", globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier);
-    globalThis.app.router.load();
   }
 
   createSnapshot() {
@@ -188,8 +150,8 @@ export class ComponentHeroStat extends HTMLElement {
   renderMultiplier(name, data: Multiplier, snapshot, isLog = false) {
     const html = this.shadowRoot.querySelector(`[name="${name}"]`) as Multiplier_Info;
     if (snapshot) html.snapshot = snapshot;
-    if (this.dataset.superdungeon == "true" && html.dataset.islog != "false") html.style.color = "yellow";
-    if (this.dataset.superdungeon == "true" && html.dataset.islog != "false") html.dataset.superdungeon = "true";
+    if (globalThis.data.custom.isSuperDungeon && html.dataset.islog != "false") html.style.color = "yellow";
+    if (globalThis.data.custom.isSuperDungeon && html.dataset.islog != "false") html.dataset.superdungeon = "true";
     html.data = data;
   }
 

@@ -5,12 +5,22 @@ export class EquipmentRequiredAbility {
   requiredValue;
   isLevel;
   isSuperAbility;
+  //kind: AbilityKind | number, requiredValue: number = 0, isSuperAbility = false
+  constructor(kind: AbilityKind | number, requiredValue: number | boolean = 0, isSuperAbility = false) {
+    if (arguments.length == 1) {
+      this.EquipmentRequiredAbility(arguments[0], isSuperAbility);
+    } else if (arguments.length == 2 && arguments[1] == true) {
+      this.EquipmentRequiredAbility(arguments[0], arguments[1]);
+    } else {
+      this.kind = kind;
+      this.requiredValue = requiredValue;
+      this.isSuperAbility = isSuperAbility;
+    }
+    // if (requiredValue == 0) {
 
-  constructor(kind: AbilityKind | number, requiredValue: number | boolean = false, isSuperAbility = false) {
-    if (requiredValue == true || requiredValue == false) this.EquipmentRequiredAbility(requiredValue, isSuperAbility);
-    this.kind = kind;
-    this.requiredValue = requiredValue;
-    this.isSuperAbility = isSuperAbility;
+    // } else {
+
+    // }
   }
 
   EquipmentRequiredAbility(requiredLevel, isSuperAbility = false) {

@@ -28,13 +28,13 @@ export class MysticArena extends BUILDING {
     // console.log(globalThis.data.challenge);
 
     globalThis.data.inventory.equipInventoryUnlockedNum.RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Add, () => this.ResearchLevel(ResourceKind.Stone))
+      new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Add, () => this.ResearchLevel(ResourceKind.Stone) * this.ResearchMul(0))
     );
     globalThis.data.challenge.permanentRewardMultiplier.RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Crystal) * 0.025)
+      new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Crystal) * 0.025 * this.ResearchMul(1))
     );
     globalThis.data.alchemy.alchemyPointGainMultiplier.RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Leaf) * 0.025)
+      new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Leaf) * 0.025 * this.ResearchMul(2))
     );
   }
 }

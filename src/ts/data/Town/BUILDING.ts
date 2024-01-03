@@ -49,4 +49,8 @@ export class BUILDING {
 
     return this.researchLevels[kind][this.kind];
   }
+
+  ResearchMul(kind: ResourceKind) {
+    return this.townCtrl.researchEffectMultipliers[kind].Value();
+  }
 }

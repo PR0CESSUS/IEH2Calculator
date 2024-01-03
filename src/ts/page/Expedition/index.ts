@@ -89,7 +89,7 @@ export class CalculatorExpedition {
   }
 
   getReward(timeHour) {
-    return Math.max(0.55478474, Math.pow(timeHour, this.app.data.expedition.rewardModifierPerHour.value));
+    return Math.max(0.55478474, Math.pow(timeHour, this.app.data.expedition.rewardModifierPerHour.Value()));
   }
 
   get html() {
@@ -101,9 +101,6 @@ export class CalculatorExpedition {
       this.app.data.expedition.rewardModifierPerHour.value
     }</p>
     <p>Expedition Speed Multiplier: ${convertTo(this.app.data.expedition.speedMultiplier.Value(), 2, "%")}</p>
-    <p>Hackmanite: <user-input data-endpoint="data.source.sdGemLevels[7]"></user-input> effect: -${
-      this.app.data.expedition.lowerLimitTime.value
-    }</p>
     
     
   
@@ -128,7 +125,7 @@ export class CalculatorExpedition {
       <td>${this.getSpeed(index)}</td>
       <td>${this.getBest(this.getSpeed(index))}h</td>
       <td>${secondsToDhms(this.getTime(this.getBest(this.getSpeed(index)), this.getSpeed(index)))}</td>
-      
+      <td>${globalThis.data.expedition.expeditions[3].RewardAmount(globalThis.data.expedition.expeditions[3], { rank: 150 }, 3840)}</td>
       </tr>`;
     });
     return html;

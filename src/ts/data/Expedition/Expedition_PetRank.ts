@@ -12,6 +12,19 @@ export class Expedition_PetRank extends ExpeditionGlobalInformation {
   }
 
   SetEffect() {
-    globalThis.data.stats.SetEffectStats(Stats.TamingPointGain, new MultiplierInfo(MultiplierKind.Expedition, MultiplierType.Mul, () => this.EffectValue()));
+    globalThis.data.stats.SetEffectStats(
+      Stats.TamingPointGain,
+      new MultiplierInfo(MultiplierKind.Expedition, MultiplierType.Mul, () => this.EffectValue())
+    );
+  }
+  RewardAmount(expedition, pet, timeHour) {
+    return (
+      4.0 *
+      globalThis.data.stats.MaxTPGAmongHeroes() *
+      Math.pow(1.1, this.level) *
+      (1.0 + 0.1 * pet.rank) *
+      Math.max(0.55478474, Math.pow(timeHour, globalThis.data.expedition.rewardModifierPerHour.Value())) *
+      globalThis.data.expedition.rewardMultiplier.Value()
+    );
   }
 }

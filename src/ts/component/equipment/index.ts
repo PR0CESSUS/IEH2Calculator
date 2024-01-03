@@ -14,55 +14,87 @@ import { PotionKind } from "../../type/PotionKind";
 import template from "./template.html";
 
 import { set, get } from "lodash";
+import { EquipmentParameter } from "../../data/Equipment/EquipmentParameter";
+import { CustomSelectType } from "../../type/CustomSelectType";
+import { ComponentHeroStat } from "../HeroStat";
 
 document.body.innerHTML += template;
 
-export default class equipmentInfo extends HTMLElement {
+export class ComponentEquipmentInfo extends HTMLElement {
   data: Equipment;
-  slotType: "Weapon" | "Armor" | "Jewelry" | "Utility" | string;
+  equipment: Equipment;
+  potion: EquipmentPotion;
+  slotType: "Weapon" | "Armor" | "Jewelry" | "Potion" | string;
 
   constructor() {
     super();
-    this.data = get(globalThis.app, this.dataset.endpoint, 0);
-    // console.log(this.data);
+    this.attachShadow({ mode: "open" }).appendChild((document.getElementById("equipment-info") as HTMLTemplateElement).content.cloneNode(true));
+    // this.data = get(globalThis.app, this.dataset.endpoint, 0);
 
+    // console.log(this.equipment);
     this.slotType = this.dataset.slot;
+    if (this.dataset.slot == "Potion") {
+      this.potion = globalThis.data.inventory.potionSlots[parseInt(this.dataset.id)];
 
-    this.attachShadow({ mode: "open" }).appendChild(
-      (document.getElementById("equipment-info") as HTMLTemplateElement).content.cloneNode(true)
-    );
-
-    if (this.data.kind == 0) {
-      switch (this.slotType) {
-        case "Weapon":
-          (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/EquipSlotWeapon.png`;
-          break;
-        case "Armor":
-          (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/EquipSlotArmor.png`;
-          break;
-        case "Jewelry":
-          (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/EquipSlotJewelry.png`;
-          break;
-        default:
-          break;
-      }
+      const path = this.potion.kind == 0 ? "EquipSlotPotion" : PotionKind[this.potion.kind];
+      this.shadowRoot.querySelectorAll('[data-type="equipment"]').forEach((element: HTMLDivElement) => {
+        element.style.display = "none";
+      });
+      (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${path}.png`;
+      (this.shadowRoot.querySelector('[name="effect"]') as HTMLDivElement).style.display = "none";
+      (this.shadowRoot.querySelector('[name="proficiency"]') as HTMLDivElement).style.display = "none";
+      const equippedEffect = this.shadowRoot.querySelector('[name="equippedEffect"]') as HTMLDivElement;
+      const stack = this.shadowRoot.querySelector('[name="stack"]') as HTMLDivElement;
+      const type = this.shadowRoot.querySelector('[name="type"]') as HTMLDivElement;
+      stack.innerHTML = this.potion.stack.toString();
+      type.innerHTML = this.potion.type;
     } else {
-      (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${this.slotKind[this.data.kind]}.png`;
+      this.equipment = globalThis.data.inventory.equipmentSlots[parseInt(this.dataset.id)];
+      this.shadowRoot.querySelectorAll('[data-type="potion"]').forEach((element: HTMLDivElement) => {
+        element.style.display = "none";
+      });
+      if (this.equipment.kind == 0) {
+        switch (this.slotType) {
+          case "Weapon":
+            (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/EquipSlotWeapon.png`;
+            break;
+          case "Armor":
+            (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/EquipSlotArmor.png`;
+            break;
+          case "Jewelry":
+            (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/EquipSlotJewelry.png`;
+            break;
+          default:
+            break;
+        }
+      } else {
+        (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${EquipmentKind[this.equipment.kind]}.png`;
+      }
     }
 
     if (this.dataset.disabled) (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).classList.add("disabled");
     this.shadowRoot.querySelector(".icon48").addEventListener("click", this.openEdit.bind(this));
     this.shadowRoot.querySelector(".icon48").addEventListener("mouseover", this.initialRender.bind(this), { once: true });
     this.shadowRoot.querySelector('[name="kind"]').addEventListener("change", this.changeKind.bind(this));
-
-    const kind = this.shadowRoot.querySelector('[name="kind"]') as HTMLSelectElement;
-
-    kind.innerHTML += Util.render.Select(this.slotType);
-    kind.querySelectorAll("option").forEach((option) => {
-      if (parseInt(option.value) == this.data.kind) option.selected = true;
+    const modal = this.shadowRoot.querySelector("#equipment-dialog") as HTMLDialogElement;
+    const closeEdit = this.closeEdit.bind(this);
+    modal.addEventListener("click", function (event) {
+      let rect = modal.getBoundingClientRect();
+      let isInDialog = rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width;
+      if (!isInDialog) {
+        modal.close();
+        closeEdit();
+        // console.log("background click cancel");
+      }
     });
+    // const kind = this.shadowRoot.querySelector('[name="kind"]') as HTMLSelectElement;
 
-    if (this.data.kind == 0) (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "none";
+    // kind.innerHTML += Util.render.Select(this.slotType);
+    // kind.querySelectorAll("option").forEach((option) => {
+    //   if (parseInt(option.value) == this.data.kind) option.selected = true;
+    // });
+
+    if (this.equipment?.kind == 0 || this.potion?.kind == 0) (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "none";
 
     // this.render();
 
@@ -79,107 +111,72 @@ export default class equipmentInfo extends HTMLElement {
   openEdit() {
     if (this.dataset.disabled == "true") return;
     this.render(true);
-    const modal = document.createElement("div");
-    modal.id = "modal";
-    const underlay = document.createElement("div");
-    underlay.classList.add("modal-underlay");
-    underlay.onclick = () => {
-      // console.log(this);
-      this.shadowRoot.querySelector(".tooltip-text").appendChild(this.shadowRoot.querySelector(".content"));
-      this.shadowRoot.getElementById("modal").remove();
-      (this.shadowRoot.querySelector('[name="kind"]') as HTMLSelectElement).disabled = true;
-      // this.parentElement.remove();
-      globalThis.app.router.load();
-    };
-    const content = document.createElement("div");
-    content.classList.add("modal-content");
-    content.id = "modal-content";
-    // const clone = this.shadowRoot.querySelector(".content").cloneNode(true);
+    const modal = this.shadowRoot.querySelector("#equipment-dialog") as HTMLDialogElement;
+    const content = modal.querySelector(`[name="dialog-content"]`) as HTMLDivElement;
+    const title = modal.querySelector(`[name="dialog-title"]`) as HTMLHeadingElement;
+    const closeEdit = this.closeEdit.bind(this);
+
+    // modal.style.width = "700px";
     content.appendChild(this.shadowRoot.querySelector(".content"));
+    title.innerHTML = "";
 
-    modal.appendChild(underlay);
-    modal.appendChild(content);
-    this.shadowRoot.appendChild(modal);
-    // this.shadowRoot.querySelector(".tooltip").classList.toggle("modal");
-    // (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).style.display = "none";
-    // (this.shadowRoot.querySelector(".tooltip") as HTMLDivElement).style.display = "block";
-    // this.shadowRoot.querySelector(".tooltip-text").classList.toggle("modal-content");
-    // this.shadowRoot.querySelector(".tooltip-text").classList.toggle("tooltip-text");
-    // const modal = this.shadowRoot.querySelector(".modal") as HTMLDivElement;
-
-    // this.elements.modal.wrapper.remove();
-    // this.shadowRoot.appendChild(this.template.getElementById("modal"));
+    // content.innerHTML = `<custom-select data-type="${CustomSelectType.HeroKind}"
+    // data-endpoint="data.source.currentHero">${globalThis.data.source.currentHero}</custom-select>`;
+    // content.append(this.createSelect(CustomSelectType.PotionKind, selected, part));
+    modal.showModal();
   }
 
-  get slotKind() {
-    switch (this.slotType) {
-      case "Utility":
-        return PotionKind;
-      case "Armor":
-      case "Weapon":
-      case "Jewelry":
-        return EquipmentKind;
-      default:
-        break;
-    }
+  closeEdit() {
+    this.shadowRoot.querySelector(".tooltip-text").appendChild(this.shadowRoot.querySelector(".content"));
+    this.render();
+    (document.querySelector("hero-stat") as ComponentHeroStat).render();
   }
 
   render(edit: boolean = false) {
-    if (edit == false && this.data.kind == 0) return;
-    (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${this.slotKind[this.data.kind]}.png`;
-    (this.shadowRoot.querySelector(".icon96") as HTMLImageElement).src = `./img/equip/${this.slotKind[this.data.kind]}.png`;
-
+    if (edit == false && this.equipment?.kind == 0) return;
     const kind = this.shadowRoot.querySelector('[name="kind"]') as HTMLSelectElement;
     const level = this.shadowRoot.querySelector('[name="level"]');
-    const effect = this.shadowRoot.querySelector('[name="effect"]');
+    const effect = this.shadowRoot.querySelector('[name="effect"]') as HTMLDivElement;
     const isSetKind = this.shadowRoot.querySelector('[name="isSetKind"]') as HTMLParagraphElement;
 
-    if (this.data.setKind == undefined || this.data.setKind == 0) {
-      isSetKind.style.display = "none";
+    if (this.slotType == "Potion") {
+      (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${PotionKind[this.potion.kind]}.png`;
+      (this.shadowRoot.querySelector(".icon96") as HTMLImageElement).src = `./img/equip/${PotionKind[this.potion.kind]}.png`;
+      kind.innerHTML = Localization.PotionName(this.potion.kind);
+      level.innerHTML = `Lv ${this.potion.level}`;
     } else {
-      isSetKind.style.display = "block";
-    }
+      (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${EquipmentKind[this.equipment.kind]}.png`;
+      (this.shadowRoot.querySelector(".icon96") as HTMLImageElement).src = `./img/equip/${EquipmentKind[this.equipment.kind]}.png`;
+      if (this.equipment.setKind == undefined || this.equipment.setKind == 0) {
+        isSetKind.style.display = "none";
+      } else {
+        isSetKind.style.display = "block";
+      }
+      level.innerHTML = `Lv ${this.equipment.level}`;
+      if (edit) {
+        kind.innerHTML = `<custom-select data-type="${CustomSelectType[this.dataset.slot]}" data-reload="false"
+        data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].kind" data-id="${this.equipment.slotId}">${this.equipment.kind}</custom-select>`;
+      } else {
+        kind.innerHTML = (this.equipment.globalInfo.isArtifact ? '<span class="purple">[Artifact] </span>' : "") + Localization.EquipmentName(this.equipment.kind);
+      }
 
-    level.innerHTML = `Lv ${this.data.level}`;
-    // effect.innerHTML = `Effect : ${globalThis.data.potion.GlobalInfo(this.data.kind).effectValue}`;
-    // effect.innerHTML += `#### : ${this.data.totalOptionNum.value}`;
-
-    // this.template.querySelector('[name="stack"]').innerHTML = edit
-    //   ? `<input type="text" size="6" value="${this.data.stack}">`
-    //   : `Stack # : ${this.data.stack} / 30`;
-
-    if (this.slotType != "Utility") {
-      this.shadowRoot.querySelector('[name="part"]').innerHTML =
-        EquipmentPart[globalThis.data.equipment.globalInformations[this.data.kind].part];
-      this.shadowRoot.querySelector('[name="rarity"]').innerHTML =
-        EquipmentRarity[globalThis.data.equipment.globalInformations[this.data.kind].rarity];
-
-      if (this.data.setKind != 0 && this.data.setKind != undefined) {
-        this.shadowRoot.querySelector('[name="setKind"]').innerHTML = `${
-          EquipmentSetKind[globalThis.data.equipment.globalInformations[this.data.kind].setKind]
-        } Set`;
+      this.shadowRoot.querySelector('[name="part"]').innerHTML = EquipmentPart[this.equipment.globalInfo.part];
+      this.shadowRoot.querySelector('[name="rarity"]').innerHTML = EquipmentRarity[this.equipment.globalInfo.rarity];
+      if (this.equipment.setKind != 0 && this.equipment.setKind != undefined) {
+        this.shadowRoot.querySelector('[name="setKind"]').innerHTML = `${EquipmentSetKind[this.equipment.globalInfo.setKind]} Set`;
         this.shadowRoot.querySelector('[name="setBonus"]').innerHTML = `[Effect Bonus ${Util.convertTo(
-          this.data.EffectMultiplierFromSetItem(this.data.heroKind) - 1,
+          this.equipment.EffectMultiplierFromSetItem(this.equipment.heroKind) - 1,
           2,
           "%"
         )}]`;
         // const effects = globalThis.data.equipment.globalInformations[this.data.kind].effects;
-        this.shadowRoot.querySelector('[name="setAmount"]').innerHTML = `${globalThis.data.inventory.SetItemEquippedNum(
-          this.data.setKind,
-          this.data.heroKind
-        )}`;
+        this.shadowRoot.querySelector('[name="setAmount"]').innerHTML = `${globalThis.data.inventory.SetItemEquippedNum(this.equipment.setKind, this.equipment.heroKind)}`;
       }
-
-      let string = "";
       this.getEffects();
-      this.getOptionEffects();
+      this.getOptionEffects(edit);
       this.getForgeEffects(edit);
       this.getProficiency();
-
-      //
     }
-
-    if (edit) kind.disabled = false;
   }
 
   connectedCallback() {
@@ -188,34 +185,13 @@ export default class equipmentInfo extends HTMLElement {
   }
 
   getProficiency() {
-    // this.shadowRoot.querySelector('[name="proficiency-warrior-level"]').innerHTML = `Lv ${
-    //   globalThis.data.equipment.globalInformations[this.data.kind].levels[HeroKind.Warrior].value
-    // }`;
-    // this.shadowRoot.querySelector('[name="proficiency-wizard-level"]').innerHTML = `Lv ${
-    //   globalThis.data.equipment.globalInformations[this.data.kind].levels[HeroKind.Wizard].value
-    // }`;
-    // this.shadowRoot.querySelector('[name="proficiency-angel-level"]').innerHTML = `Lv ${
-    //   globalThis.data.equipment.globalInformations[this.data.kind].levels[HeroKind.Angel].value
-    // }`;
-    // this.shadowRoot.querySelector('[name="proficiency-thief-level"]').innerHTML = `Lv ${
-    //   globalThis.data.equipment.globalInformations[this.data.kind].levels[HeroKind.Thief].value
-    // }`;
-    // this.shadowRoot.querySelector('[name="proficiency-archer-level"]').innerHTML = `Lv ${
-    //   globalThis.data.equipment.globalInformations[this.data.kind].levels[HeroKind.Archer].value
-    // }`;
-    // this.shadowRoot.querySelector('[name="proficiency-tamer-level"]').innerHTML = `Lv ${
-    //   globalThis.data.equipment.globalInformations[this.data.kind].levels[HeroKind.Tamer].value
-    // }`;
-
-    this.data.globalInfo.levelMaxEffects.forEach((effect, index) => {
-      const value = this.data.EffectValue(effect.EffectValue(0), HeroKind.Warrior);
+    this.equipment.globalInfo.levelMaxEffects.forEach((effect, index) => {
+      const value = this.equipment.EffectValue(effect.EffectValue(0), HeroKind.Warrior);
       // console.log(`[name="proficiency-effect-${HeroKind[index]}"]`);
-      this.shadowRoot.querySelector(`[name="proficiency-level-${HeroKind[index]}"]`).innerHTML = `Lv ${
-        globalThis.data.equipment.globalInformations[this.data.kind].levels[index].value
-      }`;
+      this.shadowRoot.querySelector(`[name="proficiency-level-${HeroKind[index]}"]`).innerHTML = `Lv ${this.equipment.globalInfo.levels[index].value}`;
 
       let enchantSlot = 0;
-      switch (this.data.globalInfo.rarity) {
+      switch (this.equipment.globalInfo.rarity) {
         case EquipmentRarity.Epic:
           enchantSlot = 3;
           break;
@@ -228,16 +204,10 @@ export default class equipmentInfo extends HTMLElement {
           break;
       }
 
-      globalThis.data.equipment.globalInformations[this.data.kind].levelMaxEffects[index].kind == 0
-        ? value
-        : Util.convertTo(value, 2, effect.valueKind);
+      this.equipment.globalInfo.levelMaxEffects[index].kind == 0 ? value : Util.convertTo(value, 2, effect.valueKind);
       this.shadowRoot.querySelector(`[name="proficiency-effect-${HeroKind[index]}"]`).innerHTML = `[${Localization.EquipmentEffectName(
-        globalThis.data.equipment.globalInformations[this.data.kind].levelMaxEffects[index].kind
-      )} + ${
-        globalThis.data.equipment.globalInformations[this.data.kind].levelMaxEffects[index].kind == 0
-          ? enchantSlot
-          : Util.convertTo(value, 2, effect.valueKind)
-      }] 
+        this.equipment.globalInfo.levelMaxEffects[index].kind
+      )} + ${this.equipment.globalInfo.levelMaxEffects[index].kind == 0 ? enchantSlot : Util.convertTo(value, 2, effect.valueKind)}] 
         `;
     });
 
@@ -248,30 +218,20 @@ export default class equipmentInfo extends HTMLElement {
     const forgeEffects = this.shadowRoot.querySelector('[name="forgeEffects"]');
     let string = "";
     let counter = 0;
-    this.data.forgeEffects.forEach((slot, index) => {
-      const input = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.data.slotId}].forgeEffects[${index}].effectValue"></user-input>`;
-      const forgeEffect = globalThis.data.inventory.equipmentSlots[this.data.slotId].forgeEffects[index];
-      // if (this.data.slotId == 5128) {
-      //   console.log(slot);
-      // }
 
-      if (slot.IsForged()) {
+    // Localization.EquipmentEffect(this.data.globalInfo.levelMaxEffects[this.data.kind].kind, this.data.globalInfo.levelMaxEffects[this.data.kind].EffectValue(0), true);
+
+    this.equipment.forgeEffects.forEach((slot, index) => {
+      if (edit) {
+        // Localization.ForgeNameString(slot.kind, this.equipment.globalInfo.isArtifact)
+        const input = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].forgeEffects[${index}].effectValue" data-reload="false" data-id="${this.equipment.slotId}"></user-input>`;
+        string += `<p class="orange">${edit ? input : ""} - ${slot.EffectString()}</p>`;
         counter++;
-        globalThis.data.inventory.equipmentSlots[this.data.slotId].CalculateRequiredLevel();
-        if (this.data.slotId == 4984) {
-          console.log(
-            this.data.requiredLevel,
-            this.data.requiredGrade,
-            this.data.requiredGradeWithoutForge,
-            this.data.requiredLevelWithoutForge
-          );
+      } else {
+        if (slot.IsForged()) {
+          counter++;
+          string += `<p class="orange">- ${slot.EffectString()} </p>`;
         }
-        string += `<p class="orange">- ${Localization.ForgeEffectString(
-          forgeEffect.kind,
-          forgeEffect.effectValue,
-          globalThis.data.inventory.equipmentSlots[this.data.slotId].RequiredLevel(true, false),
-          globalThis.data.inventory.equipmentSlots[this.data.slotId].globalInfo.isArtifact
-        )} ${edit ? input : ""}</p>`;
       }
     });
 
@@ -281,49 +241,73 @@ export default class equipmentInfo extends HTMLElement {
     forgeEffects.innerHTML = string;
   }
 
-  getOptionEffects() {
+  getOptionEffects(edit: boolean = false) {
     let string = "";
 
-    this.data.optionEffects.forEach((effect, index) => {
-      if (effect.kind == EquipmentEffectKind.Nothing) {
-        if (index < this.data.totalOptionNum.value) string += `<p>-[Enchant Available]</p>`;
-      } else {
-        const value = this.data.EffectValue(effect.effectValue, HeroKind.Warrior);
-        string += `<p>${Localization.EquipmentEffectName(effect.kind)} - ${Util.convertTo(value, 2, effect.valueKind)}</p>`;
+    this.equipment.optionEffects.forEach((effect, index) => {
+      if (index < this.equipment.totalOptionNum.value) {
+        if (edit) {
+          const kind = `<custom-select data-type="${CustomSelectType.EquipmentEffectKind}" data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].kind" data-reload="false" data-id="${this.equipment.slotId}">${effect.kind}</custom-select>`;
+          const level = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].level" data-reload="false" data-id="${this.equipment.slotId}" data-width="50px"></user-input>`;
+          const value = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].effectValue" data-reload="false" data-id="${this.equipment.slotId}"></user-input>`;
+          string += `<p>${kind} ${level} ${value} = ${Localization.EquipmentEffect(
+            effect.kind,
+            this.equipment.EffectValue(effect.effectValue, HeroKind.Warrior),
+            true,
+            0,
+            true
+          )}</p>`;
+        } else {
+          string += `<p>${Localization.EquipmentEffect(effect.kind, this.equipment.EffectValue(effect.effectValue, HeroKind.Warrior))}</p>`;
+        }
       }
+      // if (effect.kind == EquipmentEffectKind.Nothing) {
+      //   if (index < this.data.totalOptionNum.value) string += `<p>-[Enchant Available]</p>`;
+      // } else {
+      //   const value = this.data.EffectValue(effect.effectValue, HeroKind.Warrior);
+      //   string += `<p>${Localization.EquipmentEffect(effect.kind, value)}</p>`;
+      // }
     });
     this.shadowRoot.querySelector('[name="optionEffects"]').innerHTML = string;
   }
 
   getEffects() {
-    const effects = globalThis.data.equipment.globalInformations[this.data.kind].effects;
     let string = "";
 
-    effects.forEach((effect, index) => {
+    this.equipment.globalInfo.effects.forEach((effect, index) => {
       // console.log(this.data.OriginalEffectValue(index));
-      const value = this.data.EffectValue(this.data.OriginalEffectValue(index), HeroKind.Angel);
+      const value = this.equipment.EffectValue(this.equipment.OriginalEffectValue(index), HeroKind.Angel);
+      const valuePerLevel = this.equipment.EffectValue(this.equipment.OriginalEffectIncrementPerLevel(index), HeroKind.Angel);
+
       let sign = ``;
       let negative = ``;
-      if (value > 0) sign = `+`;
+      //
+      // if (value > 0) sign = `+`;
 
-      string += `<p>${Localization.EquipmentEffectName(effect.kind)} `;
+      string += `<p>${Localization.EquipmentEffect(effect.kind, value, false, valuePerLevel, false)} `;
+      // string += `<p>${Localization.EquipmentEffectName(effect.kind)} `;
 
-      if (value < 0) string += `<span class="red"></span>`;
-      string += Util.convertTo(value, 2, effect.valueKind);
-      if (value < 0) string += `</span>`;
+      // if (value < 0) string += `<span class="red"></span>`;
+      // string += Util.convertTo(value, 2, effect.valueKind);
+      // if (value < 0) string += `</span>`;
 
       string += `</p>`;
     });
     this.shadowRoot.querySelector('[name="effects"]').innerHTML = string;
   }
 
-  changeKind(this: equipmentInfo, event: Event & { target: EventTarget & HTMLSelectElement }) {
+  changeKind() {
     // this.elements.kind.value;
-    this.data.kind = parseInt(event.target.value);
-    // console.log(event.target.value);
-    if (this.data.kind != 0) (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "block";
-    if (this.data.kind == 0) (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "none";
+    // console.log("changeKind");
+    globalThis.data.inventory.UpdateSetItemEquippedNumHero(this.equipment.heroKind);
+    this.equipment.Start();
     this.render(true);
+
+    // this.equipment.kind = parseInt(event.target.value);
+    // // console.log(event.target.value);
+    // if (this.equipment.kind != 0) (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "block";
+    // if (this.equipment.kind == 0) (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "none";
+    // this.render(true);
     // const clone = this.shadowRoot.querySelector(".tooltip-text").cloneNode(true);
     // document.getElementById("modal-content").innerHTML = this.shadowRoot.querySelector("tooltip-text").innerHTML;
     // document.getElementById("modal-content").appendChild(clone);

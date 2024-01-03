@@ -20,8 +20,8 @@ export class PotionGlobalInformation {
   EffectValue(level) {
     return 0.0;
   }
-  IsActiveEffect(heroKind: HeroKind, stack) {
-    return false;
+  IsActiveEffect(heroKind: HeroKind, stack: Function) {
+    return globalThis.data.source.isActiveBattle[heroKind] && stack() > 0;
   }
   get effectValue() {
     return this.EffectValue(this.level) * globalThis.data.potion.effectMultiplier.Value();

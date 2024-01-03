@@ -14,8 +14,27 @@ export class Trapper extends BUILDING {
   }
 
   SetResearch() {
-    globalThis.data.monster.colorMaterialDropChance.RegisterMultiplier(new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Add, () => this.ResearchLevel(ResourceKind.Stone) * 2e-5));
-    globalThis.data.shop.restockNumTrap.RegisterMultiplier(new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Add, () => this.ResearchLevel(ResourceKind.Crystal)));
-    globalThis.data.stats.SetEffectStats(Stats.TamingPointGain, new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Leaf) * 0.02));
+    globalThis.data.monster.colorMaterialDropChance.RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.TownResearch,
+        MultiplierType.Add,
+        () => this.ResearchLevel(ResourceKind.Stone) * 2e-5 * this.ResearchMul(0)
+      )
+    );
+    globalThis.data.shop.restockNumTrap.RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.TownResearch,
+        MultiplierType.Add,
+        () => this.ResearchLevel(ResourceKind.Crystal) * this.ResearchMul(1)
+      )
+    );
+    globalThis.data.stats.SetEffectStats(
+      Stats.TamingPointGain,
+      new MultiplierInfo(
+        MultiplierKind.TownResearch,
+        MultiplierType.Mul,
+        () => this.ResearchLevel(ResourceKind.Leaf) * 0.02 * this.ResearchMul(2)
+      )
+    );
   }
 }

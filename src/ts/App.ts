@@ -6,10 +6,12 @@ import { convertFrom } from "./Util/convertFrom";
 import { Router } from "./Router";
 import { CalculatorExpedition } from "./page/Expedition";
 import { Test } from "./page/Test";
-import { Equipment } from "./page/Equipment";
-import { RubyShard } from "./page/RubyShard";
+import { CalculatorEquipment } from "./page/Equipment";
+import { CalculatorRubyShard } from "./page/RubyShard";
 import { Page } from "./page/Page";
 import { PageData } from "./page/Data";
+import { PageDropChance } from "./page/Drop-Chance";
+import { CalculatorGuild } from "./page/Guild";
 import component from "./component";
 
 export class App {
@@ -30,10 +32,12 @@ export class App {
     // this.page.push(new Test(this));
     // this.page.push(new Equipment(this));
     this.addPage(new Page("#data", "Data", new PageData()));
-    this.addPage(new Page("#equipment", "Equipment", new Equipment()));
+    this.addPage(new Page("#equipment", "Equipment", new CalculatorEquipment()));
     // this.addPage(new Page("#expedition", "Expedition", new CalculatorExpedition()));
-    this.addPage(new Page("#ruby-shard", "Ruby Shard", new RubyShard()));
-    this.addPage(new Page("#test", "Test", new Test()));
+    this.addPage(new Page("#ruby-shard", "Ruby Shard", new CalculatorRubyShard()));
+    this.addPage(new Page("#guild", "Guild", new CalculatorGuild()));
+    // this.addPage(new Page("#test", "Test", new Test()));
+    this.addPage(new Page("#drop-chance", "Drop Chance", new PageDropChance()));
 
     // this.page = [];
     this.router.initialization();

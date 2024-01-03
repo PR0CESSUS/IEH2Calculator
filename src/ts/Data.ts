@@ -31,7 +31,7 @@ import { DataEpicStore } from "./data/EpicStore";
 
 export class DATA {
   currentHero: HeroKind = 0;
-  source: SourceKind;
+  source: DataDefault;
   ascension: DataAscension;
   skill: DataSkill;
   potion: DataPotion;
@@ -98,6 +98,8 @@ export class DATA {
     // console.log("equipArmorUnlockedNum ", globalThis.data.inventory.equipArmorUnlockedNum[HERO].Value());
     // console.log("equipJewelryUnlockedNum ", globalThis.data.inventory.equipJewelryUnlockedNum[HERO].Value());
     // console.log("eqWeaponSlotNum ", globalThis.data.battles[HERO].superDungeonCtrl.eqWeaponSlotNum.Value());
+    // console.log();
+    // globalThis.data.inventory.equipmentSlots[3472].SetAgainAllEffect();
   }
 
   get battle() {
@@ -111,7 +113,7 @@ export class DATA {
     this.town.Start();
     this.ascension.Start();
     this.mission.Start();
-    this.inventory.Start();
+
     this.monster.Start();
     this.sdg.Start();
     this.superStats.Start();
@@ -120,6 +122,7 @@ export class DATA {
     }
     this.quest.Start();
     this.rebirth.Start();
+    this.inventory.Start();
   }
 
   load() {

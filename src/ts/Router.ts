@@ -50,6 +50,7 @@ export class Router {
 
     let html = `Welcome Page`;
     let name = ``;
+
     // if (url != "") this.app.page[url.slice(1)].Load();
     this.routes.forEach((route) => {
       if (route.url() == location.hash) {
@@ -67,5 +68,6 @@ export class Router {
     }
     this.renderRoutes();
     this.app.update();
+    // this.app.page[url.slice(1)].logic.AfterLoad();
   }
 }

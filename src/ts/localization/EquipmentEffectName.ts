@@ -189,21 +189,21 @@ export function EquipmentEffectName(kind: EquipmentEffectKind) {
     case EquipmentEffectKind.PetEXPGain:
       return "Pet EXP Gain";
     case EquipmentEffectKind.LoyaltyPointGain:
-      return "Loyalty PoGain";
+      return "Loyalty Point Gain";
     case EquipmentEffectKind.CatalystDoubleCriticalChance:
       return "Catalyst Double Critical";
     case EquipmentEffectKind.WarriorSkillEffectRange:
-      return "Warrior of: Area Effect";
+      return "Warrior Area of Effect";
     case EquipmentEffectKind.WizardSkillEffectRange:
-      return "Wizard of: Area Effect";
+      return "Wizard Area of Effect";
     case EquipmentEffectKind.AngelSkillEffectRange:
-      return "Angel of: Area Effect";
+      return "Angel Area of Effect";
     case EquipmentEffectKind.ThiefSkillEffectRange:
-      return "Thief of: Area Effect";
+      return "Thief Area of Effect";
     case EquipmentEffectKind.ArcherSkillEffectRange:
-      return "Archer of: Area Effect";
+      return "Archer Area of Effect";
     case EquipmentEffectKind.TamerSkillEffectRange:
-      return "Tamer of: Area Effect";
+      return "Tamer Area of Effect";
     case EquipmentEffectKind.HpRegenMultiplier:
       return "HP Regen Multiplier";
     case EquipmentEffectKind.MpRegenMultiplier:
@@ -253,11 +253,11 @@ export function EquipmentEffectName(kind: EquipmentEffectKind) {
     case EquipmentEffectKind.DarkDamageMultiplier:
       return "Dark Damage Multiplier";
     case EquipmentEffectKind.TamingPointMultiplier:
-      return "Taming PoMultiplier";
+      return "Taming Point Multiplier";
     case EquipmentEffectKind.PetEXPGainMultiplier:
       return "Pet EXP Gain Multiplier";
     case EquipmentEffectKind.LoyaltyPointGainMultiplier:
-      return "Loyalty PoGain Multiplier";
+      return "Loyalty Point Gain Multiplier";
     case EquipmentEffectKind.BlessingEffectMultiplier:
       return "Blessing Effect Multiplier";
     case EquipmentEffectKind.PhysicalCriticalMultiplier:

@@ -12,6 +12,18 @@ export class Expedition_Equipment extends ExpeditionGlobalInformation {
   }
 
   SetEffect() {
-    globalThis.data.stats.SetEffectStats(Stats.EquipmentProficiencyGain, new MultiplierInfo(MultiplierKind.Expedition, MultiplierType.Mul, () => this.EffectValue()));
+    globalThis.data.stats.SetEffectStats(
+      Stats.EquipmentProficiencyGain,
+      new MultiplierInfo(MultiplierKind.Expedition, MultiplierType.Mul, () => this.EffectValue())
+    );
+  }
+  RewardAmount(expedition, pet, timeHour) {
+    return (
+      1200.0 *
+      (1.0 + 0.1 * this.level) *
+      (1.0 + 0.05 * pet.rank.value) *
+      Math.max(0.55478474, Math.pow(timeHour, this.expeditionCtrl.rewardModifierPerHour.Value())) *
+      expedition.expeditionCtrl.rewardMultiplier.Value()
+    );
   }
 }

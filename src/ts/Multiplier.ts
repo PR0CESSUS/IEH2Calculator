@@ -18,11 +18,7 @@ export class Multiplier {
   multiplicative = 1;
   maxValue: Function;
   minValue: Function;
-  constructor(
-    multiplier: MultiplierInfo = new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
-    maxValue: Function = () => 1e300,
-    minValue: Function = () => 0
-  ) {
+  constructor(multiplier: MultiplierInfo = new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0), maxValue: Function = () => 1e300, minValue: Function = () => 0) {
     // Func<double> maxValue = null, Func<double> minValue = null
     this.maxValue = maxValue;
     this.minValue = minValue;
@@ -34,6 +30,11 @@ export class Multiplier {
   get value() {
     this.isDirty = true;
     return this.Value();
+  }
+  Debug(kind: MultiplierKind, type: MultiplierType) {
+    this.modifiers.forEach((modifier) => {
+      if (modifier.kind == kind && modifier.type == type) console.log("modifier", modifier);
+    });
   }
 
   Snapshot() {
@@ -135,13 +136,7 @@ export class Multiplier {
         case ConvertType.Normal:
           return a < 1.0 ? a : this.modifiers[0].Value + Math.log10(a);
         case ConvertType.Percent:
-          return this.modifiers[0].Value >= 1.0
-            ? a < 1.0
-              ? a
-              : this.modifiers[0].Value + Math.log10(a)
-            : a < 0.01
-            ? a
-            : this.modifiers[0].Value + Math.log10(a * 100.0) / 100.0;
+          return this.modifiers[0].Value >= 1.0 ? (a < 1.0 ? a : this.modifiers[0].Value + Math.log10(a)) : a < 0.01 ? a : this.modifiers[0].Value + Math.log10(a * 100.0) / 100.0;
         case ConvertType.Meter:
           return a < 100.0 ? a : this.modifiers[0].Value + Math.log10(a / 100.0) * 100.0;
       }

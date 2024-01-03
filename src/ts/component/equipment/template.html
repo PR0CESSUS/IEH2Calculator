@@ -3,11 +3,47 @@
     @import "./styles-bundle.css";
 
 
+    div {
+      line-height: 13px;
+    }
 
     .disabled {
       height: 100%;
       opacity: 0.4;
       /* Change the color and opacity as needed */
+    }
+
+    .group {
+      text-decoration: underline;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .purple {
+      color: #DC78FF;
+    }
+
+    .clickable:hover {
+      background-color: #3b3b3b;
+      cursor: pointer;
+      border-style: solid;
+      border-color: black;
+      padding: 5px;
+    }
+
+    .clickable:hover::after {
+      content: ' \270E EDIT';
+    }
+
+    dialog {
+      background-color: rgb(48, 48, 48);
+      color: #fff;
+      border-radius: 10px;
+      border-style: solid;
+      border-width: 2px;
+      border-color: black;
+      width: 700px;
+
     }
   </style>
   <div class="tooltip">
@@ -16,52 +52,72 @@
 
     <div class="tooltip-text">
       <div class="content">
-        <table>
-          <tr>
-            <td><img class="icon96 icon-border"></td>
-            <td style="vertical-align: top;">
-              <select name="kind" style="width: 350px;" disabled="true">
-                <option value="0">Nothing</option>
-              </select> &lt; <span class="green" name="level"></span> &gt;<br><br>
-              <p name="stack"></p>
-            </td>
-          </tr>
-        </table>
+
+        <div style="height: 100px; font-size: 14px;">
+          <img class="icon96 icon-border" style="margin-right: 10px;">
+          <span name="kind"></span>
+          &lt; <span class="green" name="level"></span> &gt;<br><br>
+          <div data-type="potion">
+            <p>Type: <span name="type"></span></p>
+            <p>Stack #: <span name="stack"></span>/30</p>
+          </div>
+        </div>
+
+
+
         <p name="effect"></p>
-        <p style="text-decoration: underline;">Information</p>
-        <p>-Type : <span name="part">${equipment.part}</span></p>
-        <p>-Rarity : <span name="rarity">${equipment.rarity}</span></p>
-        <p name="isSetKind">-Unique : <span name="setKind">${equipment.setKind}</span>
-          <span name="setBonus" class="green">Effect Bonus 0%</span> Equipping <span name="setAmount"
-            class="green">0</span> / 8
-        </p>
+        <p class="group">Information</p>
+        <div name="information" data-type="equipment">
+          <p>-Type : <span name="part">${equipment.part}</span></p>
+          <p>-Rarity : <span name="rarity">${equipment.rarity}</span></p>
+          <p name="isSetKind">-Unique : <span name="setKind">${equipment.setKind}</span>
+            <span name="setBonus" class="green">Effect Bonus 0%</span> Equipping <span name="setAmount"
+              class="green">0</span> / 8
+          </p>
+
+        </div>
+        <p class="group" data-type="potion">Equipped Effect</p>
+        <div name="equippedEffect" data-type="potion"></div>
         <br>
-        <p style="text-decoration: underline;">Effect</p>
-        <div name="effects">list</div>
-        <div name="optionEffects"></div>
+        <p class="group" data-type="equipment">Effect</p>
+        <div name="effects" data-type="equipment">list</div>
+        <div name="optionEffects" data-type="equipment"></div>
 
 
         <br>
-        <p style="text-decoration: underline;">Forged Effect</p>
-        <div name="forgeEffects"></div>
+        <p class="group" data-type="equipment">Forged Effect</p>
+        <div name="forgeEffects" data-type="equipment"></div>
         <br>
-        <p style="text-decoration: underline;">Proficiency</p>
-        <p>-Warrior &lt; <span class="green" name="proficiency-level-Warrior">Lv ${level}</span> &gt;: <span
-            class="green" name="proficiency-effect-Warrior">[${effect}]</span>
-        <p>-Wizard &lt; <span class="green" name="proficiency-level-Wizard">Lv ${level}</span> &gt;: <span class="green"
-            name="proficiency-effect-Wizard">[${effect}]</span>
-        <p>-Angel &lt; <span class="green" name="proficiency-level-Angel">Lv ${level}</span> &gt;: <span class="green"
-            name="proficiency-effect-Angel">[${effect}]</span>
-        <p>-Thief &lt; <span class="green" name="proficiency-level-Thief">Lv ${level}</span> &gt;: <span class="green"
-            name="proficiency-effect-Thief">[${effect}]</span>
-        <p>-Archer &lt; <span class="green" name="proficiency-level-Archer">Lv ${level}</span> &gt;: <span class="green"
-            name="proficiency-effect-Archer">[${effect}]</span>
-        <p>-Tamer &lt; <span class="green" name="proficiency-level-Tamer">Lv ${level}</span> &gt;: <span class="green"
-            name="proficiency-effect-Tamer">[${effect}]</span>
+        <p class="group" data-type="equipment">Proficiency</p>
+        <div name="proficiency" data-type="equipment">
+          <p>-Warrior &lt; <span class="green" name="proficiency-level-Warrior">Lv ${level}</span> &gt;: <span
+              class="green" name="proficiency-effect-Warrior">[${effect}]</span>
+          <p>-Wizard &lt; <span class="green" name="proficiency-level-Wizard">Lv ${level}</span> &gt;: <span
+              class="green" name="proficiency-effect-Wizard">[${effect}]</span>
+          <p>-Angel &lt; <span class="green" name="proficiency-level-Angel">Lv ${level}</span> &gt;: <span class="green"
+              name="proficiency-effect-Angel">[${effect}]</span>
+          <p>-Thief &lt; <span class="green" name="proficiency-level-Thief">Lv ${level}</span> &gt;: <span class="green"
+              name="proficiency-effect-Thief">[${effect}]</span>
+          <p>-Archer &lt; <span class="green" name="proficiency-level-Archer">Lv ${level}</span> &gt;: <span
+              class="green" name="proficiency-effect-Archer">[${effect}]</span>
+          <p>-Tamer &lt; <span class="green" name="proficiency-level-Tamer">Lv ${level}</span> &gt;: <span class="green"
+              name="proficiency-effect-Tamer">[${effect}]</span>
+        </div>
+
       </div>
     </div>
 
   </div>
+  <dialog id="equipment-dialog">
+    <h4 name="dialog-title">Title</h4>
+    <div name="dialog-content"></div>
 
+    <button id="cancel" onclick="this.parentElement.close();">Cancel</button>
+    <button onclick="console.dir(this.parentElement)">Confirm</button>
+
+
+
+
+  </dialog>
 
 </template>

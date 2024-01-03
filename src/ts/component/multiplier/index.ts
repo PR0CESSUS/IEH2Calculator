@@ -23,9 +23,7 @@ export class Multiplier_Info extends HTMLElement {
   constructor() {
     super();
 
-    this.attachShadow({ mode: "open" }).appendChild(
-      (document.getElementById("multiplier-info") as HTMLTemplateElement).content.cloneNode(true)
-    );
+    this.attachShadow({ mode: "open" }).appendChild((document.getElementById("multiplier-info") as HTMLTemplateElement).content.cloneNode(true));
 
     this.shadowRoot.querySelector('[name="name"]').innerHTML = this.innerHTML;
     this.shadowRoot.querySelector('[name="name-tooltip"]').innerHTML = this.innerHTML;
@@ -77,25 +75,10 @@ export class Multiplier_Info extends HTMLElement {
   }
 
   renderTooltip() {
-    this.shadowRoot.querySelector('[name="additive-total"]').innerHTML = this.compare(
-      this.data.additive,
-      this.snapshot?.additive,
-      this.dataset.type ? this.dataset.type : "%"
-    );
-    this.shadowRoot.querySelector('[name="multiplicative-total"]').innerHTML = this.compare(
-      this.data.multiplicative,
-      this.snapshot?.multiplicative
-    );
-    this.shadowRoot.querySelector('[name="temporary-total"]').innerHTML = this.compare(
-      this.data.temp,
-      this.snapshot?.temp,
-      this.dataset.type ? this.dataset.type : "%"
-    );
-    this.shadowRoot.querySelector('[name="temporary-total-log"]').innerHTML = this.compare(
-      this.data.log,
-      this.snapshot?.log,
-      this.dataset.type ? this.dataset.type : "%"
-    );
+    this.shadowRoot.querySelector('[name="additive-total"]').innerHTML = this.compare(this.data.additive, this.snapshot?.additive, this.dataset.type ? this.dataset.type : "%");
+    this.shadowRoot.querySelector('[name="multiplicative-total"]').innerHTML = this.compare(this.data.multiplicative, this.snapshot?.multiplicative);
+    this.shadowRoot.querySelector('[name="temporary-total"]').innerHTML = this.compare(this.data.temp, this.snapshot?.temp, this.dataset.type ? this.dataset.type : "%");
+    this.shadowRoot.querySelector('[name="temporary-total-log"]').innerHTML = this.compare(this.data.log, this.snapshot?.log, this.dataset.type ? this.dataset.type : "%");
     ///
     this.shadowRoot.querySelector('[name="value-total"]').innerHTML =
       this.dataset.superdungeon == "true"
@@ -103,11 +86,7 @@ export class Multiplier_Info extends HTMLElement {
         : this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%");
 
     ///
-    this.shadowRoot.querySelector('[name="after-total"]').innerHTML = this.compare(
-      this.data.after,
-      this.snapshot?.after,
-      this.dataset.type ? this.dataset.type : "%"
-    );
+    this.shadowRoot.querySelector('[name="after-total"]').innerHTML = this.compare(this.data.after, this.snapshot?.after, this.dataset.type ? this.dataset.type : "%");
 
     const afterValue = this.data.after > 0 || this.snapshot?.after > 0;
     if (!afterValue) (this.shadowRoot.querySelector('[name="after"]') as HTMLDivElement).style.display = "none";
@@ -120,26 +99,19 @@ export class Multiplier_Info extends HTMLElement {
     const additiveList = this.shadowRoot.querySelector('[name="additive-list"]');
     const multiplicativeList = this.shadowRoot.querySelector('[name="multiplicative-list"]');
     const afterList = this.shadowRoot.querySelector('[name="after-list"]');
+    additiveList.innerHTML = "";
+    multiplicativeList.innerHTML = "";
+    afterList.innerHTML = "";
     for (let index = 0; index < Enums.MultiplierKind; index++) {
       const name = Localization.StatsBreakdown(index);
       const valueAdditive = this.data.additiveKind[MultiplierKind[index]] ? this.data.additiveKind[MultiplierKind[index]] : 0;
-      const valueMultiplicative = this.data.multiplicativeKind[MultiplierKind[index]]
-        ? this.data.multiplicativeKind[MultiplierKind[index]]
-        : 0;
+      const valueMultiplicative = this.data.multiplicativeKind[MultiplierKind[index]] ? this.data.multiplicativeKind[MultiplierKind[index]] : 0;
       const valueAfter = this.data.afterKind[MultiplierKind[index]] ? this.data.afterKind[MultiplierKind[index]] : 0;
       if (valueAdditive || MultiplierKind.Base == index) {
-        const value = this.compare(
-          valueAdditive,
-          this.snapshot?.additiveKind[MultiplierKind[index]],
-          this.dataset.type ? this.dataset.type : "%"
-        );
+        const value = this.compare(valueAdditive, this.snapshot?.additiveKind[MultiplierKind[index]], this.dataset.type ? this.dataset.type : "%");
         additiveList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
       } else if (this.snapshot?.additiveKind[MultiplierKind[index]]) {
-        const value = this.compare(
-          valueAdditive,
-          this.snapshot?.additiveKind[MultiplierKind[index]],
-          this.dataset.type ? this.dataset.type : "%"
-        );
+        const value = this.compare(valueAdditive, this.snapshot?.additiveKind[MultiplierKind[index]], this.dataset.type ? this.dataset.type : "%");
         additiveList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
       }
       // multipliers
@@ -152,18 +124,10 @@ export class Multiplier_Info extends HTMLElement {
       }
 
       if (valueAfter) {
-        const value = this.compare(
-          valueAfter,
-          this.snapshot?.afterKind[MultiplierKind[index]],
-          this.dataset.type ? this.dataset.type : "%"
-        );
+        const value = this.compare(valueAfter, this.snapshot?.afterKind[MultiplierKind[index]], this.dataset.type ? this.dataset.type : "%");
         afterList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
       } else if (this.snapshot?.afterKind[MultiplierKind[index]]) {
-        const value = this.compare(
-          valueAfter,
-          this.snapshot?.afterKind[MultiplierKind[index]],
-          this.dataset.type ? this.dataset.type : "%"
-        );
+        const value = this.compare(valueAfter, this.snapshot?.afterKind[MultiplierKind[index]], this.dataset.type ? this.dataset.type : "%");
         afterList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
       }
     }

@@ -4,6 +4,11 @@ import { MultiplierType } from "../../type/MultiplierType";
 import { Enums } from "../../Enums";
 import { ClassSkill } from "./ClassSkill";
 import { AngelSkill } from "./AngelSkill";
+import { WarriorSkill } from "./WarriorSkill";
+import { WizardSkill } from "./WizardSkill";
+import { ThiefSkill } from "./ThiefSkill";
+import { ArcherSkill } from "./ArcherSkill";
+import { TamerSkill } from "./TamerSkill";
 
 export class DataSkill {
   ladyEmeldaEffectMultiplier: Multiplier[] = Array(Enums.HeroKind);
@@ -33,12 +38,14 @@ export class DataSkill {
       );
     for (let index = 0; index < this.ladyEmeldaEffectMultiplier.length; index++)
       this.ladyEmeldaEffectMultiplier[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-    for (let index = 0; index < this.skillCooltimeReduction.length; index++)
+
+    for (let index = 0; index < this.skillCooltimeReduction.length; index++) {
       this.skillCooltimeReduction[index] = new Multiplier(
         new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0),
         () => 0.5,
         () => 0.0
       );
+    }
     for (let index = 0; index < this.skillCastSpeedModifier.length; index++) {
       this.skillCastSpeedModifier[index] = new Multiplier(
         new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0),
@@ -79,6 +86,11 @@ export class DataSkill {
     for (let index = 0; index < this.baseAttackSlimeBall.length; index++) this.baseAttackSlimeBall[index] = new Multiplier();
     this.globalSkillProfGainRate = new Multiplier();
 
+    this.classSkills[0] = new WarriorSkill();
+    this.classSkills[1] = new WizardSkill();
     this.classSkills[2] = new AngelSkill();
+    this.classSkills[3] = new ThiefSkill();
+    this.classSkills[4] = new ArcherSkill();
+    this.classSkills[5] = new TamerSkill();
   }
 }

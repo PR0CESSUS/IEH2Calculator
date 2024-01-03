@@ -7,7 +7,7 @@ export class SaveFileDencrypt {
   private iterationCount = 1000;
   private position = 0;
 
-  constructor(data: string) {
+  constructor(data: string, clean: boolean = true) {
     let dataArray = data.split("#");
     this.data = {
       ...JSON.parse(this.dencrypt(dataArray[0])),
@@ -16,7 +16,9 @@ export class SaveFileDencrypt {
     };
     // console.log(this.data);
     this.merge();
-    this.cleanFile();
+    this.FixLoadout();
+    this.ClearNotEssential();
+    if (clean) this.cleanFile();
   }
   private dencrypt(src: string) {
     let key = this.Rfc2898DeriveBytes(16);
@@ -89,19 +91,62 @@ export class SaveFileDencrypt {
     }
     let position = this.position;
 
-    let bytes = pbkdf2Sync(
-      Buffer.from(decoder.decode(this.key)),
-      decoder.decode(this.salt),
-      this.iterationCount,
-      position + byteCount,
-      "sha1"
-    );
+    let bytes = pbkdf2Sync(Buffer.from(decoder.decode(this.key)), decoder.decode(this.salt), this.iterationCount, position + byteCount, "sha1");
     this.position += byteCount;
     let result = Buffer.alloc(byteCount);
     for (let i = 0; i < byteCount; i++) {
       result[i] = bytes[position + i];
     }
     return result;
+  }
+
+  private ClearNotEssential() {
+    delete this.data.isInitialized;
+    delete this.data.SEVolume;
+    delete this.data.BGMVolume;
+    delete this.data.lastSwarmPlaytime;
+    delete this.data.language;
+    delete this.data.inAppPurchasedNum_ver01011401;
+    delete this.data.isUsedSimulationOnce;
+    delete this.data.isToggleOn;
+    delete this.data.bgmVolume;
+    delete this.data.sfxVolume;
+    delete this.data.numberFormatKind;
+    delete this.data.SDAutoBuyStopFloor;
+    delete this.data.isFirstWelcomed;
+    delete this.data.lastCloudSaveTimeForBonus;
+    delete this.data.isCloudSaveOnce;
+    delete this.data.lastServerTimeGotServerTime;
+    delete this.data.lastLocalTimeGotServerTime;
+    delete this.data.lastTimeLocal;
+    delete this.data.birthDate;
+    delete this.data.isVer01010201;
+    delete this.data.isVer01010302;
+    delete this.data.isVer01010402;
+    delete this.data.isVer01010706;
+    delete this.data.isVer01010801;
+    delete this.data.isVer01010803;
+    delete this.data.isVer01010805;
+    delete this.data.isVer01011101;
+    delete this.data.isVer01011112;
+    delete this.data.isVer01011113;
+    delete this.data.isVer01011301;
+    delete this.data.isVer01011401;
+    delete this.data.isVer01011401_2;
+    delete this.data.isVer01011404;
+    delete this.data.isVer01011405;
+    delete this.data.isVer01011406;
+    delete this.data.isVer01011407;
+    delete this.data.isVer01011408;
+    delete this.data.isVer01011505;
+    delete this.data.isVer01011505_4;
+    delete this.data.isVer01011505_9;
+    delete this.data.isVer01011506_03;
+    delete this.data.isVer01011506_11;
+    delete this.data.isVer01011601_1;
+    delete this.data.isVer01011601_8;
+    delete this.data.isVer01011601_26;
+    delete this.data.isVer01011601_34;
   }
 
   private cleanFile() {
@@ -158,7 +203,7 @@ export class SaveFileDencrypt {
       "MovedDistance",
       "persistent",
       "areaIsReceived",
-      "current",
+      // "current",
       "purchasedNum",
       "IEH1Achievement",
       "NumEnchantFilter",
@@ -201,9 +246,7 @@ export class SaveFileDencrypt {
     delete this.data.combatRangeId;
     delete this.data.heroExp;
     delete this.data.maxHeroLevelReached;
-    delete this.data.currentHero;
     delete this.data.ascendTime;
-    delete this.data.isActiveBattle;
     delete this.data.language;
     delete this.data.isOnAMWA;
     delete this.data.summonSpecies;
@@ -228,7 +271,6 @@ export class SaveFileDencrypt {
     delete this.data.totalEquipmentGained;
     delete this.data.potionQueues;
     delete this.data.potionIsSuperQueues;
-    // delete this.data.isClearedChallenge;
     delete this.data.isClearedQuestsDaily;
     delete this.data.upgradeQueueExpGain;
     delete this.data.isEnchantFilter;
@@ -245,7 +287,6 @@ export class SaveFileDencrypt {
     delete this.data.lastSwarmPlaytime;
     delete this.data.equipmentIsGotOnce;
     delete this.data.isAutoRebirthOns;
-    delete this.data.skillLoadoutIds;
     delete this.data.ascensionPlayTime;
     delete this.data.ascensionPoints;
     delete this.data.bestAscensionPlayTime;
@@ -283,11 +324,25 @@ export class SaveFileDencrypt {
     delete this.data.ascensionNum;
     delete this.data.enchantId;
     delete this.data.enchantKinds;
-    delete this.data.expeditionExps; // maby for upgrading simulator
+    delete this.data.expeditionExps;
     delete this.data.inAppPurchasedNum_ver01011401;
+    // NEW
+    delete this.data.isDisassembleTalismans;
+    delete this.data.isReceivedBonusCodes;
+    delete this.data.SDAutoBuyStopFloor;
+
     // delete this.data.expedition;
     // console.log("clean data size: " + byteSize(JSON.stringify(this.data)));
     // writeFileSync("D:/test/test/test.json", JSON.stringify(this.data, null, 2));
     // console.log("file saved");
+  }
+
+  FixLoadout() {
+    for (let index = 0; index < this.data.equipmentLoadoutIds.length; index++) {
+      const sourceOffset = 4840 + index * 72;
+      const offset = 520 + this.data.equipmentLoadoutIds[index] * 72 + index * 720;
+      this.data.equipmentId.copyWithin(offset, sourceOffset, sourceOffset + 72);
+      // debugger;
+    }
   }
 }

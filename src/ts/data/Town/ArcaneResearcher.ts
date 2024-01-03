@@ -13,8 +13,26 @@ export class ArcaneResearcher extends BUILDING {
   }
 
   SetResearch() {
-    this.townCtrl.researchPower[0].RegisterMultiplier(new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Stone) * 0.05));
-    this.townCtrl.researchPower[1].RegisterMultiplier(new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Crystal) * 0.05));
-    this.townCtrl.researchPower[2].RegisterMultiplier(new MultiplierInfo(MultiplierKind.TownResearch, MultiplierType.Mul, () => this.ResearchLevel(ResourceKind.Leaf) * 0.05));
+    this.townCtrl.researchPower[0].RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.TownResearch,
+        MultiplierType.Mul,
+        () => this.ResearchLevel(ResourceKind.Stone) * 0.05 * this.ResearchMul(0)
+      )
+    );
+    this.townCtrl.researchPower[1].RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.TownResearch,
+        MultiplierType.Mul,
+        () => this.ResearchLevel(ResourceKind.Crystal) * 0.05 * this.ResearchMul(1)
+      )
+    );
+    this.townCtrl.researchPower[2].RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.TownResearch,
+        MultiplierType.Mul,
+        () => this.ResearchLevel(ResourceKind.Leaf) * 0.05 * this.ResearchMul(2)
+      )
+    );
   }
 }

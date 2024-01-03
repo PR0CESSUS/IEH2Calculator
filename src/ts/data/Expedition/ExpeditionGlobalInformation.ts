@@ -35,4 +35,6 @@ export class ExpeditionGlobalInformation {
   EffectValue() {
     return this.passiveEffectValueIncrementPerLevel * this.level;
   }
+
+  RewardAmount(expedition, pet, timeHour) {}
 }

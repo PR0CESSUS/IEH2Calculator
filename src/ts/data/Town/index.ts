@@ -27,26 +27,25 @@ export class DataTown {
     () => 0.0
   );
   buildings: any[] = [];
-  researchPower: Multiplier[] = Array(3)
-    .fill(null)
-    .map(
-      (_, index) =>
-        new Multiplier(
-          new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () =>
-            Math.log10(10.0 + globalThis.data.resource.Resource(index).value)
-          ),
-          () => 1e20,
-          () => 1.0
-        )
-    );
+  researchPower: Multiplier[] = Array(3);
 
   maxResearchNum: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-  researchEffectMultipliers: Multiplier[] = [new Multiplier(), new Multiplier(), new Multiplier()];
+  researchEffectMultipliers: Multiplier[] = Array(3);
 
   constructor() {
     // globalThis.data.stat.townCtrl = this;
     // for (let index = 0; index < this.townMaterialGainMultiplier.length; index++)
     //   this.townMaterialGainMultiplier[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    for (let index = 0; index < this.researchPower.length; index++) {
+      this.researchPower[index] = new Multiplier(
+        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () =>
+          Math.log10(10.0 + globalThis.data.resource.Resource(index).value)
+        ),
+        () => 1e20,
+        () => 1.0
+      );
+      this.researchEffectMultipliers[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    }
 
     for (let index = 0; index < Enums.ResourceKind; index++) {
       this.townLevelEffectMultipliers[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
@@ -86,5 +85,13 @@ export class DataTown {
     for (let index = 0; index < this.buildings.length; index++) {
       this.buildings[index].levelBonus.RegisterMultiplier(info);
     }
+  }
+
+  MaxTownMaterialGainMultiplier() {
+    let num = 0.0;
+    for (let kind = 0; kind < this.townMaterialGainMultiplier.length; ++kind) {
+      if (this.townMaterialGainMultiplier[kind].Value() > num) num = this.townMaterialGainMultiplier[kind].Value();
+    }
+    return num;
   }
 }

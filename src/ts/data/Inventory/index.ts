@@ -55,75 +55,13 @@ export class DataInventory {
     // console.log("Start inventory");
 
     for (let index = 0; index < this.equipmentSlots.length; index++) {
-      // this.equipmentSlots[index].Start();
-      const id = globalThis.data.source.equipmentId[index] as number;
-      let item = {
-        kind: globalThis.data.source.equipmentKinds[id],
-        optionEffects: [
-          {
-            kind: globalThis.data.source.equipment1stOptionEffectKinds[id],
-            level: globalThis.data.source.equipment1stOptionLevels[id],
-            value: globalThis.data.source.equipment1stOptionEffectValues[id],
-          },
-
-          {
-            kind: globalThis.data.source.equipment2ndOptionEffectKinds[id],
-            level: globalThis.data.source.equipment2ndOptionLevels[id],
-            value: globalThis.data.source.equipment2ndOptionEffectValues[id],
-          },
-
-          {
-            kind: globalThis.data.source.equipment3rdOptionEffectKinds[id],
-            level: globalThis.data.source.equipment3rdOptionLevels[id],
-            value: globalThis.data.source.equipment3rdOptionEffectValues[id],
-          },
-
-          {
-            kind: globalThis.data.source.equipment4thOptionEffectKinds[id],
-            level: globalThis.data.source.equipment4thOptionLevels[id],
-            value: globalThis.data.source.equipment4thOptionEffectValues[id],
-          },
-
-          {
-            kind: globalThis.data.source.equipment5thOptionEffectKinds[id],
-            level: globalThis.data.source.equipment5thOptionLevels[id],
-            value: globalThis.data.source.equipment5thOptionEffectValues[id],
-          },
-
-          {
-            kind: globalThis.data.source.equipment6thOptionEffectKinds[id],
-            level: globalThis.data.source.equipment6thOptionLevels[id],
-            value: globalThis.data.source.equipment6thOptionEffectValues[id],
-          },
-
-          {
-            kind: globalThis.data.source.equipment7thOptionEffectKinds[id],
-            level: globalThis.data.source.equipment7thOptionLevels[id],
-            value: globalThis.data.source.equipment7thOptionEffectValues[id],
-          },
-        ],
-        forgeEffects: [
-          globalThis.data.source.equipment1stForgeValues[id],
-          globalThis.data.source.equipment2ndForgeValues[id],
-          globalThis.data.source.equipment3rdForgeValues[id],
-          globalThis.data.source.equipment4thForgeValues[id],
-          globalThis.data.source.equipment5thForgeValues[id],
-          globalThis.data.source.equipment6thForgeValues[id],
-          globalThis.data.source.equipment7thForgeValues[id],
-        ],
-      };
-      this.equipmentSlots[index] = new Equipment(item);
-
-      this.equipmentSlots[index].slotId = index;
+      this.equipmentSlots[index] = new Equipment(index);
+      this.equipmentSlots[index].Start();
     }
 
     for (let index = 0; index < this.potionSlots.length; index++) {
-      const id = globalThis.data.source.potionId[index] as number;
-      let potion = {
-        kind: globalThis.data.source.potionKinds[id],
-        stack: globalThis.data.source.potionStackNums[id],
-      };
-      this.potionSlots[index] = new EquipmentPotion(potion);
+      this.potionSlots[index] = new EquipmentPotion(index);
+      this.potionSlots[index].Start();
     }
     // for (let index = 0; index < this.potionSlots.length; index++)
     //   this.potionSlots[index].Start();
@@ -138,17 +76,17 @@ export class DataInventory {
   }
 
   getHeroBySlotId(slotId) {
-    if (slotId >= 4840 && slotId < 4912) {
+    if (slotId >= 520 && slotId < 1240) {
       return HeroKind.Warrior;
-    } else if (slotId >= 4912 && slotId < 4984) {
+    } else if (slotId >= 1240 && slotId < 1960) {
       return HeroKind.Wizard;
-    } else if (slotId >= 4984 && slotId < 5056) {
+    } else if (slotId >= 1960 && slotId < 2680) {
       return HeroKind.Angel;
-    } else if (slotId >= 5056 && slotId < 5128) {
+    } else if (slotId >= 2680 && slotId < 3400) {
       return HeroKind.Thief;
-    } else if (slotId >= 5128 && slotId < 5200) {
+    } else if (slotId >= 3400 && slotId < 4120) {
       return HeroKind.Archer;
-    } else if (slotId >= 5200 && slotId < 5272) {
+    } else if (slotId >= 4120 && slotId < 4840) {
       return HeroKind.Tamer;
     }
   }
@@ -250,20 +188,21 @@ export class DataInventory {
     for (let kind = 0; kind < Enums.EquipmentSetKind; kind++) this.UpdateSetItemEquippedNum(kind, heroKind);
   }
 
-  getOffset(hero) {
-    switch (hero) {
+  getOffset(heroKind: HeroKind) {
+    // 520 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72 + globalThis.data.source.currentHero * 720
+    switch (heroKind) {
       case HeroKind.Warrior:
-        return 4840;
+        return 520 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Wizard:
-        return 4912;
+        return 1240 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Angel:
-        return 4984;
+        return 1960 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Thief:
-        return 5056;
+        return 2680 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Archer:
-        return 5128;
+        return 3400 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Tamer:
-        return 5200;
+        return 4120 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
       default:
         return 0;
     }

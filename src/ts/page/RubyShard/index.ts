@@ -1,16 +1,16 @@
 import { App } from "../../App";
 import { Util } from "../../Util";
+import { CustomSelectType } from "../../type/CustomSelectType";
 import { Page } from "../Page";
 
-export class RubyShard {
+export class CalculatorRubyShard {
   endpoint = "";
   custom = {
     ticket: 0,
-    reset: 0,
     failure: 0,
     dungeon: 0,
     modifier: 0,
-    floor: 0,
+    floor: 100,
   };
   constructor() {}
 
@@ -20,7 +20,7 @@ export class RubyShard {
 
   runsNum() {
     let runs = 0;
-    while (this.custom.reset > Math.pow(2, runs)) runs++;
+    while (globalThis.data.source.SDAutoLeaveAndRetryTargetEntryCost > Math.pow(2, runs)) runs++;
     return runs;
   }
 
@@ -51,22 +51,24 @@ export class RubyShard {
   get html() {
     const convertCost = globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.Value();
     let html = ``;
-    html += `Dungeon: <custom-select data-type="SDdungeon" data-endpoint="page['ruby-shard'].logic.custom.dungeon">${this.custom.dungeon}</custom-select>`;
+    // CustomSelectType
+    html += `Dungeon: <custom-select data-type="${CustomSelectType.SuperDungeon}" data-endpoint="page['ruby-shard'].logic.custom.dungeon">${this.custom.dungeon}</custom-select>`;
     html += `Modifier: <user-input data-endpoint="${this.endpoint}.custom.modifier"></user-input>`;
     html += `Floors Cleared: <user-input data-endpoint="${this.endpoint}.custom.floor"></user-input>`;
-    html += `<br>`;
-    html += `Ruby Shard per Dungeon : ${this.getShardsGain()}<br>`;
-    html += `Failure Rate % : <user-input data-endpoint="${this.endpoint}.custom.failure"></user-input> (Total Ruby Shards = Total Ruby Shards - Total Ruby Shards * failure rate)<br>`;
-    html += `Tickets : <user-input data-endpoint="${this.endpoint}.custom.ticket"></user-input><br>`;
-    html += `Reset Value : <user-input data-endpoint="${this.endpoint}.custom.reset"></user-input><br>`;
-    html += `Portal Orb Cost : ${Util.convertTo(this.costPerTicket() * this.custom.ticket)}<br>`;
-    html += `Runs ${this.runsNum() * 5 * this.custom.ticket}<br>`;
+    html += `<table>`;
+
+    html += `<tr><td>Failure Rate %</td><td><user-input data-endpoint="${this.endpoint}.custom.failure"></user-input> (Total Ruby Shards = Total Ruby Shards - Total Ruby Shards * failure rate)</td></tr>`;
+    html += `<tr><td>Tickets</td><td><user-input data-endpoint="${this.endpoint}.custom.ticket"></user-input></td></tr>`;
+    html += `<tr><td>Reset Value</td><td><user-input data-endpoint="data.source.SDAutoLeaveAndRetryTargetEntryCost"></user-input></td></tr>`;
+    html += `<tr><td>Portal Orb Cost</td><td>${Util.convertTo(this.costPerTicket() * this.custom.ticket)}</td></tr>`;
+    html += `<tr><td>Runs</td><td>${this.runsNum() * 5 * this.custom.ticket}</td></tr>`;
     let shard = this.runsNum() * 5 * this.custom.ticket * this.getShardsGain();
     shard = shard - shard * (this.custom.failure / 100);
-
-    html += `Total Ruby Shards ${Util.convertTo(shard, 3)}<br>`;
-    html += `Ruby Converter : ${Util.convertTo(convertCost)}<br>`;
-    html += `Total Ruby : ${Math.floor(shard / convertCost)}<br>`;
+    html += `<tr><td>Ruby Shard per Dungeon</td><td>${this.getShardsGain()}</td></tr>`;
+    html += `<tr><td>Total Ruby Shards</td><td>${Util.convertTo(shard, 3)}</td></tr>`;
+    html += `<tr><td>Ruby Converter</td><td>${Util.convertTo(convertCost)}</td></tr>`;
+    html += `<tr><td>Total Ruby</td><td>${Math.floor(shard / convertCost)}</td></tr>`;
+    html += `</table>`;
     html += `<hr>`;
 
     return html;

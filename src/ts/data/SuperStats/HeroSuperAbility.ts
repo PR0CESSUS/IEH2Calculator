@@ -27,6 +27,6 @@ export class HeroSuperAbility {
   }
 
   Point() {
-    return 0;
+    return this.value;
   }
 }

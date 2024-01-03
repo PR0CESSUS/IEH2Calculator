@@ -14,6 +14,18 @@ export class Expedition_Shard extends ExpeditionGlobalInformation {
   SetEffect() {
     // console.log(globalThis.data.town);
 
-    globalThis.data.town.townLevelEffectMultipliers[2].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Expedition, MultiplierType.Add, () => this.EffectValue()));
+    globalThis.data.town.townLevelEffectMultipliers[2].RegisterMultiplier(
+      new MultiplierInfo(MultiplierKind.Expedition, MultiplierType.Add, () => this.EffectValue())
+    );
+  }
+  RewardAmount(expedition, pet, timeHour) {
+    return (
+      60.0 *
+      Math.pow(1.1, this.level) *
+      globalThis.data.town.MaxTownMaterialGainMultiplier() *
+      (1.0 + 0.5 * pet.rank.value) *
+      Math.max(0.55478474, Math.pow(timeHour, this.expeditionCtrl.rewardModifierPerHour.Value())) *
+      expedition.expeditionCtrl.rewardMultiplier.Value()
+    );
   }
 }

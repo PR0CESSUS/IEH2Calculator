@@ -11,6 +11,7 @@ import { Debuff } from "../../type/Debuff";
 import { Stats } from "../../type/Stats";
 import { Enums, Enum } from "../../Enums";
 import { HeroStats } from "./HeroStats";
+import { Util } from "../../Util";
 
 export class DataStats {
   heroLevelIncrementLimit: Multiplier;
@@ -71,8 +72,7 @@ export class DataStats {
 
   ModifiedExpGain(heroKind: HeroKind, areaKind) {
     return (
-      (this.HeroStats(heroKind, Stats.ExpGain).Value() /
-        (1.0 + globalThis.data.area.expBonuses[globalThis.data.battle[heroKind].areaBattle.CurrentArea().kind].Value())) *
+      (this.HeroStats(heroKind, Stats.ExpGain).Value() / (1.0 + globalThis.data.area.expBonuses[globalThis.data.battle[heroKind].areaBattle.CurrentArea().kind].Value())) *
       (1.0 + globalThis.data.area.expBonuses[areaKind].Value())
     );
   }
@@ -210,4 +210,22 @@ export class DataStats {
   //  HeroLevel(heroKind: HeroKind) => this.heroes[heroKind].level;
 
   //  Exp(heroKind: HeroKind) => this.heroes[heroKind].exp;
+
+  MaxPetEXPGainAmongHeroes() {
+    let num = 0.0;
+    for (let kind = 0; kind < Enums.HeroKind; ++kind) {
+      if (this.Hero(kind).petExpGainPerDefeat.Value() > num) num = this.Hero(kind).petExpGainPerDefeat.Value();
+    }
+    return num;
+  }
+
+  MaxTPGAmongHeroes() {
+    let num = 0.0;
+    for (let index = 0; index < Enums.HeroKind; index++) {
+      if (this.Hero(index).stats[Stats.TamingPointGain].Value() > num) num = this.Hero(index).stats[Stats.TamingPointGain].Value();
+    }
+    // console.log("MaxTPGAmongHeroes", Util.convertTo(num));
+
+    return num;
+  }
 }

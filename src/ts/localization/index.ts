@@ -8,6 +8,9 @@ import { PotionName } from "./PotionName";
 import { ExpeditionGlobalInformationString } from "./ExpeditionGlobalInformationString";
 import { SDName } from "./SDName";
 import { ForgeEffectString } from "./ForgeEffectString";
+import { ForgeNameString } from "./ForgeNameString";
+import { Material } from "./Material";
+import { EquipmentEffect } from "./EquipmentEffect";
 
 export const Localization = {
   EquipmentEffectName: EquipmentEffectName,
@@ -20,4 +23,7 @@ export const Localization = {
   ExpeditionGlobalInformationString: ExpeditionGlobalInformationString,
   SDName: SDName,
   ForgeEffectString: ForgeEffectString,
+  ForgeNameString: ForgeNameString,
+  Material: Material,
+  EquipmentEffect: EquipmentEffect,
 };

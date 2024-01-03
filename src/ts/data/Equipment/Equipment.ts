@@ -13,20 +13,12 @@ import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
 import { EquipmentForgeEffectKind } from "../../type/EquipmentForgeEffectKind";
 import { Stats } from "../../type/Stats";
 import { EquipmentParameter } from "./EquipmentParameter";
-import { EquipmentOptionEffect, EquipmentOptionEffectData } from "./EquipmentOptionEffect";
+import { EquipmentOptionEffect } from "./EquipmentOptionEffect";
 import { EquipmentForgeEffect } from "./EquipmentForgeEffect";
 import { InventoryParameter } from "../Inventory/InventoryParameter";
-import { EquipmentSet } from "./EquipmentSet";
 import { SetEffect } from "./SetEffect";
 
-export type EquipmentData = {
-  kind: EquipmentKind;
-  optionEffects: EquipmentOptionEffectData[];
-  forgeEffects: number[];
-};
-
 export class Equipment {
-  data: EquipmentData;
   isEffectRegistered: Function[] = [];
   isMasteryEffectRegistered;
   isOptionEffectRegistered: boolean[][] = Array(Enums.HeroKind);
@@ -45,17 +37,21 @@ export class Equipment {
   info: MultiplierInfo;
   activateCondition;
   optionNum = 4;
-  set: EquipmentSet;
 
-  constructor(data: EquipmentData) {
-    this.data = data;
+  // kind: EquipmentKind;
+  // set: EquipmentSet;
 
-    for (let index = 0; index < this.isOptionEffectRegistered.length; index++) {
-      this.isOptionEffectRegistered[index] = Array(Enums.HeroKind).fill(false);
-    }
+  constructor(id) {
+    this.id = globalThis.data.source.equipmentId[id];
+    this.slotId = id;
+    // this.slotId = globalThis.data.source.equipmentId[id];
+    // this.kind = globalThis.data.source.equipmentKinds[id];
 
-    for (let optionId = 0; optionId < this.optionEffects.length; optionId++)
-      this.optionEffects[optionId] = new EquipmentOptionEffect(data.optionEffects[optionId]);
+    // for (let index = 0; index < this.isOptionEffectRegistered.length; index++) {
+    //   this.isOptionEffectRegistered[index] = Array(Enums.HeroKind).fill(false);
+    // }
+
+    for (let optionId = 0; optionId < this.optionEffects.length; optionId++) this.optionEffects[optionId] = new EquipmentOptionEffect(this, this.id, optionId);
     this.totalOptionNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => this.optionNum));
     this.totalOptionNum.RegisterMultiplier(
       new MultiplierInfo(
@@ -65,13 +61,13 @@ export class Equipment {
         () => this.globalInfo.levels[3].isMaxed
       )
     );
-    this.forgeEffects[0] = new EquipmentForgeEffect(this, data.forgeEffects[0], EquipmentForgeEffectKind.ReduceRequiredHeroLevel);
-    this.forgeEffects[1] = new EquipmentForgeEffect(this, data.forgeEffects[1], EquipmentForgeEffectKind.ReduceRequiredAbility);
-    this.forgeEffects[2] = new EquipmentForgeEffect(this, data.forgeEffects[2], EquipmentForgeEffectKind.IncreaseProficiencyGain);
-    this.forgeEffects[3] = new EquipmentForgeEffect(this, data.forgeEffects[3], EquipmentForgeEffectKind.IncreaseEffect);
-    this.forgeEffects[4] = new EquipmentForgeEffect(this, data.forgeEffects[4], EquipmentForgeEffectKind.PurifyCurseEffect);
-    this.forgeEffects[5] = new EquipmentForgeEffect(this, data.forgeEffects[5], EquipmentForgeEffectKind.IncreaseEffectIncrement);
-    this.forgeEffects[6] = new EquipmentForgeEffect(this, data.forgeEffects[6], EquipmentForgeEffectKind.EqLevel);
+    this.forgeEffects[0] = new EquipmentForgeEffect(this, EquipmentForgeEffectKind.ReduceRequiredHeroLevel);
+    this.forgeEffects[1] = new EquipmentForgeEffect(this, EquipmentForgeEffectKind.ReduceRequiredAbility);
+    this.forgeEffects[2] = new EquipmentForgeEffect(this, EquipmentForgeEffectKind.IncreaseProficiencyGain);
+    this.forgeEffects[3] = new EquipmentForgeEffect(this, EquipmentForgeEffectKind.IncreaseEffect);
+    this.forgeEffects[4] = new EquipmentForgeEffect(this, EquipmentForgeEffectKind.PurifyCurseEffect);
+    this.forgeEffects[5] = new EquipmentForgeEffect(this, EquipmentForgeEffectKind.IncreaseEffectIncrement);
+    this.forgeEffects[6] = new EquipmentForgeEffect(this, EquipmentForgeEffectKind.EqLevel);
   }
 
   get globalInfo() {
@@ -83,7 +79,7 @@ export class Equipment {
   }
 
   get kind() {
-    return this.data.kind;
+    return globalThis.data.source.equipmentKinds[this.id];
   }
 
   get setKind() {
@@ -91,28 +87,43 @@ export class Equipment {
   }
 
   set kind(value) {
-    this.data.kind = value;
-    this.SetAgainAllEffect();
+    globalThis.data.source.equipmentKinds[this.id] = value;
+    // this.SetAgainAllEffect();
   }
 
   get heroKind() {
-    if (this.slotId >= 4840 && this.slotId < 4912) {
+    const slotId = this.slotId;
+    if (slotId >= 520 && slotId < 1240) {
       return HeroKind.Warrior;
-    } else if (this.slotId >= 4912 && this.slotId < 4984) {
+    } else if (slotId >= 1240 && slotId < 1960) {
       return HeroKind.Wizard;
-    } else if (this.slotId >= 4984 && this.slotId < 5056) {
+    } else if (slotId >= 1960 && slotId < 2680) {
       return HeroKind.Angel;
-    } else if (this.slotId >= 4984 && this.slotId < 5056) {
+    } else if (slotId >= 2680 && slotId < 3400) {
       return HeroKind.Thief;
-    } else if (this.slotId >= 5056 && this.slotId < 5128) {
+    } else if (slotId >= 3400 && slotId < 4120) {
       return HeroKind.Archer;
-    } else if (this.slotId >= 5128 && this.slotId < 5200) {
+    } else if (slotId >= 4120 && slotId < 4840) {
       return HeroKind.Tamer;
     }
   }
 
+  get loadout() {
+    return Math.floor((this.slotId - (520 + this.heroKind * 720)) / 72);
+  }
+
+  get loadoutSlot() {
+    return this.slotId - (520 + this.heroKind * 720 + this.loadout * 72);
+  }
+
   Start() {
     this.CalculateRequiredLevel();
+
+    if (this.loadout == globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero] && this.heroKind == globalThis.data.source.currentHero) {
+      // console.log("SetAgainAllEffect", this.slotId, this.IsEquipped());
+      this.SetAgainAllEffect();
+    }
+
     // this.CalculateRequiredAbilityPoint();
   }
 
@@ -152,9 +163,7 @@ export class Equipment {
 
   CanForge(kind: EquipmentForgeEffectKind, isArtifactAnvil) {
     if ((!isArtifactAnvil && this.globalInfo.isArtifact) || (isArtifactAnvil && !this.globalInfo.isArtifact)) return false;
-    return this.forgeEffects[kind].IsForged()
-      ? this.ForgeEffectMaxValueLeft(kind, isArtifactAnvil) > 0.0
-      : this.AvailableForgeSlotNum() > 0;
+    return this.forgeEffects[kind].IsForged() ? this.ForgeEffectMaxValueLeft(kind, isArtifactAnvil) > 0.0 : this.AvailableForgeSlotNum() > 0;
   }
 
   ForgeEffectMaxValueLeft(kind: EquipmentForgeEffectKind, isArtifactAnvil) {
@@ -175,10 +184,8 @@ export class Equipment {
         val1 = 0.0;
         for (let index = 1; index < this.globalInfo.requiredAbilities.length; index++) {
           if (isArtifactAnvil) {
-            if (this.globalInfo.requiredAbilities[index].isSuperAbility)
-              val1 = Math.max(val1, this.globalInfo.requiredAbilities[index].requiredValue);
-          } else if (!this.globalInfo.requiredAbilities[index].isSuperAbility)
-            val1 = Math.max(val1, this.globalInfo.requiredAbilities[index].requiredValue);
+            if (this.globalInfo.requiredAbilities[index].isSuperAbility) val1 = Math.max(val1, this.globalInfo.requiredAbilities[index].requiredValue);
+          } else if (!this.globalInfo.requiredAbilities[index].isSuperAbility) val1 = Math.max(val1, this.globalInfo.requiredAbilities[index].requiredValue);
         }
         break;
       case EquipmentForgeEffectKind.IncreaseEffect:
@@ -222,56 +229,47 @@ export class Equipment {
   SetAgainAllEffect() {
     this.IsEffectRegisteredClear();
     // this.SetEffectBase(1);
+
+    // console.log(index, this.IsEquipped(index), this.slotId);
     // this.SetMasteryEffect();
-    for (let index = 0; index < Enums.HeroKind; index++) {
-      if (this.IsEquipped(index)) {
-        // console.log("SetAgainAllEffect()");
-        // console.log("s", index, this.IsEquipped(index), this.slotId);
-
-        this.SetEffectBase(index);
-        this.SetMasteryEffect(index);
-        // console.log("set again");
-        // globalThis.app.router.load();
-
-        break;
-      }
+    if (this.IsEquipped()) {
+      this.SetEffectBase(this.heroKind);
+      this.SetMasteryEffect(this.heroKind);
     }
-  }
-  IsEquipped(heroKind: HeroKind) {
-    // return true;
-    // console.log(this.slotId - InventoryParameter.equipInventorySlotId < InventoryParameter.equipPartSlotId * 3);
 
-    if (this.kind == EquipmentKind.Nothing || this.slotId < InventoryParameter.equipInventorySlotId) return false;
-    switch (heroKind) {
-      case HeroKind.Warrior:
-        return this.slotId - InventoryParameter.equipInventorySlotId < InventoryParameter.equipPartSlotId * 3;
-      case HeroKind.Wizard:
-        return (
-          this.slotId - InventoryParameter.equipInventorySlotId >= InventoryParameter.equipPartSlotId * 3 &&
-          this.slotId - InventoryParameter.equipInventorySlotId < 2 * InventoryParameter.equipPartSlotId * 3
-        );
-      case HeroKind.Angel:
-        return (
-          this.slotId - InventoryParameter.equipInventorySlotId >= 2 * InventoryParameter.equipPartSlotId * 3 &&
-          this.slotId - InventoryParameter.equipInventorySlotId < 3 * InventoryParameter.equipPartSlotId * 3
-        );
-      case HeroKind.Thief:
-        return (
-          this.slotId - InventoryParameter.equipInventorySlotId >= 3 * InventoryParameter.equipPartSlotId * 3 &&
-          this.slotId - InventoryParameter.equipInventorySlotId < 4 * InventoryParameter.equipPartSlotId * 3
-        );
-      case HeroKind.Archer:
-        return (
-          this.slotId - InventoryParameter.equipInventorySlotId >= 4 * InventoryParameter.equipPartSlotId * 3 &&
-          this.slotId - InventoryParameter.equipInventorySlotId < 5 * InventoryParameter.equipPartSlotId * 3
-        );
-      case HeroKind.Tamer:
-        return (
-          this.slotId - InventoryParameter.equipInventorySlotId >= 5 * InventoryParameter.equipPartSlotId * 3 &&
-          this.slotId - InventoryParameter.equipInventorySlotId < 6 * InventoryParameter.equipPartSlotId * 3
-        );
-      default:
-        return false;
+    // for (let index = 0; index < Enums.HeroKind; index++) {
+    //   if (this.IsEquipped()) {
+    //     this.SetEffectBase(index);
+    //     this.SetMasteryEffect(index);
+    //     // console.log("SetAgainAllEffect() inside", this.isEffectRegistered);
+    //     // console.log("set again");
+    //     // globalThis.app.router.load();
+
+    //     break;
+    //   }
+    // }
+  }
+  IsEquipped() {
+    if (this.loadout != globalThis.data.source.equipmentLoadoutIds[this.heroKind] || !globalThis.data.source.isActiveBattle[this.heroKind] || this.kind == 0) return false;
+
+    if (this.loadoutSlot < 24) {
+      if (globalThis.data.custom.isSuperDungeon == false) {
+        return globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() >= this.loadoutSlot;
+      } else {
+        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() >= this.loadoutSlot;
+      }
+    } else if (this.loadoutSlot >= 24 && this.loadoutSlot < 48) {
+      if (globalThis.data.custom.isSuperDungeon == false) {
+        return globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() >= this.loadoutSlot - 24;
+      } else {
+        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.Value() >= this.loadoutSlot - 24;
+      }
+    } else if (this.loadoutSlot >= 48) {
+      if (globalThis.data.custom.isSuperDungeon == false) {
+        return globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() >= this.loadoutSlot - 48;
+      } else {
+        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.Value() >= this.loadoutSlot - 48;
+      }
     }
   }
   SetMasteryEffect(heroKind: HeroKind) {
@@ -297,8 +295,7 @@ export class Equipment {
       this.isEffectRegistered.push(this.SetEffect(heroKind, this.globalInfo.effects[index].kind, () => this.OriginalEffectValue(index)));
     }
     for (let index = 0; index < this.optionEffects.length; index++) {
-      if (this.optionEffects[index].kind != 0)
-        this.isEffectRegistered.push(this.SetEffect(heroKind, this.optionEffects[index].kind, () => this.optionEffects[index].effectValue));
+      if (this.optionEffects[index].kind != 0) this.isEffectRegistered.push(this.SetEffect(heroKind, this.optionEffects[index].kind, () => this.optionEffects[index].effectValue));
 
       //
       // this.SetEffect(heroKind, this.optionEffects[index].kind, () => this.optionEffects[index].effectValue);
@@ -329,13 +326,7 @@ export class Equipment {
   }
 
   RequiredLevel(withoutForge, isGrade) {
-    return isGrade
-      ? withoutForge
-        ? this.requiredGradeWithoutForge
-        : this.requiredGrade
-      : withoutForge
-      ? this.requiredLevelWithoutForge
-      : this.requiredLevel;
+    return isGrade ? (withoutForge ? this.requiredGradeWithoutForge : this.requiredGrade) : withoutForge ? this.requiredLevelWithoutForge : this.requiredLevel;
   }
 
   // IsEnoughLevel(heroKind: HeroKind, isGrade) {
@@ -349,8 +340,6 @@ export class Equipment {
     return this.globalInfo.setKind != 0 && this.globalInfo.setKind != undefined;
   }
   EffectMultiplierFromSetItem(heroKind: HeroKind) {
-    // BUG
-
     if (!this.isSetItem || this.isSetItem == undefined) return 1;
 
     switch (globalThis.data.inventory.SetItemEquippedNum(this.globalInfo.setKind, heroKind)) {
@@ -376,8 +365,7 @@ export class Equipment {
   EffectValue(baseEffectValue, heroKind: HeroKind) {
     let num = baseEffectValue * this.EffectMultiplierFromSetItem(heroKind) * (1.0 + this.forgeEffects[3].EffectValue());
     if (!this.globalInfo.isArtifact) num *= globalThis.data.equipment.EffectMultiplier(heroKind);
-    else if (globalThis.data.equipment.effectMultiplierModifierForArtifact.Value() > 0.0)
-      num *= globalThis.data.equipment.ArtifactEffectMultiplier(heroKind);
+    else if (globalThis.data.equipment.effectMultiplierModifierForArtifact.Value() > 0.0) num *= globalThis.data.equipment.ArtifactEffectMultiplier(heroKind);
     if (num < 0.0) num *= Math.max(0.0, 1 - this.forgeEffects[4].EffectValue());
     return num;
   }
@@ -393,11 +381,16 @@ export class Equipment {
     this.requiredGradeWithoutForge = Math.max(0, val2_1);
     if (this.globalInfo.isArtifact) val2_1 -= this.forgeEffects[0].EffectValue();
     this.requiredGrade = Math.max(0, val2_1);
+    //
     let val2_2 = 0;
+
     if (!this.globalInfo.isArtifact) val2_2 = this.globalInfo.requiredAbilities[0].requiredValue;
+    // console.log("base", this.globalInfo.requiredAbilities[0].requiredValue);
     for (let index = 0; index < this.optionEffects.length; index++) {
       if (!this.optionEffects[index].isAfter) val2_2 += this.optionEffects[index].RequiredLevelIncrement();
+      // console.log("optionEffects", index, this.optionEffects[index].RequiredLevelIncrement(), this.optionEffects[index].isAfter, this.optionEffects[index].kind);
     }
+    // console.log(val2_2);
     this.requiredLevelWithoutForge = Math.max(0, val2_2);
     if (!this.globalInfo.isArtifact) val2_2 -= this.forgeEffects[0].EffectValue();
     this.requiredLevel = Math.max(0, val2_2);

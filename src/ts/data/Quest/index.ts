@@ -206,7 +206,7 @@ export class QuestController {
   globalQuestListCapture: QUEST[] = [];
   globalQuestListAlchemy: QUEST[] = [];
   dailyQuestList: QUEST[] = [];
-  titleQuestList: Array<Array<QUEST>> = Array(Enums.HeroKind).fill([]);
+  titleQuestList: Array<Array<QUEST>> = Array(Enums.HeroKind);
   generalQuestList = Array(Enums.HeroKind);
   globalQuests: QUEST[] = [];
   dailyQuests: QUEST[];
@@ -311,12 +311,7 @@ export class QuestController {
     this.globalQuestList.push(new GlobalQuest_SD7(this, HeroKind.Warrior));
     this.globalQuestList.push(new GlobalQuest_SD8(this, HeroKind.Warrior));
 
-    this.globalQuests = [
-      ...this.globalQuestListNitro,
-      ...this.globalQuestListCapture,
-      ...this.globalQuestListAlchemy,
-      ...this.globalQuestList,
-    ];
+    this.globalQuests = [...this.globalQuestListNitro, ...this.globalQuestListCapture, ...this.globalQuestListAlchemy, ...this.globalQuestList];
     //   this.globalQuests = new QUEST[Enum.GetNames(typeof (QuestKindGlobal)).length];
     //   for (let index1 = 0; index1 < this.globalQuests.length; index1++) {
     //     for (let index2 = 0; index2 < this.globalQuestList.length; index2++) {
@@ -347,6 +342,7 @@ export class QuestController {
     //   this.titleQuests = new QUEST[Enum.GetNames(typeof (HeroKind)).length][];
     //   this.generalQuests = new QUEST[Enum.GetNames(typeof (HeroKind)).length][];
     for (let index = 0; index < this.titleQuestList.length; index++) {
+      this.titleQuestList[index] = [];
       //     this.titleQuestList[index] = new List<QUEST>();
       //     this.titleQuestList[index].push(new TitleQuest_SkillMaster1(this, index));
       //     this.titleQuestList[index].push(new TitleQuest_SkillMaster2(this, index));
@@ -514,11 +510,7 @@ export class QuestController {
   TitleLevel(heroKind: HeroKind, kind: TitleKind) {
     let num = 0;
     for (let index = 0; index < this.titleQuests[heroKind].length; index++) {
-      if (
-        this.titleQuests[heroKind][index].rewardTitleKind == kind &&
-        this.titleQuests[heroKind][index].isCleared &&
-        this.titleQuests[heroKind][index].rewardTitleLevel > num
-      ) {
+      if (this.titleQuests[heroKind][index].rewardTitleKind == kind && this.titleQuests[heroKind][index].isCleared && this.titleQuests[heroKind][index].rewardTitleLevel > num) {
         num = this.titleQuests[heroKind][index].rewardTitleLevel;
       }
     }
@@ -538,134 +530,78 @@ export class QuestController {
     switch (kind) {
       case TitleKind.SkillMaster:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo1 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo1 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.SkillSlotNum(index).RegisterMultiplier(multiplierInfo1);
-          const multiplierInfo2 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).sub
-          );
+          const multiplierInfo2 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).sub);
           globalThis.data.stats.HeroStats(index, Stats.SkillProficiencyGain).RegisterMultiplier(multiplierInfo2);
         }
         break;
       case TitleKind.MonsterDistinguisher:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo3 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo3 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.MonsterDistinguishMaxLevel(index).RegisterMultiplier(multiplierInfo3);
-          const multiplierInfo4 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).sub
-          );
+          const multiplierInfo4 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).sub);
           globalThis.data.stats.MonsterCaptureMaxLevelIncrement(index).RegisterMultiplier(multiplierInfo4);
         }
         break;
       case TitleKind.EquipmentSlotWeapon:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.inventory.equipWeaponUnlockedNum[index].RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.EquipmentSlotArmor:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.inventory.equipArmorUnlockedNum[index].RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.EquipmentSlotJewelry:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.inventory.equipJewelryUnlockedNum[index].RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.PotionSlot:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.inventory.equipPotionUnlockedNum[index].RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.EquipmentProficiency:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.HeroStats(index, Stats.EquipmentProficiencyGain).RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.PhysicalDamage:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.ElementDamage(index, Element.Physical).RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.FireDamage:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.ElementDamage(index, Element.Fire).RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.IceDamage:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.ElementDamage(index, Element.Ice).RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.ThunderDamage:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.ElementDamage(index, Element.Thunder).RegisterMultiplier(multiplierInfo);
         }
         break;
       //
       case TitleKind.LightDamage:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.ElementDamage(index, Element.Light).RegisterMultiplier(multiplierInfo);
         }
         //
@@ -673,21 +609,13 @@ export class QuestController {
         break;
       case TitleKind.DarkDamage:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.ElementDamage(index, Element.Dark).RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.Alchemist:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.alchemy.mysteriousWaterProductionPerSec.RegisterMultiplier(multiplierInfo);
         }
         break;
@@ -705,138 +633,74 @@ export class QuestController {
         break;
       case TitleKind.FireResistance:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo5 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo5 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.HeroStats(index, Stats.FireRes).RegisterMultiplier(multiplierInfo5);
-          const multiplierInfo6 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).sub
-          );
+          const multiplierInfo6 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).sub);
           globalThis.data.stats.ElementInvalid(index, Element.Fire).RegisterMultiplier(multiplierInfo6);
         }
         break;
       case TitleKind.IceResistance:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo7 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo7 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.HeroStats(index, Stats.IceRes).RegisterMultiplier(multiplierInfo7);
-          const multiplierInfo8 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).sub
-          );
+          const multiplierInfo8 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).sub);
           globalThis.data.stats.ElementInvalid(index, Element.Ice).RegisterMultiplier(multiplierInfo8);
         }
         break;
       case TitleKind.ThunderResistance:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo9 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo9 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.HeroStats(index, Stats.ThunderRes).RegisterMultiplier(multiplierInfo9);
-          const multiplierInfo10 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).sub
-          );
+          const multiplierInfo10 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).sub);
           globalThis.data.stats.ElementInvalid(index, Element.Thunder).RegisterMultiplier(multiplierInfo10);
         }
         break;
       case TitleKind.LightResistance:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo11 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo11 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.HeroStats(index, Stats.LightRes).RegisterMultiplier(multiplierInfo11);
-          const multiplierInfo12 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).sub
-          );
+          const multiplierInfo12 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).sub);
           globalThis.data.stats.ElementInvalid(index, Element.Light).RegisterMultiplier(multiplierInfo12);
         }
         break;
       case TitleKind.DarkResistance:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo13 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo13 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.HeroStats(index, Stats.DarkRes).RegisterMultiplier(multiplierInfo13);
-          const multiplierInfo14 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).sub
-          );
+          const multiplierInfo14 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).sub);
           globalThis.data.stats.ElementInvalid(index, Element.Dark).RegisterMultiplier(multiplierInfo14);
         }
         break;
       case TitleKind.Cooperation:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           // TODO backgroundGainRate
           //   globalThis.data.guild.Member(index).backgroundGainRate.RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.DebuffResistance:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.HeroStats(index, Stats.DebuffRes).RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.MoveSpeed:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.stats.HeroStats(index, Stats.MoveSpeed).RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.Quester:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Add,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           this.generalQuestClearGain[index].RegisterMultiplier(multiplierInfo);
         }
         break;
       case TitleKind.ExplorerOfSD:
         for (let index = 0; index < Enums.HeroKind; index++) {
-          const multiplierInfo15 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).main
-          );
+          const multiplierInfo15 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).main);
           globalThis.data.battles[index].superDungeonCtrl.damageMultiplier.RegisterMultiplier(multiplierInfo15);
-          const multiplierInfo16 = new MultiplierInfo(
-            MultiplierKind.Title,
-            MultiplierType.Mul,
-            () => this.TitleEffectValue(index, kind).sub
-          );
+          const multiplierInfo16 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).sub);
           globalThis.data.superStats.Hero(index).fameGain.RegisterMultiplier(multiplierInfo16);
         }
         break;

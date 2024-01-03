@@ -1,9 +1,11 @@
 import { HeroKind } from "../../type/HeroKind";
 import { PotionKind } from "../../type/PotionKind";
+import { PotionType } from "../../type/PotionType";
 import { TalismanRarity } from "../../type/TalismanRarity";
 import { PotionGlobalInformation } from "./PotionGlobalInformation";
 
 export class Talisman extends PotionGlobalInformation {
+  type: PotionType = PotionType.Talisman;
   get talismanKind() {
     return PotionKind.AncientAngelsBadge;
   }

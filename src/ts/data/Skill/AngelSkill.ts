@@ -1,15 +1,15 @@
 import { HeroKind } from "../../type/HeroKind";
 import { ClassSkill } from "./ClassSkill";
-import { GodBless } from "./data/GodBless";
-import { Haste } from "./data/Haste";
-import { Heal } from "./data/Heal";
-import { HolyArch } from "./data/HolyArch";
-import { MagicImpact } from "./data/MagicImpact";
-import { MuscleInflation } from "./data/MuscleInflation";
-import { ProtectWall } from "./data/ProtectWall";
-import { WingAttack } from "./data/WingAttack";
-import { WingShoot } from "./data/WingShoot";
-import { WingStorm } from "./data/WingStorm";
+import { GodBless } from "./data/Angel/GodBless";
+import { Haste } from "./data/Angel/Haste";
+import { Heal } from "./data/Angel/Heal";
+import { HolyArch } from "./data/Angel/HolyArch";
+import { MagicImpact } from "./data/Angel/MagicImpact";
+import { MuscleInflation } from "./data/Angel/MuscleInflation";
+import { ProtectWall } from "./data/Angel/ProtectWall";
+import { WingAttack } from "./data/Angel/WingAttack";
+import { WingShoot } from "./data/Angel/WingShoot";
+import { WingStorm } from "./data/Angel/WingStorm";
 
 export class AngelSkill extends ClassSkill {
   heroKind = HeroKind.Angel;

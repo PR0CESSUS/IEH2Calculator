@@ -35,7 +35,7 @@
             /* width: 310px; */
             margin-left: 0px;
             /* margin-bottom: 50px; */
-            padding: 5px 5px 10px 10px;
+            padding: 6px;
             background-color: #1a2c4d;
             border-style: outset;
             border-width: 2px;
@@ -53,6 +53,47 @@
         .hidden {
             display: none;
         }
+
+        .btn {
+            font-size: 14px;
+            font-weight: bold;
+            color: aliceblue;
+            border-style: outset;
+            border-width: 3px;
+            -webkit-filter: blur(0.3px);
+            filter: blur(0.3px);
+            margin-left: 2px;
+            padding: 2px 15px 5px 15px;
+        }
+
+        .btn:hover {
+            box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-blue {
+            background-image: linear-gradient(#2b487f, #203860);
+            background-color: #2b487f;
+            border-top-color: #5476ae;
+            border-bottom-color: #202f4e;
+            border-left-color: #1b3763;
+            border-right-color: #223e6a;
+        }
+
+        .btn-gray {
+            background-image: linear-gradient(#656565, #4a4a4a);
+            background-color: #1a2c4d;
+            border-top-color: #939393;
+            border-bottom-color: #3f3f3f;
+            border-left-color: #474747;
+            border-right-color: #4e4e4e;
+        }
+
+        .block {
+            width: 390px;
+            display: inline-block;
+            padding-right: 15px;
+            vertical-align: top;
+        }
     </style>
     <div>
 
@@ -67,12 +108,12 @@
             <li name="regions">Regions</li>
 
         </ul>
-        <button name="createSnapshot">Create Stat Snapshot</button>
-        <button name="add">Add</button>
-        <button name="remove">Remove</button>
+        <button name="createSnapshot" class="btn btn-gray">Create Stat Snapshot</button>
+        <custom-checkbox data-endpoint="data.custom.isSuperDungeon">Super
+            Dungeon</custom-checkbox>
         <div name="main-content" class="hidden">
             <h3>Main Stats</h3>
-            <div style="width: 350px; display: inline-block; padding-right: 15px;">
+            <div class="block">
                 <multiplier-info name="basicStats0" data-type="normal">HP</multiplier-info>
                 <multiplier-info name="basicStats1" data-type="normal">MP</multiplier-info>
                 <multiplier-info name="basicStats2" data-type="normal">ATK</multiplier-info>
@@ -90,7 +131,7 @@
                     Chance</multiplier-info>
                 <multiplier-info name="equipment.effectMultiplier" data-islog="false">Equipment Effect</multiplier-info>
             </div>
-            <div style="width: 350px; display: inline-block; vertical-align: top;" class="hidden">
+            <div class="block">
                 <multiplier-info name="hpRegenerate" data-type="normal">HP Regeneration</multiplier-info>
                 <multiplier-info name="mpRegenerate" data-type="normal">MP Regeneration</multiplier-info>
                 <multiplier-info name="blessingInfo.effectMultiplier" data-islog="false">Blessing
@@ -113,7 +154,7 @@
 
         <div name="attack-content" class="hidden">
             <h3>Attack</h3>
-            <div style="width: 350px; display: inline-block; padding-right: 15px;">
+            <div class="block">
                 <multiplier-info name="elementDamages0">Physical Damage</multiplier-info>
                 <multiplier-info name="elementDamages1">Fire Damage</multiplier-info>
                 <multiplier-info name="elementDamages2">Ice Damage</multiplier-info>
@@ -135,7 +176,7 @@
 
         <div name="defense-content" class="hidden">
             <h3>Defense Stats</h3>
-            <div style="width: 350px; display: inline-block; padding-right: 15px;">
+            <div class="block">
                 <multiplier-info name="stats0">Fire Resistance</multiplier-info>
                 <multiplier-info name="stats1">Ice Resistance</multiplier-info>
                 <multiplier-info name="stats2">Thunder Resistance</multiplier-info>
@@ -149,7 +190,7 @@
 
         <div name="gains-content" class="hidden">
             <h3>Gain Stats</h3>
-            <div style="width: 350px; display: inline-block; padding-right: 15px;">
+            <div class="block">
                 <multiplier-info name="stats14" data-islog="false">EXP Gain</multiplier-info>
                 <multiplier-info name="stats11" data-islog="false">Skill Proficiency Gain</multiplier-info>
                 <multiplier-info name="stats12" data-islog="false">Equipment Proficiency Gain</multiplier-info>
@@ -162,7 +203,7 @@
 
         <div name="bestiary-content" class="hidden">
             <h3>Bestiary</h3>
-            <div style="width: 350px; display: inline-block; padding-right: 15px;">
+            <div class="block">
                 <multiplier-info name="stats13" data-islog="false">Taming Point Gain</multiplier-info>
                 <multiplier-info name="stats17" data-islog="false">Pet Base Physical Critial Chance</multiplier-info>
                 <multiplier-info name="stats18" data-islog="false">Pet Base Magical Critial Chance</multiplier-info>
@@ -179,7 +220,7 @@
 
         <div name="regions-content" class="hidden">
             <h3>Regions Stats</h3>
-            <div style="width: 350px; display: inline-block; padding-right: 15px;">
+            <div class="block">
                 <multiplier-info name="monsterDamages0">Damage to Slime</multiplier-info>
                 <multiplier-info name="monsterDamages1">Damage to Magicslime</multiplier-info>
                 <multiplier-info name="monsterDamages2">Damage to Spider</multiplier-info>
