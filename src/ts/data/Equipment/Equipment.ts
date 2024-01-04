@@ -254,21 +254,23 @@ export class Equipment {
 
     if (this.loadoutSlot < 24) {
       if (globalThis.data.custom.isSuperDungeon == false) {
-        return globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() >= this.loadoutSlot;
+        return globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() > this.loadoutSlot;
       } else {
-        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() >= this.loadoutSlot;
+        // if (this.heroKind == 4) console.log("sd weeapon", globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() > this.loadoutSlot, this.loadoutSlot);
+
+        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() > this.loadoutSlot;
       }
     } else if (this.loadoutSlot >= 24 && this.loadoutSlot < 48) {
       if (globalThis.data.custom.isSuperDungeon == false) {
-        return globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() >= this.loadoutSlot - 24;
+        return globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 24;
       } else {
-        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.Value() >= this.loadoutSlot - 24;
+        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.Value() > this.loadoutSlot - 24;
       }
     } else if (this.loadoutSlot >= 48) {
       if (globalThis.data.custom.isSuperDungeon == false) {
-        return globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() >= this.loadoutSlot - 48;
+        return globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 48;
       } else {
-        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.Value() >= this.loadoutSlot - 48;
+        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.Value() > this.loadoutSlot - 48;
       }
     }
   }

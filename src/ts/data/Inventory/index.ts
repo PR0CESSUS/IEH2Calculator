@@ -75,6 +75,16 @@ export class DataInventory {
     // this.setItemEquippedNums[0][0] = 7;
   }
 
+  Update() {
+    this.equipmentSlots.forEach((equipment, index) => {
+      if (equipment.IsEquipped()) {
+        equipment.Start();
+      } else {
+        equipment.IsEffectRegisteredClear();
+      }
+    });
+  }
+
   getHeroBySlotId(slotId) {
     if (slotId >= 520 && slotId < 1240) {
       return HeroKind.Warrior;

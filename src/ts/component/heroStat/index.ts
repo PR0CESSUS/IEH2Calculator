@@ -40,7 +40,7 @@ export class ComponentHeroStat extends HTMLElement {
   ];
   constructor() {
     super();
-
+    // console.log("hero stat constructor");
     // this.heroKind = parseInt(this.dataset.hero);
     this.heroKind = globalThis.data.source.currentHero;
     // console.log(this.dataset.hero);
@@ -117,6 +117,8 @@ export class ComponentHeroStat extends HTMLElement {
   }
 
   render(edit: boolean = false) {
+    // console.log("hero-stat render");
+
     const snapshot = JSON.parse(localStorage.getItem("snapshotStat"));
 
     // console.log(snapshot);

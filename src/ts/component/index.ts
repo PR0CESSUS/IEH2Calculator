@@ -13,10 +13,10 @@ export default function () {
   customElements.define("equipment-info", ComponentEquipmentInfo);
   customElements.define("equipment-loadout", ComponentEquipmentLoadout);
   customElements.define("multiplier-info", Multiplier_Info);
+  customElements.define("custom-checkbox", customCheckbox);
+  customElements.define("hero-stat", ComponentHeroStat);
   customElements.define("sd-simulator", ComponentSDSimulator);
   customElements.define("user-input", userInput);
   customElements.define("custom-select", customSelect);
-  customElements.define("custom-checkbox", customCheckbox);
   customElements.define("data-overview", ComponentDataOverview);
-  customElements.define("hero-stat", ComponentHeroStat);
 }

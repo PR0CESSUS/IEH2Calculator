@@ -20,9 +20,7 @@ export class customCheckbox extends HTMLElement {
     super();
     this.data = get(globalThis.app, this.dataset.endpoint, null);
 
-    this.attachShadow({ mode: "open" }).appendChild(
-      (document.getElementById("custom-checkbox") as HTMLTemplateElement).content.cloneNode(true)
-    );
+    this.attachShadow({ mode: "open" }).appendChild((document.getElementById("custom-checkbox") as HTMLTemplateElement).content.cloneNode(true));
 
     this.shadowRoot.querySelector('[name="name"]').innerHTML += this.innerHTML;
     this.shadowRoot.querySelector("input").checked = this.data;
@@ -44,9 +42,15 @@ export class customCheckbox extends HTMLElement {
 
     set(globalThis.app, this.dataset.endpoint, event.target.checked);
     globalThis.app.Save();
+    if (this.dataset.type == "superdungeon") {
+      globalThis.data.inventory.Update();
+      // console.log("checkbox superdungeon");
+
+      // document.querySelector('hero-stat')
+    }
     // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;
     // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;
-    globalThis.app.router.load();
+    if (this.dataset.reload != "false") globalThis.app.router.load();
     // this.data = event.target.value;
     // console.log(globalThis.data.source.sdGemLevels[8]);
   }

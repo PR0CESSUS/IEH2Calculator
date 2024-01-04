@@ -64,9 +64,9 @@ export class ComponentEquipmentLoadout extends HTMLElement {
     this.shadowRoot.querySelectorAll("li").forEach((li) => {
       li.onclick = this.ChangeLoadout.bind(this);
     });
-    globalThis.data.inventory.equipmentSlots.forEach((equipment, index) => {
-      if (equipment.IsEquipped()) equipment.Start();
-    });
+    // globalThis.data.inventory.equipmentSlots.forEach((equipment, index) => {
+    //   if (equipment.IsEquipped()) equipment.Start();
+    // });
     this.render();
   }
 
@@ -83,13 +83,7 @@ export class ComponentEquipmentLoadout extends HTMLElement {
     // console.log(globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero]);
     globalThis.data.save();
 
-    globalThis.data.inventory.equipmentSlots.forEach((equipment, index) => {
-      if (equipment.IsEquipped()) {
-        equipment.Start();
-      } else {
-        equipment.IsEffectRegisteredClear();
-      }
-    });
+    globalThis.data.inventory.Update();
     this.render();
     (document.querySelector("hero-stat") as ComponentHeroStat).render();
   }
