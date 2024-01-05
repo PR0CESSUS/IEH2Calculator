@@ -37,7 +37,7 @@ export class EquipmentForgeEffect {
     }
   }
   set effectValue(value) {
-    if (this.equipment.ForgedSlotNum() >= 4 && value > 0) return;
+    if (this.equipment.ForgedSlotNum() >= 4 && value > 0 && this.effectValue == 0) return;
     switch (this.kind) {
       case EquipmentForgeEffectKind.ReduceRequiredHeroLevel:
         globalThis.data.source.equipment1stForgeValues[this.equipment.id] = Math.min(value, this.equipment.ForgeEffectMaxValue(this.kind, this.equipment.globalInfo.isArtifact));

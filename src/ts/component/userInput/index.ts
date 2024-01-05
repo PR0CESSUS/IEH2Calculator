@@ -62,14 +62,14 @@ export default class userInput extends HTMLElement {
     if (this.dataset.max) {
       value = Math.min(value, parseFloat(this.dataset.max));
     }
+
     set(globalThis.app, this.dataset.endpoint, value);
     globalThis.app.Save();
 
     // this.shadowRoot.querySelector("input").value = get(globalThis.app, this.dataset.endpoint, null);
     // console.dir();
 
-    if (this.offsetParent.id == "equipment-dialog") {
-      // console.log("equipment event : ", this.dataset.id);
+    if (this.dataset.type == "equipment") {
       const equipmentInfo = document.querySelector("equipment-loadout").shadowRoot.querySelector(`equipment-info[data-id="${this.dataset.id}"]`) as ComponentEquipmentInfo;
 
       equipmentInfo.render(true);

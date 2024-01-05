@@ -78,10 +78,14 @@ export class ComponentEquipmentInfo extends HTMLElement {
     this.shadowRoot.querySelector('[name="kind"]').addEventListener("change", this.changeKind.bind(this));
     const modal = this.shadowRoot.querySelector("#equipment-dialog") as HTMLDialogElement;
     const closeEdit = this.closeEdit.bind(this);
-    modal.addEventListener("click", function (event) {
+    modal.addEventListener("mousedown", function (event) {
       let rect = modal.getBoundingClientRect();
       let isInDialog = rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width;
-      if (!isInDialog) {
+      //@ts-ignore
+      if (!isInDialog && event.target.tagName === "DIALOG") {
+        //@ts-ignore
+        console.log(event.target == this, event.target.tagName);
+
         modal.close();
         closeEdit();
         // console.log("background click cancel");
@@ -224,7 +228,7 @@ export class ComponentEquipmentInfo extends HTMLElement {
     this.equipment.forgeEffects.forEach((slot, index) => {
       if (edit) {
         // Localization.ForgeNameString(slot.kind, this.equipment.globalInfo.isArtifact)
-        const input = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].forgeEffects[${index}].effectValue" data-reload="false" data-id="${this.equipment.slotId}"></user-input>`;
+        const input = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].forgeEffects[${index}].effectValue" data-reload="false" data-id="${this.equipment.slotId}" data-type="equipment"></user-input>`;
         string += `<p class="orange">${edit ? input : ""} - ${slot.EffectString()}</p>`;
         counter++;
       } else {
