@@ -97,7 +97,10 @@ export class ComponentEquipmentInfo extends HTMLElement {
       if (event.ctrlKey && event.key == "v") {
         // console.log("keydown event equipment-info", this.dataset.id);
         // console.log(globalThis.app.clipboard);
-        this.equipment.PasteOptionEffect(globalThis.app.clipboard);
+        if (globalThis.app.clipboard?.type == "CopyOptionEffect") {
+          this.equipment.PasteOptionEffect(globalThis.app.clipboard?.data);
+        }
+
         this.render();
         (document.querySelector("hero-stat") as ComponentHeroStat).render();
         globalThis.app.Save();
@@ -338,7 +341,7 @@ export class ComponentEquipmentInfo extends HTMLElement {
   }
 
   copyEvent(type = null) {
-    globalThis.app.clipboard = this.equipment.CopyOptionEffect();
+    globalThis.app.clipboard = { type: "CopyOptionEffect", data: this.equipment.CopyOptionEffect() };
 
     // console.log(this.equipment.CopyOptionEffect());
   }
