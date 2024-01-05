@@ -88,7 +88,8 @@ export class Equipment {
 
   set kind(value) {
     globalThis.data.source.equipmentKinds[this.id] = value;
-    // this.SetAgainAllEffect();
+    // globalThis.data.inventory.UpdateSetItemEquippedNumHero(this.heroKind);
+    // this.Start();
   }
 
   get heroKind() {
@@ -396,5 +397,26 @@ export class Equipment {
     this.requiredLevelWithoutForge = Math.max(0, val2_2);
     if (!this.globalInfo.isArtifact) val2_2 -= this.forgeEffects[0].EffectValue();
     this.requiredLevel = Math.max(0, val2_2);
+  }
+
+  CopyOptionEffect() {
+    let array = [];
+    for (let index = 0; index < this.optionEffects.length; index++) {
+      array.push(this.optionEffects[index].Copy());
+    }
+    return array;
+  }
+  PasteOptionEffect(array: { kind: number; effectValue: number; level: number }[]) {
+    // let array = [];
+
+    for (let index = 0; index < this.optionEffects.length; index++) {
+      // console.log(array[index]);
+
+      this.optionEffects[index].Paste(array[index]);
+    }
+    // console.log("paste optionEffects");
+
+    this.Start();
+    // return array;
   }
 }

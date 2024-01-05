@@ -4,6 +4,7 @@ import { onClick } from "./event/onClick";
 import { customDataExport } from "./event/customDataExport";
 import { customDataImport } from "./event/customDataImport";
 import { onhashchange } from "./event/onhashchange";
+import { onKeyDown } from "./event/keydown";
 
 export class Events {
   configRequest: Function;
@@ -13,6 +14,7 @@ export class Events {
   onClick: Function;
   customDataExport: Function;
   customDataImport: Function;
+  onKeyDown: Function;
   onhashchange;
 
   constructor(app: App) {
@@ -21,11 +23,13 @@ export class Events {
     this.onChange = onChange;
     this.onClick = onClick;
     this.onhashchange = onhashchange.bind(app);
+    this.onKeyDown = onKeyDown;
 
     // document.body.addEventListener("htmx:configRequest", this.configRequest.bind(app));
     // document.body.addEventListener("htmx:afterSettle", this.afterSettle.bind(app));
     document.body.addEventListener("change", this.onChange.bind(app));
     document.body.addEventListener("click", this.onClick.bind(app));
+    // document.body.addEventListener("keydown", this.onKeyDown.bind(app));
     window.onhashchange = this.onhashchange;
   }
 }

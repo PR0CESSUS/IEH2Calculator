@@ -31,6 +31,7 @@ export class ComponentEquipmentLoadout extends HTMLElement {
   data: HeroStats;
   dataSD: SuperDungeonController;
   hero: HeroKind;
+
   constructor() {
     super();
 
@@ -68,6 +69,12 @@ export class ComponentEquipmentLoadout extends HTMLElement {
     //   if (equipment.IsEquipped()) equipment.Start();
     // });
     this.render();
+    // this.onkeydown = (event) => {
+    //   if (event.ctrlKey && event.key == "v") {
+    //     console.log(event);
+    //     console.log(event.composedPath());
+    //   }
+    // };
   }
 
   ChangeLoadout(event) {

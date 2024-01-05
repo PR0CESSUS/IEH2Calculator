@@ -87,6 +87,10 @@ export class EquipmentOptionEffect {
     // this.equipment.Start();
   }
   get effectValue() {
+    // if (this.equipment.slotId == 3523) {
+    //   console.log(this.optionId >= this.equipment.totalOptionNum.Value(), this.optionId, this.equipment.totalOptionNum.Value());
+    // }
+    if (this.optionId >= this.equipment.totalOptionNum.Value()) return 0;
     switch (this.optionId) {
       case 0:
         return globalThis.data.source.equipment1stOptionEffectValues[this.createId];
@@ -210,5 +214,17 @@ export class EquipmentOptionEffect {
       default:
         return "percent";
     }
+  }
+
+  Copy() {
+    return { kind: this.kind, effectValue: this.effectValue, level: this.level };
+  }
+
+  Paste(data: { kind: number; effectValue: number; level: number }) {
+    // console.log("before", this.kind, this.level, this.effectValue);
+    this.kind = data.kind;
+    this.level = data.level;
+    this.effectValue = data.effectValue;
+    // console.log("after", this.kind, this.level, this.effectValue);
   }
 }

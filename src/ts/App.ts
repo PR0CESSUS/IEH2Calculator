@@ -20,6 +20,7 @@ export class App {
   event: Events;
   router: Router;
   page = {};
+  clipboard: any;
 
   _set = set;
   _get = get;

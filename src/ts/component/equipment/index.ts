@@ -24,6 +24,8 @@ export class ComponentEquipmentInfo extends HTMLElement {
   data: Equipment;
   equipment: Equipment;
   potion: EquipmentPotion;
+  // tabIndex: number = 1000;
+  clipboard: string = "";
   slotType: "Weapon" | "Armor" | "Jewelry" | "Potion" | string;
 
   constructor() {
@@ -74,42 +76,45 @@ export class ComponentEquipmentInfo extends HTMLElement {
 
     if (this.dataset.disabled) (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).classList.add("disabled");
     this.shadowRoot.querySelector(".icon48").addEventListener("click", this.openEdit.bind(this));
-    this.shadowRoot.querySelector(".icon48").addEventListener("mouseover", this.initialRender.bind(this), { once: true });
+    // this.shadowRoot.querySelector(".icon48").addEventListener("mouseover", this.initialRender.bind(this), { once: true });
+    this.shadowRoot.querySelector(".icon48").addEventListener("mouseover", this.mouseOverHandler.bind(this));
     this.shadowRoot.querySelector('[name="kind"]').addEventListener("change", this.changeKind.bind(this));
     const modal = this.shadowRoot.querySelector("#equipment-dialog") as HTMLDialogElement;
+    const modalCloseBtn = this.shadowRoot.querySelector('[name="dialog-close"]') as HTMLButtonElement;
+    modalCloseBtn.onclick = this.closeEdit.bind(this);
     const closeEdit = this.closeEdit.bind(this);
     modal.addEventListener("mousedown", function (event) {
       let rect = modal.getBoundingClientRect();
       let isInDialog = rect.top <= event.clientY && event.clientY <= rect.top + rect.height && rect.left <= event.clientX && event.clientX <= rect.left + rect.width;
       //@ts-ignore
       if (!isInDialog && event.target.tagName === "DIALOG") {
-        //@ts-ignore
-        console.log(event.target == this, event.target.tagName);
-
-        modal.close();
         closeEdit();
-        // console.log("background click cancel");
       }
     });
-    // const kind = this.shadowRoot.querySelector('[name="kind"]') as HTMLSelectElement;
-
-    // kind.innerHTML += Util.render.Select(this.slotType);
-    // kind.querySelectorAll("option").forEach((option) => {
-    //   if (parseInt(option.value) == this.data.kind) option.selected = true;
-    // });
 
     if (this.equipment?.kind == 0 || this.potion?.kind == 0) (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "none";
-
-    // this.render();
-
-    //   <div id="modal">
-    //   <div class="modal-underlay" onclick="window.app.router.load()"></div>
-    //   <div id="modal-content" class="modal-content"></div>
-    // </div>
+    this.onkeydown = (event) => {
+      if (event.ctrlKey && event.key == "v") {
+        // console.log("keydown event equipment-info", this.dataset.id);
+        // console.log(globalThis.app.clipboard);
+        this.equipment.PasteOptionEffect(globalThis.app.clipboard);
+        this.render();
+        (document.querySelector("hero-stat") as ComponentHeroStat).render();
+        globalThis.app.Save();
+      }
+    };
+    this.render();
   }
 
-  initialRender() {
-    this.render();
+  mouseOverHandler() {
+    // this.render();
+    // this.focus();
+    // console.log(document.activeElement);
+    // console.log(navigator.clipboard.readText());
+
+    (this.shadowRoot.querySelector('[name="icon48-anchor"]') as HTMLImageElement).focus({ focusVisible: false } as FocusOptions);
+    // (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).focus({ focusVisible: false } as FocusOptions);
+    // console.log("mouseover event");
   }
 
   openEdit() {
@@ -131,12 +136,21 @@ export class ComponentEquipmentInfo extends HTMLElement {
   }
 
   closeEdit() {
+    const modal = this.shadowRoot.querySelector("#equipment-dialog") as HTMLDialogElement;
+    if (modal.open) {
+      modal.close();
+    }
     this.shadowRoot.querySelector(".tooltip-text").appendChild(this.shadowRoot.querySelector(".content"));
     this.render();
     (document.querySelector("hero-stat") as ComponentHeroStat).render();
   }
 
   render(edit: boolean = false) {
+    if (this.equipment?.kind == 0 || this.potion?.kind == 0) {
+      (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "none";
+    } else {
+      (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "block";
+    }
     if (edit == false && this.equipment?.kind == 0) return;
     const kind = this.shadowRoot.querySelector('[name="kind"]') as HTMLSelectElement;
     const level = this.shadowRoot.querySelector('[name="level"]');
@@ -253,25 +267,31 @@ export class ComponentEquipmentInfo extends HTMLElement {
         if (edit) {
           const kind = `<custom-select data-type="${CustomSelectType.EquipmentEffectKind}" data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].kind" data-reload="false" data-id="${this.equipment.slotId}">${effect.kind}</custom-select>`;
           const level = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].level" data-reload="false" data-id="${this.equipment.slotId}" data-width="50px"></user-input>`;
-          const value = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].effectValue" data-reload="false" data-id="${this.equipment.slotId}"></user-input>`;
+          const value = `<user-input data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].effectValue" data-reload="false" data-id="${this.equipment.slotId}" data-type="equipment"></user-input>`;
           string += `<p>${kind} ${level} ${value} = ${Localization.EquipmentEffect(
             effect.kind,
-            this.equipment.EffectValue(effect.effectValue, HeroKind.Warrior),
+            this.equipment.EffectValue(effect.effectValue, this.equipment.heroKind),
             true,
             0,
             true
           )}</p>`;
         } else {
-          string += `<p>${Localization.EquipmentEffect(effect.kind, this.equipment.EffectValue(effect.effectValue, HeroKind.Warrior))}</p>`;
+          string += `<p>${Localization.EquipmentEffect(effect.kind, this.equipment.EffectValue(effect.effectValue, this.equipment.heroKind))}</p>`;
         }
       }
-      // if (effect.kind == EquipmentEffectKind.Nothing) {
+
       //   if (index < this.data.totalOptionNum.value) string += `<p>-[Enchant Available]</p>`;
       // } else {
       //   const value = this.data.EffectValue(effect.effectValue, HeroKind.Warrior);
       //   string += `<p>${Localization.EquipmentEffect(effect.kind, value)}</p>`;
       // }
     });
+    if (edit) {
+      (this.shadowRoot.querySelector('[name="copy-optionEffects"]') as HTMLButtonElement).style.display = "block";
+    } else {
+      (this.shadowRoot.querySelector('[name="copy-optionEffects"]') as HTMLButtonElement).style.display = "none";
+    }
+
     this.shadowRoot.querySelector('[name="optionEffects"]').innerHTML = string;
   }
 
@@ -315,5 +335,11 @@ export class ComponentEquipmentInfo extends HTMLElement {
     // const clone = this.shadowRoot.querySelector(".tooltip-text").cloneNode(true);
     // document.getElementById("modal-content").innerHTML = this.shadowRoot.querySelector("tooltip-text").innerHTML;
     // document.getElementById("modal-content").appendChild(clone);
+  }
+
+  copyEvent(type = null) {
+    globalThis.app.clipboard = this.equipment.CopyOptionEffect();
+
+    // console.log(this.equipment.CopyOptionEffect());
   }
 }
