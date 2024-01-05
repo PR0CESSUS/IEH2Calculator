@@ -12,6 +12,7 @@ import { Page } from "./page/Page";
 import { PageData } from "./page/Data";
 import { PageDropChance } from "./page/Drop-Chance";
 import { CalculatorGuild } from "./page/Guild";
+import { PageHelp } from "./page/Help";
 import component from "./component";
 
 export class App {
@@ -38,6 +39,7 @@ export class App {
     this.addPage(new Page("#guild", "Guild", new CalculatorGuild()));
     // this.addPage(new Page("#test", "Test", new Test()));
     this.addPage(new Page("#drop-chance", "Drop Chance", new PageDropChance()));
+    this.addPage(new Page("#help", "Help", new PageHelp()));
 
     // this.page = [];
     this.router.initialization();
