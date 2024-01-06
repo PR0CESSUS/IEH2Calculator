@@ -8,10 +8,10 @@ export class Page {
     this.url = url;
     this.name = name;
     this.logic = logic;
-    this.logic.endpoint = `page['${this.url.slice(1)}'].logic`;
+    this.logic.endpoint = `database.table.${this.url.slice(1)}`;
     // console.log(this.logic);
-    this.Load();
-    this.logic.Initialization();
+    // this.Load();
+    // this.logic.Initialization();
 
     globalThis.app.router.register(
       () => this.url,
@@ -44,8 +44,7 @@ export class Page {
   }
 
   Save() {
-    if (this.logic.custom != undefined && Object.keys(this.logic.custom).length != 0)
-      localStorage.setItem(`CustomData-${this.url.slice(1)}`, JSON.stringify(this.logic.custom));
+    if (this.logic.custom != undefined && Object.keys(this.logic.custom).length != 0) localStorage.setItem(`CustomData-${this.url.slice(1)}`, JSON.stringify(this.logic.custom));
     // let data = localStorage.getItem("CustomData");
     // if (data == null) {
     //   let custom = {

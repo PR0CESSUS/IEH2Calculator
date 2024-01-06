@@ -1,4 +1,5 @@
 import { DATA } from "./Data";
+import { Database } from "./Database";
 import { Events } from "./Events";
 import { set, get } from "lodash";
 import { convertTo } from "./Util/convertTo";
@@ -10,7 +11,7 @@ import { CalculatorEquipment } from "./page/Equipment";
 import { CalculatorRubyShard } from "./page/RubyShard";
 import { Page } from "./page/Page";
 import { PageData } from "./page/Data";
-import { PageDropChance } from "./page/Drop-Chance";
+import { CalculatorDropChance } from "./page/Drop-Chance";
 import { CalculatorGuild } from "./page/Guild";
 import { PageHelp } from "./page/Help";
 import component from "./component";
@@ -21,15 +22,18 @@ export class App {
   router: Router;
   page = {};
   clipboard: any;
+  database: Database;
 
   _set = set;
   _get = get;
 
   constructor() {
     globalThis.app = this;
+    this.database = new Database("app");
     this.router = new Router(this);
     this.event = new Events(this);
     this.data = new DATA(this);
+
     // this.page.push(new CalculatorExpedition(this));
     // this.page.push(new Test(this));
     // this.page.push(new Equipment(this));
@@ -39,18 +43,33 @@ export class App {
     this.addPage(new Page("#ruby-shard", "Ruby Shard", new CalculatorRubyShard()));
     this.addPage(new Page("#guild", "Guild", new CalculatorGuild()));
     // this.addPage(new Page("#test", "Test", new Test()));
-    this.addPage(new Page("#drop-chance", "Drop Chance", new PageDropChance()));
+    this.addPage(new Page("#drop-chance", "Drop Chance", new CalculatorDropChance()));
     this.addPage(new Page("#help", "Help", new PageHelp()));
 
     // this.page = [];
     this.router.initialization();
     component();
+
+    (document.getElementById("dialog") as HTMLDialogElement).onmousedown = this.event.dialogBackdropClose;
+    // const test = new Database("app2");
+
+    // local = this.database.Connect("guild", local);
+
+    // console.log({ ...a, ...b });
+
+    // console.log(this.database);
+
+    // this.database.app = { tab: "main" };
+    // this.database.register("app", { tab: "main" });
+    // this.database.register("app");
+    // this.database;
     // this.Save();
     // console.log(this);
   }
 
   Save() {
     this.data.save();
+    this.database.Save();
     // console.log();
     let custom = {};
     Object.keys(this.page).forEach((page) => {

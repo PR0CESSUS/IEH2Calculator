@@ -4,19 +4,19 @@ import { CustomSelectType } from "../../type/CustomSelectType";
 import { Page } from "../Page";
 
 export class CalculatorRubyShard {
-  endpoint = "";
-  custom = {
+  database = {
     ticket: 0,
     failure: 0,
     dungeon: 0,
     modifier: 0,
     floor: 100,
   };
-  constructor() {}
-
-  Initialization(): void {
-    this.custom;
+  endpoint;
+  constructor() {
+    this.database = globalThis.app.database.Connect("ruby-shard", this.database);
   }
+
+  Initialization(): void {}
 
   runsNum() {
     let runs = 0;
@@ -39,9 +39,9 @@ export class CalculatorRubyShard {
     let SUM = 0;
     // const modifier = JSON.parse(this.custom.modifier);
 
-    for (let index = 1; index < Math.floor(this.custom.floor / 10) + 1; index++) {
+    for (let index = 1; index < Math.floor(this.database.floor / 10) + 1; index++) {
       let floor = index * 10;
-      let gain = (floor / 10 + this.custom.modifier) * (1 + this.custom.dungeon);
+      let gain = (floor / 10 + this.database.modifier) * (1 + this.database.dungeon);
       // console.log(gain, index + this.custom.modifier);
       SUM += gain;
     }
@@ -52,18 +52,18 @@ export class CalculatorRubyShard {
     const convertCost = globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.Value();
     let html = ``;
     // CustomSelectType
-    html += `Dungeon: <custom-select data-type="${CustomSelectType.SuperDungeon}" data-endpoint="page['ruby-shard'].logic.custom.dungeon">${this.custom.dungeon}</custom-select>`;
-    html += `Modifier: <user-input data-endpoint="${this.endpoint}.custom.modifier"></user-input>`;
-    html += `Floors Cleared: <user-input data-endpoint="${this.endpoint}.custom.floor"></user-input>`;
+    html += `Dungeon: <custom-select data-type="${CustomSelectType.SuperDungeon}" data-endpoint="${this.endpoint}.dungeon">${this.database.dungeon}</custom-select>`;
+    html += `Modifier: <user-input data-endpoint="${this.endpoint}.modifier"></user-input>`;
+    html += `Floors Cleared: <user-input data-endpoint="${this.endpoint}.floor"></user-input>`;
     html += `<table>`;
 
-    html += `<tr><td>Failure Rate %</td><td><user-input data-endpoint="${this.endpoint}.custom.failure"></user-input> (Total Ruby Shards = Total Ruby Shards - Total Ruby Shards * failure rate)</td></tr>`;
-    html += `<tr><td>Tickets</td><td><user-input data-endpoint="${this.endpoint}.custom.ticket"></user-input></td></tr>`;
+    html += `<tr><td>Failure Rate %</td><td><user-input data-endpoint="${this.endpoint}.failure"></user-input> (Total Ruby Shards = Total Ruby Shards - Total Ruby Shards * failure rate)</td></tr>`;
+    html += `<tr><td>Tickets</td><td><user-input data-endpoint="${this.endpoint}.ticket"></user-input></td></tr>`;
     html += `<tr><td>Reset Value</td><td><user-input data-endpoint="data.source.SDAutoLeaveAndRetryTargetEntryCost"></user-input></td></tr>`;
-    html += `<tr><td>Portal Orb Cost</td><td>${Util.convertTo(this.costPerTicket() * this.custom.ticket)}</td></tr>`;
-    html += `<tr><td>Runs</td><td>${this.runsNum() * 5 * this.custom.ticket}</td></tr>`;
-    let shard = this.runsNum() * 5 * this.custom.ticket * this.getShardsGain();
-    shard = shard - shard * (this.custom.failure / 100);
+    html += `<tr><td>Portal Orb Cost</td><td>${Util.convertTo(this.costPerTicket() * this.database.ticket)}</td></tr>`;
+    html += `<tr><td>Runs</td><td>${this.runsNum() * 5 * this.database.ticket}</td></tr>`;
+    let shard = this.runsNum() * 5 * this.database.ticket * this.getShardsGain();
+    shard = shard - shard * (this.database.failure / 100);
     html += `<tr><td>Ruby Shard per Dungeon</td><td>${this.getShardsGain()}</td></tr>`;
     html += `<tr><td>Total Ruby Shards</td><td>${Util.convertTo(shard, 3)}</td></tr>`;
     html += `<tr><td>Ruby Converter</td><td>${Util.convertTo(convertCost)}</td></tr>`;

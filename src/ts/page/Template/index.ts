@@ -1,10 +1,12 @@
 export class Template {
+  database;
   endpoint;
   constructor() {}
 
   Initialization() {}
 
   get html() {
-    return "";
+    let html = ``;
+    return html;
   }
 }

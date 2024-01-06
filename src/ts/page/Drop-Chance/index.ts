@@ -16,18 +16,21 @@ import { Enums } from "../../Enums";
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
 import { EquipmentParameter } from "../../data/Equipment/EquipmentParameter";
 
-export class PageDropChance {
-  custom = {
+export class CalculatorDropChance {
+  database = {
     level: 0,
     sdchance: 1,
   };
+
   endpoint;
-  constructor() {}
+  constructor() {
+    this.database = globalThis.app.database.Connect("drop-chance", this.database);
+  }
   Initialization() {}
 
   getChance() {
-    const monsterLevel = this.custom.level;
-    const sdEnchantChance = this.custom.sdchance;
+    const monsterLevel = this.database.level;
+    const sdEnchantChance = this.database.sdchance;
 
     let data: any = [];
     let data2: any = [];
@@ -85,8 +88,8 @@ export class PageDropChance {
     // console.log(str);
 
     let html = ``;
-    html += `Mob Level: <user-input data-endpoint="${this.endpoint}.custom.level"></user-input>`;
-    html += `SD Enchant Chance: <user-input data-endpoint="${this.endpoint}.custom.sdchance" data-convert="true" data-precision="1" data-max="2"></user-input> (value from 1 - 2)`;
+    html += `Mob Level: <user-input data-endpoint="${this.endpoint}.level"></user-input>`;
+    html += `SD Enchant Chance: <user-input data-endpoint="${this.endpoint}.sdchance" data-convert="true" data-precision="1" data-max="2"></user-input> (value from 1 - 2)`;
 
     html += this.getChance();
 

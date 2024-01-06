@@ -19,7 +19,9 @@ import { DataStorage } from "../DataStorage";
 document.body.innerHTML += template;
 export class ComponentHeroStat extends HTMLElement {
   heroKind: HeroKind;
-  dataStorage: DataStorage;
+  database = {
+    tab: "main",
+  };
   data = [
     "basicStats",
     "stats",
@@ -37,6 +39,11 @@ export class ComponentHeroStat extends HTMLElement {
     "SD.damageCutMultiplier",
     "SD.sdChallengeBossDamageMultiplier",
     "SD.sdChallengeBossDamageCutMultiplier",
+    "monster.doubleCaptureChance",
+    "monster.captureTripleChance",
+    "monster.petPassiveEffectMultiplier",
+    "petExpGainPerDefeat",
+    "loyaltyPoingGain",
   ];
   constructor() {
     super();
@@ -45,15 +52,13 @@ export class ComponentHeroStat extends HTMLElement {
     this.heroKind = globalThis.data.source.currentHero;
     // console.log(this.dataset.hero);
 
-    this.dataStorage = new DataStorage(this, "ComponentHeroStat", {
-      tab: "main",
-    });
+    this.database = globalThis.app.database.Connect("ComponentHeroStat", this.database);
 
     // this.dataBattle = globalThis.
 
     this.attachShadow({ mode: "open" }).appendChild((document.getElementById("hero-stat") as HTMLTemplateElement).content.cloneNode(true));
-    this.shadowRoot.querySelector(`[name="${this.dataStorage.data.tab}-content"]`).classList.remove("hidden");
-    this.shadowRoot.querySelector(`[name="${this.dataStorage.data.tab}"]`).classList.add("active");
+    this.shadowRoot.querySelector(`[name="${this.database.tab}-content"]`).classList.remove("hidden");
+    this.shadowRoot.querySelector(`[name="${this.database.tab}"]`).classList.add("active");
     // console.log(this.data);
     // console.log(this.dataSD);
     (this.shadowRoot.querySelector('[name="createSnapshot"]') as HTMLButtonElement).onclick = this.createSnapshot.bind(this);
@@ -69,12 +74,12 @@ export class ComponentHeroStat extends HTMLElement {
 
   changeTab(event) {
     const name = (event.composedPath()[0] as HTMLLIElement).attributes.getNamedItem("name").value;
-    this.shadowRoot.querySelector(`[name="${this.dataStorage.data.tab}-content"]`).classList.add("hidden");
+    this.shadowRoot.querySelector(`[name="${this.database.tab}-content"]`).classList.add("hidden");
     this.shadowRoot.querySelector(`[name="${name}-content"]`).classList.remove("hidden");
-    this.shadowRoot.querySelector(`[name="${this.dataStorage.data.tab}"]`).classList.remove("active");
+    this.shadowRoot.querySelector(`[name="${this.database.tab}"]`).classList.remove("active");
     this.shadowRoot.querySelector(`[name="${name}"]`).classList.add("active");
-    this.dataStorage.data.tab = name;
-    this.dataStorage.Save();
+    this.database.tab = name;
+    globalThis.app.database.Save();
     // console.log(this.dataStorage.data.tab);
   }
 
@@ -90,6 +95,7 @@ export class ComponentHeroStat extends HTMLElement {
       optionEffectChance: [],
       equipment: { effectMultiplier: null },
       blessingInfo: { effectMultiplier: null },
+      monster: { doubleCaptureChance: null, captureTripleChance: null },
     };
 
     this.data.forEach((entry, index) => {
@@ -161,6 +167,10 @@ export class ComponentHeroStat extends HTMLElement {
     switch (source) {
       case "equipment":
         return globalThis.data.equipment[name];
+      case "monster":
+        if (name == "captureTripleChance") return globalThis.data.monster.captureTripleChance[this.heroKind];
+        if (name == "doubleCaptureChance") return globalThis.data.monster.doubleCaptureChance[this.heroKind];
+        return globalThis.data.monster[name];
       case "blessingInfo":
         return globalThis.data.blessingInfo.effectMultipliers[this.heroKind];
       case "SD":

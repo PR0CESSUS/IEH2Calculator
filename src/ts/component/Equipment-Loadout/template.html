@@ -1,6 +1,5 @@
 <template id="equipment-loadout">
     <style>
-        /* @import "./styles-bundle.css"; */
         div {
             margin: 0;
             padding: 0;
@@ -62,6 +61,41 @@
             border-style: solid;
             border-width: 1px;
         }
+
+        .btn {
+            font-size: 14px;
+
+            font-weight: bold;
+            color: aliceblue;
+            border-style: outset;
+            border-width: 3px;
+            -webkit-filter: blur(0.3px);
+            filter: blur(0.3px);
+            margin-left: 2px;
+            padding: 0px 10px 0px 10px;
+        }
+
+        .btn:hover {
+            box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-blue {
+            background-image: linear-gradient(#2b487f, #203860);
+            background-color: #2b487f;
+            border-top-color: #5476ae;
+            border-bottom-color: #202f4e;
+            border-left-color: #1b3763;
+            border-right-color: #223e6a;
+        }
+
+        .btn-gray {
+            background-image: linear-gradient(#656565, #4a4a4a);
+            background-color: #1a2c4d;
+            border-top-color: #939393;
+            border-bottom-color: #3f3f3f;
+            border-left-color: #474747;
+            border-right-color: #4e4e4e;
+        }
     </style>
     <div>
         <div style="display: flex;">
@@ -77,11 +111,11 @@
                 <li name="loadout6">Loadout 7</li>
 
             </ul>
+            <button class="btn btn-blue" onclick="this.getRootNode().host.OpenDialog();">&#9776;</button>
         </div>
         <div name="content"></div>
 
     </div>
-
 
 
 

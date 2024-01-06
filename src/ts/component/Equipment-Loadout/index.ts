@@ -181,6 +181,53 @@ export class ComponentEquipmentLoadout extends HTMLElement {
     (this.shadowRoot.querySelector(`[name="content"]`) as HTMLDivElement).innerHTML = html;
   }
 
+  getEquipmentList() {
+    const INITIAL_OFFSET = 520 + globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero] * 72 + globalThis.data.source.currentHero * 720;
+    let str = "";
+    let list = {};
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      if (globalThis.data.inventory.equipmentSlots[index].kind == 0) continue;
+      let equipment = Localization.EquipmentName(globalThis.data.inventory.equipmentSlots[index].kind);
+
+      list[equipment] = list[equipment] ? list[equipment] + 1 : 1;
+    }
+
+    for (const [key, value] of Object.entries(list)) {
+      str += `${key}: ${value}<br>`;
+    }
+    return str;
+  }
+
+  getEquipmentEffectList() {
+    const INITIAL_OFFSET = 520 + globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero] * 72 + globalThis.data.source.currentHero * 720;
+    let str = "";
+    let list = {};
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      if (globalThis.data.inventory.equipmentSlots[index].kind == 0) continue;
+      for (let i = 0; i < globalThis.data.inventory.equipmentSlots[index].optionEffects.length; i++) {
+        if (globalThis.data.inventory.equipmentSlots[index].optionEffects[i].kind == 0) continue;
+        const effect = Localization.EquipmentEffectName(globalThis.data.inventory.equipmentSlots[index].optionEffects[i].kind);
+        list[effect] = list[effect] ? list[effect] + 1 : 1;
+      }
+    }
+
+    for (const [key, value] of Object.entries(list)) {
+      str += `${key}: ${value}<br>`;
+    }
+    return str;
+  }
+
+  OpenDialog() {
+    // const dialog = this.shadowRoot.getElementById("dialog") as HTMLDialogElement;
+    const dialog = document.getElementById("dialog") as HTMLDialogElement;
+    dialog.innerHTML = `<h3>Equipment List</h3>`;
+    dialog.innerHTML += this.getEquipmentList();
+    dialog.innerHTML += `<h3>Enchantment List</h3>`;
+    dialog.innerHTML += this.getEquipmentEffectList();
+    dialog.innerHTML += `<button class="btn btn-gray" style="float: right;" name="dialog-close" onclick="this.parentElement.close();">Close</button>`;
+    dialog.showModal();
+  }
+
   connectedCallback() {
     // console.log("connectedCallback()");
     // this.render();
