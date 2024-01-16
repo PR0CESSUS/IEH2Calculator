@@ -1,5 +1,5 @@
-import { App } from "./src/ts/App";
-import { DATA } from "./src/ts/Data";
+import { App } from "./src/App";
+import { DATA } from "./src/Data";
 
 declare global {
   var app: App;

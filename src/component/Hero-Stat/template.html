@@ -1,0 +1,149 @@
+<div>
+    <ul>
+        <li name="main">Main</li>
+        <li name="attack">Attack</li>
+        <li name="defense">Defense</li>
+        <li name="gains">Gains</li>
+        <li name="skills">Skills</li>
+        <li name="bestiary">Bestiary</li>
+        <li name="regions">Regions</li>
+
+    </ul>
+    <button name="createSnapshot" class="btn btn-gray">Create Stat Snapshot</button>
+    <custom-checkbox data-endpoint="data.custom.isSuperDungeon" data-type="superdungeon">Super
+        Dungeon</custom-checkbox>
+    <div name="main-content" class="hidden">
+        <h3>Main Stats</h3>
+        <div class="block">
+            <multiplier-info name="basicStats0" data-type="normal">HP</multiplier-info>
+            <multiplier-info name="basicStats1" data-type="normal">MP</multiplier-info>
+            <multiplier-info name="basicStats2" data-type="normal">ATK</multiplier-info>
+            <multiplier-info name="basicStats3" data-type="normal">MATK</multiplier-info>
+            <multiplier-info name="basicStats4" data-type="normal">DEF</multiplier-info>
+            <multiplier-info name="basicStats5" data-type="normal">MDEF</multiplier-info>
+            <multiplier-info name="basicStats6" data-type="normal">SPD</multiplier-info>
+            <multiplier-info name="stats10" data-type="meter">Move Speed</multiplier-info>
+            <multiplier-info name="stats9">Equipment Drop Chance</multiplier-info>
+            <multiplier-info name="optionEffectChance0" data-islog="false">Equipment 1st Enchantment Slot
+                Chance</multiplier-info>
+            <multiplier-info name="optionEffectChance1" data-islog="false">Equipment 2nd Enchantment Slot
+                Chance</multiplier-info>
+            <multiplier-info name="optionEffectChance2" data-islog="false">Equipment 3rd Enchantment Slot
+                Chance</multiplier-info>
+            <multiplier-info name="equipment.effectMultiplier" data-islog="false">Equipment Effect</multiplier-info>
+        </div>
+        <div class="block">
+            <multiplier-info name="hpRegenerate" data-type="normal">HP Regeneration</multiplier-info>
+            <multiplier-info name="mpRegenerate" data-type="normal">MP Regeneration</multiplier-info>
+            <multiplier-info name="blessingInfo.effectMultiplier" data-islog="false">Blessing
+                Effect</multiplier-info>
+            <multiplier-info name="SD.damageMultiplier" data-islog="false">SD Damage Multiplier</multiplier-info>
+            <multiplier-info name="SD.damageCutMultiplier" data-islog="false">SD Damage Cut
+                Multiplier</multiplier-info>
+            <multiplier-info name="SD.sdChallengeBossDamageMultiplier" data-islog="false">SD Challange Boss Damage
+                Multiplier</multiplier-info>
+            <multiplier-info name="SD.sdChallengeBossDamageCutMultiplier" data-islog="false">SD Challange Boss
+                Damage Cut
+                Multiplier</multiplier-info>
+            <multiplier-info name="SD.armoredFury" data-islog="false">SD Armored Fury</multiplier-info>
+            <multiplier-info name="SD.wardedFury" data-islog="false">SD Warded Fury</multiplier-info>
+
+        </div>
+
+
+    </div>
+
+    <div name="attack-content" class="hidden">
+        <h3>Attack</h3>
+        <div class="block">
+            <multiplier-info name="elementDamages0">Physical Damage</multiplier-info>
+            <multiplier-info name="elementDamages1">Fire Damage</multiplier-info>
+            <multiplier-info name="elementDamages2">Ice Damage</multiplier-info>
+            <multiplier-info name="elementDamages3">Thunder Damage</multiplier-info>
+            <multiplier-info name="elementDamages4">Light Damage</multiplier-info>
+            <multiplier-info name="elementDamages5">Dark Damage</multiplier-info>
+            <multiplier-info name="stats15">Armored Fury</multiplier-info>
+            <multiplier-info name="stats16">Warded Fury</multiplier-info>
+            <multiplier-info name="stats6">Physical Critical Chance</multiplier-info>
+            <multiplier-info name="stats7">Magical Critical Chance</multiplier-info>
+            <multiplier-info name="stats8">Critical Damage</multiplier-info>
+            <multiplier-info name="extraAfterDamage" data-islog="false">Extra After Damage</multiplier-info>
+
+        </div>
+
+
+
+    </div>
+
+    <div name="defense-content" class="hidden">
+        <h3>Defense Stats</h3>
+        <div class="block">
+            <multiplier-info name="stats0">Fire Resistance</multiplier-info>
+            <multiplier-info name="stats1">Ice Resistance</multiplier-info>
+            <multiplier-info name="stats2">Thunder Resistance</multiplier-info>
+            <multiplier-info name="stats3">Light Resistance</multiplier-info>
+            <multiplier-info name="stats4">Dark Resistance</multiplier-info>
+            <multiplier-info name="stats5">Debuff Resistance</multiplier-info>
+        </div>
+
+
+    </div>
+
+    <div name="gains-content" class="hidden">
+        <h3>Gain Stats</h3>
+        <div class="block">
+            <multiplier-info name="stats14" data-islog="false">EXP Gain</multiplier-info>
+            <multiplier-info name="stats11" data-islog="false">Skill Proficiency Gain</multiplier-info>
+            <multiplier-info name="stats12" data-islog="false">Equipment Proficiency Gain</multiplier-info>
+            <multiplier-info name="stats21" data-islog="false">Artifact Proficiency Gain</multiplier-info>
+
+        </div>
+
+
+    </div>
+
+    <div name="bestiary-content" class="hidden">
+        <h3>Bestiary</h3>
+        <div class="block">
+            <multiplier-info name="monster.doubleCaptureChance" data-islog="false">Double Capture
+                Chance</multiplier-info>
+            <multiplier-info name="monster.captureTripleChance" data-islog="false">Triple Capture
+                Chance</multiplier-info>
+            <multiplier-info name="petExpGainPerDefeat" data-islog="false">Pet EXP Gain</multiplier-info>
+            <multiplier-info name="stats13" data-islog="false">Taming Point Gain</multiplier-info>
+            <multiplier-info name="loyaltyPoingGain" data-islog="false">Loyalty Point Gain</multiplier-info>
+            <multiplier-info name="stats17" data-islog="false">Pet Base Physical Critial Chance</multiplier-info>
+            <multiplier-info name="stats18" data-islog="false">Pet Base Magical Critial Chance</multiplier-info>
+            <multiplier-info name="stats19" data-islog="false">Pet Base Critial Damage</multiplier-info>
+            <multiplier-info name="stats20" data-islog="false">Pet Debuff Resistance</multiplier-info>
+            <multiplier-info name="monster.petPassiveEffectMultiplier" data-islog="false">Pet Passive
+                Effect</multiplier-info>
+
+        </div>
+
+    </div>
+
+    <div name="skills-content" class="hidden">
+        <h3>Stats</h3>
+    </div>
+
+    <div name="regions-content" class="hidden">
+        <h3>Regions Stats</h3>
+        <div class="block">
+            <multiplier-info name="monsterDamages0">Damage to Slime</multiplier-info>
+            <multiplier-info name="monsterDamages1">Damage to Magicslime</multiplier-info>
+            <multiplier-info name="monsterDamages2">Damage to Spider</multiplier-info>
+            <multiplier-info name="monsterDamages3">Damage to Bat</multiplier-info>
+            <multiplier-info name="monsterDamages4">Damage to Fairy</multiplier-info>
+            <multiplier-info name="monsterDamages5">Damage to Fox</multiplier-info>
+            <multiplier-info name="monsterDamages6">Damage to Devilfish</multiplier-info>
+            <multiplier-info name="monsterDamages7">Damage to Treant</multiplier-info>
+            <multiplier-info name="monsterDamages8">Damage to Flametiger</multiplier-info>
+            <multiplier-info name="monsterDamages9">Damage to Unicorn</multiplier-info>
+            <multiplier-info name="monsterDamages10">Damage to Mimic</multiplier-info>
+            <multiplier-info name="monsterDamages11">Damage to Challange Boss</multiplier-info>
+
+        </div>
+    </div>
+
+</div>

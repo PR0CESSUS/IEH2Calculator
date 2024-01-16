@@ -1,0 +1,27 @@
+<custom-tooltip>
+  <span slot="content">
+    <custom-dialog>
+      <span slot="button"><img class="icon48"></span>
+      <span slot="dialog">new dialog content <custom-input data-endpoint="table.level"></custom-input>
+        ${this.custom.level}</span>
+    </custom-dialog>
+  </span>
+  <div slot="tooltip" style="width: 700px;">
+
+    <div style="height: 100px; font-size: 14px;">
+      <img class="icon96 icon-border" style="margin-right: 10px;">
+      <span name="kind"></span>
+      &lt; <span class="green" name="level"></span> &gt;<br><br>
+      <div data-type="potion">
+        <p>Type: <span name="type"></span></p>
+        <p>Stack #: <span name="stack"></span>/30</p>
+      </div>
+    </div>
+
+
+    <p class="group">Equipped Effect</p>
+    <p name="effect"></p>
+
+
+  </div>
+</custom-tooltip>

@@ -1,0 +1,17 @@
+dialog {
+  padding: 0;
+  background: rgba(51, 51, 51, 0.95);
+  color: #fff;
+  border-width: 1px;
+  border-color: #525252;
+}
+.wrapper {
+  padding: 10px;
+}
+
+button {
+  background: none;
+  appearance: none;
+  padding: 0px;
+  border-width: 0px;
+}

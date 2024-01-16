@@ -1,5 +1,6 @@
 .green {
-  color: #01f304;
+  color: #00ff00;
+  /* color: #01f304; */
 }
 
 .orange {
@@ -8,4 +9,15 @@
 
 .red {
   color: red;
+}
+
+.yellow {
+  color: #ffea04;
+}
+
+.purple {
+  color: #dc78ff;
+}
+.gray {
+  color: #7a7a7a;
 }

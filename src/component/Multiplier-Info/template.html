@@ -1,0 +1,36 @@
+<custom-tooltip>
+    <div slot="content" class="a">
+        <span name="name">Name</span>
+        <p name="value" style="float: right;">Value</p>
+    </div>
+
+    <div slot="tooltip" style="width: 400px;">
+        <p name="name-tooltip" class="name"></p>
+        <p style="text-decoration: underline; font-size: 14px;">Additive:</p>
+        <div name="additive-list"></div>
+        <p>Additive Total:<span name="additive-total" style="float: right;"></span></p>
+        <br>
+        <p style="text-decoration: underline; font-size: 14px;">Multiplicative:</p>
+        <div name="multiplicative-list"></div>
+        <p>Multiplicative Total: <span name="multiplicative-total" style="float: right;"></span></p>
+        <br>
+        <div name="superdungeon" style="display: none;">
+            <p>Temporary Total: <span name="temporary-total" style="float: right;"></span></p>
+            <br>
+            <p><span style="color: yellow; text-decoration: underline; font-size: 14px; text-decoration-color: #fff;">Super
+                    Dungeon: </span><span name="temporary-total" style="float: right;"></span></p>
+            <p>Base + Log10([Temporary Total])<span name="temporary-total-log" style="float: right;"></span></p>
+            <br>
+        </div>
+
+        <div name="after">
+
+
+            <p style="text-decoration: underline; font-size: 14px;">After:</p>
+            <div name="after-list"></div>
+            <p>After Total: <span name="after-total" style="float: right;"></span></p>
+            <br>
+        </div>
+        <p style="font-size: 14px;">Total:<span name="value-total" style="float: right;"></span></p>
+    </div>
+</custom-tooltip>

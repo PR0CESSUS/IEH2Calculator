@@ -1,23 +1,3 @@
-import { App } from "./ts/App";
+import { App } from "./App";
 
-globalThis.APP = new App();
-
-// customElements.define(
-//   "my-paragraph",
-//   class extends HTMLElement {
-//     constructor() {
-//       super();
-
-//       const template = document.getElementById("my-paragraph");
-//       //@ts-ignore
-//       const templateContent = template.content;
-
-//       this.attachShadow({ mode: "open" }).appendChild(templateContent.cloneNode(true));
-//     }
-//   }
-// );
-
-// const slottedSpan = document.querySelector("my-paragraph span");
-
-// console.log(slottedSpan.assignedSlot);
-// console.log(slottedSpan.slot);
+new App();

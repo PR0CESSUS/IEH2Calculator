@@ -1,0 +1,11 @@
+* {
+  display: none;
+}
+
+div {
+  position: fixed;
+  height: 20px;
+  padding: 5px;
+  bottom: 0px;
+  background-color: aquamarine;
+}
