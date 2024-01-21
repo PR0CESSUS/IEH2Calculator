@@ -13,21 +13,25 @@ import { Material } from "./Material";
 import { EquipmentEffect } from "./EquipmentEffect";
 import { PotionEffect } from "./PotionEffect";
 import { PotionTypeString } from "./PotionType";
+import { SkillName } from "./SkillName";
+import { SDPowerupString } from "./SDPowerupString";
 
 export const Localization = {
-  EquipmentEffectName: EquipmentEffectName,
-  EquipmentName: EquipmentName,
-  StatsBreakdown: StatsBreakdown,
-  SDUpgradeString: SDUpgradeString,
-  SDShopString: SDShopString,
-  SDGemString: SDGemString,
-  PotionName: PotionName,
-  ExpeditionGlobalInformationString: ExpeditionGlobalInformationString,
-  SDName: SDName,
-  ForgeEffectString: ForgeEffectString,
-  ForgeNameString: ForgeNameString,
-  Material: Material,
-  EquipmentEffect: EquipmentEffect,
-  PotionEffect: PotionEffect,
-  PotionType: PotionTypeString,
+  EquipmentEffectName,
+  EquipmentName,
+  StatsBreakdown,
+  SDUpgradeString,
+  SDShopString,
+  SDGemString,
+  PotionName,
+  ExpeditionGlobalInformationString,
+  SDName,
+  ForgeEffectString,
+  ForgeNameString,
+  Material,
+  EquipmentEffect,
+  PotionEffect,
+  PotionTypeString,
+  SkillName,
+  SDPowerupString,
 };

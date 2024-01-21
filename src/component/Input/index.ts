@@ -20,8 +20,10 @@ export class ComponentCustomInput extends HTMLElement {
 
   constructor() {
     super();
+
     this.data = get(globalThis.app, this.dataset.endpoint, null);
     this.precision = this.dataset.precision ? parseInt(this.dataset.precision) : 2;
+
     // this.attachShadow({ mode: "open" });
     // const input = document.createElement("input");
     // input.type = "text";

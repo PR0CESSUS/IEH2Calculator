@@ -13,11 +13,11 @@ import { ComponentPotionInfo } from "./Potion-Info";
 import { ComponentCustomClipboard } from "./Clipboard";
 
 export default function () {
-  customElements.define("potion-info", ComponentPotionInfo);
   customElements.define("equipment-info", ComponentEquipmentInfo);
   customElements.define("equipment-loadout", ComponentEquipmentLoadout);
   customElements.define("multiplier-info", ComponentMultiplierInfo);
   customElements.define("hero-stat", ComponentHeroStat);
+  customElements.define("potion-info", ComponentPotionInfo);
   customElements.define("battle-simulator", ComponentBattleSimulator);
   customElements.define("custom-checkbox", ComponentCustomCheckbox);
   customElements.define("custom-input", ComponentCustomInput);

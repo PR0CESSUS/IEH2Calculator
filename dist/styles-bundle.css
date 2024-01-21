@@ -205,6 +205,12 @@ img:before {
   border-right-color: #223e6a;
 }
 
+.btn-small {
+  height: 22px;
+  font-size: 12px;
+  padding-top: 0;
+}
+
 .green {
   color: #00ff00;
   /* color: #01f304; */

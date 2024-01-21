@@ -107,10 +107,10 @@ export class ComponentEquipmentInfo extends HTMLElement {
     this.renderIcon();
     const tooltip = this.shadowRoot.querySelector(`[slot="tooltip"]`) as HTMLDivElement;
     const dialog = this.shadowRoot.querySelector(`[slot="dialog"]`);
-    tooltip.style.display = this.equipment.kind == 0 || this.equipment.isDisabled() ? "none" : "block";
+    tooltip.style.display = this.equipment.kind == 0 ? "none" : "block";
     // if (edit == false && this.equipment.kind == 0) return;
     tooltip.innerHTML = "";
-    if (this.equipment.isDisabled()) return;
+    if (this.equipment.kind == 0) return;
 
     // (this.shadowRoot.querySelector(".icon96") as HTMLImageElement).src = `./img/equip/${EquipmentKind[this.equipment.kind]}.png`;
 
@@ -147,10 +147,10 @@ export class ComponentEquipmentInfo extends HTMLElement {
   }
   Update() {
     console.log("update");
-    this.equipment.Start();
+    // this.equipment.Start();
     this.render();
     (document.querySelector("hero-stat") as ComponentHeroStat).Update();
-    console.log();
+    // console.log();
   }
 
   getIcon(edit: boolean = false) {
@@ -158,7 +158,7 @@ export class ComponentEquipmentInfo extends HTMLElement {
     <img class="icon96" src="./img/equip/${EquipmentKind[this.equipment.kind]}.png">`;
     if (edit) {
       html += `<custom-select data-type="${CustomSelectType[EquipmentPart[this.equipment.slotPart]]}" data-reload="false"
-      data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].kind" data-id="${this.equipment.slotId}" data-render="${this.id}">${
+      data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].kind" data-id="${this.equipment.slotId}" data-render="equipment-loadout#${this.id}">${
         this.equipment.kind
       }</custom-select>`;
     } else {
@@ -182,7 +182,7 @@ export class ComponentEquipmentInfo extends HTMLElement {
   getInformation() {
     let html = `<h5>Information</h5>`;
     const setAmount = globalThis.data.inventory.SetItemEquippedNum(this.equipment.setKind, this.equipment.heroKind);
-    const setBonus = Util.convertTo(this.equipment.EffectMultiplierFromSetItem(this.equipment.heroKind) - 1, 2, "%");
+    const setBonus = Util.percent(this.equipment.EffectMultiplierFromSetItem(this.equipment.heroKind) - 1);
 
     html += `<p>-Type : ${EquipmentPart[this.equipment.globalInfo.part]}</p>
     <p>-Rarity : ${EquipmentRarity[this.equipment.globalInfo.rarity]}</p>`;

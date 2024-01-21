@@ -28,13 +28,14 @@ import { SDP_RestoreDodgeTimesec } from "./SDP/SDP_RestoreDodgeTimesec";
 import { SDP_SkillCastSpeed } from "./SDP/SDP_SkillCastSpeed";
 import { SDP_SkillHitCount } from "./SDP/SDP_SkillHitCount";
 import { SDP_TimeLimit } from "./SDP/SDP_TimeLimit";
+import { SuperDungeonPowerup } from "./SuperDungeonPowerup";
 
 export class SuperDungeonController {
   battleCtrl: BATTLE_CONTROLLER;
   //   dungeonCoin: DungeonCoin;
   initialDungeonCoin: Multiplier;
   //   powerupList: SuperDungeonPowerup[] = [];
-  powerupList = [];
+  powerupList: SuperDungeonPowerup[] = [];
   //   powerupRamdomArray: SuperDungeonPowerup[];
   skillSlotNum: Multiplier;
   eqWeaponSlotNum: Multiplier;
@@ -89,6 +90,7 @@ export class SuperDungeonController {
     );
     // this.dodgeTimesecLeft = new NUMBER((() => this.sdgCtrl.dodgeTimesec.Value()), (() => 0.0));
     this.dodgeHealPercent = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0), () => 1.0, null);
+    this.dodgeTimeRestoreSecEveryFloor = new Multiplier();
     // this.dodgeTimeRestoreSecEveryFloor = new Multiplier((() => this.sdgCtrl.dodgeTimesec.Value()), (() => 0.0));
     this.SetPowerups();
   }
@@ -98,19 +100,17 @@ export class SuperDungeonController {
       new MultiplierInfo(
         MultiplierKind.ArmoredFury,
         MultiplierType.Mul,
-        () =>
-          this.armoredFury.Value() * Math.log2(Math.max(1.0, globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.DEF).After()))
+        () => this.armoredFury.Value() * Math.log2(Math.max(1.0, globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.DEF).After()))
       )
     );
     this.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.WardedFury,
         MultiplierType.Mul,
-        () =>
-          this.wardedFury.Value() * Math.log2(Math.max(1.0, globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.MDEF).After()))
+        () => this.wardedFury.Value() * Math.log2(Math.max(1.0, globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.MDEF).After()))
       )
     );
-    // for (let index = 0; index < this.powerupList.length; index++) this.powerupList[index].Start();
+    for (let index = 0; index < this.powerupList.length; index++) this.powerupList[index].Start();
   }
 
   //   Initialize() {
@@ -127,22 +127,26 @@ export class SuperDungeonController {
     this.powerupList.push(new SDP_DamageMultiplier(this));
     this.powerupList.push(new SDP_DamageCutMultiplier(this));
     this.powerupList.push(new SDP_RestoreDodgeTimesec(this));
-    this.powerupList.push(new SDP_MoveSpeed(this));
     this.powerupList.push(new SDP_DodgeHeal(this));
+    this.powerupList.push(new SDP_DungeonCoinGain(this));
+    this.powerupList.push(new SDP_FameGain(this));
+    this.powerupList.push(new SDP_SkillCastSpeed(this));
     this.powerupList.push(new SDP_PhysicalCriticalChance(this));
     this.powerupList.push(new SDP_MagicalCriticalChance(this));
     this.powerupList.push(new SDP_CriticalDamage(this));
-    this.powerupList.push(new SDP_SkillCastSpeed(this));
+    this.powerupList.push(new SDP_MoveSpeed(this));
     this.powerupList.push(new SDP_PhysicalDamage(this));
     this.powerupList.push(new SDP_MagicalDamage(this));
     this.powerupList.push(new SDP_PhysicalAbsorption(this));
     this.powerupList.push(new SDP_MagicalAbsorption(this));
-    this.powerupList.push(new SDP_DungeonCoinGain(this));
-    this.powerupList.push(new SDP_FameGain(this));
     this.powerupList.push(new SDP_SkillHitCount(this));
-    this.powerupList.push(new SDP_ChallengeBossDamageMultiplier(this));
-    this.powerupList.push(new SDP_EquipmentDropChance(this));
     this.powerupList.push(new SDP_ExtraAfterDamage(this));
+    this.powerupList.push(new SDP_EquipmentDropChance(this));
+    this.powerupList.push(new SDP_ChallengeBossDamageMultiplier(this));
+
+    // this.powerupList.forEach((powerup, index) => {
+    //   powerup.
+    // })
   }
 
   //   get powerupShowNum() {return this.sdgCtrl.powerupShowNum.Value() - this.currentSD.modifierCtrl.powerupDecrement.Value();}
@@ -154,19 +158,19 @@ export class SuperDungeonController {
     return null;
   }
 
-  IsAvailableFilterSlot() {
-    return this.CurrentAvailableFilterSlotNum() > 0;
-  }
+  // IsAvailableFilterSlot() {
+  //   return this.CurrentAvailableFilterSlotNum() > 0;
+  // }
 
-  CurrentAvailableFilterSlotNum() {
-    return Math.max(0, globalThis.data.sdg.powerupFilterSlot.Value() - this.CurrentFilterSlotUsed());
-  }
+  // CurrentAvailableFilterSlotNum() {
+  //   return Math.max(0, globalThis.data.sdg.powerupFilterSlot.Value() - this.CurrentFilterSlotUsed());
+  // }
 
-  CurrentFilterSlotUsed() {
-    let num = 0;
-    for (let index = 0; index < this.powerupList.length; index++) {
-      if (this.powerupList[index].isOnPowerupFilter) num++;
-    }
-    return num;
-  }
+  // CurrentFilterSlotUsed() {
+  //   let num = 0;
+  //   for (let index = 0; index < this.powerupList.length; index++) {
+  //     if (this.powerupList[index].isOnPowerupFilter) num++;
+  //   }
+  //   return num;
+  // }
 }

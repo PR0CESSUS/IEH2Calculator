@@ -17,7 +17,12 @@ export class SDU_SDWardedFury extends SuperDungeonUpgrade {
   SetEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
       globalThis.data.battles[index].superDungeonCtrl.wardedFury.RegisterMultiplier(
-        new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Add, () => this.EffectValue())
+        new MultiplierInfo(
+          MultiplierKind.SDUpgrade,
+          MultiplierType.Add,
+          () => this.EffectValue(),
+          () => this.IsActive()
+        )
       );
   }
 

@@ -1,15 +1,24 @@
+import { Endpoint } from "./Endpoint";
 import { convertTo } from "./convertTo";
 import { convertFrom } from "./convertFrom";
-import { render } from "./render";
-import { tDigit } from "./tDigit";
-import { percent } from "./percent";
-import { meter } from "./meter";
+import { NumberType } from "../type/NumberType";
+import { secondsToDhms } from "./secondsToDhms";
 
 export const Util = {
-  render: render,
-  convertTo: convertTo,
-  convertFrom: convertFrom,
-  tDigit: tDigit,
-  percent: percent,
-  meter: meter,
+  convertTo,
+  convertFrom,
+  tDigit: (value: number, precision = 2) => {
+    return convertTo(value, precision, NumberType.Normal);
+  },
+  percent: (value: number, precision = 2) => {
+    return convertTo(value, precision, NumberType.Percent);
+  },
+  meter: (value: number, precision = 2) => {
+    return convertTo(value, precision, NumberType.Meter);
+  },
+  secondsToDhms,
+  getBaseLog: (x, y) => {
+    return Math.log(x) / Math.log(y);
+  },
+  Endpoint,
 };

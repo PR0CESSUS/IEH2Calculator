@@ -17,11 +17,17 @@ export class PotionGlobalInformation {
     return globalThis.data.source.potionLevels[this.kind];
   }
 
+  set level(value) {
+    globalThis.data.source.potionLevels[this.kind] = Math.min(this.type == PotionType.Talisman ? 50 : 100, value);
+  }
+
   EffectValue(level) {
     return 0.0;
   }
   IsActiveEffect(heroKind: HeroKind, stack: Function) {
-    return globalThis.data.source.isActiveBattle[heroKind] && stack() > 0;
+    if (!globalThis.data.source.isActiveBattle[heroKind] || stack() == 0 || this.kind == 0) return false;
+
+    return true;
   }
   get effectValue() {
     return this.EffectValue(this.level) * globalThis.data.potion.effectMultiplier.Value();

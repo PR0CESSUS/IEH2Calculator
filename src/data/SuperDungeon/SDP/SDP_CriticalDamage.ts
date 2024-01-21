@@ -30,9 +30,16 @@ export class SDP_CriticalDamage extends SuperDungeonPowerup {
   SetEffect() {
     // console.log(this.heroKind);
 
-    globalThis.data.stats
-      .HeroStats(this.heroKind, Stats.CriticalDamage)
-      .RegisterMultiplier(new MultiplierInfo(MultiplierKind.DungeonItem, MultiplierType.After, () => this.EffectValue() * this.level));
+    globalThis.data.stats.HeroStats(this.heroKind, Stats.CriticalDamage).RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.DungeonItem,
+        MultiplierType.After,
+        () => this.EffectValue() * this.level,
+        () => {
+          return this.isActive();
+        }
+      )
+    );
   }
 
   SetGlobalEffect() {

@@ -26,7 +26,14 @@ export class SDP_DamageMultiplier extends SuperDungeonPowerup {
 
   SetEffect() {
     this.ctrl.damageMultiplier.RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.DungeonItem, MultiplierType.Add, () => this.EffectValue() * this.level)
+      new MultiplierInfo(
+        MultiplierKind.DungeonItem,
+        MultiplierType.Add,
+        () => this.EffectValue() * this.level,
+        () => {
+          return this.isActive();
+        }
+      )
     );
   }
 

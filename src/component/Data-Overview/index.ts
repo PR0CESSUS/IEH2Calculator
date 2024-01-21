@@ -58,6 +58,12 @@ export class ComponentDataOverview extends HTMLElement {
     let str = "";
     str += `<table>`;
     switch (name) {
+      case "main":
+        str += `<tr><th>Hero</th><th>Status</th></tr>`;
+        globalThis.data.source.isActiveBattle.forEach((status, index) => {
+          str += `<tr><td>${HeroKind[index]}: </td><td>${status ? (globalThis.data.source.currentHero == index ? "active" : "passive") : "inactive"}</td></tr>`;
+        });
+        break;
       case "gemritual":
         str += `<tr><th>Name</th><th>Level</th></tr>`;
         globalThis.data.sdg.sdGemRitualCtrl.sdGemList.forEach((upgrade, index) => {
@@ -92,6 +98,21 @@ export class ComponentDataOverview extends HTMLElement {
           const localization = Localization.ExpeditionGlobalInformationString(expedition);
 
           str += `<tr><td>${localization.name}: </td><td><custom-input data-endpoint="data.expedition.expeditions[${index}].level"></custom-input></td></tr>`;
+        });
+        break;
+      case "sdpowerup":
+        str += `<tr><th>Name</th><th>Rank</th><th>Purchased</th><th>Level</th><th>Passive Effect</th></tr>`;
+        globalThis.data.battle.superDungeonCtrl.powerupList.forEach((powerup, index) => {
+          const localization = Localization.SDPowerupString(powerup.kind, powerup.PermanentEffectValue());
+          // console.log(powerup.purchasedNum);
+          // globalThis.data.battles[${globalThis.data.source.currentHero}].superDungeonCtrl.powerupList
+          str += `<tr>`;
+          str += `<td>${localization.name}: </td>`;
+          str += `<td><custom-input data-endpoint="data.battle.superDungeonCtrl.powerupList[${index}].rank"></custom-input></td>`;
+          str += `<td><custom-input data-endpoint="data.battle.superDungeonCtrl.powerupList[${index}].purchasedNum"></custom-input></td>`;
+          str += `<td><custom-input data-endpoint="data.custom.powerup[${index}]"></custom-input></td>`;
+          str += `<td>${localization.passive}</td>`;
+          str += `</tr>`;
         });
         break;
       default:

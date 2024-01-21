@@ -9,16 +9,18 @@ import { Element } from "../../type/Element";
 import { SuperDungeonController } from "../SuperDungeon/SuperDungeonController";
 import { BATTLE } from "./BATTLE";
 import { HERO_BATTLE } from "./HERO_BATTLE";
+import { MONSTER_BATTLE } from "./MONSTER_BATTLE";
+import { CHALLENGE_BATTLE } from "./CHALLENGE_BATTLE";
 
 export class BATTLE_CONTROLLER {
   heroKind: HeroKind;
   hero: HERO_BATTLE;
   //   List<> heroAllys = new List<>();
   //   pets: PET_BATTLE[] = new PET_BATTLE[Parameter.maxPetSpawnNum];
-  //   monsters: MONSTER_BATTLE[] = new MONSTER_BATTLE[Parameter.maxMonsterSpawnNum];
-  //   challengeMonsters: CHALLENGE_BATTLE[] = Array(Enums.ChallengeMonsterKind);
-  heroesList = [];
-  monstersList: BATTLE[] = [];
+  monster: MONSTER_BATTLE;
+  challengeMonster: CHALLENGE_BATTLE;
+  // heroesList = [];
+  // monstersList: BATTLE[] = [];
   //   heroListArray: BATTLE[];
   //   monsterListArray: BATTLE[];
   //   areaBattle: AREA_BATTLE;
@@ -34,7 +36,8 @@ export class BATTLE_CONTROLLER {
   constructor(heroKind: HeroKind) {
     this.heroKind = heroKind;
     this.superDungeonCtrl = new SuperDungeonController(this);
-    this.monstersList.push(new BATTLE(this));
+    this.monster = new MONSTER_BATTLE(this);
+    this.challengeMonster = new CHALLENGE_BATTLE(this);
     this.hero = new HERO_BATTLE(this.heroKind, this);
     // if (this.heroKind == HeroKind.Warrior) {
 
@@ -46,5 +49,13 @@ export class BATTLE_CONTROLLER {
     // this.hero.Start();
 
     this.superDungeonCtrl.Start();
+  }
+
+  CurrentSlayerElement(): Element {
+    for (let index = 0; index < Enums.Element; ++index) {
+      let kind = index;
+      if (globalThis.data.stats.ElementSlayerDamage(this.heroKind, kind).Value() > 0.0) return kind;
+    }
+    return Element.Physical;
   }
 }

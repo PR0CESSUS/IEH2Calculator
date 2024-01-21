@@ -11,6 +11,7 @@ import { SkillPassiveEffect } from "./SkillPassiveEffect";
 import { SkillParameter } from "./SkillParameter";
 import { BATTLE } from "../Battle/BATTLE";
 import { BasicStatsKind } from "../../type/BasicStatsKind";
+import { Util } from "../../Util";
 
 export class SKILL {
   heroKind: HeroKind;
@@ -186,14 +187,7 @@ export class SKILL {
   //   Description() {return "";}
 
   get levelBonus() {
-    if (this.isLog) {
-      return (
-        globalThis.data.skill.skillLevelBonus[this.heroKind].After() +
-        globalThis.data.skill.skillLevelBonusFromHolyArch[this.heroKind].Value()
-      );
-    } else {
-      return 0;
-    }
+    return globalThis.data.skill.skillLevelBonus[this.heroKind].Value();
   }
 
   Level() {
@@ -248,10 +242,7 @@ export class SKILL {
   //   }
 
   HitCount() {
-    return (
-      Math.min(this.maxHitCount, this.initHitCount + this.incrementHitCount * this.level) +
-      globalThis.data.skill.extraSkillHitCount[this.heroKind].Value()
-    );
+    return Math.min(this.maxHitCount, this.initHitCount + this.incrementHitCount * this.level) + globalThis.data.skill.extraSkillHitCount[this.heroKind].Value();
   }
 
   //   HitCountForPetAttack(heroKind: HeroKind) {
@@ -275,12 +266,7 @@ export class SKILL {
 
   //   RequiredProficiency() {return this.RequiredProficiency(this.level);}
 
-  Damage2(isDisplay = true) {
-    let myself = {
-      heroKind: this.heroKind,
-      matk: globalThis.data.stats.heroes[this.heroKind].basicStats[BasicStatsKind.MDEF].After(),
-      atk: globalThis.data.stats.heroes[this.heroKind].basicStats[BasicStatsKind.DEF].After(),
-    };
+  DamageOrigin(myself: BATTLE, isDisplay = false) {
     this.tempDamage[myself.heroKind] = !this.isLog
       ? this.element != Element.Physical
         ? this.Damage() * myself.matk
@@ -289,20 +275,21 @@ export class SKILL {
       ? Math.log10(Math.max(1.0, this.Damage())) + myself.matk
       : Math.log10(Math.max(1.0, this.Damage())) + myself.atk;
     this.tempDamage[myself.heroKind] *= globalThis.data.skill.ladyEmeldaEffectMultiplier[myself.heroKind].Value();
+
     // console.log(globalThis.data.stats.ElementDamage(myself.heroKind, this.element).Value());
 
-    if (isDisplay) return this.tempDamage[myself.heroKind] * globalThis.data.stats.ElementDamage(myself.heroKind, this.element).After();
+    if (isDisplay) return this.tempDamage[myself.heroKind] * globalThis.data.stats.ElementDamage(myself.heroKind, this.element).Value();
     // this.tempDamage[myself.heroKind] *= this.skillAbuseMpPercents[myself.heroKind];
     return this.tempDamage[myself.heroKind];
   }
 
-  //   IncrementDamagePerLevel(myself: BATTLE, isDisplay = false) {
-  //     num1 = this.IncrementDamagePerLevel();
-  //     num2 = this.element != Element.Physical ? num1 * myself.matk : num1 * myself.atk;
-  //     if (isDisplay)
-  //       num2 *= globalThis.data.stats.ElementDamage(myself.heroKind, this.element).Value();
-  //     return num2;
-  //   }
+  // IncrementDamagePerLevelTooltip(myself: BATTLE, isDisplay = false) {
+  //   let num1 = this.IncrementDamagePerLevel();
+  //   let num2 = this.element != Element.Physical ? num1 * myself.matk : num1 * myself.atk;
+  //   if (isDisplay)
+  //     num2 *= globalThis.data.stats.ElementDamage(myself.heroKind, this.element).Value();
+  //   return num2;
+  // }
 
   //   HealPoint() {return this.Damage();}
 
@@ -322,32 +309,27 @@ export class SKILL {
 
   //   IsCrit(myself: BATTLE) {return this.element != Element.Physical ? UsefulMethod.WithinRandom(myself.magCrit) : UsefulMethod.WithinRandom(myself.phyCrit);}
 
-  //   CalculateInterval(myself: BATTLE) {
-  //     this.interval[myself.heroKind] = Math.max(0.1, this.Interval() * this.IntervalModifier(myself));
-  //     this.lastCalcTimeInterval[myself.heroKind] = Main.main.allTime;
-  //   }
+  CalculateInterval(myself: BATTLE) {
+    return Math.max(0.1, this.Interval() * this.IntervalModifier(myself));
+  }
 
-  //   Interval(myself: BATTLE) {
-  //     if (this.interval[myself.heroKind] != 0.0 && this.lastCalcTimeInterval[myself.heroKind] + Main.main.calculateSpanTimeSec + this.randomCalcSpanTime[myself.heroKind] > Main.main.allTime)
-  //       return this.interval[myself.heroKind];
-  //     this.CalculateInterval(myself);
-  //     return this.interval[myself.heroKind];
-  //   }
+  IntervalModifier(myself: BATTLE) {
+    let num = myself.spd;
+    if (num > 10000000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(9000000.0, 0.65) + Math.pow(num - 10000000.0, 0.6);
+    else if (num > 1000000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(num - 1000000.0, 0.65);
+    else if (num > 100000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(num - 100000.0, 0.7);
+    else if (num > 10000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(num - 10000.0, 0.8);
+    else if (num > 1000.0) num = 1000.0 + Math.pow(num - 1000.0, 0.9);
 
-  //   IntervalModifier(myself: BATTLE) {
-  //     let num = myself.spd;
-  //     if (num > 10000000.0)
-  //       num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(9000000.0, 0.65) + Math.pow(num - 10000000.0, 0.6);
-  //     else if (num > 1000000.0)
-  //       num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(num - 1000000.0, 0.65);
-  //     else if (num > 100000.0)
-  //       num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(num - 100000.0, 0.7);
-  //     else if (num > 10000.0)
-  //       num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(num - 10000.0, 0.8);
-  //     else if (num > 1000.0)
-  //       num = 1000.0 + Math.pow(num - 1000.0, 0.9);
-  //     return Math.max(0.1, 1.0 / Math.log(1.4 + Math.max(0.0, num / 5.0) / 5000.0, 1.4) * Math.max(0.5, 1.0 - globalThis.data.skill.skillCooltimeReduction[myself.heroKind].Value()) / globalThis.data.skill.skillCastSpeedModifier[myself.heroKind].Value());
-  //   }
+    // console.log(num, globalThis.data.skill.skillCastSpeedModifier[myself.heroKind]);
+    // console.log("log test", Util.getBaseLog(10, 2), Math.log2(10));
+
+    return Math.max(
+      0.1,
+      ((1.0 / Util.getBaseLog(1.4 + Math.max(0.0, num / 5.0) / 5000.0, 1.4)) * Math.max(0.5, 1.0 - globalThis.data.skill.skillCooltimeReduction[myself.heroKind].Value())) /
+        globalThis.data.skill.skillCastSpeedModifier[myself.heroKind].Value()
+    );
+  }
 
   //   ThrowSpeedModifier(myself: BATTLE) {return this.IntervalModifier(myself) <= 0.0 ? 1 : Math.min(5, Math.max(1, 0.5 / this.Interval(myself)));}
 

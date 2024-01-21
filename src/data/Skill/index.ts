@@ -9,6 +9,7 @@ import { WizardSkill } from "./WizardSkill";
 import { ThiefSkill } from "./ThiefSkill";
 import { ArcherSkill } from "./ArcherSkill";
 import { TamerSkill } from "./TamerSkill";
+import { HeroKind } from "../../type/HeroKind";
 
 export class DataSkill {
   ladyEmeldaEffectMultiplier: Multiplier[] = Array(Enums.HeroKind);
@@ -55,15 +56,15 @@ export class DataSkill {
     }
     for (let index = 0; index < this.skillRangeMultiplier.length; index++) {
       this.skillRangeMultiplier[index] = new Multiplier(
-        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0),
-        () => 10.0,
-        () => 0.1
+        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0)
+        // () => 10.0,
+        // () => 0.1
       );
 
       this.skillEffectRangeMultiplier[index] = new Multiplier(
-        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0),
-        () => 10.0,
-        () => 0.1
+        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0)
+        // () => 10.0,
+        // () => 0.1
       );
 
       this.extraSkillHitCount[index] = new Multiplier(
@@ -92,5 +93,9 @@ export class DataSkill {
     this.classSkills[3] = new ThiefSkill();
     this.classSkills[4] = new ArcherSkill();
     this.classSkills[5] = new TamerSkill();
+  }
+
+  Skill(slot: number, heroKind: HeroKind) {
+    return this.classSkills[heroKind].skills[slot];
   }
 }

@@ -27,7 +27,6 @@ export class Equipment {
   isReachedMax;
   id;
   slotId;
-  slotPart: EquipmentPart;
   totalOptionNum: Multiplier;
   //   getGlobalInfo: EquipmentGlobalInformation;
   optionEffects: EquipmentOptionEffect[] = Array(EquipmentParameter.maxOptionEffectNum);
@@ -123,15 +122,22 @@ export class Equipment {
     return this.slotId - (520 + this.heroKind * 720 + this.loadout * 72);
   }
 
+  get slotPart() {
+    if (this.loadoutSlot < 24) return EquipmentPart.Weapon;
+    if (this.loadoutSlot >= 24 && this.loadoutSlot < 48) return EquipmentPart.Armor;
+    return EquipmentPart.Jewelry;
+  }
+
   Start() {
     this.CalculateRequiredLevel();
 
-    if (this.loadout == globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero] && this.heroKind == globalThis.data.source.currentHero) {
-      // console.log("SetAgainAllEffect", this.slotId, this.IsEquipped());
-      this.SetAgainAllEffect();
-    }
+    if (!this.isDisabled()) this.SetAgainAllEffect();
+
     //
     // this.CalculateRequiredAbilityPoint();
+    if (this.heroKind == HeroKind.Warrior && this.loadout == 2) {
+      // console.log("warrior gear", this.slotId, this.loadoutSlot, this.IsEquipped(), this.isDisabled());
+    }
   }
 
   public IsSkillLevelEnchant(kind: EquipmentEffectKind) {
@@ -221,16 +227,10 @@ export class Equipment {
   }
 
   IsEffectRegisteredClear() {
-    // TODO
-    // console.log(this.isEffectRegistered);
-
     this.isEffectRegistered.forEach((effect) => {
       effect();
     });
     this.isEffectRegistered = [];
-    // clearing alredy set enchatments
-    // for (let index = 0; index < this.isEffectRegistered.length; index++) this.isEffectRegistered[index] = false;
-    // this.isMasteryEffectRegistered = false;
   }
 
   SetAgainAllEffect() {
@@ -257,51 +257,56 @@ export class Equipment {
     // }
   }
   IsEquipped() {
+    if (this.slotId < 520 || this.slotId >= 4840) return false;
     if (this.loadout != globalThis.data.source.equipmentLoadoutIds[this.heroKind] || !globalThis.data.source.isActiveBattle[this.heroKind] || this.kind == 0) return false;
 
+    // if (this.slotId == 717) {
+    //   console.log("IsEquipped after first filter");
+    //   console.log(globalThis.data.source.isActiveBattle[this.heroKind]);
+    // }
     if (this.loadoutSlot < 24) {
-      if (globalThis.data.custom.isSuperDungeon == false) {
-        return globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() > this.loadoutSlot;
-      } else {
-        // if (this.heroKind == 4) console.log("sd weeapon", globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() > this.loadoutSlot, this.loadoutSlot);
-
-        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() > this.loadoutSlot;
-      }
+      return globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() > this.loadoutSlot;
     } else if (this.loadoutSlot >= 24 && this.loadoutSlot < 48) {
-      if (globalThis.data.custom.isSuperDungeon == false) {
-        return globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 24;
-      } else {
-        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.Value() > this.loadoutSlot - 24;
-      }
+      return globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 24;
     } else if (this.loadoutSlot >= 48) {
-      if (globalThis.data.custom.isSuperDungeon == false) {
-        return globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 48;
-      } else {
-        return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.Value() > this.loadoutSlot - 48;
-      }
+      return globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 48;
     }
+    // if (this.loadoutSlot < 24) {
+    //   return globalThis.data.custom.isSuperDungeon
+    //     ? globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() > this.loadoutSlot
+    //     : globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() > this.loadoutSlot;
+    // } else if (this.loadoutSlot >= 24 && this.loadoutSlot < 48) {
+    //   return globalThis.data.custom.isSuperDungeon
+    //     ? globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.Value() > this.loadoutSlot - 24
+    //     : globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 24;
+    // } else if (this.loadoutSlot >= 48) {
+    //   return globalThis.data.custom.isSuperDungeon
+    //     ? globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.Value() > this.loadoutSlot - 48
+    //     : globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 48;
+    // }
   }
 
   isDisabled() {
-    if (globalThis.data.custom.isSuperDungeon == false) {
+    if (this.slotId < 520 || this.slotId >= 4840) return true;
+    if (globalThis.data.custom.isSuperDungeon && this.heroKind == globalThis.data.source.currentHero) {
       switch (this.slotPart) {
         case EquipmentPart.Weapon:
-          return globalThis.data.inventory.equipWeaponUnlockedNum[globalThis.data.source.currentHero].Value() <= this.loadoutSlot;
+          return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() <= this.loadoutSlot;
         case EquipmentPart.Armor:
-          return globalThis.data.inventory.equipArmorUnlockedNum[globalThis.data.source.currentHero].Value() <= this.loadoutSlot - 24;
+          return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.Value() <= this.loadoutSlot - 24;
         case EquipmentPart.Jewelry:
-          return globalThis.data.inventory.equipJewelryUnlockedNum[globalThis.data.source.currentHero].Value() <= this.loadoutSlot - 48;
+          return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.Value() <= this.loadoutSlot - 48;
         default:
           return true;
       }
     } else {
       switch (this.slotPart) {
         case EquipmentPart.Weapon:
-          return globalThis.data.battles[globalThis.data.source.currentHero].superDungeonCtrl.eqWeaponSlotNum.value <= this.loadoutSlot;
+          return globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() <= this.loadoutSlot;
         case EquipmentPart.Armor:
-          return globalThis.data.battles[globalThis.data.source.currentHero].superDungeonCtrl.eqArmorSlotNum.value <= this.loadoutSlot - 24;
+          return globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() <= this.loadoutSlot - 24;
         case EquipmentPart.Jewelry:
-          return globalThis.data.battles[globalThis.data.source.currentHero].superDungeonCtrl.eqJewelrySlotNum.value <= this.loadoutSlot - 48;
+          return globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() <= this.loadoutSlot - 48;
         default:
           return true;
       }
@@ -313,14 +318,14 @@ export class Equipment {
 
     for (let index = 0; index < this.globalInfo.levelMaxEffects.length; index++) {
       if (this.globalInfo.levelMaxEffects[index].kind == 0) continue;
-      this.isEffectRegistered.push(
-        this.SetEffect(
-          heroKind,
-          this.globalInfo.levelMaxEffects[index].kind,
-          () => this.globalInfo.levelMaxEffects[index].EffectValue(0),
-          () => this.globalInfo.levels[index].isMaxed
-        )
+      const register = this.SetEffect(
+        heroKind,
+        this.globalInfo.levelMaxEffects[index].kind,
+        () => this.globalInfo.levelMaxEffects[index].EffectValue(0),
+        () => this.globalInfo.levels[index].isMaxed
       );
+
+      Array.isArray(register) ? this.isEffectRegistered.push(...register) : this.isEffectRegistered.push(register);
     }
   }
 
@@ -328,10 +333,27 @@ export class Equipment {
     if (this.kind == EquipmentKind.Nothing) return;
     for (let index = 0; index < this.globalInfo.effects.length; index++) {
       // this.SetEffect(heroKind, this.globalInfo.effects[index].kind, () => this.OriginalEffectValue(index));
-      this.isEffectRegistered.push(this.SetEffect(heroKind, this.globalInfo.effects[index].kind, () => this.OriginalEffectValue(index)));
+      const register = this.SetEffect(
+        heroKind,
+        this.globalInfo.effects[index].kind,
+        () => this.OriginalEffectValue(index),
+        () => !this.isDisabled()
+      );
+      Array.isArray(register) ? this.isEffectRegistered.push(...register) : this.isEffectRegistered.push(register);
     }
     for (let index = 0; index < this.optionEffects.length; index++) {
-      if (this.optionEffects[index].kind != 0) this.isEffectRegistered.push(this.SetEffect(heroKind, this.optionEffects[index].kind, () => this.optionEffects[index].effectValue));
+      // console.log(this.optionEffects[index].kind == 58, "all skil");
+
+      if (this.optionEffects[index].kind != 0) {
+        const register = this.SetEffect(
+          heroKind,
+          this.optionEffects[index].kind,
+          () => this.optionEffects[index].effectValue,
+          () => !this.isDisabled()
+        );
+        // if (Array.isArray(register)) console.log("all skill", register);
+        Array.isArray(register) ? this.isEffectRegistered.push(...register) : this.isEffectRegistered.push(register);
+      }
 
       //
       // this.SetEffect(heroKind, this.optionEffects[index].kind, () => this.optionEffects[index].effectValue);

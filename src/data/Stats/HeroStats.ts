@@ -32,7 +32,7 @@ export class HeroStats {
   movedDistanceReset;
   materialLootGain: Multiplier;
   elementSlayerDamages: Multiplier[] = Array(Enums.Element);
-  debuffChances: Multiplier[] = Array(Enums.Element);
+  debuffChances: Multiplier[] = Array(Enums.Debuff);
   channeledMp: Multiplier;
   summonPetSlot: Multiplier;
   loyaltyPoingGain: Multiplier;
@@ -170,11 +170,9 @@ export class HeroStats {
         return Parameter.stats[this.heroKind][8] * this.abilities[4].Point();
       })
     );
-    this.stats[8].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return Parameter.baseStats[this.heroKind][9];
-      })
-    );
+    this.stats[8].modifiers[0] = new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
+      return Parameter.baseStats[this.heroKind][9];
+    });
     this.stats[9].maxValue = () => {
       return 1.0;
     };

@@ -15,6 +15,9 @@ import { ComponentEquipmentInfo } from "../Equipment-Info";
 // import template from "./template.html";
 import style from '!!css-loader?{"sourceMap":false,"exportType":"string"}!./style.css';
 import { set, get } from "lodash";
+import { MonsterSpecies } from "../../type/MonsterSpecies";
+import { MonsterColor } from "../../type/MonsterColor";
+import { ChallengeMonsterKind } from "../../type/ChallengeMonsterKind";
 
 export class ComponentCustomSelect extends HTMLElement {
   constructor() {
@@ -24,63 +27,61 @@ export class ComponentCustomSelect extends HTMLElement {
     // this.shadowRoot.innerHTML += template;
 
     const select = document.createElement("select");
-
-    select.innerHTML = this.createOption();
-    // this.shadowRoot.querySelector("input").value = this.data;
+    this.addOption(select);
     select.onchange = this.inputChange.bind(this);
 
     this.shadowRoot.append(select);
-    // this.shadowRoot.querySelector(".icon48").addEventListener("click", this.openEdit.bind(this));
-    // this.shadowRoot.querySelector('[name="kind"]').addEventListener("change", this.changeKind.bind(this));
+    // this.dataset.class
 
-    // this.render();
-
-    //   <div id="modal">
-    //   <div class="modal-underlay" onclick="window.app.router.load()"></div>
-    //   <div id="modal-content" class="modal-content"></div>
-    // </div>
+    // console.log(this.attributes, "constructor");
   }
-  createOption() {
-    let options = ``;
-    if (this.dataset.type == undefined) return `<option value="0">Nothing</option>`;
+
+  addOption(element: HTMLSelectElement) {
+    if (this.dataset.type == undefined) element.innerHTML = `<option value="0">Nothing</option>`;
     for (let index = 0; index < this.length; index++) {
-      const isSelected = parseInt(this.innerHTML) == index ? " selected" : "";
-      switch (parseInt(this.dataset.type)) {
-        case CustomSelectType.HeroKind:
-          options += `<option value="${index}"${isSelected}>${HeroKind[index]}</option>`;
-          break;
-        case CustomSelectType.SuperDungeon:
-          options += `<option value="${index}"${isSelected}>${Localization.SDName(index)}</option>`;
-          break;
-        case CustomSelectType.Weapon:
-          if (globalThis.data.equipment.globalInformations[index].part == EquipmentPart.Weapon || index == 0)
-            options += `<option value="${index}"${isSelected}>${Localization.EquipmentName(index)}</option>`;
-          break;
-        case CustomSelectType.Armor:
-          if (globalThis.data.equipment.globalInformations[index].part == EquipmentPart.Armor || index == 0)
-            options += `<option value="${index}"${isSelected}>${Localization.EquipmentName(index)}</option>`;
-          break;
-        case CustomSelectType.Jewelry:
-          if (globalThis.data.equipment.globalInformations[index].part == EquipmentPart.Jewelry || index == 0)
-            options += `<option value="${index}"${isSelected}>${Localization.EquipmentName(index)}</option>`;
-          break;
-        case CustomSelectType.PotionKind:
-          options += `<option value="${index}"${isSelected}>${Localization.PotionName(index)}</option>`;
-          break;
-        case CustomSelectType.EquipmentEffectKind:
-          options += `<option value="${index}"${isSelected}>${Localization.EquipmentEffectName(index)}</option>`;
-          break;
-        case CustomSelectType.EquipmentForgeEffectKind:
-          options += `<option value="${index}"${isSelected}>${Localization.ForgeNameString(index)}</option>`;
-          break;
-        case CustomSelectType.Number:
-          options += `<option value="${index}"${isSelected}>${index}</option>`;
-          break;
-        default:
-          break;
-      }
+      const optionHtml = document.createElement("option");
+
+      if (this.getText(index) == undefined || this.getText(index) == "") continue;
+
+      optionHtml.selected = parseInt(this.innerHTML) == index;
+      optionHtml.value = index.toString();
+      optionHtml.text = this.getText(index);
+      element.append(optionHtml);
     }
-    return options;
+  }
+
+  getText(index: number) {
+    switch (parseInt(this.dataset.type)) {
+      case CustomSelectType.HeroKind:
+        return HeroKind[index];
+      case CustomSelectType.SuperDungeon:
+        return Localization.SDName(index);
+      case CustomSelectType.Weapon:
+        if (globalThis.data.equipment.globalInformations[index].part == EquipmentPart.Weapon || index == 0) return Localization.EquipmentName(index);
+        break;
+      case CustomSelectType.Armor:
+        if (globalThis.data.equipment.globalInformations[index].part == EquipmentPart.Armor || index == 0) return Localization.EquipmentName(index);
+        break;
+      case CustomSelectType.Jewelry:
+        if (globalThis.data.equipment.globalInformations[index].part == EquipmentPart.Jewelry || index == 0) return Localization.EquipmentName(index);
+        break;
+      case CustomSelectType.PotionKind:
+        return Localization.PotionName(index);
+      case CustomSelectType.EquipmentEffectKind:
+        return Localization.EquipmentEffectName(index);
+      case CustomSelectType.EquipmentForgeEffectKind:
+        return Localization.ForgeNameString(index);
+      case CustomSelectType.Number:
+        return index.toString();
+      case CustomSelectType.MonsterSpecies:
+        return MonsterSpecies[index];
+      case CustomSelectType.MonsterColor:
+        return MonsterColor[index];
+      case CustomSelectType.ChallengeMonsterKind:
+        return ChallengeMonsterKind[index];
+      default:
+        break;
+    }
   }
 
   get length() {
@@ -102,53 +103,38 @@ export class ComponentCustomSelect extends HTMLElement {
         return 5;
       case CustomSelectType.Number:
         return parseInt(this.dataset.length);
+      case CustomSelectType.MonsterSpecies:
+        return Enums.MonsterSpecies;
+      case CustomSelectType.MonsterColor:
+        return Enums.MonsterColor;
+      case CustomSelectType.ChallengeMonsterKind:
+        return Enums.ChallengeMonsterKind;
       default:
         return 0;
     }
   }
 
   inputChange(event: Event & { target: HTMLInputElement }) {
-    // console.log(, this);
-    // console.log(event.target.value);
-    // event.preventDefault();
-    //@ts-ignore
-    // console.dir(event.composedPath()[1].host.parentElement);
-
     if (this.dataset.endpoint == undefined || this.dataset.endpoint == "") return;
-
     set(globalThis.app, this.dataset.endpoint, parseInt(event.target.value));
-    // globalThis.app.Save();
-    // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;
-    const type = parseInt(this.dataset.type);
-    if (type == CustomSelectType.Weapon || type == CustomSelectType.Armor || type == CustomSelectType.Jewelry || type == CustomSelectType.EquipmentEffectKind) {
-      // console.log("equipment event : ", this.dataset.id);
-      // const equipmentInfo = document.querySelector("equipment-loadout").shadowRoot.querySelector(`equipment-info[data-id="${this.dataset.id}"]`) as ComponentEquipmentInfo;
 
-      // equipmentInfo.changeKind();
-      console.log("specific select action");
-
-      // (.changeKind(customEvent);
-    }
     if (this.dataset.render) {
-      // console.log(this.dataset.render);
-      const equipmentInfo = document.querySelector("equipment-loadout").shadowRoot.getElementById(this.dataset.render) as ComponentEquipmentInfo;
-      // console.log(get(globalThis.app, this.dataset.endpoint));
-      const createId = globalThis.data.inventory.equipmentSlots[2001].optionEffects[0].createId;
-      // console.log(createId);
-      // console.log(globalThis.data.source.equipment1stOptionLevels[createId]);
+      if (this.dataset.render.includes("equipment-loadout")) {
+        const html = document.querySelector("equipment-loadout") as ComponentEquipmentLoadout;
+        if (this.dataset.render.includes("#")) {
+          const path = this.dataset.render.split("#");
 
-      equipmentInfo.Update();
+          //@ts-ignore
+          html.shadowRoot.querySelector("#" + path[1]).Update();
+        }
+        html.Update();
+      }
     }
 
-    // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;
     if (this.dataset.reload != "false") globalThis.app.page.Load();
-    // this.data = event.target.value;
-    // console.log(globalThis.data.source.sdGemLevels[8]);
   }
 
   connectedCallback() {
-    // console.log("s");
-    // console.log("connectedCallback()");
-    // this.render();
+    // console.log(this.attributes, "connectedCallback");
   }
 }

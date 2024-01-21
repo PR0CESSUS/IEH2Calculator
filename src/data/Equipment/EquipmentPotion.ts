@@ -4,7 +4,7 @@ import { PotionType } from "../../type/PotionType";
 
 export class EquipmentPotion {
   slotId: number;
-  effectRegister;
+  effectRegister = [];
 
   constructor(slotId: number) {
     this.slotId = slotId;
@@ -15,6 +15,16 @@ export class EquipmentPotion {
   }
   get kind(): PotionKind {
     return globalThis.data.source.potionKinds[this.id];
+  }
+
+  set kind(value) {
+    globalThis.data.source.potionKinds[this.id] = value;
+    this.Start();
+  }
+
+  get slot() {
+    if (this.slotId < 260) return 0;
+    return (this.slotId - 260 - this.heroKind * 6) % 6;
   }
 
   get stack() {
@@ -36,11 +46,11 @@ export class EquipmentPotion {
       return HeroKind.Wizard;
     } else if (this.slotId >= 272 && this.slotId < 278) {
       return HeroKind.Angel;
-    } else if (this.slotId >= 278 && this.slotId < 286) {
+    } else if (this.slotId >= 278 && this.slotId < 284) {
       return HeroKind.Thief;
-    } else if (this.slotId >= 286 && this.slotId < 292) {
+    } else if (this.slotId >= 284 && this.slotId < 290) {
       return HeroKind.Archer;
-    } else if (this.slotId >= 292 && this.slotId < 298) {
+    } else if (this.slotId >= 290 && this.slotId < 296) {
       return HeroKind.Tamer;
     }
   }
@@ -53,25 +63,32 @@ export class EquipmentPotion {
     }
   }
 
-  Start() {
-    if (this.slotId < 260) return;
-    if (this.effectRegister != undefined) this.effectRegister();
+  UnregisterEffects() {
+    this.effectRegister.forEach((effect) => {
+      effect();
+      // console.log(effect);
+    });
+    this.effectRegister = [];
+  }
 
-    if (globalThis.data.potion.GlobalInfo(this.kind).SetEffect != undefined) {
-      // console.log(this.heroKind, this.stack);
-      this.effectRegister = globalThis.data.potion.GlobalInfo(this.kind).SetEffect(this.heroKind, () => this.stack);
+  Start() {
+    this.UnregisterEffects();
+    if (this.slotId < 260 || this.kind == 0) return;
+
+    if (globalThis.data.potion.GlobalInfo(this.kind).SetEffect != undefined && !this.isDisabled()) {
+      const register = globalThis.data.potion.GlobalInfo(this.kind).SetEffect(this.heroKind, () => this.stack);
+      Array.isArray(register) ? this.effectRegister.push(...register) : this.effectRegister.push(register);
     }
   }
 
   isDisabled() {
-    if (this.slotId < 260) return true;
-    const slot = (this.slotId - 260 - this.heroKind * 6) % 6;
-    // console.log(slot);
-
-    if (globalThis.data.custom.isSuperDungeon) {
-      return globalThis.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.Value() <= slot;
+    if (this.slotId < 260 || !globalThis.data.source.isActiveBattle[this.heroKind]) return true;
+    if (globalThis.data.custom.isSuperDungeon && this.heroKind == globalThis.data.source.currentHero) {
+      // console.log("hero", HeroKind[this.heroKind], "slot", slot, "superdungeon", globalThis.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.Value() <= slot);
+      return globalThis.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.Value() <= this.slot;
     } else {
-      return globalThis.data.inventory.equipPotionUnlockedNum[this.heroKind].Value() <= slot;
+      // console.log("hero", HeroKind[this.heroKind], "slot", slot, " normal", globalThis.data.inventory.equipPotionUnlockedNum[this.heroKind].Value() <= slot);
+      return globalThis.data.inventory.equipPotionUnlockedNum[this.heroKind].Value() <= this.slot;
     }
   }
 }

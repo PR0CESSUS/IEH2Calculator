@@ -1,5 +1,6 @@
 export enum NumberType {
-  normal,
-  percent,
-  meter,
+  Normal,
+  Percent,
+  Meter,
+  TimeDhms,
 }

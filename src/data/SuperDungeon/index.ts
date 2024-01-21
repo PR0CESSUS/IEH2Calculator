@@ -99,32 +99,26 @@ export class SuperDungeonGlobalController {
   }
 
   SetEffectSDDamageMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.damageMultiplier.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.damageMultiplier.RegisterMultiplier(info);
   }
 
   SetEffectSDDamageCutMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(info);
   }
 
   SetEffectSDChallengeBossDamageMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(info);
   }
 
   SetEffectSDChallengeBossDamageCutMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(info);
   }
 
   SetEffectSDArmoredFuryMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.armoredFury.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.armoredFury.RegisterMultiplier(info);
   }
 
   SetEffectSDWardedFuryMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.wardedFury.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.wardedFury.RegisterMultiplier(info);
   }
 }

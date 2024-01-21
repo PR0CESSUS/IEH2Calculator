@@ -1,10 +1,63 @@
+import { MonsterSpecies } from "./../../type/MonsterSpecies";
+import { MonsterColor } from "./../../type/MonsterColor";
 import { Element } from "../../type/Element";
 import { PetPassiveEffectKind } from "../../type/PetPassiveEffectKind";
 
 export const MonsterParameter = {
   colorDropChanceBase: 0.001,
   dropChanceBase: 0.01,
-
+  ColorFactor(color: MonsterColor) {
+    switch (color) {
+      case MonsterColor.Normal:
+        return 1.0;
+      case MonsterColor.Blue:
+        return 1.25;
+      case MonsterColor.Yellow:
+        return 1.25;
+      case MonsterColor.Red:
+        return 1.5;
+      case MonsterColor.Green:
+        return 2.5;
+      case MonsterColor.Purple:
+        return 3.0;
+      case MonsterColor.Boss:
+        return 10.0;
+      case MonsterColor.Metal:
+        return 500.0;
+      default:
+        return 1.0;
+    }
+  },
+  SpeciesFactor(species: MonsterSpecies) {
+    switch (species) {
+      case MonsterSpecies.Slime:
+        return 1.0;
+      case MonsterSpecies.MagicSlime:
+        return 1.15;
+      case MonsterSpecies.Spider:
+        return 0.8;
+      case MonsterSpecies.Bat:
+        return 1.35;
+      case MonsterSpecies.Fairy:
+        return 1.5;
+      case MonsterSpecies.Fox:
+        return 1.75;
+      case MonsterSpecies.DevilFish:
+        return 2.35;
+      case MonsterSpecies.Treant:
+        return 3.0;
+      case MonsterSpecies.FlameTiger:
+        return 5.0;
+      case MonsterSpecies.Unicorn:
+        return 7.0;
+      case MonsterSpecies.Mimic:
+        return 10.0;
+      case MonsterSpecies.ChallengeBoss:
+        return 5.0;
+      default:
+        return 1.0;
+    }
+  },
   PetPassiveEffectMaxValue(kind: PetPassiveEffectKind) {
     switch (kind) {
       case PetPassiveEffectKind.DoubleMaterialChance:
@@ -217,32 +270,14 @@ export const MonsterParameter = {
   ],
 
   monsterAttackElements: [
-    [
-      Element.Physical,
-      Element.Physical,
-      Element.Physical,
-      Element.Physical,
-      Element.Physical,
-      Element.Physical,
-      Element.Physical,
-      Element.Physical,
-    ],
+    [Element.Physical, Element.Physical, Element.Physical, Element.Physical, Element.Physical, Element.Physical, Element.Physical, Element.Physical],
     [Element.Ice, Element.Ice, Element.Thunder, Element.Fire, Element.Light, Element.Dark, Element.Fire, Element.Physical],
 
     [Element.Physical, Element.Ice, Element.Physical, Element.Fire, Element.Physical, Element.Dark, Element.Physical, Element.Physical],
 
     [Element.Fire, Element.Ice, Element.Thunder, Element.Fire, Element.Light, Element.Dark, Element.Dark, Element.Physical],
 
-    [
-      Element.Thunder,
-      Element.Physical,
-      Element.Thunder,
-      Element.Physical,
-      Element.Light,
-      Element.Physical,
-      Element.Thunder,
-      Element.Physical,
-    ],
+    [Element.Thunder, Element.Physical, Element.Thunder, Element.Physical, Element.Light, Element.Physical, Element.Thunder, Element.Physical],
 
     [Element.Physical, Element.Ice, Element.Physical, Element.Fire, Element.Physical, Element.Dark, Element.Physical, Element.Physical],
 
@@ -253,18 +288,7 @@ export const MonsterParameter = {
     [Element.Physical, Element.Ice, Element.Physical, Element.Fire, Element.Physical, Element.Dark, Element.Physical, Element.Physical],
     [Element.Physical],
 
-    [
-      Element.Physical,
-      Element.Dark,
-      Element.Physical,
-      Element.Physical,
-      Element.Fire,
-      Element.Thunder,
-      Element.Physical,
-      Element.Physical,
-      Element.Physical,
-      Element.Physical,
-    ],
+    [Element.Physical, Element.Dark, Element.Physical, Element.Physical, Element.Fire, Element.Thunder, Element.Physical, Element.Physical, Element.Physical, Element.Physical],
   ],
   monsterStats: [
     [

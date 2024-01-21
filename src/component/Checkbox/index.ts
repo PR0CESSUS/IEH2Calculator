@@ -20,20 +20,24 @@ export class ComponentCustomCheckbox extends HTMLElement {
     this.data = get(globalThis.app, this.dataset.endpoint, null);
 
     this.shadowRoot.innerHTML += `<style>${style}</style>`;
-    this.shadowRoot.innerHTML += template;
+    // this.shadowRoot.innerHTML += template;
 
-    this.shadowRoot.querySelector('[name="name"]').innerHTML += this.innerHTML;
-    this.shadowRoot.querySelector("input").checked = this.data;
-    this.shadowRoot.querySelector("input").onchange = this.inputChange.bind(this);
+    const input = document.createElement("input");
+    const name = document.createElement("span");
+    this.style.display = "flex";
+
+    name.innerHTML += this.innerHTML;
+    input.type = "checkbox";
+    input.checked = this.data;
+    input.onchange = this.inputChange.bind(this);
+    // this.classList.forEach((className) => {
+    //   input.classList.add(className);
+    // });
     // this.shadowRoot.querySelector(".icon48").addEventListener("click", this.openEdit.bind(this));
     // this.shadowRoot.querySelector('[name="kind"]').addEventListener("change", this.changeKind.bind(this));
 
-    // this.render();
-
-    //   <div id="modal">
-    //   <div class="modal-underlay" onclick="window.app.router.load()"></div>
-    //   <div id="modal-content" class="modal-content"></div>
-    // </div>
+    this.shadowRoot.append(input);
+    this.shadowRoot.append(name);
   }
 
   inputChange(event: Event & { target: HTMLInputElement }) {
@@ -43,7 +47,10 @@ export class ComponentCustomCheckbox extends HTMLElement {
     set(globalThis.app, this.dataset.endpoint, event.target.checked);
     // globalThis.app.Save();
     // hideous build in logic
-    if (this.dataset.type == "superdungeon") globalThis.data.inventory.Update();
+    if (globalThis.data.custom.isSuperDungeon) {
+      globalThis.data.SetLog10();
+      globalThis.data.inventory.Update();
+    }
 
     // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;
     // globalThis.data.expedition.rewardModifierPerHour.isDirty = true;

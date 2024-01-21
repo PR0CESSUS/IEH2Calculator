@@ -1,10 +1,9 @@
-import { ConvertType } from "./type/ConvertType";
+import { NumberType } from "./type/NumberType";
 import { MultiplierKind } from "./type/MultiplierKind";
 import { MultiplierType } from "./type/MultiplierType";
 import { convertTo } from "./Util/convertTo";
 
 export class Multiplier {
-  isDirty: boolean = true;
   modifiers: MultiplierInfo[] = [];
   additiveKind: { [key in keyof typeof MultiplierKind]: number } = {} as any;
   multiplicativeKind: { [key in keyof typeof MultiplierKind]: number } = {} as any;
@@ -14,10 +13,11 @@ export class Multiplier {
   temp = 0;
   log = 0;
   isLog: boolean = false;
-  numberType: ConvertType = ConvertType.Percent;
+  numberType: NumberType = NumberType.Percent;
   multiplicative = 1;
   maxValue: Function;
   minValue: Function;
+  debug = false;
   constructor(multiplier: MultiplierInfo = new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0), maxValue: Function = () => 1e300, minValue: Function = () => 0) {
     // Func<double> maxValue = null, Func<double> minValue = null
     this.maxValue = maxValue;
@@ -28,7 +28,6 @@ export class Multiplier {
   }
 
   get value() {
-    this.isDirty = true;
     return this.Value();
   }
   Debug(kind: MultiplierKind, type: MultiplierType) {
@@ -86,9 +85,6 @@ export class Multiplier {
     this.afterKind = {} as any;
     for (let index = 0; index < this.modifiers.length; index++) {
       const modifier = this.modifiers[index];
-      if (modifier.kind == 24) {
-        // console.log(modifier.value);
-      }
       if (modifier.trigger() == false) continue;
       // if (modifier.kind == 10) console.log(modifier.value());
 
@@ -99,7 +95,7 @@ export class Multiplier {
           } else {
             this.additiveKind[MultiplierKind[modifier.kind]] = modifier.value();
           }
-          this.additive = Object.values(this.additiveKind).reduce((a, b) => a + b, 0);
+
           break;
         case MultiplierType.Mul:
           if (this.multiplicativeKind[MultiplierKind[modifier.kind]]) {
@@ -107,7 +103,7 @@ export class Multiplier {
           } else {
             this.multiplicativeKind[MultiplierKind[modifier.kind]] = 1 + modifier.value();
           }
-          this.multiplicative = Object.values(this.multiplicativeKind).reduce((a, b) => a * b);
+
           break;
         case MultiplierType.After:
           if (this.afterKind[MultiplierKind[modifier.kind]]) {
@@ -115,29 +111,29 @@ export class Multiplier {
           } else {
             this.afterKind[MultiplierKind[modifier.kind]] = modifier.value();
           }
-          this.after = Object.values(this.afterKind).reduce((a, b) => a + b, 0);
+
           break;
         default:
           break;
       }
     }
-
+    this.additive = Object.values(this.additiveKind).reduce((a, b) => a + b, 0);
+    this.multiplicative = Object.values(this.multiplicativeKind).reduce((a, b) => a * b);
+    this.after = Object.values(this.afterKind).reduce((a, b) => a + b, 0);
     this.temp = this.BeforeTotalValue(false);
     this.log = this.BeforeTotalValue(true);
-    // TODO liczenie log dla normal i procent
-
-    this.isDirty = false;
   }
 
   BeforeTotalValue(isLog: boolean) {
     if (isLog) {
       let a = this.additive * this.multiplicative;
+
       switch (this.numberType) {
-        case ConvertType.Normal:
+        case NumberType.Normal:
           return a < 1.0 ? a : this.modifiers[0].Value + Math.log10(a);
-        case ConvertType.Percent:
+        case NumberType.Percent:
           return this.modifiers[0].Value >= 1.0 ? (a < 1.0 ? a : this.modifiers[0].Value + Math.log10(a)) : a < 0.01 ? a : this.modifiers[0].Value + Math.log10(a * 100.0) / 100.0;
-        case ConvertType.Meter:
+        case NumberType.Meter:
           return a < 100.0 ? a : this.modifiers[0].Value + Math.log10(a / 100.0) * 100.0;
       }
     }

@@ -9,7 +9,7 @@
     "sourceMap": true
   },
   // "include": ["src/**/*.ts"],
-  "include": ["src/*.ts", "src/data/**/*.ts", "src/component/**/*.ts", "src/localization/**/*.ts", "src/event/index.ts"],
+  "include": ["src/**/*.ts", "src/debug/*.ts"],
   "exclude": ["dist", "node_modules", "**/*.spec.ts", "main.js"],
   "files": ["global.d.ts", "html.d.ts", "css.d.ts"]
 }

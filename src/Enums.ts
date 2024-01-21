@@ -23,6 +23,7 @@ import { EquipmentEffectKind } from "./type/EquipmentEffectKind";
 import { RebirthUpgradeKind } from "./type/RebirthUpgradeKind";
 import { EquipmentForgeEffectKind } from "./type/EquipmentForgeEffectKind";
 import { DictionaryUpgradeKind } from "./type/DictionaryUpgradeKind";
+import { Debuff } from "./type/Debuff";
 
 export const Enums = {
   HeroKind: Object.entries(HeroKind).length / 2,
@@ -50,6 +51,7 @@ export const Enums = {
   RebirthUpgradeKind: Object.entries(RebirthUpgradeKind).length / 2,
   EquipmentForgeEffectKind: Object.entries(EquipmentForgeEffectKind).length / 2,
   DictionaryUpgradeKind: Object.entries(DictionaryUpgradeKind).length / 2,
+  Debuff: Object.entries(Debuff).length / 2,
 };
 
 export const Enum = {

@@ -18,7 +18,12 @@ export class SDU_SDArmoredFury extends SuperDungeonUpgrade {
   SetEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
       globalThis.data.battles[index].superDungeonCtrl.armoredFury.RegisterMultiplier(
-        new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Add, () => this.EffectValue())
+        new MultiplierInfo(
+          MultiplierKind.SDUpgrade,
+          MultiplierType.Add,
+          () => this.EffectValue(),
+          () => this.IsActive()
+        )
       );
   }
 

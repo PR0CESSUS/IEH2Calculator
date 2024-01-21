@@ -218,44 +218,4 @@ export class DataPotion {
     //   potion.SetPassiveEffect();
     // });
   }
-
-  get html() {
-    let html = "";
-    html += globalThis.data;
-    html += `
-    <table>  
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Level</th>
-        <th scope="col">Disassembled</th>
-        <th scope="col">Effect</th>
-        <th scope="col">Effect Passive</th>
-      </tr>
-    </thead>`;
-
-    const noPercent = ["EnchantedAlembic", "SlimeBadge", "MagicslimeBadge", "SpiderBadge", "BatBadge", "FairyBadge", "FoxBadge", "MinorHealthPotion"];
-    for (let index = 0; index < Object.entries(PotionKind).length / 2; index++) {
-      const potion = PotionKind[index];
-      html += `<tr>`;
-      html += `<td>${potion}</td>`;
-      html += `<td><input type='text' data-endpoint='potion.${potion}.level' size="4"></td>`;
-      html += `<td><input type='text' data-endpoint='potion.${potion}.disassembled' size="12"></td>`;
-      if (noPercent.includes(potion)) {
-        html += `<td data-endpoint='potion.${potion}.effectValue' data-precision='2' data-type="number"></td>`;
-      } else {
-        html += `<td data-endpoint='potion.${potion}.effectValue' data-precision='2' data-type="percent"></td>`;
-      }
-      if (noPercent.includes(potion)) {
-        html += `<td data-endpoint='potion.${potion}.passiveEffectValue' data-precision='2' data-type="number"></td>`;
-      } else {
-        html += `<td data-endpoint='potion.${potion}.passiveEffectValue' data-precision='2' data-type="percent"></td>`;
-      }
-      html += `</tr>`;
-    }
-
-    html += "</table>";
-
-    return html;
-  }
 }

@@ -30,7 +30,14 @@ export class SDP_SkillHitCount extends SuperDungeonPowerup {
     // console.log(this.EffectValue(), this.kind, this.sdgCtrl.powerupEffectMultiplier[this.kind]);
 
     globalThis.data.skill.extraSkillHitCount[this.heroKind].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.DungeonItem, MultiplierType.Add, () => this.EffectValue() * this.level)
+      new MultiplierInfo(
+        MultiplierKind.DungeonItem,
+        MultiplierType.Add,
+        () => this.EffectValue() * this.level,
+        () => {
+          return this.isActive();
+        }
+      )
     );
   }
 

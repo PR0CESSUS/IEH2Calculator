@@ -20,8 +20,6 @@ import { ComponentHeroStat } from "../Hero-Stat";
 
 export class ComponentPotionInfo extends HTMLElement {
   potion: EquipmentPotion;
-  // tabIndex: number = 1000;
-  clipboard: string = "";
 
   constructor() {
     super();
@@ -35,11 +33,6 @@ export class ComponentPotionInfo extends HTMLElement {
 
     this.potion = globalThis.data.inventory.potionSlots[parseInt(this.dataset.id)];
 
-    const path = this.potion.kind == 0 ? "EquipSlotPotion" : PotionKind[this.potion.kind];
-
-    (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${path}.png`;
-
-    if (this.dataset.disabled) (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).classList.add("disabled");
     // this.shadowRoot.querySelector(".icon48").addEventListener("click", this.openEdit.bind(this));
     // this.shadowRoot.querySelector(".icon48").addEventListener("mouseover", this.initialRender.bind(this), { once: true });
     // this.shadowRoot.querySelector(".icon48").addEventListener("mouseover", this.mouseOverHandler.bind(this));
@@ -47,7 +40,7 @@ export class ComponentPotionInfo extends HTMLElement {
 
     // if (this.equipment?.kind == 0 || this.potion?.kind == 0) (this.shadowRoot.querySelector(".tooltip-text") as HTMLDivElement).style.display = "none";
 
-    this.Update();
+    this.render();
   }
 
   mouseOverHandler() {}
@@ -79,45 +72,54 @@ export class ComponentPotionInfo extends HTMLElement {
     this.render();
     (document.querySelector("hero-stat") as ComponentHeroStat).render();
   }
-
-  render(edit: boolean = false) {
-    let html = `
-    <div style="height: 100px; font-size: 14px;">
-    <img class="icon96 icon-border" style="margin-right: 10px;" src="./img/equip/${PotionKind[this.potion.kind]}.png">`;
-    if (edit) {
-      html += `<custom-select data-type="${CustomSelectType.PotionKind}" data-reload="false"
-        data-endpoint="data.inventory.potionSlots[${this.potion.slotId}].kind" data-id="${this.potion.slotId}">${this.potion.kind}</custom-select>`;
-    } else {
-      html += `<span name="kind">${Localization.PotionName(this.potion.kind)}</span>`;
+  renderIcon() {
+    const icon = this.shadowRoot.querySelector(".icon48") as HTMLImageElement;
+    if (this.potion.isDisabled()) {
+      icon.classList.add("disabled");
     }
-
-    html += `&lt; <span class="green" name="level">Lv ${this.potion.level}</span> &gt;<br><br>
-    <div data-type="potion">
-      <p>Type: ${Localization.PotionType(this.potion.type)}</p><br>
-      <p>Stack #: ${this.potion.stack}/30</p>
-    </div>
-  </div>
-  <h5>Equipped Effect</h5>
-  <p name="effect">- ${Localization.PotionEffect(this.potion.kind, this.potion.effectValue, false)}</p>
-  `;
-
-    // kind.innerHTML = Localization.PotionName(this.potion.kind);
-
-    return html;
+    icon.src = `./img/equip/${this.potion.kind == 0 ? "EquipSlotPotion" : PotionKind[this.potion.kind]}.png`;
   }
-
-  Update() {
+  render(edit: boolean = false) {
+    this.renderIcon();
     const tooltip = this.shadowRoot.querySelector('[slot="tooltip"]') as HTMLDivElement;
     const dialog = this.shadowRoot.querySelector('[slot="dialog"]') as HTMLSlotElement;
-    (this.shadowRoot.querySelector(".icon48") as HTMLImageElement).src = `./img/equip/${PotionKind[this.potion.kind]}.png`;
     if (this.potion.kind == 0) {
       tooltip.style.display = "none";
     } else {
       tooltip.style.display = "block";
     }
 
-    tooltip.innerHTML = this.render();
-    dialog.innerHTML = this.render(true);
+    tooltip.innerHTML = this.renderInfo();
+    dialog.innerHTML = this.renderInfo(true);
+  }
+  renderInfo(edit: boolean = false) {
+    let html = `
+  <div style="height: 100px; font-size: 14px;">
+  <img class="icon96 icon-border" style="margin-right: 10px;" src="./img/equip/${PotionKind[this.potion.kind]}.png">`;
+    if (edit) {
+      html += `<custom-select data-type="${CustomSelectType.PotionKind}" data-reload="false"
+      data-endpoint="data.inventory.potionSlots[${this.potion.slotId}].kind" data-id="${this.potion.slotId}" data-render="equipment-loadout#${this.id}">${this.potion.kind}</custom-select>`;
+    } else {
+      html += `<span name="kind">${Localization.PotionName(this.potion.kind)}</span>`;
+    }
+
+    html += `&lt; <span class="green" name="level">Lv ${this.potion.level}</span> &gt;<br><br>
+  <div data-type="potion">
+    <p>Type: ${Localization.PotionTypeString(this.potion.type)}</p><br>
+    <p>Stack #: ${this.potion.stack}/30</p>
+  </div>
+</div>
+<h5>Equipped Effect</h5>
+<p name="effect">- ${Localization.PotionEffect(this.potion.kind, this.potion.effectValue, false)}</p>
+`;
+
+    return html;
+  }
+
+  Update() {
+    this.render();
+
+    (document.querySelector("hero-stat") as ComponentHeroStat).Update();
   }
 
   connectedCallback() {

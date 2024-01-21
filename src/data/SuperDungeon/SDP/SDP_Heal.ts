@@ -26,7 +26,14 @@ export class SDP_Heal extends SuperDungeonPowerup {
 
   SetEffect() {
     return this.ctrl.healPercentEveryFloor.RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.DungeonItem, MultiplierType.Add, () => this.EffectValue() * this.level)
+      new MultiplierInfo(
+        MultiplierKind.DungeonItem,
+        MultiplierType.Add,
+        () => this.EffectValue() * this.level,
+        () => {
+          this.isActive();
+        }
+      )
     );
   }
 

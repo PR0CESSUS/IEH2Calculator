@@ -9,7 +9,7 @@ p {
   font-size: 12px;
 }
 
-span {
+div {
   font-size: 12px;
 }
 
@@ -25,5 +25,23 @@ span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 230px;
+  max-width: 200px;
+}
+
+.value {
+  float: right;
+  overflow: visible;
+  /* unicode-bidi: bidi-override; */
+  direction: rtl;
+  /* overflow-x: visible; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100px;
+}
+[name="value"] {
+  float: right;
+  unicode-bidi: bidi-override;
+  direction: ltr;
+  /* background-color: aqua; */
+  /* overflow-x: visible; */
 }

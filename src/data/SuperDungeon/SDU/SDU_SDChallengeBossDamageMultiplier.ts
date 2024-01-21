@@ -17,7 +17,12 @@ export class SDU_SDChallengeBossDamageMultiplier extends SuperDungeonUpgrade {
   SetEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
       globalThis.data.battles[index].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
-        new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue())
+        new MultiplierInfo(
+          MultiplierKind.SDUpgrade,
+          MultiplierType.Mul,
+          () => this.EffectValue(),
+          () => this.IsActive()
+        )
       );
   }
 

@@ -75,7 +75,7 @@ export class PageDropChance {
       // if (element.kind.length <= 20) str += `\t`;
       // if (element.kind.length <= 24) str += `\t`;
       // str += `${element.chance}<br>`;
-      str += `<td>${Util.convertTo(element.chance, 5, "%")}</td></tr>`;
+      str += `<td>${Util.percent(element.chance, 5)}</td></tr>`;
       // if (index == 79) longest = element.kind.length;
     });
     str += `</>`;

@@ -1,6 +1,5 @@
-import { App } from "../../App";
-import { Page } from "../Page";
 import { ExpeditionKind } from "../../type/ExpeditionKind";
+import { Util } from "../../Util";
 import { convertTo } from "../../Util/convertTo";
 import { secondsToDhms } from "../../Util/secondsToDhms";
 
@@ -94,13 +93,9 @@ export class CalculatorExpedition {
 
   get html() {
     let html = `
-    <p>Hackmanite: <user-input data-endpoint="data.source.sdGemLevels[7]"></user-input> effect: -${secondsToDhms(
-      900 - this.app.data.expedition.lowerLimitTime.value
-    )}</p>
-    <p>Turquoise lv <user-input data-endpoint="data.source.sdGemLevels[8]"></user-input> effect: ${
-      this.app.data.expedition.rewardModifierPerHour.value
-    }</p>
-    <p>Expedition Speed Multiplier: ${convertTo(this.app.data.expedition.speedMultiplier.Value(), 2, "%")}</p>
+    <p>Hackmanite: <user-input data-endpoint="data.source.sdGemLevels[7]"></user-input> effect: -${secondsToDhms(900 - this.app.data.expedition.lowerLimitTime.value)}</p>
+    <p>Turquoise lv <user-input data-endpoint="data.source.sdGemLevels[8]"></user-input> effect: ${this.app.data.expedition.rewardModifierPerHour.value}</p>
+    <p>Expedition Speed Multiplier: ${Util.percent(this.app.data.expedition.speedMultiplier.Value(), 2)}</p>
     
     
   

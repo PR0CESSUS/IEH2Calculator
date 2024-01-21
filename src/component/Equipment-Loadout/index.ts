@@ -109,14 +109,6 @@ export class ComponentEquipmentLoadout extends HTMLElement {
       html += `<table class="equipment"><tbody>`;
       for (let index = 0; index < 24; index++) {
         const offset = INITIAL_OFFSET + index + i * 24;
-        globalThis.data.inventory.equipmentSlots[offset].slotPart = i;
-        const isDisabled = globalThis.data.inventory.equipmentSlots[offset].isDisabled() ? 'data-disabled="true"' : "";
-        // if (!this.isDisabled(i, index)) {
-
-        // } else {
-        //   globalThis.data.inventory.equipmentSlots[offset].IsEffectRegisteredClear();
-        // }
-        // if (index == 1) isDisabled = 'class="TEST';
 
         if (index % 8 == 0) html += `<tr style="height: 8px;"></tr>`;
         if (index % 4 == 0) html += `<tr>`;
@@ -130,10 +122,9 @@ export class ComponentEquipmentLoadout extends HTMLElement {
     html += `<table class="equipment"><tbody>`;
     for (let index = 0; index < 6; index++) {
       const offset = 260 + 6 * globalThis.data.source.currentHero + index;
-      let isDisabled = globalThis.data.inventory.potionSlots[offset].isDisabled() ? 'data-disabled="true"' : "";
 
       if (index % 2 == 0 && index != 0) html += `<tr style="height: 8px;"></tr>`;
-      html += `<tr><td><potion-info data-id="${offset}" ${isDisabled}></potion-info>`;
+      html += `<tr><td><potion-info data-id="${offset}" id="Potion${offset}"></potion-info>`;
     }
     html += `</td></tr>`;
     html += "</tbody></table>";
@@ -190,5 +181,11 @@ export class ComponentEquipmentLoadout extends HTMLElement {
     // console.log("connectedCallback()");
     // this.render();
     // (document.querySelector("hero-stat") as ComponentHeroStat).render();
+  }
+
+  Update() {
+    // console.log(this.shadowRoot.querySelector("hero-stat"));
+
+    (document.querySelector("hero-stat") as ComponentHeroStat).Update();
   }
 }

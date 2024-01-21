@@ -17,6 +17,8 @@ export class HERO_BATTLE extends BATTLE {
     super(battleCtrl);
     this.battleCtrl = battleCtrl;
     this.heroKind = heroKind;
+
+    this.level = globalThis.data.source.heroLevel[heroKind];
   }
 
   StatsModifier(value) {
@@ -25,20 +27,24 @@ export class HERO_BATTLE extends BATTLE {
 
   Start() {}
 
-  hp() {
+  get hp() {
     return globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.HP).Value();
   }
 
-  mp() {
+  get mp() {
     return Math.max(0.0, globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.MP).Value() - globalThis.data.stats.heroes[this.heroKind].channeledMp.Value());
   }
 
-  atk() {
-    return globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.ATK).Value();
+  get atk() {
+    return globalThis.data.custom.isSuperDungeon
+      ? globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.DEF).Value()
+      : globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.ATK).Value();
   }
 
   get matk() {
-    return globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.MATK).Value();
+    return globalThis.data.custom.isSuperDungeon
+      ? globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.MDEF).Value()
+      : globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.MATK).Value();
   }
 
   get def() {
@@ -49,7 +55,7 @@ export class HERO_BATTLE extends BATTLE {
     return globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.MDEF).Value();
   }
 
-  spd() {
+  get spd() {
     return globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.SPD).Value();
   }
 
@@ -73,19 +79,20 @@ export class HERO_BATTLE extends BATTLE {
     return globalThis.data.stats.ElementResistance(this.heroKind, Element.Dark).Value() + this.fieldDebuffElement[5] * this.battleCtrl.areaBattle.areaDebuffFactor;
   }
 
-  phyCrit() {
+  get phyCrit() {
     return globalThis.data.stats.HeroStats(this.heroKind, Stats.PhysCritChance).Value() + this.fieldDebuffPhyCrit * this.battleCtrl.areaBattle.areaDebuffFactor;
   }
 
-  magCrit() {
+  get magCrit() {
     return globalThis.data.stats.HeroStats(this.heroKind, Stats.MagCritChance).Value() + this.fieldDebuffMagCrit * this.battleCtrl.areaBattle.areaDebuffFactor;
   }
 
   get critDamage() {
+    globalThis.data.stats.HeroStats(this.heroKind, Stats.CriticalDamage).isLog = globalThis.data.custom.isSuperDungeon;
     return globalThis.data.stats.HeroStats(this.heroKind, Stats.CriticalDamage).Value();
   }
 
-  moveSpeed() {
+  get moveSpeed() {
     return globalThis.data.stats.HeroStats(this.heroKind, Stats.MoveSpeed).Value() * this.fieldCurseMoveSpeedMul;
   }
 
@@ -93,59 +100,59 @@ export class HERO_BATTLE extends BATTLE {
     return globalThis.data.stats.Hero(this.heroKind).extraAfterDamage.Value();
   }
 
-  debuffResistance() {
+  get debuffResistance() {
     return globalThis.data.stats.HeroStats(this.heroKind, Stats.DebuffRes).Value() + this.fieldDebuffDebuffRes * this.battleCtrl.areaBattle.areaDebuffFactor;
   }
 
-  physicalAbsorption() {
+  get physicalAbsorption() {
     return globalThis.data.stats.ElementAbsorption(this.heroKind, Element.Physical).Value();
   }
 
-  fireAbsorption() {
+  get fireAbsorption() {
     return globalThis.data.stats.ElementAbsorption(this.heroKind, Element.Fire).Value();
   }
 
-  iceAbsorption() {
+  get iceAbsorption() {
     return globalThis.data.stats.ElementAbsorption(this.heroKind, Element.Ice).Value();
   }
 
-  thunderAbsorption() {
+  get thunderAbsorption() {
     return globalThis.data.stats.ElementAbsorption(this.heroKind, Element.Thunder).Value();
   }
 
-  lightAbsorption() {
+  get lightAbsorption() {
     return globalThis.data.stats.ElementAbsorption(this.heroKind, Element.Light).Value();
   }
 
-  darkAbsorption() {
+  get darkAbsorption() {
     return globalThis.data.stats.ElementAbsorption(this.heroKind, Element.Dark).Value();
   }
 
-  physicalInvalidChance() {
+  get physicalInvalidChance() {
     return globalThis.data.stats.ElementInvalid(this.heroKind, Element.Physical).Value();
   }
 
-  fireInvalidChance() {
+  get fireInvalidChance() {
     return globalThis.data.stats.ElementInvalid(this.heroKind, Element.Fire).Value();
   }
 
-  iceInvalidChance() {
+  get iceInvalidChance() {
     return globalThis.data.stats.ElementInvalid(this.heroKind, Element.Ice).Value();
   }
 
-  thunderInvalidChance() {
+  get thunderInvalidChance() {
     return globalThis.data.stats.ElementInvalid(this.heroKind, Element.Thunder).Value();
   }
 
-  lightInvalidChance() {
+  get lightInvalidChance() {
     return globalThis.data.stats.ElementInvalid(this.heroKind, Element.Light).Value();
   }
 
-  darkInvalidChance() {
+  get darkInvalidChance() {
     return globalThis.data.stats.ElementInvalid(this.heroKind, Element.Dark).Value();
   }
 
-  guardianKorInvalidChanceDamageHpPercent() {
+  get guardianKorInvalidChanceDamageHpPercent() {
     return Math.min(0.25, globalThis.data.stats.heroes[this.heroKind].guardianKorInvalidDamageHpPercent.Value());
   }
 }

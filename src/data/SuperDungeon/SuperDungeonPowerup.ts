@@ -7,12 +7,16 @@ export class SuperDungeonPowerup {
   ctrl: SuperDungeonController;
   heroKind: HeroKind;
   // rank: SuperDungeonPowerupRank;
-  level: number;
+
   // purchasedNum: SuperDungeonPowerupPurchasedNum;
   // transaction: Transaction;
   // rankTransaction: Transaction;
   // unlockTransaction: SpecifiedTransaction;
   // isShow;
+
+  get level() {
+    return globalThis.data.custom.powerup[this.kind];
+  }
 
   constructor(ctrl: SuperDungeonController) {
     this.ctrl = ctrl;
@@ -35,7 +39,9 @@ export class SuperDungeonPowerup {
   get purchasedNum() {
     return globalThis.data.source.superDungeonPowerupPurchasedNums[this.kind];
   }
-
+  set purchasedNum(value) {
+    globalThis.data.source.superDungeonPowerupPurchasedNums[this.kind] = value;
+  }
   // get dungeonCoin() {return this.ctrl.dungeonCoin;}
 
   // get dungeonCoinPermanent() {return this.sdgCtrl.dungeonCoinPermanent;}
@@ -45,24 +51,21 @@ export class SuperDungeonPowerup {
   get rank() {
     return globalThis.data.source.superDungeonPowerupRanks[this.kind];
   }
+  set rank(value) {
+    globalThis.data.source.superDungeonPowerupRanks[this.kind] = Math.min(100, value);
+  }
 
   Start() {
     // this.rank.maxValue = (() => this.sdgCtrl.powerupMaxRank.Value());
     // this.SetTransaction();
-    // this.SetEffect();
+    this.SetEffect();
   }
 
   // Initialize() {return this.level.ChangeValue(0);}
 
-  // isActive {
-  //   get {
-  //     if (!this.isUnlocked)
-  //       return false;
-  //     if (!this.isOnPowerupFilter)
-  //       return true;
-  //     return this.isOnPowerupFilter && this.level < this.purchaseLimitAutoBuy;
-  //   }
-  // }
+  isActive() {
+    return globalThis.data.custom.isPowerupActive;
+  }
 
   // Cost(level) {return (10 + 10 * level);}
 

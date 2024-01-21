@@ -3,6 +3,8 @@ import { Database } from "./Database";
 import { Events } from "./event";
 import { Router } from "./router";
 import component from "./component";
+import { DEBUG } from "./debug";
+import { HeroKind } from "./type/HeroKind";
 
 export class App {
   data: DATA;
@@ -15,7 +17,7 @@ export class App {
 
     this.database = new Database("app");
     this.event = new Events(this);
-    this.data = new DATA(this);
+    this.data = new DATA();
     this.page = new Router();
 
     component();
@@ -26,6 +28,10 @@ export class App {
     //   },
     //   true
     // );
+    const id = 2020;
+    const debug = new DEBUG.DebugEquipment();
+    // debug.item(id);
+    // debug.hero(HeroKind.Archer);
   }
 
   Save() {

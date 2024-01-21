@@ -14,12 +14,13 @@ import { Multiplier } from "../../Multiplier";
 import { Localization } from "../../localization";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { Enums } from "../../Enums";
-import { ConvertType } from "../../type/ConvertType";
+import { NumberType } from "../../type/NumberType";
 
 export class ComponentMultiplierInfo extends HTMLElement {
-  #data: Multiplier;
-  #snapshot;
-  #isLog: boolean;
+  data: Multiplier;
+  snapshot;
+  isLog: boolean = false;
+  type: NumberType = NumberType.Percent;
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -27,48 +28,40 @@ export class ComponentMultiplierInfo extends HTMLElement {
     this.shadowRoot.innerHTML += template;
 
     this.shadowRoot.querySelector('[name="name"]').innerHTML = this.innerHTML;
-
-    // this.shadowRoot.querySelector('custom-tooltip [slot="content"]').innerHTML = this.innerHTML;
     this.shadowRoot.querySelector('[name="name-tooltip"]').innerHTML = this.innerHTML;
+
+    if (this.dataset.endpoint) {
+      this.snapshot = globalThis.app.database.Get("hero-stat").snapshot[this.dataset.endpoint];
+      this.data = get(globalThis.data, this.dataset.endpoint, null);
+
+      if (this.data.isLog) this.style.color = "yellow";
+
+      if (this.dataset.type) this.type = parseInt(this.dataset.type);
+
+      this.data.numberType = this.type;
+
+      // console.log("endpoint ", this.dataset.endpoint, this.data);
+      this.render();
+    }
+    // this.data
     // console.log(this.dataSD);
 
     // this.render();
   }
 
-  set snapshot(value) {
-    this.#snapshot = value;
-  }
-
-  get snapshot() {
-    return this.#snapshot;
-  }
-
-  set data(value: Multiplier) {
-    this.#data = value;
-
-    this.#data.isLog = this.dataset.islog == "false" ? false : this.dataset.superdungeon == "true" ? true : false;
-    if (this.dataset.type == "normal") this.#data.numberType = ConvertType.Normal;
-    // value.Calculate();
-    this.render();
-  }
-
-  get data() {
-    return this.#data;
-  }
-
-  compare(current, snapshot = 0, type = "%") {
+  compare(current, snapshot = 0, type: NumberType = NumberType.Percent) {
     if (current == 0 || snapshot == 0) return Util.convertTo(current, 2, type);
     if (this.snapshot) {
       if (snapshot > current) {
         if (current == 0) current = 1;
         if (snapshot / current - 1 < 0.0001) return Util.convertTo(current, 2, type);
-        const diff = Util.convertTo(snapshot / current - 1, 2, type);
+        const diff = Util.percent(snapshot / current - 1, 2);
         return `<span class="red">(-${diff}) ${Util.convertTo(current, 2, type)}</span>`;
       }
 
       if (snapshot < current) {
         if (snapshot == 0) snapshot = 1;
-        const diff = Util.convertTo(current / snapshot - 1, 2, "%");
+        const diff = Util.percent(current / snapshot - 1, 2);
         if (current / snapshot - 1 < 0.0001) return Util.convertTo(current, 2, type);
         return `<span class="green">(+${diff}) ${Util.convertTo(current, 2, type)}</span>`;
       }
@@ -80,23 +73,20 @@ export class ComponentMultiplierInfo extends HTMLElement {
   }
 
   renderTooltip() {
-    this.shadowRoot.querySelector('[name="additive-total"]').innerHTML = this.compare(this.data.additive, this.snapshot?.additive, this.dataset.type ? this.dataset.type : "%");
-    this.shadowRoot.querySelector('[name="multiplicative-total"]').innerHTML = this.compare(this.data.multiplicative, this.snapshot?.multiplicative);
-    this.shadowRoot.querySelector('[name="temporary-total"]').innerHTML = this.compare(this.data.temp, this.snapshot?.temp, this.dataset.type ? this.dataset.type : "%");
-    this.shadowRoot.querySelector('[name="temporary-total-log"]').innerHTML = this.compare(this.data.log, this.snapshot?.log, this.dataset.type ? this.dataset.type : "%");
+    this.shadowRoot.querySelector('[name="additive-total"]').innerHTML = this.compare(this.data.additive, this.snapshot?.additive, this.type);
+    this.shadowRoot.querySelector('[name="multiplicative-total"]').innerHTML = this.compare(this.data.multiplicative, this.snapshot?.multiplicative, NumberType.Percent);
+    this.shadowRoot.querySelector('[name="temporary-total"]').innerHTML = this.compare(this.data.temp, this.snapshot?.temp, this.type);
+    this.shadowRoot.querySelector('[name="temporary-total-log"]').innerHTML = this.compare(this.data.log, this.snapshot?.log, this.type);
     ///
-    this.shadowRoot.querySelector('[name="value-total"]').innerHTML =
-      this.dataset.superdungeon == "true"
-        ? this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%")
-        : this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%");
+    this.shadowRoot.querySelector('[name="value-total"]').innerHTML = this.compare(this.data.Value(), this.snapshot?.Value, this.type);
 
     ///
-    this.shadowRoot.querySelector('[name="after-total"]').innerHTML = this.compare(this.data.after, this.snapshot?.after, this.dataset.type ? this.dataset.type : "%");
+    this.shadowRoot.querySelector('[name="after-total"]').innerHTML = this.compare(this.data.after, this.snapshot?.after, this.type);
 
     const afterValue = this.data.after > 0 || this.snapshot?.after > 0;
     if (!afterValue) (this.shadowRoot.querySelector('[name="after"]') as HTMLDivElement).style.display = "none";
 
-    if (this.dataset.superdungeon == "true") {
+    if (this.data.isLog) {
       (this.shadowRoot.querySelector('[name="superdungeon"]') as HTMLDivElement).style.display = "block";
     }
 
@@ -113,11 +103,11 @@ export class ComponentMultiplierInfo extends HTMLElement {
       const valueMultiplicative = this.data.multiplicativeKind[MultiplierKind[index]] ? this.data.multiplicativeKind[MultiplierKind[index]] : 0;
       const valueAfter = this.data.afterKind[MultiplierKind[index]] ? this.data.afterKind[MultiplierKind[index]] : 0;
       if (valueAdditive || MultiplierKind.Base == index) {
-        const value = this.compare(valueAdditive, this.snapshot?.additiveKind[MultiplierKind[index]], this.dataset.type ? this.dataset.type : "%");
-        additiveList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
+        const value = this.compare(valueAdditive, this.snapshot?.additiveKind[MultiplierKind[index]], this.type);
+        additiveList.innerHTML += `<p ${valueAdditive < 0 ? 'class="yellow"' : ""}>-${name}<span style="float:right;">${value}</span></p>`;
       } else if (this.snapshot?.additiveKind[MultiplierKind[index]]) {
-        const value = this.compare(valueAdditive, this.snapshot?.additiveKind[MultiplierKind[index]], this.dataset.type ? this.dataset.type : "%");
-        additiveList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
+        const value = this.compare(valueAdditive, this.snapshot?.additiveKind[MultiplierKind[index]], this.type);
+        additiveList.innerHTML += `<p ${valueAdditive < 0 ? 'class="yellow"' : ""}>-${name}<span style="float:right;">${value}</span></p>`;
       }
       // multipliers
       if (valueMultiplicative) {
@@ -129,10 +119,10 @@ export class ComponentMultiplierInfo extends HTMLElement {
       }
 
       if (valueAfter) {
-        const value = this.compare(valueAfter, this.snapshot?.afterKind[MultiplierKind[index]], this.dataset.type ? this.dataset.type : "%");
+        const value = this.compare(valueAfter, this.snapshot?.afterKind[MultiplierKind[index]], this.type);
         afterList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
       } else if (this.snapshot?.afterKind[MultiplierKind[index]]) {
-        const value = this.compare(valueAfter, this.snapshot?.afterKind[MultiplierKind[index]], this.dataset.type ? this.dataset.type : "%");
+        const value = this.compare(valueAfter, this.snapshot?.afterKind[MultiplierKind[index]], this.type);
         afterList.innerHTML += `<p>-${name}<span style="float:right;">${value}</span></p>`;
       }
     }
@@ -149,10 +139,7 @@ export class ComponentMultiplierInfo extends HTMLElement {
       const valueHTML = this.shadowRoot.querySelector('[name="value"]');
       const nameHTML = this.shadowRoot.querySelector('[name="name"]');
       // console.log(this.shadowRoot.querySelector('[name="value"]').innerHTML);
-      valueHTML.innerHTML =
-        this.dataset.superdungeon == "true"
-          ? this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%")
-          : this.compare(this.data.Value(), this.snapshot?.Value, this.dataset.type ? this.dataset.type : "%");
+      valueHTML.innerHTML = this.compare(this.data.Value(), this.snapshot?.Value, this.type);
       this.renderTooltip();
       if (nameHTML.innerHTML == "HP Regeneration") valueHTML.innerHTML += " / sec";
       if (nameHTML.innerHTML == "MP Regeneration") valueHTML.innerHTML += " / sec";

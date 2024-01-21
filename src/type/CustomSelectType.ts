@@ -9,4 +9,7 @@ export enum CustomSelectType {
   EquipmentEffectKind,
   EquipmentForgeEffectKind,
   Number,
+  MonsterSpecies,
+  MonsterColor,
+  ChallengeMonsterKind,
 }

@@ -1,73 +1,18 @@
-<template id="sd-simulator">
-    <style>
-        @import "./styles-bundle.css";
-    </style>
-    <div style="display: flex; margin-top: 10px;"> Dungeon:
-        <select name="dungeon">
-            <option value="0">The Slime Hideout</option>
-            <option value="1">The Spider Underground Apartment</option>
-            <option value="2">The Darkest Forest</option>
-            <option value="3">The Burning Garden</option>
-            <option value="4">The Kor Lecture Hall</option>
-        </select>
-        Multiplier:
-        <select style="width: 70px;" name="multiplier">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-        </select>
+<div style="display: flex;">
+
+    <div>
+        <h3>Enemy</h3>
+        <p>HP: <span name="HP"></span></p>
+        <p>DEF: <span name="DEF"></span></p>
+        <p>MDEF: <span name="MDEF"></span></p>
+        <p>Fire Resistance: <span name="Fire"></span></p>
+        <p>Ice Resistance: <span name="Ice"></span></p>
+        <p>Thunder Resistance: <span name="Thunder"></span></p>
+        <p>Light Resistance: <span name="Light"></span></p>
+        <p>Dark Resistance: <span name="Dark"></span></p>
     </div>
+    <div style="margin-left: 20px;" name="player">
+        <h3>Player</h3>
 
-
-
-    <div style="display: flex;">
-        <div style="margin-right: 20px;" name="player">
-            <h4>Me</h4>
-            <p>Single Hit Damage: <span name="singleHitDamage"></span></p>
-        </div>
-        <div>
-            <h4>Enemy</h4>
-            <p>Level: <span name="level"></span></p>
-            <p>HP: <span name="HP"></span></p>
-            <p>DEF: <span name="DEF"></span></p>
-            <p>MDEF: <span name="MDEF"></span></p>
-            <p>Fire Resistance: <span name="Fire"></span></p>
-            <p>Ice Resistance: <span name="Ice"></span></p>
-            <p>Thunder Resistance: <span name="Thunder"></span></p>
-            <p>Light Resistance: <span name="Light"></span></p>
-            <p>Dark Resistance: <span name="Dark"></span></p>
-        </div>
     </div>
-
-    <hr>
-    <h3>Powerup</h3>
-    <p>SD Damage Multiplier <input value="0" name="powerup0"></p>
-    <p>Critical Damage <input value="0" name="powerup1"></p>
-    <p>Physical Damage <input value="0" name="powerup2"></p>
-    <p>Magical Damage <input value="0" name="powerup3"></p>
-    <p>Skill Hit Count <input value="0" name="powerup4"></p>
-    <p>SD Challange Boss Damage Multiplier <input value="0" name="powerup5"></p>
-    <p>Extra After Damage <input value="0" name="powerup6"></p>
-
-
-
-</template>
+</div>

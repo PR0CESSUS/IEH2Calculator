@@ -24,12 +24,6 @@ export class SwordAttack extends SKILL {
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 500, SkillPassiveEffectKind.HeroStats, Stats.SkillProficiencyGain, MultiplierType.Add, 1.0));
   }
 
-  Damage() {
-    let num = this.Damage();
-    if (this.classSkill.stances[1].isActive) num *= 1.0 + this.classSkill.stances[1].effectValueBuff;
-    return num;
-  }
-
   DebuffChance() {
     return globalThis.data.skill.baseAttackPoisonChance[this.heroKind].Value() > 0.0
       ? globalThis.data.skill.baseAttackPoisonChance[this.heroKind].Value()

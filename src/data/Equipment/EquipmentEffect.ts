@@ -1,4 +1,5 @@
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
+import { NumberType } from "../../type/NumberType";
 
 export class EquipmentEffect {
   isMaxEffect;
@@ -33,12 +34,12 @@ export class EquipmentEffect {
       case EquipmentEffectKind.MDEFAfter:
       case EquipmentEffectKind.MPAdder:
       case EquipmentEffectKind.MPAfter:
-        return "normal";
+        return NumberType.Normal;
       case EquipmentEffectKind.MoveSpeedAdder:
       case EquipmentEffectKind.MoveSpeedAfter:
-        return "meter";
+        return NumberType.Meter;
       default:
-        return "percent";
+        return NumberType.Percent;
     }
   }
 }

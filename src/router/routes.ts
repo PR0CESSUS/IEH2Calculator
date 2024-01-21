@@ -1,3 +1,4 @@
+import { PageBattle } from "./../page/Battle/index";
 import { PageHelp } from "../page/Help";
 import { PageGuild } from "../page/Guild";
 import { PageHome } from "../page/Home";
@@ -6,6 +7,7 @@ import { PageDropChance } from "../page/Drop-Chance";
 import { PageRubyShard } from "../page/Ruby-Shard";
 import { PageEquipment } from "../page/Equipment";
 import { PageTest } from "../page/Test";
+import { PageTalisman } from "../page/Talisman";
 
 export function getRoutes() {
   return {
@@ -24,6 +26,11 @@ export function getRoutes() {
       title: "Data",
       description: "Data",
     },
+    battle: {
+      template: new PageBattle(),
+      title: "Battle Simulator",
+      description: "Battle",
+    },
     equipment: {
       template: new PageEquipment(),
       title: "Equipment Calculator",
@@ -33,6 +40,11 @@ export function getRoutes() {
       template: new PageGuild(),
       title: "Guild Calculator",
       description: "Guild",
+    },
+    talisman: {
+      template: new PageTalisman(),
+      title: "Talisman Fragments",
+      description: "Talisman",
     },
     "drop-chance": {
       template: new PageDropChance(),
@@ -49,6 +61,7 @@ export function getRoutes() {
       title: "Help",
       description: "Help",
     },
+
     // test: {
     //   template: new PageTest(),
     //   title: "TEST",

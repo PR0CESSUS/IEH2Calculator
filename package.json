@@ -1,6 +1,6 @@
 {
   "name": "ieh2calculator",
-  "version": "0.0.55",
+  "version": "0.0.56",
   "description": "Calculator for Incremental Epic Hero 2",
   "main": "./src/main.ts",
   "scripts": {
@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/PR0CESSUS/IEH2Calculator#readme",
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",

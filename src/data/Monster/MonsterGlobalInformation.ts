@@ -79,7 +79,9 @@ export class MonsterGlobalInformation {
     // }
     return num2;
   }
-
+  Mp(level, difficulty) {
+    return 10.0;
+  }
   MAtk(level, difficulty) {
     if (this.color == MonsterColor.Metal) return MonsterParameter.monsterStats[this.species][this.colorId][3] * level;
     let num1 = MonsterParameter.monsterStats[this.species][this.colorId][3];
@@ -91,7 +93,24 @@ export class MonsterGlobalInformation {
 
     return num2 * Math.pow(2.0, difficulty / 10.0);
   }
-
+  Atk(level, difficulty) {
+    if (this.color == MonsterColor.Metal) return MonsterParameter.monsterStats[this.species][this.colorId][2] * level;
+    let num1 = MonsterParameter.monsterStats[this.species][this.colorId][2];
+    let num2;
+    // if (isPet) {
+    //   a = num1 * (1.0 + this.pet.Level() * 0.75) * (1.0 + 0.05 * this.pet.loyalty.value) * Math.pow(2.0, Math.floor(this.pet.Level() / 50.0)) * globalThis.data.monster.petStatsMultiplier.Value() * globalThis.data.stats.BasicStats(heroKind, BasicStatsKind.ATK).Mul() * globalThis.data.stats.heroes[heroKind].summonPetATKMATKMultiplier.Value();
+    //   if (this.isLogStats[heroKind] && a >= 1.0)
+    //     a = MonsterParameter.monsterStats[this.species][this.colorId][2] + Math.log(a, Multiplier.logBase);
+    //   num2 = a + globalThis.data.stats.BasicStats(heroKind, BasicStatsKind.ATK).After();
+    // }
+    // else {
+    num2 = num1 * (1.0 + level * 0.75 + 20.0 * Math.pow(level / 100.0, 3.0) + 100.0 * Math.pow(level / 250.0, 5.0));
+    if (level >= 400) num2 *= Math.pow(3.0, (level - 400) / 100.0);
+    if (level >= 500) num2 *= Math.pow(5.0, (level - 500) / 100.0);
+    if (level >= 1000) num2 *= Math.pow(10.0, (level - 1000) / 100.0);
+    // }
+    return num2 * Math.pow(2.0, difficulty / 10.0);
+  }
   Def(level, difficulty) {
     if (this.color == MonsterColor.Metal) return MonsterParameter.monsterStats[this.species][this.colorId][4];
     let num1 = MonsterParameter.monsterStats[this.species][this.colorId][4];
@@ -140,6 +159,64 @@ export class MonsterGlobalInformation {
   }
   Dark() {
     return MonsterParameter.monsterStats[this.species][this.colorId][11];
+  }
+  PhyCrit(level) {
+    return 0.01 * Math.log2(1 + level);
+  }
+
+  MagCrit(level) {
+    return 0.01 * Math.log2(1 + level);
+  }
+
+  CriticalDamage() {
+    return 2.0;
+  }
+
+  DebuffResistance() {
+    if (this.species == MonsterSpecies.ChallengeBoss) {
+      switch (this.challengeMonsterKind) {
+        case ChallengeMonsterKind.Florzporb:
+          return 0.0;
+        case ChallengeMonsterKind.Arachnetta:
+          return 0.05;
+        case ChallengeMonsterKind.GuardianKor:
+          return 0.1;
+        case ChallengeMonsterKind.Nostro:
+          return 0.2;
+        case ChallengeMonsterKind.LadyEmelda:
+          return 0.5;
+        case ChallengeMonsterKind.NariSune:
+          return 0.9;
+        case ChallengeMonsterKind.Octobaddie:
+          return 0.9999;
+        case ChallengeMonsterKind.Bananoon:
+          return 0.99999;
+        case ChallengeMonsterKind.Glorbliorbus:
+          return 1.0;
+        case ChallengeMonsterKind.DistortionSlime:
+          return 1.0;
+      }
+    }
+    return 0.0;
+  }
+
+  Exp(level, difficulty) {
+    let num =
+      (25.0 + 3.0 * (2 * level + 2.0 * Math.pow(level / 10.0, 2.0) + 5.0 * Math.pow(level / 50.0, 3.0) + 10.0 * Math.pow(level / 100.0, 4.0))) *
+      Math.pow(2.0, difficulty / 10.0) *
+      MonsterParameter.ColorFactor(this.color) *
+      MonsterParameter.SpeciesFactor(this.species);
+    if (level >= 400) num *= Math.pow(2.0, (level - 400) / 100.0);
+    if (level >= 500) num *= Math.pow(2.0, (level - 500) / 100.0);
+    if (level >= 600) num *= Math.pow(2.0, (level - 600) / 100.0);
+    if (level >= 700) num *= Math.pow(2.0, (level - 700) / 100.0);
+    if (level >= 800) num *= Math.pow(2.0, (level - 800) / 100.0);
+    if (level >= 900) num *= Math.pow(2.0, (level - 900) / 100.0);
+    return num;
+  }
+
+  Damage(level, difficulty) {
+    return this.AttackElement() == Element.Physical ? this.Atk(level, difficulty) : this.MAtk(level, difficulty);
   }
 
   get colorId() {

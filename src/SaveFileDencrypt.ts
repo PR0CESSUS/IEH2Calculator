@@ -165,7 +165,6 @@ export class SaveFileDencrypt {
       "autoAbilityPointMax",
       "monsterMutantDefeatedNums",
       "monsterMutantCapturedNums",
-      "SkillFor",
       "areaBestTimes",
       "areaCompleteNums",
       "equipmentIsLocked",

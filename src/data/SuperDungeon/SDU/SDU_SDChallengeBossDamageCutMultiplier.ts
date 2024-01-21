@@ -18,7 +18,12 @@ export class SDU_SDChallengeBossDamageCutMultiplier extends SuperDungeonUpgrade 
   SetEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
       globalThis.data.battles[index].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
-        new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue())
+        new MultiplierInfo(
+          MultiplierKind.SDUpgrade,
+          MultiplierType.Mul,
+          () => this.EffectValue(),
+          () => this.IsActive()
+        )
       );
   }
 

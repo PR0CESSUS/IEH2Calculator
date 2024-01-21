@@ -1,3 +1,4 @@
+import { Stats } from "./type/Stats";
 import { SourceKind } from "./type/SourceKind";
 import { DataDefault } from "./data/DataDefault";
 import { App } from "./App";
@@ -29,6 +30,10 @@ import { SuperStatsController } from "./data/SuperStats";
 import { QuestController } from "./data/Quest";
 import { DataEpicStore } from "./data/EpicStore";
 import { Database } from "./Database";
+import { SuperDungeonUpgradeKind } from "./type/SuperDungeonUpgradeKind";
+import { UpgradeController } from "./data/Upgrade";
+import { MultiplierInfo } from "./Multiplier";
+import { MultiplierType } from "./type/MultiplierType";
 
 export class DATA {
   database: Database;
@@ -58,19 +63,19 @@ export class DATA {
   mission: DataMission;
   sdg: SuperDungeonGlobalController;
   nitro: DataNitro;
-  app: App;
+  upgrade: UpgradeController;
   custom = {
     isSuperDungeon: false,
+    isPowerupActive: false,
+    powerup: Array(Enums.SuperDungeonPowerupKind).fill(0),
   };
-  constructor(app: App) {
+  constructor() {
     globalThis.data = this;
-    this.app = app;
     this.database = new Database("SaveFileData");
-    // this.source = { ...new DataDefault() };
     this.source = this.database.Connect(new DataDefault());
-
-    // this.load();
     this.custom = globalThis.app.database.Connect("customData", this.custom);
+    globalThis.app.database.Watch("isSuperDungeon", this.SuperDungeonToggle.bind(this));
+    this.database.Watch("currentHero", this.SetLog10.bind(this));
     this.potion = new DataPotion();
     this.challenge = new DataChallenge();
     this.town = new DataTown();
@@ -87,32 +92,20 @@ export class DATA {
     this.quest = new QuestController();
     this.skill = new DataSkill();
     this.epicStore = new DataEpicStore();
+    this.upgrade = new UpgradeController();
 
     for (let index = 0; index < this.battles.length; index++) {
       this.battles[index] = new BATTLE_CONTROLLER(index);
     }
 
-    // console.log(this.source.maxModifierCleareds);
-
-    // console.log(globalThis.data.challenge.permanentRewardMultiplier);
     this.Start();
-    // console.log(globalThis.data.source.abilityPoints);
-    // console.log(globalThis.data.source.superDungeonMaxFloorsReached);
-    // console.log(globalThis.data.source.maxModifierCleareds);
-    // const HERO = HeroKind.Angel;
-    // console.log(HeroKind[HERO]);
-    // console.log("equipWeaponUnlockedNum ", globalThis.data.inventory.equipWeaponUnlockedNum[HERO].Value());
-    // console.log("equipArmorUnlockedNum ", globalThis.data.inventory.equipArmorUnlockedNum[HERO].Value());
-    // console.log("equipJewelryUnlockedNum ", globalThis.data.inventory.equipJewelryUnlockedNum[HERO].Value());
-    // console.log("eqWeaponSlotNum ", globalThis.data.battles[HERO].superDungeonCtrl.eqWeaponSlotNum.Value());
-    // console.log();
-    // globalThis.data.inventory.equipmentSlots[3472].SetAgainAllEffect();
-    // this.source.equipment1stOptionLevels[1703] = 5;
-    // this.source.currentHero = 2;
-    // this.custom.isSuperDungeon = false;
+
+    // this.stats.heroes[2].basicStats[4].RegisterMultiplier(new MultiplierInfo(1, MultiplierType.After, () => -1672000));
   }
 
-  get battle() {
+  get battle(): BATTLE_CONTROLLER {
+    // console.log("batle");
+
     return this.battles[this.source.currentHero];
   }
 
@@ -133,6 +126,8 @@ export class DATA {
     this.quest.Start();
     this.rebirth.Start();
     this.inventory.Start();
+    this.upgrade.Start();
+    this.SetLog10();
   }
 
   load() {
@@ -150,5 +145,37 @@ export class DATA {
   save() {
     localStorage.setItem("SaveFileData", JSON.stringify(this.source));
     console.log("data manual save");
+  }
+
+  SetLog10() {
+    // console.log("setlog10", this.custom.isSuperDungeon);
+
+    const heroKind = this.source.currentHero;
+    // skills
+    this.skill.isLog[heroKind] = this.custom.isSuperDungeon;
+    this.skill.skillLevelBonus[heroKind].isLog = this.custom.isSuperDungeon;
+    this.skill.skillRangeMultiplier[heroKind].isLog = this.custom.isSuperDungeon;
+    this.skill.skillEffectRangeMultiplier[heroKind].isLog = this.custom.isSuperDungeon;
+    // stats
+    this.stats.heroes[heroKind].stats[5].isLog = this.custom.isSuperDungeon;
+    this.stats.heroes[heroKind].stats[6].isLog = this.custom.isSuperDungeon;
+    this.stats.heroes[heroKind].stats[7].isLog = this.custom.isSuperDungeon;
+    this.stats.heroes[heroKind].stats[8].isLog = this.custom.isSuperDungeon;
+    this.stats.heroes[heroKind].stats[9].isLog = this.custom.isSuperDungeon;
+    this.stats.heroes[heroKind].stats[10].isLog = this.custom.isSuperDungeon;
+    this.stats.heroes[heroKind].hpRegenerate.isLog = this.custom.isSuperDungeon;
+    this.stats.heroes[heroKind].mpRegenerate.isLog = this.custom.isSuperDungeon;
+
+    for (let index = 0; index < Enums.BasicStatsKind; index++) this.stats.heroes[heroKind].basicStats[index].isLog = this.custom.isSuperDungeon;
+    for (let index = 0; index < Enums.Element; index++) this.stats.heroes[heroKind].elementDamages[index].isLog = this.custom.isSuperDungeon;
+    for (let index = 1; index < Enums.Element; index++) this.stats.heroes[heroKind].stats[index].isLog = this.custom.isSuperDungeon;
+    for (let index = 0; index < Enums.Element; index++) this.stats.heroes[heroKind].elementAbsoptions[index].isLog = this.custom.isSuperDungeon;
+    for (let index = 0; index < Enums.Element; index++) this.stats.heroes[heroKind].elementInvalids[index].isLog = this.custom.isSuperDungeon;
+    for (let index = 0; index < Enums.MonsterSpecies; index++) this.stats.heroes[heroKind].monsterDamages[index].isLog = this.custom.isSuperDungeon;
+  }
+
+  SuperDungeonToggle() {
+    // console.log("SD toogle", this.custom.isSuperDungeon);
+    this.SetLog10();
   }
 }

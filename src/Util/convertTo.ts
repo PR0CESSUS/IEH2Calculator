@@ -1,49 +1,20 @@
-//@ts-nocheck
+import { NumberType } from "../type/NumberType";
 import { secondsToDhms } from "./secondsToDhms";
 
-export function convertTo(input, precision = 2, kind: string | null = null) {
+export function convertTo(input, precision = 2, type: NumberType | null = null) {
   input = parseFloat(input);
-  let output = 0;
-  let kindPercent = ["percent", "%"];
-  let kindRaw = ["MoveSpeedAdder"];
+  let output: number | string = 0;
   let isNegative = false;
+  if (type == NumberType.TimeDhms) return secondsToDhms(input);
+  if (type == NumberType.Meter) input /= 100;
+  if (type == NumberType.Percent) input *= 100;
 
-  if (kind == "time-h") {
-    return input / 60 / 60 + "h";
-  }
-  if (kind == "time") {
-    return secondsToDhms(input);
-  }
-
-  if (kind == "E") {
-    return input.toExponential(precision);
-  }
-  // kindPercent.forEach(element => {
-  //   if (kind == element) {
-  //     input *= 100;
-  //   }
-  // });
-  if (kindRaw.includes(kind)) {
-    input /= 100;
-  }
-
-  if (kindPercent.includes(kind)) {
-    input *= 100;
-  }
   if (input < 0) {
-    // console.log("negative");
-
     input *= -1;
-    // console.log(input);
     isNegative = true;
   }
-  if (kind == "meter") {
-    input = input / 100;
-  }
 
-  if (input == 0) {
-    output = 0;
-  } else if (input <= 10000) {
+  if (input <= 10000) {
     output = input.toFixed(precision);
   } else if (input < 1000000) {
     output = (input / 1000).toFixed(precision) + "K";
@@ -56,19 +27,13 @@ export function convertTo(input, precision = 2, kind: string | null = null) {
   } else {
     output = input.toExponential(precision);
   }
-  if (kind == "meter") {
-    return output + "m / sec";
-  }
+  if (type == NumberType.Meter) return output + "m / sec";
+
   if (isNegative) {
-    output.slice(0, 1);
+    (output as string).slice(0, 1);
     output = "-" + output;
   }
+  if (type == NumberType.Percent) output += "%";
 
-  kindPercent.forEach((element) => {
-    if (kind == element) {
-      output += "%";
-    }
-  });
-
-  return output;
+  return output.toString();
 }

@@ -1,3 +1,4 @@
+import { Util } from "./../../Util/index";
 import { Debuff } from "../../type/Debuff";
 import { HeroKind } from "../../type/HeroKind";
 import { Element } from "../../type/Element";
@@ -11,7 +12,7 @@ import { BATTLE_CONTROLLER } from ".";
 export class BATTLE {
   heroKind: HeroKind;
   species: MonsterSpecies;
-  color: ChallengeMonsterKind; // MonsterColor;
+  color: MonsterColor; // MonsterColor;
   isAlive;
   //   currentHp: NUMBER;
   //   currentMp: NUMBER;
@@ -27,8 +28,8 @@ export class BATTLE {
   tempTotalDamage;
   tempExtraAfterDamage;
   totalDamage;
-  electricDamage;
-  slayerOilDamage;
+  electricDamage = 0;
+  slayerOilDamage = 0;
   poisonDamagePerSec;
   isPilfered;
   battleCtrl: BATTLE_CONTROLLER;
@@ -37,6 +38,7 @@ export class BATTLE {
   fieldDebuffMagCrit;
   fieldCurseMoveSpeedMul;
   fieldDebuffDebuffRes;
+  isHero = false;
 
   constructor(battleCtrl: BATTLE_CONTROLLER) {
     this.heroKind = battleCtrl.heroKind;
@@ -48,10 +50,25 @@ export class BATTLE {
     this.fieldDebuffDebuffRes = 0;
   }
 
-  get damageFactor() {
-    return globalThis.data.stats.heroes[this.heroKind].monsterDamages[MonsterSpecies.ChallengeBoss].After();
+  DebuffFactor(kind: Debuff) {
+    // switch (kind) {
+    //   case Debuff.Stop:
+    //     return this.color == MonsterColor.Boss || this.species == MonsterSpecies.ChallengeBoss ? 1.0 - 0.5 * 0.9 : 1.0 - 0.5;
+    //   case Debuff.FireResDown:
+    //     return -1;
+    //   case Debuff.IceResDown:
+    //     return -1;
+    //   case Debuff.ThunderResDown:
+    //     return -1;
+    //   case Debuff.LightResDown:
+    //     return -1;
+    //   case Debuff.DarkResDown:
+    //     return -1;
+    //   default:
+    //     return this.color == MonsterColor.Boss || this.species == MonsterSpecies.ChallengeBoss ? 1.0 - 0.5 * 0.25 : 1.0 - 0.5 * 0.5;
+    // }
+    return 1;
   }
-
   DamageFactorElement(element: Element) {
     // console.log(this.heroKind);
 
@@ -74,36 +91,29 @@ export class BATTLE {
     }
   }
 
-  //   DebuffFactor(kind: Debuff) {
-  //     switch (kind) {
-  //       case Debuff.Stop:
-  //         return this.color == MonsterColor.Boss || this.species == MonsterSpecies.ChallengeBoss ? 1.0 - Convert.ToInt32(this.debuffings[kind].isDebuff) * 0.9 : 1.0 - Convert.ToInt32(this.debuffings[kind].isDebuff);
-  //       case Debuff.FireResDown:
-  //         return -Convert.ToInt32(this.debuffings[kind].isDebuff);
-  //       case Debuff.IceResDown:
-  //         return -Convert.ToInt32(this.debuffings[kind].isDebuff);
-  //       case Debuff.ThunderResDown:
-  //         return -Convert.ToInt32(this.debuffings[kind].isDebuff);
-  //       case Debuff.LightResDown:
-  //         return -Convert.ToInt32(this.debuffings[kind].isDebuff);
-  //       case Debuff.DarkResDown:
-  //         return -Convert.ToInt32(this.debuffings[kind].isDebuff);
-  //       default:
-  //         return this.color == MonsterColor.Boss || this.species == MonsterSpecies.ChallengeBoss ? 1.0 - Convert.ToInt32(this.debuffings[kind].isDebuff) * 0.25 : 1.0 - Convert.ToInt32(this.debuffings[kind].isDebuff) * 0.5;
-  //     }
-  //   }
-
   //   get fieldDebuffPhyCrit() {return Convert.ToInt16(this.battleCtrl.isSimulated) * this.battleCtrl.areaBattle.CurrentArea().debuffPhyCrit;}
 
   //   get fieldDebuffMagCrit() {return Convert.ToInt16(this.battleCtrl.isSimulated) * this.battleCtrl.areaBattle.CurrentArea().debuffMagCrit;}
 
   //   get fieldCursePetBasicStatsMul() {return Convert.ToInt16(this.battleCtrl.isSimulated) * this.battleCtrl.areaBattle.CurrentArea().cursePetBasicStatsMul;}
+  get atk() {
+    return 0;
+  }
 
+  get matk() {
+    return 0;
+  }
+  get isPet() {
+    return false;
+  }
   get def() {
-    return globalThis.data.monster.GlobalInformationChallengeBoss(this.color).Def(this.level, 0);
+    return 0;
   }
   get mdef() {
-    return globalThis.data.monster.GlobalInformationChallengeBoss(this.color).MDef(this.level, 0);
+    return 0;
+  }
+  get spd() {
+    return 0;
   }
   get fire() {
     return 0;
@@ -112,19 +122,22 @@ export class BATTLE {
     return 0;
   }
   get thunder() {
-    return globalThis.data.monster.GlobalInformationChallengeBoss(this.color).Thunder();
+    return 0;
   }
   get light() {
-    return globalThis.data.monster.GlobalInformationChallengeBoss(this.color).Light();
+    return 0;
   }
   get dark() {
-    return globalThis.data.monster.GlobalInformationChallengeBoss(this.color).Dark();
+    return 0;
   }
   get extraAfterDamage() {
     return 0.0;
   }
   get critDamage() {
     return 0;
+  }
+  get damageFactor() {
+    return 1;
   }
   DamageCutRate(originDamage, element: Element) {
     let num1 = 1.0;
@@ -162,16 +175,11 @@ export class BATTLE {
   }
 
   DamageModifier(value) {
-    return this.battleCtrl.isSuperDungeon
-      ? value * this.battleCtrl.superDungeonCtrl.damageMultiplier.Value() * globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.Value()
-      : value;
+    return globalThis.data.custom.isSuperDungeon ? value * this.battleCtrl.superDungeonCtrl.damageMultiplier.Value() : value;
   }
 
   DamageCutModifier(value) {
-    // console.log(value);
-
-    // return value;
-    return this.battleCtrl.isSuperDungeon ? value * this.battleCtrl.superDungeonCtrl.damageCutMultiplier.Value() : value;
+    return this.isHero && globalThis.data.custom.isSuperDungeon ? value * this.battleCtrl.superDungeonCtrl.damageCutMultiplier.Value() : value;
   }
 
   CalculateDamage(originDamage, critDamage, element: Element, isCrit) {
@@ -193,26 +201,61 @@ export class BATTLE {
     damage,
     hitCount,
     isCrit,
-    element: Element,
-    debuff: Debuff,
-    debuffEffectValue = 0.0,
-    isDebuffForce = false,
-    isFixedDamage = false,
-    isPreventDodge = false
+    element: Element
+    // debuff: Debuff,
+    // debuffEffectValue = 0.0,
+    // isDebuffForce = false,
+    // isFixedDamage = false,
+    // isPreventDodge = false
   ) {
-    // this.isSlayerOil = !this.isHero && this.battleCtrl.CurrentSlayerElement() != 0;
-    // if (this.isSlayerOil) element = this.battleCtrl.CurrentSlayerElement();
+    this.isSlayerOil = !this.isHero && this.battleCtrl.CurrentSlayerElement() != 0;
+    if (this.isSlayerOil) element = this.battleCtrl.CurrentSlayerElement();
+
     this.calculatedDamage = this.CalculateDamage(damage, battle.critDamage, element, isCrit);
-
-    // this.ReceiveDebuff(debuff, this.calculatedDamage, debuffEffectValue, isDebuffForce);
     this.tempTotalDamagePerHitCount = this.DamageModifier(this.calculatedDamage);
-    this.tempTotalDamage = this.tempTotalDamagePerHitCount * hitCount;
-    // this.electricDamage = this.debuffings[7].isDebuff ? this.tempTotalDamage * 0.1 : 0.0;
-    this.slayerOilDamage = this.isSlayerOil ? this.tempTotalDamage * globalThis.data.stats.ElementSlayerDamage(this.battleCtrl.heroKind, element).Value() : 0.0;
 
+    this.tempTotalDamage = this.tempTotalDamagePerHitCount * hitCount;
+
+    // this.electricDamage = this.debuffings[7].isDebuff ? this.tempTotalDamage * 0.1 : 0.0;
+
+    this.slayerOilDamage = this.isSlayerOil ? this.tempTotalDamage * globalThis.data.stats.ElementSlayerDamage(this.battleCtrl.heroKind, element).Value() : 0.0;
     this.totalDamage = this.tempTotalDamage + this.electricDamage + this.slayerOilDamage;
 
     this.tempExtraAfterDamage = this.totalDamage * battle.extraAfterDamage;
     this.totalDamage += this.tempExtraAfterDamage;
+    // console.log("battle.extraAfterDamage:", battle.extraAfterDamage);
+    // console.log("this.calculatedDamage:", this.calculatedDamage);
+    // console.log("this.tempTotalDamagePerHitCount:", this.tempTotalDamagePerHitCount);
+    // console.log(" this.tempTotalDamage:", this.tempTotalDamage);
+    // console.log("this.slayerOilDamage:", this.slayerOilDamage);
+    // console.log(
+    //   "this.totalDamage = this.tempTotalDamage + this.electricDamage + this.slayerOilDamage:",
+    //   (this.totalDamage = this.tempTotalDamage + this.electricDamage + this.slayerOilDamage)
+    // );
+
+    return this.totalDamage;
+  }
+
+  AttackedInfo(battle: BATTLE, damage, hitCount, isCrit, element: Element) {
+    let isSlayerOil = !this.isHero && this.battleCtrl.CurrentSlayerElement() != 0;
+    if (isSlayerOil) element = this.battleCtrl.CurrentSlayerElement();
+    let info = {
+      DamagePerHit: this.DamageModifier(this.CalculateDamage(damage, battle.critDamage, element, isCrit)),
+      tempTotalDamage: 0,
+      slayerOilDamage: 0,
+      electricDamage: 0,
+      totalBeforeExtraAfter: 0,
+      extraAfterDamagePerHit: 0,
+      extraAfterDamage: 0,
+      totalDamage: 0,
+    };
+
+    info.tempTotalDamage = info.DamagePerHit * hitCount;
+    info.slayerOilDamage = isSlayerOil ? info.tempTotalDamage * globalThis.data.stats.ElementSlayerDamage(this.battleCtrl.heroKind, element).Value() : 0.0;
+    info.totalBeforeExtraAfter = info.tempTotalDamage + info.electricDamage + info.slayerOilDamage;
+    info.extraAfterDamagePerHit = info.DamagePerHit * battle.extraAfterDamage;
+    info.extraAfterDamage = info.totalBeforeExtraAfter * battle.extraAfterDamage;
+    info.totalDamage = info.tempTotalDamage + info.electricDamage + info.slayerOilDamage + info.extraAfterDamage;
+    return info;
   }
 }

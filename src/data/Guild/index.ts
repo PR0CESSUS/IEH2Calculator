@@ -28,6 +28,7 @@ export class DataGuild {
   isTryingSwitchPlay;
 
   constructor() {
+    //TODO super guild ability
     // this.level = new GuildLevel((Func<long>) (() => this.guildLevelCap.Value()));
     // this.exp = new GuildExp(new Func<long, double>(this.RequiredExp), this.level);
     // for (let index = 0; index < this.members.length; index++)
