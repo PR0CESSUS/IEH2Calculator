@@ -276,8 +276,8 @@ export class ComponentEquipmentInfo extends HTMLElement {
             6
           )}" onchange="let e = event.target.getRootNode().host; e.equipment.optionEffects[${index}].effectValue = this.value; e.Update()">`;
           // const slider = `<input type="range" min="1" max="${maxLevel}" value="${currentLevel}" class="slider" id="myRange">`;
-          const kind = `<custom-select data-type="${CustomSelectType.EquipmentEffectKind}" data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].kind" data-reload="false" data-id="${this.equipment.slotId}">${effect.kind}</custom-select>`;
-          const level = `<custom-select data-render="${this.id}" data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].level" data-reload="false" data-id="${this.equipment.slotId}" data-width="50px" data-type="${CustomSelectType.Number}" data-length="11">${currentLevel}</custom-select>`;
+          const kind = `<custom-select data-render="equipment-loadout#${this.id}" data-type="${CustomSelectType.EquipmentEffectKind}" data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].kind" data-reload="false" data-id="${this.equipment.slotId}">${effect.kind}</custom-select>`;
+          const level = `<custom-select data-render="equipment-loadout#${this.id}" data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].level" data-reload="false" data-id="${this.equipment.slotId}" data-width="50px" data-type="${CustomSelectType.Number}" data-length="11">${currentLevel}</custom-select>`;
           const value = `<custom-input data-endpoint="data.inventory.equipmentSlots[${this.equipment.slotId}].optionEffects[${index}].effectValue" data-reload="false" data-id="${this.equipment.slotId}" data-type="equipment"></custom-input>`;
 
           if (this.equipment.optionEffects[index].kind == 0) {

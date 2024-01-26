@@ -21,6 +21,8 @@ import { ComponentCustomSelect } from "../Select";
 import { CustomSelectType } from "../../type/CustomSelectType";
 import { Localization } from "../../localization";
 import { SuperDungeonUpgradeKind } from "../../type/SuperDungeonUpgradeKind";
+import { SKILL } from "../../data/Skill/SKILL";
+import { BATTLE } from "../../data/Battle/BATTLE";
 
 export class ComponentBattleSimulator extends HTMLElement {
   data: HeroStats;
@@ -44,37 +46,80 @@ export class ComponentBattleSimulator extends HTMLElement {
     const skill = globalThis.data.skill.Skill(0, globalThis.data.source.currentHero);
     const monster = globalThis.data.battle.challengeMonster;
     const hero = globalThis.data.battle.hero;
-    const element = skill.element != globalThis.data.battle.CurrentSlayerElement() ? globalThis.data.battle.CurrentSlayerElement() : skill.element;
-
-    const damage = skill.DamageOrigin(hero, false);
-    const skillCount = globalThis.data.source.currentHero == HeroKind.Angel ? skill.HitCount() / 5 : skill.HitCount();
-    const info = monster.AttackedInfo(hero, damage, skillCount, true, element);
 
     htmlPlayer.innerHTML += `<p>Skill: 
     ${Localization.SkillName(globalThis.data.source.currentHero, 0)} 
     <span class="green">Lv ${Util.tDigit(skill.level, 0)} + ${Util.tDigit(skill.levelBonus, 0)} </span>
     <span class="orange">&lt; Rank ${skill.rank} &gt;</span></p>`;
-    htmlPlayer.innerHTML += `<p>Skill Tooltip Damage: ${Util.tDigit(skill.DamageOrigin(hero, true))} * ${Util.tDigit(skill.HitCount(), 0)}</p>`;
-    htmlPlayer.innerHTML += `<p>Cast Time: ${Util.tDigit(skill.CalculateInterval(hero), 3)} sec</p>`;
-    htmlPlayer.innerHTML += `<p>Element: ${Element[element]}</p>`;
-    htmlPlayer.innerHTML += `<p>Slayer Oil Effect: ${Util.percent(
-      globalThis.data.stats.ElementSlayerDamage(globalThis.data.source.currentHero, globalThis.data.battle.CurrentSlayerElement()).Value()
-    )}</p>`;
-    htmlPlayer.innerHTML +=
-      skill.element == Element.Physical
-        ? `<p>ATK: ${Util.tDigit(globalThis.data.stats.BasicStats(2, BasicStatsKind.DEF).Value())}</p>`
-        : `<p>MATK: ${Util.tDigit(globalThis.data.stats.BasicStats(2, BasicStatsKind.MDEF).Value())}</p>`;
+    htmlPlayer.innerHTML += `<p>- ${Element[skill.element]} Damage:  ${Util.tDigit(skill.DamageOrigin(hero, true))} * ${Util.tDigit(skill.HitCount(), 0)}</p>`;
+    htmlPlayer.innerHTML += `<p>- Cast Time: ${Util.tDigit(skill.CalculateInterval(hero), 3)} sec</p>`;
+    htmlPlayer.innerHTML += `<hr>`;
+    htmlPlayer.innerHTML += `<h4>Skill Damage Breakdown</h4>`;
+    // htmlPlayer.innerHTML += `<p>Skill Damage: ${Util.tDigit(skill.Damage())}</p>`;
+    htmlPlayer.innerHTML += this.skillBreakdownString(skill, hero, monster);
+
     // htmlPlayer.innerHTML += `<p>Element: ${Element[element]}</p>`;
-    htmlPlayer.innerHTML += `<p>Monster Damage Cut Rate: ${Util.percent(monster.DamageCutRate(damage, element), 4)}</p>`;
-    htmlPlayer.innerHTML += `<table>
-    <tr><td>Single Hit Damage: </td><td>${Util.tDigit(info.DamagePerHit)}</td></tr>
-    <tr><td>Every Hit Damage: </td><td>${Util.tDigit(info.tempTotalDamage)}</td></tr>
-    <tr><td>Slayer Oil Damage: </td><td>${Util.tDigit(info.slayerOilDamage)}</td></tr>
-    <tr><td>Electric Damage: </td><td>${Util.tDigit(info.electricDamage)}</td></tr>
-    <tr><td>Extra After Damage: </td><td>${Util.tDigit(info.extraAfterDamage)}</td></tr>
-    <tr><td>Total Damage: </td><td>${Util.tDigit(info.totalDamage)}</td></tr>
-    <tr><td>DPS: </td><td>${Util.tDigit(info.totalDamage / skill.CalculateInterval(hero))}</td></tr>
+
+    // htmlPlayer.innerHTML += `<table>
+    // <tr><td>Single Hit Damage: </td><td>${Util.tDigit(info.DamagePerHit)}</td></tr>
+    // <tr><td>Every Hit Damage: </td><td>${Util.tDigit(info.tempTotalDamage)}</td></tr>
+    // <tr><td>Slayer Oil Damage: </td><td>${Util.tDigit(info.slayerOilDamage)}</td><td><span class="green">(${SlayerOil})</span></td></tr>
+    // <tr><td>Electric Damage: </td><td>${Util.tDigit(info.electricDamage)}</td></tr>
+    // <tr><td>Extra After Damage: </td><td>${Util.tDigit(info.extraAfterDamage)}</td><td><span class="green">(${ExtraAfter})</span></td></tr>
+    // <tr><td>Total Damage: </td><td>${Util.tDigit(info.totalDamage)}</td></tr>
+    // <tr><td>DPS: </td><td>${Util.tDigit(info.totalDamage / skill.CalculateInterval(hero))}</td></tr>
+    // </table>`;
+  }
+
+  skillBreakdownString(skill: SKILL, hero: BATTLE, monster: BATTLE) {
+    const SlayerOilValue = globalThis.data.stats.ElementSlayerDamage(globalThis.data.source.currentHero, globalThis.data.battle.CurrentSlayerElement()).Value();
+    const damage = skill.DamageOrigin(hero, false);
+    const element = SlayerOilValue > 0 ? globalThis.data.battle.CurrentSlayerElement() : skill.element;
+    const skillCount = globalThis.data.source.currentHero == HeroKind.Angel ? skill.HitCount() / 5 : skill.HitCount();
+    const info = monster.AttackedInfo(hero, damage, skillCount, true, element);
+    let str = `<table style="font-size: 12px; border-collapse: collapse;">`;
+
+    str += `<tr><td>Base: </td><td>${globalThis.data.custom.isSuperDungeon ? Util.tDigit(Math.log10(Math.max(1.0, skill.Damage()))) : Util.tDigit(skill.Damage())}</td></tr>`;
+    if (globalThis.data.custom.isSuperDungeon) {
+      if (skill.element == Element.Physical) {
+        str += `<tr><td>ATK: </td><td>+ ${Util.tDigit(hero.atk)}</td></tr>`;
+      } else {
+        str += `<tr><td>MATK: </td><td>+ ${Util.tDigit(hero.matk)}</td></tr>`;
+      }
+    } else {
+      if (skill.element == Element.Physical) {
+        str += `<tr><td>ATK: </td><td>* ${Util.tDigit(hero.atk)}</td></tr>`;
+      } else {
+        str += `<tr><td>MATK: </td><td>* ${Util.tDigit(hero.matk)}</td></tr>`;
+      }
+    }
+
+    str += `
+    <tr><td>Emelda</td><td>* ${Util.percent(globalThis.data.skill.ladyEmeldaEffectMultiplier[globalThis.data.source.currentHero].Value())}</td></tr>
+    <tr style="border-bottom: 1px solid #fff;"><td>Total</td><td>= ${Util.tDigit(damage)}</td></tr>
+    <tr><td>Monster Damage Resistance</td><td>* ${Util.percent(monster.DamageCutRate(damage, element), 4)} vs ${Element[element]}</td></tr>
+    <tr><td>Knowledge ${MonsterSpecies[monster.species]}</td><td>* ${Util.percent(monster.damageFactor)}</td></tr>
+    <tr><td>Element ${Element[element]}</td><td>* ${Util.percent(monster.DamageFactorElement(element))}  </td></tr>
+    <tr><td>Critical Damage</td><td>* ${Util.percent(hero.critDamage)}  </td></tr>`;
+    if (globalThis.data.custom.isSuperDungeon) {
+      str += `
+      <tr><td>Damage Modifier</td><td>* ${Util.percent(globalThis.data.battle.superDungeonCtrl.damageMultiplier.Value())}  </td></tr>
+      <tr><td>Damage Modifier vs Boss</td><td>* ${Util.percent(globalThis.data.battle.superDungeonCtrl.sdChallengeBossDamageMultiplier.Value())}  </td></tr>`;
+    }
+
+    str += `<tr style="border-bottom: 1px solid #fff;"><td>Single Hit Damage</td><td>= ${Util.tDigit(info.DamagePerHit)}  </td></tr>
+    <tr><td>Hit Count</td><td>* ${Util.tDigit(skill.HitCount(), 0)}  </td></tr>
+    <tr style="border-bottom: 1px solid #fff;"><td>Total Damage Before Oil</td><td>= ${Util.tDigit(info.tempTotalDamage)}  </td></tr>
+    <tr><td>Slayer Oil Bonus</td><td>* ${Util.percent(SlayerOilValue)} </td></tr>
+    <tr style="border-bottom: 1px solid #fff;"><td>Slayer Oil Damage</td><td>= ${Util.tDigit(info.slayerOilDamage)} </td></tr>
+    <tr style="border-bottom: 1px solid #fff;"><td>Total Damage Before Extra After</td><td>= ${Util.tDigit(info.totalBeforeExtraAfter)} </td></tr>
+    <tr><td>Extra After Bonus</td><td>* ${Util.percent(hero.extraAfterDamage)}</td></tr>
+    <tr style="border-bottom: 1px solid #fff;"><td>Extra After Damage</td><td>= ${Util.tDigit(info.extraAfterDamage)}  </td></tr>
+    <tr style="border-bottom: 1px solid #fff;"><td>Total Damage</td><td>= ${Util.tDigit(info.totalDamage)}  </td></tr>
+    <tr><td>Cast Time</td><td>/ ${Util.tDigit(skill.CalculateInterval(hero), 3)}  </td></tr>
+    <tr><td>DPS</td><td>= ${Util.tDigit(info.totalDamage / skill.CalculateInterval(hero))}</td></tr>
     </table>`;
+    return str;
   }
 
   render(edit: boolean = false) {

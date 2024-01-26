@@ -19,7 +19,7 @@ export function renderMain() {
   str += `<multiplier-info ${endpoint.new(`stats.heroes[${globalThis.data.source.currentHero}].optionEffectChance[1]`)}>Equipment 2nd Enchantment Slot Chance</multiplier-info>`;
   str += `<multiplier-info ${endpoint.new(`stats.heroes[${globalThis.data.source.currentHero}].optionEffectChance[2]`)}>Equipment 3rd Enchantment Slot Chance</multiplier-info>`;
   str += `<multiplier-info ${endpoint.new(`equipment.effectMultiplier`)}>Equipment Effect</multiplier-info>`;
-
+  str += `<multiplier-info ${endpoint.new(`potion.effectMultiplier`)}>Potion Effect</multiplier-info>`;
   str += `</div>`;
   str += `<div class="block">`;
   str += `<multiplier-info ${endpoint.new(`stats.heroes[${globalThis.data.source.currentHero}].hpRegenerate`)} data-type="${NumberType.Normal}">HP Regeneration</multiplier-info>`;

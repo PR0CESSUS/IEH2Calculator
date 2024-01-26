@@ -83,6 +83,11 @@ export class DataInventory {
         equipment.IsEffectRegisteredClear();
       }
     });
+
+    for (let index = 260; index < this.potionSlots.length; index++) {
+      this.potionSlots[index].Start();
+    }
+
     for (let index = 0; index < Enums.HeroKind; index++) {
       this.UpdateSetItemEquippedNumHero(index);
     }

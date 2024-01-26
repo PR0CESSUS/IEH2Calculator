@@ -74,17 +74,17 @@ export class BATTLE {
 
     switch (element) {
       case Element.Physical:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Physical].After();
+        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Physical].Value();
       case Element.Fire:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Fire].After();
+        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Fire].Value();
       case Element.Ice:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Ice].After();
+        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Ice].Value();
       case Element.Thunder:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Thunder].After();
+        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Thunder].Value();
       case Element.Light:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Light].After();
+        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Light].Value();
       case Element.Dark:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Dark].After();
+        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Dark].Value();
 
       default:
         return 1.0;

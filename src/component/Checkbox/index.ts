@@ -47,7 +47,7 @@ export class ComponentCustomCheckbox extends HTMLElement {
     set(globalThis.app, this.dataset.endpoint, event.target.checked);
     // globalThis.app.Save();
     // hideous build in logic
-    if (globalThis.data.custom.isSuperDungeon) {
+    if (this.dataset.endpoint == "data.custom.isSuperDungeon") {
       globalThis.data.SetLog10();
       globalThis.data.inventory.Update();
     }
