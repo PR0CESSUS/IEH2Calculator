@@ -44,7 +44,7 @@ export class ComponentBattleSimulator extends HTMLElement {
   getSkillInfo() {
     const htmlPlayer = this.shadowRoot.querySelector('[name="player"]') as HTMLDivElement;
     const skill = globalThis.data.skill.Skill(0, globalThis.data.source.currentHero);
-    const monster = globalThis.data.battle.challengeMonster;
+    const monster = parseInt(this.dataset.species) == MonsterSpecies.ChallengeBoss ? globalThis.data.battle.challengeMonster : globalThis.data.battle.monster;
     const hero = globalThis.data.battle.hero;
 
     htmlPlayer.innerHTML += `<p>Skill: 
