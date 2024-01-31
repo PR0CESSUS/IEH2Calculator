@@ -54,8 +54,8 @@ export class EquipmentOptionEffect {
         return 0;
     }
   }
-  set kind(value) {
-    this.equipment.IsEffectRegisteredClear();
+
+  SetKind(value) {
     switch (this.optionId) {
       case 0:
         globalThis.data.source.equipment1stOptionEffectKinds[this.createId] = value;
@@ -81,6 +81,11 @@ export class EquipmentOptionEffect {
       default:
         break;
     }
+  }
+
+  set kind(value) {
+    this.equipment.IsEffectRegisteredClear();
+    this.SetKind(value);
     // change level and value
     this.level = this.MaxLevel();
 
@@ -110,8 +115,8 @@ export class EquipmentOptionEffect {
         return 0;
     }
   }
-  set effectValue(value) {
-    value = Math.min(value, EquipmentParameter.EffectCalculation(this.kind, this.level + 1));
+
+  SetEffectValue(value) {
     switch (this.optionId) {
       case 0:
         globalThis.data.source.equipment1stOptionEffectValues[this.createId] = value;
@@ -138,6 +143,10 @@ export class EquipmentOptionEffect {
         break;
     }
   }
+  set effectValue(value) {
+    value = Math.min(value, EquipmentParameter.EffectCalculation(this.kind, this.level + 1));
+    this.SetEffectValue(value);
+  }
   get level() {
     switch (this.optionId) {
       case 0:
@@ -158,8 +167,8 @@ export class EquipmentOptionEffect {
         return 0;
     }
   }
-  set level(value) {
-    value = Math.min(value, EquipmentParameter.MaxLevel(this.kind));
+
+  SetLevel(value) {
     switch (this.optionId) {
       case 0:
         globalThis.data.source.equipment1stOptionLevels[this.createId] = value;
@@ -185,6 +194,11 @@ export class EquipmentOptionEffect {
       default:
         break;
     }
+  }
+
+  set level(value) {
+    value = Math.min(value, EquipmentParameter.MaxLevel(this.kind));
+    this.SetLevel(value);
     this.effectValue = this.MaxEffectValue();
   }
   get isAfter() {

@@ -422,8 +422,8 @@ export class Equipment {
 
   EffectValue(baseEffectValue, heroKind: HeroKind) {
     let num = baseEffectValue * this.EffectMultiplierFromSetItem(heroKind) * (1.0 + this.forgeEffects[3].EffectValue());
-    if (!this.globalInfo.isArtifact) num *= globalThis.data.equipment.EffectMultiplier(heroKind);
-    else if (globalThis.data.equipment.effectMultiplierModifierForArtifact.Value() > 0.0) num *= globalThis.data.equipment.ArtifactEffectMultiplier(heroKind);
+    if (!this.globalInfo.isArtifact) num *= globalThis.data.equipment.EffectMultiplier();
+    else if (globalThis.data.equipment.effectMultiplierModifierForArtifact.Value() > 0.0) num *= globalThis.data.equipment.ArtifactEffectMultiplier();
     if (num < 0.0) num *= Math.max(0.0, 1 - this.forgeEffects[4].EffectValue());
     return num;
   }
@@ -462,7 +462,7 @@ export class Equipment {
         return this.forgeEffects.map((forge) => forge.Copy());
       case CopyKind.Equipment:
         // for (let index = 0; index < this.forgeEffects.length; index++) data.push(this.forgeEffects[index].Copy());
-        console.log("Equipment Copy");
+        // console.log("Equipment Copy");
 
         return {
           kind: this.kind,
@@ -485,8 +485,6 @@ export class Equipment {
         globalThis.data.inventory.UpdateSetItemEquippedNumHero(this.heroKind);
         break;
       case CopyKind.OptionEffect:
-        console.log("paste ", data);
-
         this.optionEffects.map((effect, index) => effect.Paste(data[index]));
         break;
       case CopyKind.ForgeEffects:

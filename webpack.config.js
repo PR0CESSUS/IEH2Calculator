@@ -25,6 +25,9 @@ module.exports = (env) => {
   const config = {
     target: "web",
     mode: "development",
+    experiments: {
+      asyncWebAssembly: true,
+    },
     devtool: "source-map",
     devServer: {
       static: path.resolve(__dirname, "dist"),

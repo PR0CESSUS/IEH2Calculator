@@ -36,36 +36,40 @@ export class EquipmentForgeEffect {
         return 0;
     }
   }
-  set effectValue(value) {
-    if (this.equipment.ForgedSlotNum() >= 4 && value > 0 && this.effectValue == 0) return;
-    const newValue = Math.min(value, this.equipment.ForgeEffectMaxValue(this.kind, this.equipment.globalInfo.isArtifact));
 
+  SetEffectValue(value) {
     switch (this.kind) {
       case EquipmentForgeEffectKind.ReduceRequiredHeroLevel:
-        globalThis.data.source.equipment1stForgeValues[this.equipment.id] = newValue;
+        globalThis.data.source.equipment1stForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.ReduceRequiredAbility:
-        globalThis.data.source.equipment2ndForgeValues[this.equipment.id] = newValue;
+        globalThis.data.source.equipment2ndForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.IncreaseProficiencyGain:
-        globalThis.data.source.equipment3rdForgeValues[this.equipment.id] = newValue;
+        globalThis.data.source.equipment3rdForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.IncreaseEffect:
-        globalThis.data.source.equipment4thForgeValues[this.equipment.id] = newValue;
+        globalThis.data.source.equipment4thForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.PurifyCurseEffect:
-        globalThis.data.source.equipment5thForgeValues[this.equipment.id] = newValue;
+        globalThis.data.source.equipment5thForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.IncreaseEffectIncrement:
-        globalThis.data.source.equipment6thForgeValues[this.equipment.id] = newValue;
+        globalThis.data.source.equipment6thForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.EqLevel:
-        globalThis.data.source.equipment7thForgeValues[this.equipment.id] = newValue;
+        globalThis.data.source.equipment7thForgeValues[this.equipment.id] = value;
         break;
 
       default:
         break;
     }
+  }
+  set effectValue(value) {
+    if (this.equipment.ForgedSlotNum() >= 4 && value > 0 && this.effectValue == 0) return;
+    const newValue = Math.min(value, this.equipment.ForgeEffectMaxValue(this.kind, this.equipment.globalInfo.isArtifact));
+    this.SetEffectValue(newValue);
+
     // console.log(this.kind, "forgeEffects set effectValue", this.effectValue, " > ", newValue);
   }
   IsForged() {

@@ -1,3 +1,4 @@
+import { ComponentHeroStat } from "./../Hero-Stat/index";
 import { Equipment } from "./../../data/Equipment/Equipment";
 import { set, get, startCase } from "lodash";
 import template from "./template.html";
@@ -16,7 +17,6 @@ import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { ChallengeMonsterKind } from "../../type/ChallengeMonsterKind";
 import { SuperDungeonPowerupKind } from "../../type/SuperDungeonPowerupKind";
-import { ComponentHeroStat } from "../Hero-Stat";
 import { SkillParameter } from "../../data/Skill/SkillParameter";
 import { EquipmentPart } from "../../type/EquipmentPart";
 import { Enums } from "../../Enums";
@@ -24,6 +24,10 @@ import { EquipmentKind } from "../../type/EquipmentKind";
 import { CustomSelectType } from "../../type/CustomSelectType";
 import { Localization } from "../../localization";
 import style from '!!css-loader?{"sourceMap":false,"exportType":"string"}!./style.css';
+import { CopyKind } from "../../type/CopyKind";
+import { ComponentCustomClipboard } from "../Clipboard";
+import { Buff } from "../../type/Buff";
+import brotliPromise from "brotli-wasm"; // Import the default export
 
 export class ComponentEquipmentLoadout extends HTMLElement {
   data: HeroStats;
@@ -33,7 +37,7 @@ export class ComponentEquipmentLoadout extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    this.shadowRoot.innerHTML += `<style>${style}</style>`;
+    this.shadowRoot.innerHTML += `<style>@import "./styles-bundle.css";${style}</style>`;
     this.shadowRoot.innerHTML += template;
     // console.log(this.dataset.hero);
 
@@ -45,7 +49,66 @@ export class ComponentEquipmentLoadout extends HTMLElement {
     //     ? `Grade: ${globalThis.data.superStats.heroes[globalThis.data.source.currentHero].grade}`
     //     : `Level: ${globalThis.data.stats.heroes[globalThis.data.source.currentHero].level}`
     // }
+    (this.shadowRoot.querySelector(`[name="copy-loadout"]`) as HTMLButtonElement).onclick = (event) => {
+      // console.log("butnn");
+      const clipboard = document.querySelector("custom-clipboard") as ComponentCustomClipboard;
+      const loadoutData = globalThis.data.inventory.CopyCurrentLoadout();
 
+      // console.log(array);
+      clipboard.type = CopyKind.EquipmentLoadout;
+      clipboard.data = loadoutData;
+      // console.log(loadoutData);
+
+      brotliPromise.then((brotli) => {
+        // console.log(val);
+        const textEncoder = new TextEncoder();
+        const uncompressedData = textEncoder.encode(JSON.stringify(loadoutData));
+        const compressedData = brotli.compress(uncompressedData, { quality: 11 });
+        // console.log(compressedData.byteLength);
+
+        navigator.clipboard.writeText(
+          JSON.stringify({
+            type: CopyKind.EquipmentLoadout,
+            data: Util.encoder(compressedData),
+          })
+        );
+      });
+
+      // console.log("JSON length", JSON.stringify(loadoutData).length);
+
+      // const compressedBytes = Util.compress(JSON.stringify(loadoutData), "gzip");
+      // compressedBytes.then((arrayBuffer) => {
+      //   const buffer = Buffer.from(arrayBuffer).toString("base64");
+
+      //   console.log("base64 length", buffer.length);
+      //   console.log("custom encoder", Util.encoder(Buffer.from(arrayBuffer)).length);
+      // });
+
+      // const buffer = Util.compressEquipmentLoadout(loadoutData);
+
+      // console.log("custom buffer base 64", buffer.toString("hex").length);
+      // console.log("custom buffer base 64", buffer.toJSON());
+
+      // const data = {
+      //   type: CopyKind.EquipmentLoadout,
+      //   data: loadoutData,
+      // };
+      // navigator.clipboard.writeText(JSON.stringify(data));
+
+      // console.log(navigator.clipboard.readText().then());
+    };
+    // this.onkeydown = (event) => {
+    //   const clipboard = document.querySelector("custom-clipboard") as ComponentCustomClipboard;
+    //   if (event.ctrlKey && event.key == "v") {
+    //     // this.render();
+    //     (document.querySelector("hero-stat") as ComponentHeroStat).render();
+    //   } else if (event.ctrlKey && event.key == "c") {
+    //     console.log("asd");
+
+    //     // clipboard.type = CopyKind.Equipment;
+    //     // clipboard.data = this.equipment.Copy(CopyKind.Equipment);
+    //   }
+    // };
     // this.shadowRoot.innerHTML += `<custom-select data-type="${CustomSelectType.EquipmentForgeEffectKind}"
     // data-endpoint="">23</custom-select>`;
     // this.onfocus = (event) => {
@@ -91,11 +154,10 @@ export class ComponentEquipmentLoadout extends HTMLElement {
 
     globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero] = parseInt(id);
     // console.log(globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero]);
-    globalThis.data.save();
+    // globalThis.data.save();
 
     globalThis.data.inventory.Update();
-    this.render();
-    (document.querySelector("hero-stat") as ComponentHeroStat).render();
+    this.Update();
   }
 
   render(value = 0) {
@@ -185,6 +247,7 @@ export class ComponentEquipmentLoadout extends HTMLElement {
 
   Update() {
     // console.log(this.shadowRoot.querySelector("hero-stat"));
+    this.render();
 
     (document.querySelector("hero-stat") as ComponentHeroStat).Update();
   }

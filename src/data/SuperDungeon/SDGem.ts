@@ -1,3 +1,4 @@
+import { Localization } from "../../localization";
 import { SDGemKind } from "../../type/SDGemKind";
 export class SDGem {
   // sdGemRitualCtrl: SDGemRitualController;
@@ -46,5 +47,13 @@ export class SDGem {
 
   EffectValue() {
     return this.initEffectValue + this.effectIncrementPerLevel * this.level;
+  }
+
+  NameString() {
+    return Localization.SDGemString(this.kind).name;
+  }
+
+  EffectValueString() {
+    return Localization.SDGemString(this.kind, this.EffectValue()).description;
   }
 }

@@ -71,6 +71,10 @@ export class ComponentBattleSimulator extends HTMLElement {
     // </table>`;
   }
 
+  skillData() {
+    let data = {};
+  }
+
   skillBreakdownString(skill: SKILL, hero: BATTLE, monster: BATTLE) {
     const SlayerOilValue = globalThis.data.stats.ElementSlayerDamage(globalThis.data.source.currentHero, globalThis.data.battle.CurrentSlayerElement()).Value();
     const damage = skill.DamageOrigin(hero, false);

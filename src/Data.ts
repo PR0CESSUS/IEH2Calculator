@@ -1,7 +1,4 @@
-import { Stats } from "./type/Stats";
-import { SourceKind } from "./type/SourceKind";
 import { DataDefault } from "./data/DataDefault";
-import { App } from "./App";
 import { DataExpedition } from "./data/Expedition";
 import { DataTown } from "./data/Town";
 import { DataStats } from "./data/Stats";
@@ -34,6 +31,9 @@ import { SuperDungeonUpgradeKind } from "./type/SuperDungeonUpgradeKind";
 import { UpgradeController } from "./data/Upgrade";
 import { MultiplierInfo } from "./Multiplier";
 import { MultiplierType } from "./type/MultiplierType";
+import { BasicStatsKind } from "./type/BasicStatsKind";
+import { MultiplierKind } from "./type/MultiplierKind";
+import { MonsterSpecies } from "./type/MonsterSpecies";
 
 export class DATA {
   database: Database;
@@ -99,7 +99,24 @@ export class DATA {
     }
 
     this.Start();
+    // test
+    // 2.53e+60 total damage
+    //
+    // globalThis.data.stats
+    //   .BasicStats(this.source.currentHero, BasicStatsKind.MDEF)
+    //   .RegisterMultiplier(new MultiplierInfo(MultiplierKind.Stance, MultiplierType.After, () => -140000));
+    // globalThis.data.stats
+    //   .BasicStats(this.source.currentHero, BasicStatsKind.DEF)
+    //   .RegisterMultiplier(new MultiplierInfo(MultiplierKind.Stance, MultiplierType.After, () => -140000));
+    // globalThis.data.stats
+    //   .MonsterDamage(this.source.currentHero, MonsterSpecies.ChallengeBoss)
+    //   .RegisterMultiplier(new MultiplierInfo(MultiplierKind.Stance, MultiplierType.After, () => 3430));
+    // globalThis.data.battle.superDungeonCtrl.damageMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Equipment, MultiplierType.Mul, () => -701));
 
+    // Total Damage	= 2.53e+60 normal bez zmian
+    //Total Damage	= 2.36e+60
+    // Total Damage	= 2.81e+60 zmiana paska na kurtke
+    // Total Damage	= 3.06e+60 zmiana paska i earinga
     // this.stats.heroes[2].basicStats[4].RegisterMultiplier(new MultiplierInfo(1, MultiplierType.After, () => -1672000));
   }
 

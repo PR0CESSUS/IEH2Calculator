@@ -110,7 +110,7 @@ export class ComponentEquipmentInfo extends HTMLElement {
     tooltip.style.display = this.equipment.kind == 0 ? "none" : "block";
     // if (edit == false && this.equipment.kind == 0) return;
     tooltip.innerHTML = "";
-    if (this.equipment.kind == 0) return;
+    // if (this.equipment.kind == 0) return;
 
     // (this.shadowRoot.querySelector(".icon96") as HTMLImageElement).src = `./img/equip/${EquipmentKind[this.equipment.kind]}.png`;
 
@@ -147,7 +147,7 @@ export class ComponentEquipmentInfo extends HTMLElement {
   }
   Update() {
     console.log("update");
-    // this.equipment.Start();
+    this.equipment.Start();
     this.render();
     (document.querySelector("hero-stat") as ComponentHeroStat).Update();
     // console.log();

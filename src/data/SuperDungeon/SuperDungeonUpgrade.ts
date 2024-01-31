@@ -1,4 +1,5 @@
 import { SuperDungeonGlobalController } from ".";
+import { Localization } from "../../localization";
 import { SuperDungeonUpgradeKind } from "../../type/SuperDungeonUpgradeKind";
 
 export class SuperDungeonUpgrade {
@@ -57,5 +58,14 @@ export class SuperDungeonUpgrade {
 
   IsActive() {
     return true;
+  }
+
+  NameString() {
+    return Localization.SDUpgradeString(this.kind).name;
+  }
+
+  EffectValueString() {
+    const localization = Localization.SDUpgradeString(this.kind, this.EffectValue());
+    return localization.description + " " + localization.value;
   }
 }

@@ -4,7 +4,8 @@ export function onKeyDown(event: KeyboardEvent) {
     //@ts-ignore
     // console.log(event.target.tagName);
     // console.log(event.composedPath());
-    console.log(document.activeElement);
+    // console.log(document.activeElement);
+
     // let e = document.createEvent("MouseEvent");
     // console.log(e);
     // document.dispatchEvent(e);

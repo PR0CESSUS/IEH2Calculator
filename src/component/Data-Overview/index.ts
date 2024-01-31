@@ -65,31 +65,54 @@ export class ComponentDataOverview extends HTMLElement {
         });
         break;
       case "gemritual":
-        str += `<tr><th>Name</th><th>Level</th></tr>`;
-        globalThis.data.sdg.sdGemRitualCtrl.sdGemList.forEach((upgrade, index) => {
-          const localization = Localization.SDGemString(upgrade.kind);
-          str += `<tr><td>${localization.name}: </td><td><custom-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[${index}].level"></custom-input></td></tr>`;
+        str += `<tr><th>Name</th><th>Level</th><th>Effect</th></tr>`;
+        globalThis.data.sdg.sdGemRitualCtrl.sdGemList.forEach((ritual, index) => {
+          str += `<tr>
+          <td>${ritual.NameString()}: </td>
+          <td><custom-input data-endpoint="data.sdg.sdGemRitualCtrl.sdGemList[${index}].level"></custom-input></td>
+          <td>${ritual.EffectValueString()}</td>
+          </tr>`;
         });
         break;
       case "rubyshop":
-        str += `<tr><th>Name</th><th>Level</th></tr>`;
+        str += `<tr><th>Name</th><th>Level</th><th>Effect</th></tr>`;
         globalThis.data.sdg.shopCtrl.itemStatBonusList.forEach((upgrade, index) => {
           const localization = Localization.SDShopString(4 + index * 2);
-          str += `<tr><td>${localization}: </td><td><custom-input data-endpoint="data.sdg.shopCtrl.itemStatBonusList[${index}].purchasedNum"></custom-input></td></tr>`;
+          const effect = Localization.SDShopString(
+            5 + index * 2,
+            upgrade.EffectValue(upgrade.purchasedNum),
+            upgrade.EffectValue(1),
+            globalThis.data.equipment.ArtifactEffectMultiplier()
+          );
+          str += `<tr>
+          <td>${localization}: </td>
+          <td><custom-input data-endpoint="data.sdg.shopCtrl.itemStatBonusList[${index}].purchasedNum"></custom-input></td>
+          <td>${effect}</td>
+          </tr>`;
         });
         break;
       case "sdupgrade":
-        str += `<tr><th>Name</th><th>Level</th></tr>`;
+        str += `<tr><th>Name</th><th>Level</th><th>Effect</th></tr>`;
         globalThis.data.sdg.upgradeCtrl.upgrade1ist.forEach((upgrade, index) => {
-          const localization = Localization.SDUpgradeString(upgrade.kind, upgrade.EffectValue().toString());
-          str += `<tr><td>${localization.name}: </td><td><custom-input data-endpoint="data.sdg.upgradeCtrl.upgrade1ist[${index}].level"></custom-input></td></tr>`;
+          // const localization = Localization.SDUpgradeString(upgrade.kind, upgrade.EffectValue().toString());
+          str += `<tr>
+          <td>${upgrade.NameString()}: </td>
+          <td><custom-input data-endpoint="data.sdg.upgradeCtrl.upgrade1ist[${index}].level"></custom-input></td>
+          <td>${upgrade.EffectValueString()}</td>
+          </tr>`;
         });
         break;
       case "talisman":
-        str += `<tr><th>Name</th><th>Disassambled</th></tr>`;
-        globalThis.data.potion.talismans.forEach((upgrade, index) => {
-          const localization = Localization.PotionName(upgrade.kind);
-          str += `<tr><td>${localization}: </td><td><custom-input data-endpoint="data.potion.talismans[${index}].disassembledNum"></custom-input></td></tr>`;
+        str += `<tr><th>Name</th><th>Disassambled</th><th>Level</th><th>Passive Effect</th></tr>`;
+        globalThis.data.potion.talismans.forEach((talisman, index) => {
+          // const effect = Localization.PotionEffect(upgrade.kind, );
+
+          str += `<tr>
+          <td>${talisman.NameString()}: </td>
+          <td><custom-input data-endpoint="data.potion.talismans[${index}].disassembledNum"></custom-input></td>
+          <td><custom-input data-endpoint="data.potion.talismans[${index}].level"></custom-input></td>
+          <td>${talisman.EffectValueString()}</td>
+          </tr>`;
         });
         break;
       case "expedition":

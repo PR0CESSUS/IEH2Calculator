@@ -55,6 +55,8 @@ export class ComponentCustomClipboard extends HTMLElement {
         return "Enchantment";
       case CopyKind.ForgeEffects:
         return "Forged Effects";
+      case CopyKind.EquipmentLoadout:
+        return "Equipment Loadout";
       default:
         return "";
     }

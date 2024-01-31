@@ -7,6 +7,7 @@ import { onhashchange } from "./onhashchange";
 import { onKeyDown } from "./keydown";
 import { dialogBackdropClose } from "./dialog";
 import { SaveFileDencrypt } from "../SaveFileDencrypt";
+import { paste } from "./paste";
 
 export class Events {
   configRequest: Function;
@@ -17,6 +18,7 @@ export class Events {
   customDataExport: Function;
   customDataImport: Function;
   onKeyDown: Function;
+  paste: Function;
   onhashchange;
   dialogBackdropClose;
 
@@ -26,7 +28,8 @@ export class Events {
     // this.onChange = onChange;
     // this.onClick = onClick;
     // this.onhashchange = onhashchange.bind(app);
-    // this.onKeyDown = onKeyDown;
+    this.onKeyDown = onKeyDown;
+    this.paste = paste;
     // this.dialogBackdropClose = dialogBackdropClose;
 
     // document.body.addEventListener("htmx:configRequest", this.configRequest.bind(app));
@@ -54,6 +57,7 @@ export class Events {
 
     // document.body.addEventListener("click", this.onClick.bind(app));
     // document.body.addEventListener("keydown", this.onKeyDown.bind(app));
+    document.body.addEventListener("paste", this.paste.bind(app));
     // window.onhashchange = this.onhashchange;
   }
 }

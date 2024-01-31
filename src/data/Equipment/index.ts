@@ -65,11 +65,11 @@ export class DataEquipment {
   Start() {
     // for (let index = 0; index < this.equipments.length; index++) this.equipments[index].Start();
   }
-  EffectMultiplier(heroKind: HeroKind) {
+  EffectMultiplier() {
     return this.effectMultiplier.Value();
   }
 
-  ArtifactEffectMultiplier(heroKind: HeroKind) {
-    return 1.0 + (this.EffectMultiplier(heroKind) - 1.0) * this.effectMultiplierModifierForArtifact.Value();
+  ArtifactEffectMultiplier() {
+    return 1.0 + (this.EffectMultiplier() - 1.0) * this.effectMultiplierModifierForArtifact.Value();
   }
 }

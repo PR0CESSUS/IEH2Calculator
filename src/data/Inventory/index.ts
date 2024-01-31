@@ -8,6 +8,7 @@ import { HeroKind } from "../../type/HeroKind";
 import { Equipment } from "../Equipment/Equipment";
 import { EquipmentPart } from "../../type/EquipmentPart";
 import { EquipmentPotion } from "../Equipment/EquipmentPotion";
+import { CopyKind } from "../../type/CopyKind";
 
 export class DataInventory {
   //   isCalledUpdateSetItemEquippedNumInThisSec: boolean[] = Array(Enums.heroKindLength);
@@ -87,7 +88,6 @@ export class DataInventory {
     for (let index = 260; index < this.potionSlots.length; index++) {
       this.potionSlots[index].Start();
     }
-
     for (let index = 0; index < Enums.HeroKind; index++) {
       this.UpdateSetItemEquippedNumHero(index);
     }
@@ -191,7 +191,11 @@ export class DataInventory {
     for (let index = 0; index < globalThis.data.equipment.setItemArray[kind].length; index++) {
       const equipmentKind = globalThis.data.equipment.setItemArray[kind][index];
       for (let equipInventorySlotId = start; equipInventorySlotId < stop; equipInventorySlotId++) {
-        if (this.equipmentSlots[equipInventorySlotId].globalInfo.kind == equipmentKind && this.equipmentSlots[equipInventorySlotId].IsEquipped()) {
+        if (
+          this.equipmentSlots[equipInventorySlotId].globalInfo.kind == equipmentKind &&
+          this.equipmentSlots[equipInventorySlotId].IsEquipped() &&
+          !this.equipmentSlots[equipInventorySlotId].isDisabled()
+        ) {
           num++;
           break;
         }
@@ -224,5 +228,43 @@ export class DataInventory {
       default:
         return 0;
     }
+  }
+
+  CopyCurrentLoadout() {
+    let array = [];
+    const INITIAL_OFFSET = 520 + globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero] * 72 + globalThis.data.source.currentHero * 720;
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      array.push(globalThis.data.inventory.equipmentSlots[index].Copy(CopyKind.Equipment));
+    }
+
+    return array;
+  }
+
+  PasteLoadout(data) {
+    let i = 0;
+    const INITIAL_OFFSET = 520 + globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero] * 72 + globalThis.data.source.currentHero * 720;
+    // console.log("INITIAL_OFFSET", INITIAL_OFFSET);
+
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      const equipment = this.equipmentSlots[index];
+      globalThis.data.source.equipmentKinds[equipment.id] = data[i].kind;
+
+      equipment.optionEffects.forEach((effect, o) => {
+        effect.SetKind(data[i].optionEffects[o].kind);
+        effect.SetEffectValue(data[i].optionEffects[o].effectValue);
+        effect.SetLevel(data[i].optionEffects[o].level);
+      });
+
+      equipment.forgeEffects.forEach((forge, f) => {
+        forge.SetEffectValue(data[i].forgeEffects[f].effectValue);
+      });
+
+      // equipment.Start();
+
+      // console.log(i);
+      // equipment.Paste(CopyKind.Equipment, data[i]);
+      i++;
+    }
+    this.Update();
   }
 }

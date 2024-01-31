@@ -1,4 +1,5 @@
 import { Enums } from "../../Enums";
+import { Localization } from "../../localization";
 import { HeroKind } from "../../type/HeroKind";
 import { PotionKind } from "../../type/PotionKind";
 import { PotionType } from "../../type/PotionType";
@@ -72,5 +73,12 @@ export class PotionGlobalInformation {
     return Math.pow(5.0, this.talismanRarity);
   }
 
+  NameString() {
+    return Localization.PotionName(this.kind);
+  }
+
+  EffectValueString() {
+    return Localization.PotionEffect(this.kind, this.passiveEffectValue, true);
+  }
   //   Name() {return Localized.localized.PotionName(this.kind);}
 }
