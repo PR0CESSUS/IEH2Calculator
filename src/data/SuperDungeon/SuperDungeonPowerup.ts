@@ -67,7 +67,7 @@ export class SuperDungeonPowerup {
   }
   TotalRankCost() {
     let total = 0;
-    for (let index = 1; index < this.rank + 1; index++) {
+    for (let index = 0; index <= this.rank; index++) {
       total += this.RankCost(index);
     }
     return total;
