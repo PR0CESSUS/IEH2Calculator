@@ -51,9 +51,9 @@ export class ComponentEquipmentInfo extends HTMLElement {
       this.focus();
     };
 
-    this.onmouseleave = (event) => {
-      this.blur();
-    };
+    // this.onmouseleave = (event) => {
+    //   this.blur();
+    // };
 
     // COPY PASTE EVENT
     this.onkeydown = (event) => {
