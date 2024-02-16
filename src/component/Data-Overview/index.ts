@@ -78,12 +78,7 @@ export class ComponentDataOverview extends HTMLElement {
         str += `<tr><th>Name</th><th>Level</th><th>Effect</th></tr>`;
         globalThis.data.sdg.shopCtrl.itemStatBonusList.forEach((upgrade, index) => {
           const localization = Localization.SDShopString(4 + index * 2);
-          const effect = Localization.SDShopString(
-            5 + index * 2,
-            upgrade.EffectValue(upgrade.purchasedNum),
-            upgrade.EffectValue(1),
-            globalThis.data.equipment.ArtifactEffectMultiplier()
-          );
+          const effect = Localization.SDShopString(5 + index * 2, upgrade.EffectValue(upgrade.purchasedNum), upgrade.EffectValue(1), globalThis.data.equipment.ArtifactEffectMultiplier());
           str += `<tr>
           <td>${localization}: </td>
           <td><custom-input data-endpoint="data.sdg.shopCtrl.itemStatBonusList[${index}].purchasedNum"></custom-input></td>
@@ -124,9 +119,11 @@ export class ComponentDataOverview extends HTMLElement {
         });
         break;
       case "sdpowerup":
-        str += `<tr><th>Name</th><th>Rank</th><th>Purchased</th><th>Level</th><th>Passive Effect</th></tr>`;
+        str += `<tr><th>Name</th><th>Rank</th><th>Purchased</th><th>Level</th><th>Topaz</th><th>Passive Effect</th></tr>`;
+        let totalTopaz = 0;
         globalThis.data.battle.superDungeonCtrl.powerupList.forEach((powerup, index) => {
           const localization = Localization.SDPowerupString(powerup.kind, powerup.PermanentEffectValue());
+          totalTopaz += powerup.TotalRankCost();
           // console.log(powerup.purchasedNum);
           // globalThis.data.battles[${globalThis.data.source.currentHero}].superDungeonCtrl.powerupList
           str += `<tr>`;
@@ -134,9 +131,11 @@ export class ComponentDataOverview extends HTMLElement {
           str += `<td><custom-input data-endpoint="data.battle.superDungeonCtrl.powerupList[${index}].rank"></custom-input></td>`;
           str += `<td><custom-input data-endpoint="data.battle.superDungeonCtrl.powerupList[${index}].purchasedNum"></custom-input></td>`;
           str += `<td><custom-input data-endpoint="data.custom.powerup[${index}]"></custom-input></td>`;
+          str += `<td>${powerup.TotalRankCost()}</td>`;
           str += `<td>${localization.passive}</td>`;
           str += `</tr>`;
         });
+        str += `<tr><td></td><td></td><td></td><td></td><td>${totalTopaz}</td><td></td></tr>`;
         break;
       default:
         break;

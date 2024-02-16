@@ -62,7 +62,20 @@ export class SuperDungeonPowerup {
   }
 
   // Initialize() {return this.level.ChangeValue(0);}
+  RankCost(rank) {
+    return 1 + rank;
+  }
+  TotalRankCost() {
+    let total = 0;
+    for (let index = 1; index < this.rank + 1; index++) {
+      total += this.RankCost(index);
+    }
+    return total;
+  }
 
+  Cost(level) {
+    return 0;
+  }
   isActive() {
     return globalThis.data.custom.isPowerupActive;
   }
