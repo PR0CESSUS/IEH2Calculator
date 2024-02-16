@@ -63,12 +63,12 @@ export class SuperDungeonPowerup {
 
   // Initialize() {return this.level.ChangeValue(0);}
   RankCost(rank) {
-    return 1 + rank;
+    return 0;
   }
   TotalRankCost() {
     let total = 0;
-    for (let index = 0; index <= this.rank; index++) {
-      total += this.RankCost(index);
+    for (let index = 0; index < this.rank; index++) {
+      if (this.rank) total += this.RankCost(index);
     }
     return total;
   }
