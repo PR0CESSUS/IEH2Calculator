@@ -135,6 +135,9 @@ export class ComponentDataOverview extends HTMLElement {
           str += `<td>${localization.passive}</td>`;
           str += `</tr>`;
         });
+        // globalThis.data.sdg.upgradeCtrl.automationList.forEach(upgrade => {
+        //   totalTopaz += upgrade.Cost
+        // })
         str += `<tr><td></td><td></td><td></td><td></td><td>${totalTopaz}</td><td></td></tr>`;
         break;
       default:

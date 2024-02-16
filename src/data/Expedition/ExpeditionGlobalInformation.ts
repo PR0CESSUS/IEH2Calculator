@@ -24,8 +24,15 @@ export class ExpeditionGlobalInformation {
 
   // PetExpGainPerSec() => 5.0 * (1.0 + 0.5 * this.level.value) * this.expeditionCtrl.petExpGainMultiplier.Value() * globalThis.data.stat.statsCtrl.MaxPetEXPGainAmongHeroes();
 
-  // SpeedModifierByExpeditionLevel() => Math.Pow(1.1, Math.floor((double) this.level.value / 10.0));
-
+  // SpeedModifierByExpeditionLevel() => Math.Pow(1.1, Math.floor( this.level.value / 10.0));
+  RequiredExp(level) {
+    let num = 86400.0 * (1 + level + 0.25 * Math.pow(Math.max(0, level - 3), 2.0));
+    if (level >= 200) num *= Math.pow(2.0, (level - 200.0) / 50.0);
+    if (level >= 300) num *= Math.pow(2.0, (level - 300.0) / 50.0);
+    if (level >= 400) num *= Math.pow(2.0, (level - 400.0) / 50.0);
+    if (level >= 500) num *= Math.pow(2.0, (level - 500.0) / 50.0);
+    return num;
+  }
   SetEffect() {}
 
   get passiveEffectValueIncrementPerLevel() {
