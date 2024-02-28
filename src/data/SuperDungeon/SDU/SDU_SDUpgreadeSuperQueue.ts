@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -18,9 +18,7 @@ export class SDU_SDUpgreadeSuperQueue extends SuperDungeonUpgrade {
   }
 
   SetEffect() {
-    return this.sdUpgradeCtrl.availableSuperQueue.RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Add, () => this.EffectValue())
-    );
+    return this.sdUpgradeCtrl.availableSuperQueue.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Add, () => this.EffectValue()));
   }
 
   get maxLevel() {

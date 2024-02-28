@@ -3,8 +3,10 @@ import { convertTo } from "./convertTo";
 import { convertFrom } from "./convertFrom";
 import { NumberType } from "../type/NumberType";
 import { secondsToDhms } from "./secondsToDhms";
-import { compress, decompress, compressEquipmentLoadout } from "./compress";
-import { encoder, decoder } from "./encoder";
+// import { compress, decompress } from "./compress";
+// import { encoder, decoder } from "./encoder";
+import { stringToPath } from "./stringToPath";
+import { get } from "./get";
 
 export const Util = {
   convertTo,
@@ -23,8 +25,10 @@ export const Util = {
     return Math.log(x) / Math.log(y);
   },
   Endpoint,
-  compress,
-  decompress,
-  encoder,
-  decoder,
+  // compress,
+  // decompress,
+  // encoder,
+  // decoder,
+  stringToPath,
+  get,
 };

@@ -1,0 +1,17 @@
+export enum TownMaterialKind {
+  MudBrick,
+  LimestoneBrick,
+  MarbleBrick,
+  GraniteBrick,
+  BasaltBrick,
+  PineLog,
+  MapleLog,
+  AshLog,
+  MahoganyLog,
+  RosewoodLog,
+  JasperShard,
+  OpalShard,
+  OnyxShard,
+  JadeShard,
+  SapphireShard,
+}

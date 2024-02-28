@@ -1,15 +1,40 @@
 {
   "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "forceConsistentCasingInFileNames": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+
+    /* Linting */
     "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "target": "ES2022",
-    "module": "NodeNext",
-    "outDir": "./dist",
-    "moduleResolution": "NodeNext",
-    "sourceMap": true
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true
   },
-  // "include": ["src/**/*.ts"],
-  "include": ["src/**/*.ts", "src/debug/*.ts"],
-  "exclude": ["dist", "node_modules", "**/*.spec.ts", "main.js"],
-  "files": ["global.d.ts", "html.d.ts", "css.d.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "test/run.ts",
+    "test/run.ts",
+    "test/encoder.ts",
+    "test/compress.ts",
+    "test/encoder.ts",
+    "test/compress.ts",
+    "test/SaveFileDencrypt.ts",
+    "test/SaveFileDencrypt.ts"
+  ],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "exclude": ["test/**/*.ts"],
+  "files": ["global.d.ts"]
 }

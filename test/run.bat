@@ -1,0 +1,1 @@
+npx tsx watch --ignore DataDefault.ts test.ts 

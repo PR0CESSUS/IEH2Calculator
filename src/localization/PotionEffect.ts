@@ -4,67 +4,67 @@ import { Util } from "../Util/";
 export function PotionEffect(kind: PotionKind, effectValue: number, isPassive: boolean = false) {
   switch (kind) {
     case PotionKind.MinorHealthPotion:
-      return "Restores HP + " + Util.tDigit(effectValue) + "</color>";
+      return "Restores HP + " + Util.tDigit(effectValue);
     case PotionKind.MinorRegenerationPoultice:
-      return "HP Regenerate + " + Util.tDigit(effectValue, 2) + " / sec" + "</color>";
+      return "HP Regenerate + " + Util.tDigit(effectValue, 2) + " / sec";
     case PotionKind.MinorResourcePoultice:
-      return "Resource Gain (Global) + " + Util.percent(effectValue) + "</color>";
+      return "Resource Gain (Global) + " + Util.percent(effectValue);
     case PotionKind.SlickShoeSolution:
-      return "Move Speed + " + Util.percent(effectValue) + "</color>";
+      return "Move Speed + " + Util.percent(effectValue);
     case PotionKind.MinorManaRegenerationPoultice:
-      return "MP Regenerate + " + Util.tDigit(effectValue, 2) + " / sec" + "</color>";
+      return "MP Regenerate + " + Util.tDigit(effectValue, 2) + " / sec";
     case PotionKind.MaterialMultiplierMist:
-      return "Increases dropped amount of materials by " + Util.tDigit(effectValue) + "</color>";
+      return "Increases dropped amount of materials by " + Util.tDigit(effectValue);
     case PotionKind.BasicElixirOfBrawn:
-      return "Physical Damage + " + Util.percent(effectValue) + "</color>";
+      return "Physical Damage + " + Util.percent(effectValue);
     case PotionKind.BasicElixirOfBrains:
-      return "Magical Damage + " + Util.percent(effectValue) + "</color>";
+      return "Magical Damage + " + Util.percent(effectValue);
     case PotionKind.BasicElixirOfFortitude:
-      return "HP + " + Util.tDigit(effectValue) + "</color>";
+      return "HP + " + Util.tDigit(effectValue);
     case PotionKind.BasicElixirOfConcentration:
-      return "MP + " + Util.tDigit(effectValue) + "</color>";
+      return "MP + " + Util.tDigit(effectValue);
     case PotionKind.BasicElixirOfUnderstanding:
-      return "Skill Proficiency Gain + " + Util.percent(effectValue) + "</color>";
+      return "Skill Proficiency Gain + " + Util.percent(effectValue);
     case PotionKind.ChilledHealthPotion:
-      return "Restores HP + " + Util.tDigit(effectValue) + "</color>";
+      return "Restores HP + " + Util.tDigit(effectValue);
     case PotionKind.ChilledRegenerationPoultice:
-      return "HP Regenerate + " + Util.tDigit(effectValue, 2) + " / sec" + "</color>";
+      return "HP Regenerate + " + Util.tDigit(effectValue, 2) + " / sec";
     case PotionKind.FrostyDefensePotion:
-      return "Ice Resistance + " + Util.percent(effectValue) + "</color>";
+      return "Ice Resistance + " + Util.percent(effectValue);
     case PotionKind.IcyAuraDraught:
-      return "Generates an aura of cold around hero that has " + Util.percent(effectValue) + "</color> chance every second to give monsters SPD Down" + " debuff";
+      return "Generates an aura of cold around hero that has " + Util.percent(effectValue) + " chance every second to give monsters SPD Down" + " debuff";
     case PotionKind.SlightlyStickySalve:
-      return "Gold Gain (Global) + " + Util.percent(effectValue) + "</color>";
+      return "Gold Gain (Global) + " + Util.percent(effectValue);
     case PotionKind.SlickerShoeSolution:
-      return "Move Speed + " + Util.percent(effectValue) + "</color>";
+      return "Move Speed + " + Util.percent(effectValue);
     case PotionKind.CoolHeadOintment:
-      return "EXP Gain + " + Util.percent(effectValue) + "</color>";
+      return "EXP Gain + " + Util.percent(effectValue);
     case PotionKind.FrostySlayersOil:
-      return "Changes skills' damage type to Ice and adds extra " + Util.percent(effectValue) + "</color> ice damage";
+      return "Changes skills' damage type to Ice and adds extra " + Util.percent(effectValue) + " ice damage";
     case PotionKind.BurningDefensePotion:
-      return "Fire Resistance + " + Util.percent(effectValue) + "</color>";
+      return "Fire Resistance + " + Util.percent(effectValue);
     case PotionKind.BlazingAuraDraught:
-      return "Generates an aura of fire around hero that has " + Util.percent(effectValue) + "</color> chance every second to knockback monsters";
+      return "Generates an aura of fire around hero that has " + Util.percent(effectValue) + " chance every second to knockback monsters";
     case PotionKind.FierySlayersOil:
-      return "Changes skills' damage type to Fire and adds extra " + Util.percent(effectValue) + "</color> fire damage";
+      return "Changes skills' damage type to Fire and adds extra " + Util.percent(effectValue) + " fire damage";
     case PotionKind.ElectricDefensePotion:
-      return "Thunder Resistance + " + Util.percent(effectValue) + "</color>";
+      return "Thunder Resistance + " + Util.percent(effectValue);
     case PotionKind.WhirlingAuraDraught:
-      return "Generates an aura of thunder around hero that has " + Util.percent(effectValue) + "</color> chance every second to give monsters Electric" + " debuff";
+      return "Generates an aura of thunder around hero that has " + Util.percent(effectValue) + " chance every second to give monsters Electric" + " debuff";
     case PotionKind.ShockingSlayersOil:
-      return "Changes skills' damage type to Thunder and adds extra " + Util.percent(effectValue) + "</color> thunder damage";
+      return "Changes skills' damage type to Thunder and adds extra " + Util.percent(effectValue) + " thunder damage";
     case PotionKind.ThrowingNet:
-      return "Right-click to capture <color=green>Normal Type</color> monsters";
+      return "Right-click to capture Normal Type monsters";
     case PotionKind.IceRope:
-      return "Right-click to capture <color=green>Blue Type</color> monsters";
+      return "Right-click to capture Blue Type monsters";
     case PotionKind.ThunderRope:
-      return "Right-click to capture <color=green>Yellow Type</color> monsters";
+      return "Right-click to capture Yellow Type monsters";
     case PotionKind.FireRope:
-      return "Right-click to capture <color=green>Red Type</color> monsters";
+      return "Right-click to capture Red Type monsters";
     case PotionKind.LightRope:
-      return "Right-click to capture <color=green>Green Type</color> monsters";
+      return "Right-click to capture Green Type monsters";
     case PotionKind.DarkRope:
-      return "Right-click to capture <color=green>Purple Type</color> monsters";
+      return "Right-click to capture Purple Type monsters";
     case PotionKind.GuildMembersEmblem:
       return isPassive ? "Reduces Guild EXP requirement to level by " + Util.percent(effectValue) : "Multiplies Guild EXP Gain by " + Util.percent(1.0 + effectValue);
     case PotionKind.CertificateOfCompetence:

@@ -9,8 +9,8 @@ import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind"
 import { GlobalStats } from "../../../../type/GlobalStats";
 
 export class KnockingShot extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 5, SkillPassiveEffectKind.BasicStats, BasicStatsKind.HP, MultiplierType.Add, 250.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MDEF, MultiplierType.Add, 25.0));

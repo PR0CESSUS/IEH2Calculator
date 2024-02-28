@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { PotionGlobalInformation } from "../PotionGlobalInformation";
 import { ResourceKind } from "../../../type/ResourceKind";
 import { MultiplierType } from "../../../type/MultiplierType";
@@ -15,7 +15,7 @@ export class MinorResourcePoultice extends PotionGlobalInformation {
 
   SetEffect(heroKind: HeroKind, equipNum: Function) {
     return [
-      globalThis.data.stats.ResourceGain(ResourceKind.Stone).RegisterMultiplier(
+      this.data.stats.ResourceGain(ResourceKind.Stone).RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.Potion,
           MultiplierType.Mul,
@@ -23,7 +23,7 @@ export class MinorResourcePoultice extends PotionGlobalInformation {
           () => this.IsActiveEffect(heroKind, equipNum)
         )
       ),
-      globalThis.data.stats.ResourceGain(ResourceKind.Crystal).RegisterMultiplier(
+      this.data.stats.ResourceGain(ResourceKind.Crystal).RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.Potion,
           MultiplierType.Mul,
@@ -31,7 +31,7 @@ export class MinorResourcePoultice extends PotionGlobalInformation {
           () => this.IsActiveEffect(heroKind, equipNum)
         )
       ),
-      globalThis.data.stats.ResourceGain(ResourceKind.Leaf).RegisterMultiplier(
+      this.data.stats.ResourceGain(ResourceKind.Leaf).RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.Potion,
           MultiplierType.Mul,
@@ -47,6 +47,6 @@ export class MinorResourcePoultice extends PotionGlobalInformation {
   }
 
   AlchemyPointGain(level) {
-    return 1.0 * globalThis.data.alchemy.alchemyPointGainMultiplier.Value();
+    return 1.0 * this.data.alchemy.alchemyPointGainMultiplier.Value();
   }
 }

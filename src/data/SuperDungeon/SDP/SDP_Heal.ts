@@ -1,11 +1,10 @@
-import { MultiplierInfo } from "../../../Multiplier";
-import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
-import { SuperDungeonController } from "../SuperDungeonController";
-import { MultiplierType } from "../../../type/MultiplierType";
-import { MultiplierKind } from "../../../type/MultiplierKind";
+import { MultiplierInfo } from "../../Multiplier";
 import { BasicStatsKind } from "../../../type/BasicStatsKind";
-import { Stats } from "../../../type/Stats";
+import { MultiplierKind } from "../../../type/MultiplierKind";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonPowerupKind } from "../../../type/SuperDungeonPowerupKind";
+import { SuperDungeonController } from "../SuperDungeonController";
+import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 
 export class SDP_Heal extends SuperDungeonPowerup {
   get kind() {
@@ -38,7 +37,7 @@ export class SDP_Heal extends SuperDungeonPowerup {
   }
 
   SetGlobalEffect() {
-    globalThis.data.stats.SetEffectBasicStats(
+    this.ctrl.data.stats.SetEffectBasicStats(
       BasicStatsKind.HP,
       new MultiplierInfo(
         MultiplierKind.DungeonItemPermanent,

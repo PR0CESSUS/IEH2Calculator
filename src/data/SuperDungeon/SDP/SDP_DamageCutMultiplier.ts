@@ -1,11 +1,10 @@
-import { MultiplierInfo } from "../../../Multiplier";
 import { Enums } from "../../../Enums";
-import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
-import { SuperDungeonController } from "../SuperDungeonController";
-import { MultiplierType } from "../../../type/MultiplierType";
+import { MultiplierInfo } from "../../Multiplier";
 import { MultiplierKind } from "../../../type/MultiplierKind";
-import { HeroKind } from "../../../type/HeroKind";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonPowerupKind } from "../../../type/SuperDungeonPowerupKind";
+import { SuperDungeonController } from "../SuperDungeonController";
+import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 
 export class SDP_DamageCutMultiplier extends SuperDungeonPowerup {
   get kind() {
@@ -39,7 +38,7 @@ export class SDP_DamageCutMultiplier extends SuperDungeonPowerup {
 
   SetGlobalEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+      this.ctrl.data.battles[index].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.DungeonItemPermanent,
           MultiplierType.Mul,

@@ -1,4 +1,6 @@
-import { MultiplierInfo, Multiplier } from "../../Multiplier";
+//TODO Delate unused methods
+
+import { MultiplierInfo, Multiplier } from "../Multiplier";
 import { MultiplierType } from "../../type/MultiplierType";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { Enums } from "../../Enums";
@@ -9,16 +11,11 @@ import { Equipment } from "../Equipment/Equipment";
 import { EquipmentPart } from "../../type/EquipmentPart";
 import { EquipmentPotion } from "../Equipment/EquipmentPotion";
 import { CopyKind } from "../../type/CopyKind";
+import { DATA } from "..";
 
 export class DataInventory {
-  //   isCalledUpdateSetItemEquippedNumInThisSec: boolean[] = Array(Enums.heroKindLength);
+  #data: DATA;
   setItemEquippedNums: any[] = Array(Enums.EquipmentSetKind);
-  //   canCreatePotionNums: number[] = Array(Enums.PotionKind);
-  //   tempCanCreatePotionNums: number[] = Array(Enums.PotionKind);
-  //   double[] potionEquipNums = new double[Enums.PotionKind) * Enums.HeroKind)];
-  //   double[] tempPotionEquipNums = new double[Enums.PotionKind) * Enums.HeroKind)];
-  //   Action slotUIAction;
-  lastPotionSlotUIActionTime = -1.0;
   equipmentSlots: Equipment[] = Array(InventoryParameter.allEquipmentSlotId);
   //   EnchantSlot[] enchantSlots = new EnchantSlot[InventoryParameter.enchantSlotId];
   potionSlots: EquipmentPotion[] = Array(InventoryParameter.allPotionSlotId);
@@ -30,7 +27,8 @@ export class DataInventory {
   potionUnlockedNum: Multiplier;
   equipPotionUnlockedNum: Multiplier[] = Array(Enums.HeroKind);
 
-  constructor() {
+  constructor(DATA: DATA) {
+    this.#data = DATA;
     for (let index = 0; index < Enums.EquipmentSetKind; index++) {
       this.setItemEquippedNums[index] = new Array(Enums.HeroKind).fill(0);
     }
@@ -56,12 +54,12 @@ export class DataInventory {
     // console.log("Start inventory");
 
     for (let index = 0; index < this.equipmentSlots.length; index++) {
-      this.equipmentSlots[index] = new Equipment(index);
+      this.equipmentSlots[index] = new Equipment(this.#data, index);
       this.equipmentSlots[index].Start();
     }
 
     for (let index = 0; index < this.potionSlots.length; index++) {
-      this.potionSlots[index] = new EquipmentPotion(index);
+      this.potionSlots[index] = new EquipmentPotion(this.#data, index);
       this.potionSlots[index].Start();
     }
     // for (let index = 0; index < this.potionSlots.length; index++)
@@ -185,11 +183,11 @@ export class DataInventory {
     let start = this.getOffset(heroKind);
     let stop = start + 72;
 
-    // console.log(globalThis.data.equipment.setItemArray[kind]);
+    // console.log(this.#data.equipment.setItemArray[kind]);
     // return;
 
-    for (let index = 0; index < globalThis.data.equipment.setItemArray[kind].length; index++) {
-      const equipmentKind = globalThis.data.equipment.setItemArray[kind][index];
+    for (let index = 0; index < this.#data.equipment.setItemArray[kind].length; index++) {
+      const equipmentKind = this.#data.equipment.setItemArray[kind][index];
       for (let equipInventorySlotId = start; equipInventorySlotId < stop; equipInventorySlotId++) {
         if (
           this.equipmentSlots[equipInventorySlotId].globalInfo.kind == equipmentKind &&
@@ -211,20 +209,20 @@ export class DataInventory {
   }
 
   getOffset(heroKind: HeroKind) {
-    // 520 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72 + globalThis.data.source.currentHero * 720
+    // 520 + this.#data.source.equipmentLoadoutIds[heroKind] * 72 + this.#data.source.currentHero * 720
     switch (heroKind) {
       case HeroKind.Warrior:
-        return 520 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 520 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Wizard:
-        return 1240 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 1240 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Angel:
-        return 1960 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 1960 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Thief:
-        return 2680 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 2680 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Archer:
-        return 3400 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 3400 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Tamer:
-        return 4120 + globalThis.data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 4120 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
       default:
         return 0;
     }
@@ -232,9 +230,9 @@ export class DataInventory {
 
   CopyCurrentLoadout() {
     let array = [];
-    const INITIAL_OFFSET = 520 + globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero] * 72 + globalThis.data.source.currentHero * 720;
+    const INITIAL_OFFSET = 520 + this.#data.source.equipmentLoadoutIds[this.#data.source.currentHero] * 72 + this.#data.source.currentHero * 720;
     for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
-      array.push(globalThis.data.inventory.equipmentSlots[index].Copy(CopyKind.Equipment));
+      array.push(this.#data.inventory.equipmentSlots[index].Copy(CopyKind.Equipment));
     }
 
     return array;
@@ -242,12 +240,12 @@ export class DataInventory {
 
   PasteLoadout(data) {
     let i = 0;
-    const INITIAL_OFFSET = 520 + globalThis.data.source.equipmentLoadoutIds[globalThis.data.source.currentHero] * 72 + globalThis.data.source.currentHero * 720;
+    const INITIAL_OFFSET = 520 + this.#data.source.equipmentLoadoutIds[this.#data.source.currentHero] * 72 + this.#data.source.currentHero * 720;
     // console.log("INITIAL_OFFSET", INITIAL_OFFSET);
 
     for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
       const equipment = this.equipmentSlots[index];
-      globalThis.data.source.equipmentKinds[equipment.id] = data[i].kind;
+      this.#data.source.equipmentKinds[equipment.id] = data[i].kind;
 
       equipment.optionEffects.forEach((effect, o) => {
         effect.SetKind(data[i].optionEffects[o].kind);

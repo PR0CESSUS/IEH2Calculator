@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { PotionGlobalInformation } from "../PotionGlobalInformation";
 import { Debuff } from "../../../type/Debuff";
 import { MultiplierType } from "../../../type/MultiplierType";
@@ -14,7 +14,7 @@ export class WhirlingAuraDraught extends PotionGlobalInformation {
   }
 
   SetEffect(heroKind: HeroKind, equipNum: Function) {
-    return globalThis.data.stats.DebuffChance(heroKind, Debuff.Electric).RegisterMultiplier(
+    return this.data.stats.DebuffChance(heroKind, Debuff.Electric).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.Potion,
         MultiplierType.Add,
@@ -29,6 +29,6 @@ export class WhirlingAuraDraught extends PotionGlobalInformation {
   }
 
   AlchemyPointGain(level) {
-    return 7.0 * globalThis.data.alchemy.alchemyPointGainMultiplier.Value();
+    return 7.0 * this.data.alchemy.alchemyPointGainMultiplier.Value();
   }
 }

@@ -1,5 +1,5 @@
-import { SuperDungeonGlobalController } from ".";
-import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { DataSuperDungeonGlobal } from ".";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { SuperDungeonUpgradeKind } from "../../type/SuperDungeonUpgradeKind";
@@ -63,11 +63,11 @@ import { SDU_SPDMultiplier } from "./SDU/SDU_SPDMultiplier";
 import { SDU_StoneGain } from "./SDU/SDU_StoneGain";
 import { SDU_StoneResearchPowerMul } from "./SDU/SDU_StoneResearchPowerMul";
 import { SDU_TamingPointGainMul } from "./SDU/SDU_TamingPointGainMul";
-import { SDU_TownMatGainMul } from "./SDU/SDU_TownMatGainMul";
+// import { SDU_TownMatGainMul } from "./SDU/SDU_TownMatGainMul";
 import { SDU_WardedFuryMultiplier } from "./SDU/SDU_WardedFuryMultiplier";
 
 export class SuperDungeonUpgradeController {
-  sdgCtrl: SuperDungeonGlobalController;
+  sdgCtrl: DataSuperDungeonGlobal;
   automationList: SuperDungeonUpgrade[] = [];
   upgrade1ist: SuperDungeonUpgrade[] = [];
   upgrade2ist: SuperDungeonUpgrade[] = [];
@@ -78,7 +78,7 @@ export class SuperDungeonUpgradeController {
   costReduction: Multiplier;
   availableSuperQueue: Multiplier;
 
-  constructor(sdgCtrl: SuperDungeonGlobalController) {
+  constructor(sdgCtrl: DataSuperDungeonGlobal) {
     this.sdgCtrl = sdgCtrl;
     this.availableSuperQueue = new Multiplier();
     this.SetUpgrade();

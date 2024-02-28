@@ -58,12 +58,11 @@ import { MinorRegenerationPoultice } from "./data/MinorRegenerationPoultice";
 import { MinorResourcePoultice } from "./data/MinorResourcePoultice";
 import { NariSuneDoll } from "./data/NariSuneDoll";
 import { NostroDoll } from "./data/NostroDoll";
-import { NullPotion } from "./data/NullPotion";
 import { OctobaddieDoll } from "./data/OctobaddieDoll";
 import { ShockingSlayersOil } from "./data/ShockingSlayersOil";
 import { SlickerShoeSolution } from "./data/SlickerShoeSolution";
 import { SlickShoeSolution } from "./data/SlickShoeSolution";
-import { SlightlyStickSalve } from "./data/SlightlyStickSalve";
+import { SlightlyStickySalve } from "./data/SlightlyStickySalve";
 import { SlimeBadge } from "./data/SlimeBadge";
 import { SpiderBadge } from "./data/SpiderBadge";
 import { TamersBadge } from "./data/TamersBadge";
@@ -77,16 +76,16 @@ import { UnicornBadge } from "./data/UnicornBadge";
 import { WarriorsBadge } from "./data/WarriorsBadge";
 import { WhirlingAuraDraught } from "./data/WhirlingAuraDraught";
 import { WizardsBadge } from "./data/WizardsBadge";
-
-import { PotionKind } from "../../type/PotionKind";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
-import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { Potion } from "./Potion";
 import { Talisman } from "./Talisman";
 import { PotionGlobalInformation } from "./PotionGlobalInformation";
+import { DATA } from "..";
 
 export class DataPotion {
+  #data: DATA;
   potions: any[];
   traps: any[];
   talismans: Talisman[];
@@ -101,8 +100,9 @@ export class DataPotion {
   potionMaxLevel: Multiplier;
   availableQueue: Multiplier;
 
-  // AlchemyController alchemyCtrl => globalThis.data.stat.alchemyCtrl;
-  constructor() {
+  // AlchemyController alchemyCtrl => this.#data.stat.alchemyCtrl;
+  constructor(DATA: DATA) {
+    this.#data = DATA;
     this.maxStackNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 10.0));
     this.preventConsumeChance = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0));
     this.effectMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
@@ -136,82 +136,81 @@ export class DataPotion {
 
   Start() {
     this.potions = [
-      new NullPotion(),
-      new MinorHealthPotion(),
-      new MinorRegenerationPoultice(),
-      new MinorResourcePoultice(),
-      new SlickShoeSolution(),
-      new MinorManaRegenerationPoultice(),
-      new MaterialMultiplierMist(),
-      new BasicElixirOfBrawn(),
-      new BasicElixirOfBrains(),
-      new BasicElixirOfFortitude(),
-      new BasicElixirOfConcentration(),
-      new BasicElixirOfUnderstanding(),
-      new ChilledHealthPotion(),
-      new ChilledRegenerationPoultice(),
-      new FrostyDefensePotion(),
-      new IcyAuraDraught(),
-      new SlightlyStickSalve(),
-      new SlickerShoeSolution(),
-      new CoolHeadOintment(),
-      new FrostySlayersOil(),
-      new BurningDefensePotion(),
-      new BlazingAuraDraught(),
-      new FierySlayersOil(),
-      new ElectricDefensePotion(),
-      new WhirlingAuraDraught(),
-      new ShockingSlayersOil(),
+      new MinorHealthPotion(this.#data),
+      new MinorRegenerationPoultice(this.#data),
+      new MinorResourcePoultice(this.#data),
+      new SlickShoeSolution(this.#data),
+      new MinorManaRegenerationPoultice(this.#data),
+      new MaterialMultiplierMist(this.#data),
+      new BasicElixirOfBrawn(this.#data),
+      new BasicElixirOfBrains(this.#data),
+      new BasicElixirOfFortitude(this.#data),
+      new BasicElixirOfConcentration(this.#data),
+      new BasicElixirOfUnderstanding(this.#data),
+      new ChilledHealthPotion(this.#data),
+      new ChilledRegenerationPoultice(this.#data),
+      new FrostyDefensePotion(this.#data),
+      new IcyAuraDraught(this.#data),
+      new SlightlyStickySalve(this.#data),
+      new SlickerShoeSolution(this.#data),
+      new CoolHeadOintment(this.#data),
+      new FrostySlayersOil(this.#data),
+      new BurningDefensePotion(this.#data),
+      new BlazingAuraDraught(this.#data),
+      new FierySlayersOil(this.#data),
+      new ElectricDefensePotion(this.#data),
+      new WhirlingAuraDraught(this.#data),
+      new ShockingSlayersOil(this.#data),
     ];
-    this.traps = [new ThrowingNet(), new IceRope(), new ThunderRope(), new FireRope(), new LightRope(), new DarkRope()];
+    this.traps = [new ThrowingNet(this.#data), new IceRope(this.#data), new ThunderRope(this.#data), new FireRope(this.#data), new LightRope(this.#data), new DarkRope(this.#data)];
     this.talismans = [
-      new GuildMembersEmblem(),
-      new CertificateOfCompetence(),
-      new MasonsTrowel(),
-      new EnchantedAlembic(),
-      new TrackersMap(),
-      new BerserkersStone(),
-      new TrappersTag(),
-      new FlorzporbDoll(),
-      new ArachnettaDoll(),
-      new GuardianKorDoll(),
-      new SlimeBadge(),
-      new MagicslimeBadge(),
-      new SpiderBadge(),
-      new BatBadge(),
-      new FairyBadge(),
-      new FoxBadge(),
-      new DevilfishBadge(),
-      new TreantBadge(),
-      new FlametigerBadge(),
-      new UnicornBadge(),
-      new AscendedFromIEH1(),
-      new WarriorsBadge(),
-      new WizardsBadge(),
-      new AngelsBadge(),
-      new ThiefsBadge(),
-      new ArchersBadge(),
-      new TamersBadge(),
-      new NostroDoll(),
-      new LadyEmeldaDoll(),
-      new NariSuneDoll(),
-      new OctobaddieDoll(),
-      new AncientWarriorsBadge(),
-      new AncientWizardsBadge(),
-      new AncientAngelsBadge(),
-      new AncientThiefsBadge(),
-      new AncientArchersBadge(),
-      new AncientTamersBadge(),
-      new AncientSlimeBadge(),
-      new AncientMagicslimeBadge(),
-      new AncientSpiderBadge(),
-      new AncientBatBadge(),
-      new AncientFairyBadge(),
-      new AncientFoxBadge(),
-      new AncientDevilfishBadge(),
-      new AncientTreantBadge(),
-      new AncientFlametigerBadge(),
-      new AncientUnicornBadge(),
+      new GuildMembersEmblem(this.#data),
+      new CertificateOfCompetence(this.#data),
+      new MasonsTrowel(this.#data),
+      new EnchantedAlembic(this.#data),
+      new TrackersMap(this.#data),
+      new BerserkersStone(this.#data),
+      new TrappersTag(this.#data),
+      new FlorzporbDoll(this.#data),
+      new ArachnettaDoll(this.#data),
+      new GuardianKorDoll(this.#data),
+      new SlimeBadge(this.#data),
+      new MagicslimeBadge(this.#data),
+      new SpiderBadge(this.#data),
+      new BatBadge(this.#data),
+      new FairyBadge(this.#data),
+      new FoxBadge(this.#data),
+      new DevilfishBadge(this.#data),
+      new TreantBadge(this.#data),
+      new FlametigerBadge(this.#data),
+      new UnicornBadge(this.#data),
+      new AscendedFromIEH1(this.#data),
+      new WarriorsBadge(this.#data),
+      new WizardsBadge(this.#data),
+      new AngelsBadge(this.#data),
+      new ThiefsBadge(this.#data),
+      new ArchersBadge(this.#data),
+      new TamersBadge(this.#data),
+      new NostroDoll(this.#data),
+      new LadyEmeldaDoll(this.#data),
+      new NariSuneDoll(this.#data),
+      new OctobaddieDoll(this.#data),
+      new AncientWarriorsBadge(this.#data),
+      new AncientWizardsBadge(this.#data),
+      new AncientAngelsBadge(this.#data),
+      new AncientThiefsBadge(this.#data),
+      new AncientArchersBadge(this.#data),
+      new AncientTamersBadge(this.#data),
+      new AncientSlimeBadge(this.#data),
+      new AncientMagicslimeBadge(this.#data),
+      new AncientSpiderBadge(this.#data),
+      new AncientBatBadge(this.#data),
+      new AncientFairyBadge(this.#data),
+      new AncientFoxBadge(this.#data),
+      new AncientDevilfishBadge(this.#data),
+      new AncientTreantBadge(this.#data),
+      new AncientFlametigerBadge(this.#data),
+      new AncientUnicornBadge(this.#data),
     ];
     this.globalInformations = [...this.potions, ...this.traps, ...this.talismans];
     // this.globalInformations.forEach((potion) => {

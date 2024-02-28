@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 import { SuperDungeonController } from "../SuperDungeonController";
 import { MultiplierType } from "../../../type/MultiplierType";
@@ -24,7 +24,7 @@ export class SDP_MoveSpeed extends SuperDungeonPowerup {
   }
 
   SetEffect() {
-    return globalThis.data.stats.HeroStats(this.heroKind, Stats.MoveSpeed).RegisterMultiplier(
+    return this.ctrl.data.stats.HeroStats(this.heroKind, Stats.MoveSpeed).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.After,
@@ -37,7 +37,7 @@ export class SDP_MoveSpeed extends SuperDungeonPowerup {
   }
 
   SetGlobalEffect() {
-    globalThis.data.stats.SetEffectStats(
+    this.ctrl.data.stats.SetEffectStats(
       Stats.MoveSpeed,
       new MultiplierInfo(
         MultiplierKind.DungeonItemPermanent,

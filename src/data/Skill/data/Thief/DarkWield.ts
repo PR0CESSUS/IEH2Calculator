@@ -9,8 +9,8 @@ import { Stats } from "../../../../type/Stats";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 
 export class DarkWield extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 5, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MATK, MultiplierType.Add, 20.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.SPD, MultiplierType.Add, 50.0));
@@ -40,7 +40,7 @@ export class DarkWield extends SKILL {
   }
 
   EffectRange() {
-    if (this.level >= 150) return this.EffectRange() + 250 * globalThis.data.skill.skillEffectRangeMultiplier[this.heroKind].Value();
-    return this.level >= 50 ? this.EffectRange() + 100 * globalThis.data.skill.skillEffectRangeMultiplier[this.heroKind].Value() : this.EffectRange();
+    if (this.level >= 150) return this.EffectRange() + 250 * this.data.skill.skillEffectRangeMultiplier[this.heroKind].Value();
+    return this.level >= 50 ? this.EffectRange() + 100 * this.data.skill.skillEffectRangeMultiplier[this.heroKind].Value() : this.EffectRange();
   }
 }

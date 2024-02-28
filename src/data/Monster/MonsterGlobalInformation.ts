@@ -1,17 +1,15 @@
+import { DATA } from "..";
 import { Enums } from "../../Enums";
-import { Debuff } from "../../type/Debuff";
-import { MultiplierKind } from "../../type/MultiplierKind";
-import { HeroKind } from "../../type/HeroKind";
-import { BasicStatsKind } from "../../type/BasicStatsKind";
-import { Element } from "../../type/Element";
-import { MonsterSpecies } from "../../type/MonsterSpecies";
-import { MonsterColor } from "../../type/MonsterColor";
 import { ChallengeMonsterKind } from "../../type/ChallengeMonsterKind";
-import { Stats } from "../../type/Stats";
-import { MonsterPet } from "./MonsterPet";
+import { Element } from "../../type/Element";
+import { HeroKind } from "../../type/HeroKind";
+import { MonsterColor } from "../../type/MonsterColor";
+import { MonsterSpecies } from "../../type/MonsterSpecies";
 import { MonsterParameter } from "./MonsterParameter";
+import { MonsterPet } from "./MonsterPet";
 
 export class MonsterGlobalInformation {
+  #data: DATA;
   pet: MonsterPet;
   isLogStats: boolean[] = Array(Enums.HeroKind);
   species: MonsterSpecies;
@@ -22,7 +20,8 @@ export class MonsterGlobalInformation {
   //   capturedNums: MonsterCapturedNumber[] = Array(Enums.HeroKind);
   //   capturedMutantNums: MonsterCapturedNumber[] = Array(Enums.HeroKind);
 
-  constructor(species: MonsterSpecies, color: number) {
+  constructor(DATA: DATA, species: MonsterSpecies, color: number) {
+    this.#data = DATA;
     this.species = species;
     this.color = color;
     if (species == MonsterSpecies.ChallengeBoss) this.challengeMonsterKind = color;
@@ -33,7 +32,7 @@ export class MonsterGlobalInformation {
     //   this.capturedNums[index2] = new MonsterCapturedNumber(species, color, index2);
     //   this.capturedMutantNums[index2] = new MonsterCapturedNumber(species, color, index2, true);
     // }
-    this.pet = new MonsterPet(this, species, color);
+    this.pet = new MonsterPet(this.#data, this, species, color);
   }
 
   Start() {
@@ -51,10 +50,10 @@ export class MonsterGlobalInformation {
     let num1 = MonsterParameter.monsterStats[this.species][this.colorId][0];
     let num2;
     // if (isPet) {
-    // let a = num1 * ((this.pet.Level() + 1) + 1.0 * Math.pow(this.pet.Level() / 5.0, 2.0)) * (1.0 + 0.05 * this.pet.loyalty.value) * Math.pow(2.0, Math.floor(this.pet.Level() / 50.0)) * globalThis.data.monster.petStatsMultiplier.Value() * globalThis.data.stats.BasicStats(heroKind, BasicStatsKind.HP).Mul();
+    // let a = num1 * ((this.pet.Level() + 1) + 1.0 * Math.pow(this.pet.Level() / 5.0, 2.0)) * (1.0 + 0.05 * this.pet.loyalty.value) * Math.pow(2.0, Math.floor(this.pet.Level() / 50.0)) * this.#data.monster.petStatsMultiplier.Value() * this.#data.stats.BasicStats(heroKind, BasicStatsKind.HP).Mul();
     // if (this.isLogStats[heroKind] && a >= 1.0)
     //   a = MonsterParameter.monsterStats[this.species][this.colorId][0] + Math.log(a, Multiplier.logBase);
-    // num2 = a + globalThis.data.stats.BasicStats(heroKind, BasicStatsKind.HP).After();
+    // num2 = a + this.#data.stats.BasicStats(heroKind, BasicStatsKind.HP).After();
     // } else {
     let num3 =
       num1 *
@@ -98,10 +97,10 @@ export class MonsterGlobalInformation {
     let num1 = MonsterParameter.monsterStats[this.species][this.colorId][2];
     let num2;
     // if (isPet) {
-    //   a = num1 * (1.0 + this.pet.Level() * 0.75) * (1.0 + 0.05 * this.pet.loyalty.value) * Math.pow(2.0, Math.floor(this.pet.Level() / 50.0)) * globalThis.data.monster.petStatsMultiplier.Value() * globalThis.data.stats.BasicStats(heroKind, BasicStatsKind.ATK).Mul() * globalThis.data.stats.heroes[heroKind].summonPetATKMATKMultiplier.Value();
+    //   a = num1 * (1.0 + this.pet.Level() * 0.75) * (1.0 + 0.05 * this.pet.loyalty.value) * Math.pow(2.0, Math.floor(this.pet.Level() / 50.0)) * this.#data.monster.petStatsMultiplier.Value() * this.#data.stats.BasicStats(heroKind, BasicStatsKind.ATK).Mul() * this.#data.stats.heroes[heroKind].summonPetATKMATKMultiplier.Value();
     //   if (this.isLogStats[heroKind] && a >= 1.0)
     //     a = MonsterParameter.monsterStats[this.species][this.colorId][2] + Math.log(a, Multiplier.logBase);
-    //   num2 = a + globalThis.data.stats.BasicStats(heroKind, BasicStatsKind.ATK).After();
+    //   num2 = a + this.#data.stats.BasicStats(heroKind, BasicStatsKind.ATK).After();
     // }
     // else {
     num2 = num1 * (1.0 + level * 0.75 + 20.0 * Math.pow(level / 100.0, 3.0) + 100.0 * Math.pow(level / 250.0, 5.0));
@@ -133,19 +132,19 @@ export class MonsterGlobalInformation {
   }
   Spd() {
     return MonsterParameter.monsterStats[this.species][this.colorId][6];
-    // let a = MonsterParameter.monsterStats[this.species][this.colorId][6] * globalThis.data.stats.BasicStats(heroKind, BasicStatsKind.SPD).Mul() * globalThis.data.stats.heroes[heroKind].summonPetSPDMoveSpeedMultiplier.Value() * (1.0 + 0.05 * this.pet.loyalty.value) * Math.pow(2.0, Math.floor(this.pet.Level() / 50.0)) * globalThis.data.monster.petStatsMultiplier.Value();
+    // let a = MonsterParameter.monsterStats[this.species][this.colorId][6] * this.#data.stats.BasicStats(heroKind, BasicStatsKind.SPD).Mul() * this.#data.stats.heroes[heroKind].summonPetSPDMoveSpeedMultiplier.Value() * (1.0 + 0.05 * this.pet.loyalty.value) * Math.pow(2.0, Math.floor(this.pet.Level() / 50.0)) * this.#data.monster.petStatsMultiplier.Value();
     // if (this.isLogStats[heroKind] && a >= 1.0)
     //   a = MonsterParameter.monsterStats[this.species][this.colorId][6] + Math.log(a, Multiplier.logBase);
-    // return a + globalThis.data.stats.BasicStats(heroKind, BasicStatsKind.SPD).After();
+    // return a + this.#data.stats.BasicStats(heroKind, BasicStatsKind.SPD).After();
   }
 
   Fire() {
     // if (!isPet)
     return MonsterParameter.monsterStats[this.species][this.colorId][7];
-    // let num = MonsterParameter.monsterStats[this.species][this.colorId][7] * globalThis.data.stats.HeroStats(heroKind, Stats.FireRes).Mul();
+    // let num = MonsterParameter.monsterStats[this.species][this.colorId][7] * this.#data.stats.HeroStats(heroKind, Stats.FireRes).Mul();
     // if (this.isLogStats[heroKind] && num >= 0.01)
     //   num = MonsterParameter.monsterStats[this.species][this.colorId][7] + Math.log(num * 100.0, Multiplier.logBase) / 100.0;
-    // return num + globalThis.data.stats.HeroStats(heroKind, Stats.FireRes).After();
+    // return num + this.#data.stats.HeroStats(heroKind, Stats.FireRes).After();
   }
 
   Ice() {
@@ -221,5 +220,101 @@ export class MonsterGlobalInformation {
 
   get colorId() {
     return this.species == MonsterSpecies.ChallengeBoss ? this.challengeMonsterKind : this.color;
+  }
+
+  MoveSpeed(level: number = 0, difficulty: number = 0, isPet: boolean = false, heroKind: HeroKind = HeroKind.Warrior) {
+    // if (!isPet)
+    //   return  (50.0 + 20.0 * this.Spd(level, difficulty, isPet, heroKind));
+    // let num =  (25.0 + 10.0 * this.Spd(level, difficulty, false, heroKind)) *  this.#data.stats.HeroStats(heroKind, Stats.MoveSpeed).multiplicative *  this.#data.stats.heroes[heroKind].summonPetSPDMoveSpeedMultiplier.Value();
+    // if (this.isLogStats[(int) heroKind] &&  num >= 100.0)
+    //   num =  (25.0 +  Mathf.Log(num / 100,  Multiplier.logBase) * 100.0);
+    // return num +  this.#data.stats.HeroStats(heroKind, Stats.MoveSpeed).After();
+    return 1;
+  }
+
+  DefeatedNumHero(isMutant = false, heroKind: HeroKind) {
+    let saveId = this.color + 10 * heroKind;
+    let saveIdChallenge = heroKind + 10 * this.challengeMonsterKind;
+    switch (this.species) {
+      case MonsterSpecies.Slime:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsSlime[saveId] : this.#data.source.monsterDefeatedNumsSlime[saveId];
+      case MonsterSpecies.MagicSlime:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsMagicSlime[saveId] : this.#data.source.monsterDefeatedNumsMagicSlime[saveId];
+      case MonsterSpecies.Spider:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsSpider[saveId] : this.#data.source.monsterDefeatedNumsSpider[saveId];
+      case MonsterSpecies.Bat:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsBat[saveId] : this.#data.source.monsterDefeatedNumsBat[saveId];
+      case MonsterSpecies.Fairy:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsFairy[saveId] : this.#data.source.monsterDefeatedNumsFairy[saveId];
+      case MonsterSpecies.Fox:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsFox[saveId] : this.#data.source.monsterDefeatedNumsFox[saveId];
+      case MonsterSpecies.DevilFish:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsDevilFish[saveId] : this.#data.source.monsterDefeatedNumsDevilFish[saveId];
+      case MonsterSpecies.Treant:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsTreant[saveId] : this.#data.source.monsterDefeatedNumsTreant[saveId];
+      case MonsterSpecies.FlameTiger:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsFlameTiger[saveId] : this.#data.source.monsterDefeatedNumsFlameTiger[saveId];
+      case MonsterSpecies.Unicorn:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsUnicorn[saveId] : this.#data.source.monsterDefeatedNumsUnicorn[saveId];
+      case MonsterSpecies.Mimic:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsMimic[saveId] : this.#data.source.monsterDefeatedNumsMimic[saveId];
+      case MonsterSpecies.ChallengeBoss:
+        return isMutant ? this.#data.source.monsterMutantDefeatedNumsChallenge[saveIdChallenge] : this.#data.source.monsterDefeatedNumsChallenge[saveIdChallenge];
+
+      default:
+        return 0;
+    }
+  }
+
+  DefeatedNum(isMutant = false) {
+    let num = 0.0;
+
+    for (let index = 0; index < Enums.HeroKind; ++index) {
+      if (isMutant) num += this.DefeatedNumHero(true, index);
+      else num += this.DefeatedNumHero(false, index);
+    }
+    return num;
+  }
+
+  CapturedNum(isMutant = false) {
+    let num = 0.0;
+    for (let index = 0; index < Enums.HeroKind; ++index) {
+      if (isMutant) num += this.CapturedNumHero(true, index);
+      else num += this.CapturedNumHero(false, index);
+    }
+    return num;
+  }
+
+  CapturedNumHero(isMutant = false, heroKind: HeroKind) {
+    let saveId = this.color + 10 * heroKind;
+    let saveIdChallenge = heroKind + 10 * this.challengeMonsterKind;
+    switch (this.species) {
+      case MonsterSpecies.Slime:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsSlime[saveId] : this.#data.source.monsterCapturedNumsSlime[saveId];
+      case MonsterSpecies.MagicSlime:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsMagicSlime[saveId] : this.#data.source.monsterCapturedNumsMagicSlime[saveId];
+      case MonsterSpecies.Spider:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsSpider[saveId] : this.#data.source.monsterCapturedNumsSpider[saveId];
+      case MonsterSpecies.Bat:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsBat[saveId] : this.#data.source.monsterCapturedNumsBat[saveId];
+      case MonsterSpecies.Fairy:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsFairy[saveId] : this.#data.source.monsterCapturedNumsFairy[saveId];
+      case MonsterSpecies.Fox:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsFox[saveId] : this.#data.source.monsterCapturedNumsFox[saveId];
+      case MonsterSpecies.DevilFish:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsDevilFish[saveId] : this.#data.source.monsterCapturedNumsDevilFish[saveId];
+      case MonsterSpecies.Treant:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsTreant[saveId] : this.#data.source.monsterCapturedNumsTreant[saveId];
+      case MonsterSpecies.FlameTiger:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsFlameTiger[saveId] : this.#data.source.monsterCapturedNumsFlameTiger[saveId];
+      case MonsterSpecies.Unicorn:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsUnicorn[saveId] : this.#data.source.monsterCapturedNumsUnicorn[saveId];
+      case MonsterSpecies.Mimic:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsMimic[saveId] : this.#data.source.monsterCapturedNumsMimic[saveId];
+      case MonsterSpecies.ChallengeBoss:
+        return isMutant ? this.#data.source.monsterMutantCapturedNumsChallenge[saveIdChallenge] : this.#data.source.monsterCapturedNumsChallenge[saveIdChallenge];
+      default:
+        return 0.0;
+    }
   }
 }

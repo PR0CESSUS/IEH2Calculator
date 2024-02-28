@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -15,26 +15,11 @@ export class SDU_MagicalDamageMultiplier extends SuperDungeonUpgrade {
   }
 
   SetEffect() {
-    globalThis.data.stats.SetEffectElementDamage(
-      Element.Fire,
-      new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue())
-    );
-    globalThis.data.stats.SetEffectElementDamage(
-      Element.Ice,
-      new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue())
-    );
-    globalThis.data.stats.SetEffectElementDamage(
-      Element.Thunder,
-      new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue())
-    );
-    globalThis.data.stats.SetEffectElementDamage(
-      Element.Light,
-      new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue())
-    );
-    globalThis.data.stats.SetEffectElementDamage(
-      Element.Dark,
-      new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue())
-    );
+    this.sdgCtrl.data.stats.SetEffectElementDamage(Element.Fire, new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
+    this.sdgCtrl.data.stats.SetEffectElementDamage(Element.Ice, new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
+    this.sdgCtrl.data.stats.SetEffectElementDamage(Element.Thunder, new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
+    this.sdgCtrl.data.stats.SetEffectElementDamage(Element.Light, new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
+    this.sdgCtrl.data.stats.SetEffectElementDamage(Element.Dark, new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
   }
 
   get maxLevel() {

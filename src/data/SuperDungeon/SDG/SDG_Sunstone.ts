@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SDGem } from "../SDGem";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -18,9 +18,7 @@ export class SDG_Sunstone extends SDGem {
   }
 
   SetEffect() {
-    return globalThis.data.stats.SetEffectGuildExp(
-      new MultiplierInfo(MultiplierKind.SDGemRitual, MultiplierType.Mul, () => this.EffectValue())
-    );
+    return this.data.stats.SetEffectGuildExp(new MultiplierInfo(MultiplierKind.SDGemRitual, MultiplierType.Mul, () => this.EffectValue()));
   }
 
   get initEffectValue() {

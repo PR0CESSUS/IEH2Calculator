@@ -9,8 +9,8 @@ import { Stats } from "../../../../type/Stats";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 
 export class IceBolt extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 5, SkillPassiveEffectKind.BasicStats, BasicStatsKind.HP, MultiplierType.Add, 100.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.DEF, MultiplierType.Add, 25.0));

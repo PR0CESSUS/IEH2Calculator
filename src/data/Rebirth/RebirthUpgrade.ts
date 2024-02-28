@@ -1,4 +1,5 @@
-import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { DATA } from "..";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { BasicStatsKind } from "../../type/BasicStatsKind";
 import { HeroKind } from "../../type/HeroKind";
 import { MultiplierKind } from "../../type/MultiplierKind";
@@ -10,12 +11,14 @@ import { Rebirth } from "./Rebirth";
 import { RebirthParameter } from "./RebirthParameter";
 
 export class RebirthUpgrade {
+  #data: DATA;
   rebirth: Rebirth;
   kind: RebirthUpgradeKind;
   effectMultiFactor: Multiplier;
   isGlobalEffect: boolean;
   constructor(rebirth: Rebirth, kind: RebirthUpgradeKind) {
     this.rebirth = rebirth;
+    this.#data = rebirth.data;
     this.kind = kind;
 
     this.effectMultiFactor = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
@@ -24,17 +27,17 @@ export class RebirthUpgrade {
   get level() {
     switch (this.rebirth.heroKind) {
       case HeroKind.Warrior:
-        return globalThis.data.source.rebirthUpgradeLevelsWarrior[this.kind];
+        return this.#data.source.rebirthUpgradeLevelsWarrior[this.kind];
       case HeroKind.Wizard:
-        return globalThis.data.source.rebirthUpgradeLevelsWizard[this.kind];
+        return this.#data.source.rebirthUpgradeLevelsWizard[this.kind];
       case HeroKind.Angel:
-        return globalThis.data.source.rebirthUpgradeLevelsAngel[this.kind];
+        return this.#data.source.rebirthUpgradeLevelsAngel[this.kind];
       case HeroKind.Thief:
-        return globalThis.data.source.rebirthUpgradeLevelsTamer[this.kind];
+        return this.#data.source.rebirthUpgradeLevelsTamer[this.kind];
       case HeroKind.Archer:
-        return globalThis.data.source.rebirthUpgradeLevelsArcher[this.kind];
+        return this.#data.source.rebirthUpgradeLevelsArcher[this.kind];
       case HeroKind.Tamer:
-        return globalThis.data.source.rebirthUpgradeLevelsTamer[this.kind];
+        return this.#data.source.rebirthUpgradeLevelsTamer[this.kind];
 
       default:
         return 0;
@@ -42,7 +45,7 @@ export class RebirthUpgrade {
   }
 
   get rebirthCtrl() {
-    return globalThis.data.rebirth;
+    return this.#data.rebirth;
   }
 
   get heroKind() {
@@ -59,75 +62,75 @@ export class RebirthUpgrade {
   SetEffect() {
     switch (this.kind) {
       case RebirthUpgradeKind.ExpGain:
-        globalThis.data.stats.HeroStats(this.heroKind, Stats.ExpGain).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
+        this.#data.stats.HeroStats(this.heroKind, Stats.ExpGain).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
         break;
       case RebirthUpgradeKind.EQRequirement:
-        globalThis.data.stats.LevelForEquipment(this.heroKind).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.stats.LevelForEquipment(this.heroKind).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         break;
       case RebirthUpgradeKind.QuestAcceptableNum:
-        // globalThis.data.quest.AcceptableNum(this.heroKind).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add,  (() => this.effectValue)));
+        // this.#data.quest.AcceptableNum(this.heroKind).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add,  (() => this.effectValue)));
         break;
       case RebirthUpgradeKind.BasicAtk:
-        globalThis.data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.ATK, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.ATK, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.BasicMAtk:
-        globalThis.data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.MATK, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.MATK, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.BasicHp:
-        globalThis.data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.HP, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.HP, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.BasicDef:
-        globalThis.data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.DEF, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.DEF, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.BasicMDef:
-        globalThis.data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.MDEF, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.MDEF, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.BasicMp:
-        globalThis.data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.MP, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.stats.SetEffectBasicStatsPerLevel(BasicStatsKind.MP, new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.StoneGain:
-        globalThis.data.stats.ResourceGain(ResourceKind.Stone).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
+        this.#data.stats.ResourceGain(ResourceKind.Stone).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.CrystalGain:
-        globalThis.data.stats.ResourceGain(ResourceKind.Crystal).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
+        this.#data.stats.ResourceGain(ResourceKind.Crystal).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.LeafGain:
-        globalThis.data.stats.ResourceGain(ResourceKind.Leaf).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
+        this.#data.stats.ResourceGain(ResourceKind.Leaf).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.StoneGoldCap:
-        // globalThis.data.upgrade.goldcapMultipliers[0].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add,  (() => this.effectValue)));
+        // this.#data.upgrade.goldcapMultipliers[0].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add,  (() => this.effectValue)));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.CrystalGoldCap:
-        // globalThis.data.upgrade.goldcapMultipliers[1].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add,  (() => this.effectValue)));
+        // this.#data.upgrade.goldcapMultipliers[1].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add,  (() => this.effectValue)));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.LeafGoldCap:
-        // globalThis.data.upgrade.goldcapMultipliers[2].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add,  (() => this.effectValue)));
+        // this.#data.upgrade.goldcapMultipliers[2].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add,  (() => this.effectValue)));
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.SkillProfGain:
-        globalThis.data.stats
+        this.#data.stats
           .HeroStats(this.heroKind, Stats.SkillProficiencyGain)
           .RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
         break;
       case RebirthUpgradeKind.SkillRankCostReduction:
-        globalThis.data.skill.skillRankCostFactors[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.skill.skillRankCostFactors[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         break;
       case RebirthUpgradeKind.ClassSkillSlot:
-        globalThis.data.stats.SkillSlotNum(this.heroKind).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.stats.SkillSlotNum(this.heroKind).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         break;
       case RebirthUpgradeKind.ShareSkillPassive:
-        globalThis.data.skill.skillPassiveShareFactors[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.skill.skillPassiveShareFactors[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         break;
       case RebirthUpgradeKind.T1ExpGainBoost:
         this.rebirthCtrl
@@ -225,21 +228,21 @@ export class RebirthUpgrade {
         this.isGlobalEffect = true;
         break;
       case RebirthUpgradeKind.EQProfGain:
-        globalThis.data.stats
+        this.#data.stats
           .HeroStats(this.heroKind, Stats.EquipmentProficiencyGain)
           .RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Mul, () => this.effectValue));
         break;
       case RebirthUpgradeKind.EQLevelCap:
-        globalThis.data.equipment.maxLevels[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.equipment.maxLevels[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         break;
       case RebirthUpgradeKind.EQWeaponSlot:
-        globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.inventory.equipWeaponUnlockedNum[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         break;
       case RebirthUpgradeKind.EQArmorSlot:
-        globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.inventory.equipArmorUnlockedNum[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         break;
       case RebirthUpgradeKind.EQJewelrySlot:
-        globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
+        this.#data.inventory.equipJewelryUnlockedNum[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Rebirth, MultiplierType.Add, () => this.effectValue));
         break;
       case RebirthUpgradeKind.T2ExpGainBoost:
         this.rebirthCtrl

@@ -1,9 +1,12 @@
+import { DATA } from "..";
 import { Localization } from "../../localization";
 import { SDGemKind } from "../../type/SDGemKind";
 export class SDGem {
+  data: DATA;
   // sdGemRitualCtrl: SDGemRitualController;
 
-  constructor() {
+  constructor(DATA: DATA) {
+    this.data = DATA;
     // this.sdGemRitualCtrl = sdGemRitualCtrl;
     //   this.level.maxValue = (() => this.maxLevel);
     //   this.exp = new SDGemExp(this, new Func<long, double>(this.RequiredExp), (INTEGER) this.level);
@@ -16,11 +19,11 @@ export class SDGem {
   }
 
   get level() {
-    return globalThis.data.source.sdGemLevels[this.kind];
+    return this.data.source.sdGemLevels[this.kind];
   }
 
   set level(value) {
-    globalThis.data.source.sdGemLevels[this.kind] = Math.min(value, this.maxLevel);
+    this.data.source.sdGemLevels[this.kind] = Math.min(value, this.maxLevel);
   }
 
   get kind() {

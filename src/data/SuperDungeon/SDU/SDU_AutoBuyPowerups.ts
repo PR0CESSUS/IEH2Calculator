@@ -1,8 +1,5 @@
-import { MultiplierInfo } from "../../../Multiplier";
-import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
-import { MultiplierType } from "../../../type/MultiplierType";
-import { MultiplierKind } from "../../../type/MultiplierKind";
 import { SuperDungeonUpgradeKind } from "../../../type/SuperDungeonUpgradeKind";
+import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 
 export class SDU_AutoBuyPowerups extends SuperDungeonUpgrade {
   get kind() {

@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 import { SuperDungeonController } from "../SuperDungeonController";
 import { MultiplierType } from "../../../type/MultiplierType";

@@ -9,8 +9,8 @@ import { Buff } from "../../../../type/Buff";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 
 export class OdeOfFriendship extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 5, SkillPassiveEffectKind.BasicStats, BasicStatsKind.HP, MultiplierType.Add, 200.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.HP, MultiplierType.Add, 500.0));

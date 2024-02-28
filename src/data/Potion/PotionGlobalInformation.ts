@@ -1,4 +1,4 @@
-import { Enums } from "../../Enums";
+import { DATA } from "..";
 import { Localization } from "../../localization";
 import { HeroKind } from "../../type/HeroKind";
 import { PotionKind } from "../../type/PotionKind";
@@ -6,32 +6,38 @@ import { PotionType } from "../../type/PotionType";
 import { TalismanRarity } from "../../type/TalismanRarity";
 
 export class PotionGlobalInformation {
+  data: DATA;
   kind: PotionKind = 0;
   type: PotionType;
   //   talismanRarity: TalismanRarity;
 
+  constructor(DATA: DATA) {
+    this.data = DATA;
+    this.SetInfo();
+  }
+
   get talismanRarity() {
-    return 0;
+    return TalismanRarity.Common;
   }
 
   get level() {
-    return globalThis.data.source.potionLevels[this.kind];
+    return this.data.source.potionLevels[this.kind];
   }
 
   set level(value) {
-    globalThis.data.source.potionLevels[this.kind] = Math.min(this.type == PotionType.Talisman ? 50 : 100, value);
+    this.data.source.potionLevels[this.kind] = Math.min(this.type == PotionType.Talisman ? 50 : 100, value);
   }
 
   EffectValue(level) {
     return 0.0;
   }
   IsActiveEffect(heroKind: HeroKind, stack: Function) {
-    if (!globalThis.data.source.isActiveBattle[heroKind] || stack() == 0 || this.kind == 0) return false;
+    if (!this.data.source.isActiveBattle[heroKind] || stack() == 0 || this.kind == 0) return false;
 
     return true;
   }
   get effectValue() {
-    return this.EffectValue(this.level) * globalThis.data.potion.effectMultiplier.Value();
+    return this.EffectValue(this.level) * this.data.potion.effectMultiplier.Value();
   }
 
   PassiveEffectValue(level) {
@@ -39,7 +45,7 @@ export class PotionGlobalInformation {
   }
 
   ModifiedPassiveEffectValue(level) {
-    return this.PassiveEffectValue(level) * globalThis.data.potion.talismanPassiveEffectMultiplier.Value();
+    return this.PassiveEffectValue(level) * this.data.potion.talismanPassiveEffectMultiplier.Value();
   }
 
   get passiveEffectMaxValue() {
@@ -60,13 +66,10 @@ export class PotionGlobalInformation {
 
   SetInfo() {}
   get disassembledNum() {
-    return globalThis.data.source.potionDisassembledNums[this.kind];
+    return this.data.source.potionDisassembledNums[this.kind];
   }
   set disassembledNum(value) {
-    globalThis.data.source.potionDisassembledNums[this.kind] = value;
-  }
-  constructor() {
-    this.SetInfo();
+    this.data.source.potionDisassembledNums[this.kind] = value;
   }
 
   get talismanDisassembleFragmentNumPerLevel() {

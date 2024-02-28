@@ -1,18 +1,19 @@
+import { DATA } from "..";
 import { Enums } from "../../Enums";
 import { HeroKind } from "../../type/HeroKind";
 import { SKILL } from "./SKILL";
 import { Stance } from "./Stance";
 
 export class ClassSkill {
+  data: DATA;
   skills: SKILL[] = Array(Enums.SkillKindWarrior);
   stances: Stance[] = [];
 
   heroKind: HeroKind;
 
-  // public int currentStanceId {
-  //   get => Main.main.SR.currentStanceId[(int) this.heroKind];
-  //   set => Main.main.SR.currentStanceId[(int) this.heroKind] = value;
-  // }
+  constructor(DATA: DATA) {
+    this.data = DATA;
+  }
 
   get currentStanceId() {
     return 0;

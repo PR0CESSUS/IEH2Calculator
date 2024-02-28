@@ -2,6 +2,16 @@ import { NumberType } from "../type/NumberType";
 import { secondsToDhms } from "./secondsToDhms";
 
 export function convertTo(input, precision = 2, type: NumberType | null = null) {
+  if (input == undefined) {
+    switch (type) {
+      case NumberType.Normal:
+        return "0%";
+      case NumberType.Meter:
+        return "0m / sec";
+      default:
+        return 0;
+    }
+  }
   input = parseFloat(input);
   let output: number | string = 0;
   let isNegative = false;

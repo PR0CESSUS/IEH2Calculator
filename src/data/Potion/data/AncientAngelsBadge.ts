@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { Enums } from "../../../Enums";
 import { Talisman } from "../Talisman";
 import { MultiplierType } from "../../../type/MultiplierType";
@@ -10,11 +10,11 @@ import { TalismanRarity } from "../../../type/TalismanRarity";
 
 export class AncientAngelsBadge extends Talisman {
   get talismanKind() {
-    return PotionKind.AncientAngelsBadge;
+    return PotionKind.AncientAngelsBadge; //
   }
 
   get talismanRarity() {
-    return TalismanRarity.Rare;
+    return TalismanRarity.Rare; //
   }
 
   get passiveEffectMaxValue() {
@@ -31,13 +31,13 @@ export class AncientAngelsBadge extends Talisman {
 
   SetPassiveEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+      this.data.battles[index].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
         new MultiplierInfo(MultiplierKind.TalismanPassive, MultiplierType.Mul, () => this.passiveEffectValue)
       );
   }
 
   SetEffect(heroKind: HeroKind, equipNum: Function) {
-    return globalThis.data.stats.HeroStats(heroKind, Stats.EquipmentProficiencyGain).RegisterMultiplier(
+    return this.data.stats.HeroStats(heroKind, Stats.EquipmentProficiencyGain).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.Talisman,
         MultiplierType.Mul,

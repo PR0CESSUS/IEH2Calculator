@@ -1,4 +1,4 @@
-import { MultiplierInfo, Multiplier } from "../../Multiplier";
+import { MultiplierInfo, Multiplier } from "../Multiplier";
 import { MultiplierType } from "../../type/MultiplierType";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { SDGemKind } from "../../type/SDGemKind";
@@ -18,29 +18,32 @@ import { SDG_Peridot } from "./SDG/SDG_Peridot";
 import { SDG_Sunstone } from "./SDG/SDG_Sunstone";
 import { SDG_Tanzanite } from "./SDG/SDG_Tanzanite";
 import { SDG_Turquoise } from "./SDG/SDG_Turquoise";
+import { DATA } from "..";
 export class SDGemRitual {
+  data: DATA;
   //   sdgCtrl: SuperDungeonGlobalController;
   sdGemList: SDGem[] = [];
   progressSpeedModifier: Multiplier;
 
-  constructor() {
+  constructor(DATA: DATA) {
+    this.data = DATA;
     // this.sdgCtrl = sdgCtrl;
     this.progressSpeedModifier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-    this.sdGemList.push(new SDG_Sunstone());
-    this.sdGemList.push(new SDG_Morganite());
-    this.sdGemList.push(new SDG_Tanzanite());
-    this.sdGemList.push(new SDG_Heliodor());
-    this.sdGemList.push(new SDG_Peridot());
-    this.sdGemList.push(new SDG_Obsidian());
-    this.sdGemList.push(new SDG_Hackmanite());
-    this.sdGemList.push(new SDG_Turquoise());
-    this.sdGemList.push(new SDG_Kunzite());
-    this.sdGemList.push(new SDG_Carnelian());
-    this.sdGemList.push(new SDG_BlueTourmaline());
-    this.sdGemList.push(new SDG_Amber());
-    this.sdGemList.push(new SDG_Diamond());
-    this.sdGemList.push(new SDG_Almandine());
-    this.sdGemList.push(new SDG_Emerald());
+    this.sdGemList.push(new SDG_Sunstone(this.data));
+    this.sdGemList.push(new SDG_Morganite(this.data));
+    this.sdGemList.push(new SDG_Tanzanite(this.data));
+    this.sdGemList.push(new SDG_Heliodor(this.data));
+    this.sdGemList.push(new SDG_Peridot(this.data));
+    this.sdGemList.push(new SDG_Obsidian(this.data));
+    this.sdGemList.push(new SDG_Hackmanite(this.data));
+    this.sdGemList.push(new SDG_Turquoise(this.data));
+    this.sdGemList.push(new SDG_Kunzite(this.data));
+    this.sdGemList.push(new SDG_Carnelian(this.data));
+    this.sdGemList.push(new SDG_BlueTourmaline(this.data));
+    this.sdGemList.push(new SDG_Amber(this.data));
+    this.sdGemList.push(new SDG_Diamond(this.data));
+    this.sdGemList.push(new SDG_Almandine(this.data));
+    this.sdGemList.push(new SDG_Emerald(this.data));
   }
 
   Start() {

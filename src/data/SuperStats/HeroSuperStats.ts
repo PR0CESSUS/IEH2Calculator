@@ -1,5 +1,5 @@
-import { Multiplier } from "../../Multiplier";
-import { MultiplierInfo } from "../../Multiplier";
+import { Multiplier } from "../Multiplier";
+import { MultiplierInfo } from "../Multiplier";
 import { Enums } from "../../Enums";
 import { MultiplierType } from "../../type/MultiplierType";
 import { MultiplierKind } from "../../type/MultiplierKind";
@@ -8,9 +8,11 @@ import { BasicStatsKind } from "../../type/BasicStatsKind";
 import { AbilityKind } from "../../type/AbilityKind";
 import { Stats } from "../../type/Stats";
 import { HeroSuperAbility } from "./HeroSuperAbility";
-import { Parameter } from "../../Parameter";
+import { Parameter } from "../Parameter";
+import { DATA } from "..";
 
 export class HeroSuperStats {
+  data: DATA;
   heroKind: HeroKind;
   // grade: HeroGrade;
   // fame: HeroFame;
@@ -20,7 +22,8 @@ export class HeroSuperStats {
   fameGain: Multiplier;
   timecountSec;
 
-  constructor(heroKind: HeroKind) {
+  constructor(DATA: DATA, heroKind: HeroKind) {
+    this.data = DATA;
     this.heroKind = heroKind;
 
     // this.grade = new HeroGrade(heroKind);
@@ -28,11 +31,11 @@ export class HeroSuperStats {
     // this.fame.isTrackGain = true;
     this.fameGain = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     // this.pointLeft = new SuperAbilityPointLeft(heroKind);
-    for (let kind = 0; kind < this.superAbilities.length; kind++) this.superAbilities[kind] = new HeroSuperAbility(heroKind, kind);
+    for (let kind = 0; kind < this.superAbilities.length; kind++) this.superAbilities[kind] = new HeroSuperAbility(this.data, heroKind, kind);
   }
 
   get grade() {
-    return globalThis.data.source.heroGrade[this.heroKind];
+    return this.data.source.heroGrade[this.heroKind];
   }
 
   Start() {
@@ -46,35 +49,23 @@ export class HeroSuperStats {
 
   SetStats() {
     for (let kind = 0; kind < Enums.BasicStatsKind; kind++) this.SetBasicStats(kind);
-    globalThis.data.stats
+    this.data.stats
+      .HeroStats(this.heroKind, Stats.PhysCritChance)
+      .RegisterMultiplier(new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.Mul, () => 0.01 * this.SuperAbility(AbilityKind.Luck).Point()));
+    this.data.stats
       .HeroStats(this.heroKind, Stats.PhysCritChance)
       .RegisterMultiplier(
-        new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.Mul, () => 0.01 * this.SuperAbility(AbilityKind.Luck).Point())
+        new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.After, () => Parameter.stats[this.heroKind][7] * this.SuperAbility(AbilityKind.Luck).Point())
       );
-    globalThis.data.stats
-      .HeroStats(this.heroKind, Stats.PhysCritChance)
-      .RegisterMultiplier(
-        new MultiplierInfo(
-          MultiplierKind.SuperAbility,
-          MultiplierType.After,
-          () => Parameter.stats[this.heroKind][7] * this.SuperAbility(AbilityKind.Luck).Point()
-        )
-      );
-    globalThis.data.stats
+    this.data.stats
+      .HeroStats(this.heroKind, Stats.MagCritChance)
+      .RegisterMultiplier(new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.Mul, () => 0.01 * this.SuperAbility(AbilityKind.Luck).Point()));
+    this.data.stats
       .HeroStats(this.heroKind, Stats.MagCritChance)
       .RegisterMultiplier(
-        new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.Mul, () => 0.01 * this.SuperAbility(AbilityKind.Luck).Point())
+        new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.After, () => Parameter.stats[this.heroKind][8] * this.SuperAbility(AbilityKind.Luck).Point())
       );
-    globalThis.data.stats
-      .HeroStats(this.heroKind, Stats.MagCritChance)
-      .RegisterMultiplier(
-        new MultiplierInfo(
-          MultiplierKind.SuperAbility,
-          MultiplierType.After,
-          () => Parameter.stats[this.heroKind][8] * this.SuperAbility(AbilityKind.Luck).Point()
-        )
-      );
-    globalThis.data.stats
+    this.data.stats
       .HeroStats(this.heroKind, Stats.CriticalDamage)
       .RegisterMultiplier(
         new MultiplierInfo(
@@ -83,7 +74,7 @@ export class HeroSuperStats {
           () => (0.01 * (this.SuperAbility(AbilityKind.Agility).Point() + this.SuperAbility(AbilityKind.Luck).Point())) / 2.0
         )
       );
-    globalThis.data.stats
+    this.data.stats
       .HeroStats(this.heroKind, Stats.CriticalDamage)
       .RegisterMultiplier(
         new MultiplierInfo(
@@ -92,12 +83,10 @@ export class HeroSuperStats {
           () => (0.0001 * (this.SuperAbility(AbilityKind.Agility).Point() + this.SuperAbility(AbilityKind.Luck).Point())) / 2.0
         )
       );
-    globalThis.data.stats
+    this.data.stats
       .HeroStats(this.heroKind, Stats.MoveSpeed)
-      .RegisterMultiplier(
-        new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.Mul, () => 0.01 * this.SuperAbility(AbilityKind.Agility).Point())
-      );
-    globalThis.data.stats
+      .RegisterMultiplier(new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.Mul, () => 0.01 * this.SuperAbility(AbilityKind.Agility).Point()));
+    this.data.stats
       .HeroStats(this.heroKind, Stats.MoveSpeed)
       .RegisterMultiplier(
         new MultiplierInfo(
@@ -109,14 +98,10 @@ export class HeroSuperStats {
   }
 
   SetBasicStats(kind: BasicStatsKind) {
-    let multiplierInfo1: MultiplierInfo = new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.Mul, () =>
-      this.BasicStatsIncrementMul(kind)
-    );
-    globalThis.data.stats.BasicStats(this.heroKind, kind).RegisterMultiplier(multiplierInfo1);
-    let multiplierInfo2: MultiplierInfo = new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.After, () =>
-      this.BasicStatsIncrementAfter(kind)
-    );
-    globalThis.data.stats.BasicStats(this.heroKind, kind).RegisterMultiplier(multiplierInfo2);
+    let multiplierInfo1: MultiplierInfo = new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.Mul, () => this.BasicStatsIncrementMul(kind));
+    this.data.stats.BasicStats(this.heroKind, kind).RegisterMultiplier(multiplierInfo1);
+    let multiplierInfo2: MultiplierInfo = new MultiplierInfo(MultiplierKind.SuperAbility, MultiplierType.After, () => this.BasicStatsIncrementAfter(kind));
+    this.data.stats.BasicStats(this.heroKind, kind).RegisterMultiplier(multiplierInfo2);
   }
 
   BasicStatsIncrementBase(kind: BasicStatsKind) {
@@ -149,7 +134,7 @@ export class HeroSuperStats {
   }
 
   SetGradeMilestone() {
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.skillSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.skillSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -157,7 +142,7 @@ export class HeroSuperStats {
         () => this.grade >= 10
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -165,7 +150,7 @@ export class HeroSuperStats {
         () => this.grade >= 20
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -173,7 +158,7 @@ export class HeroSuperStats {
         () => this.grade >= 30
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -181,7 +166,7 @@ export class HeroSuperStats {
         () => this.grade >= 40
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -189,7 +174,7 @@ export class HeroSuperStats {
         () => this.grade >= 50
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -197,7 +182,7 @@ export class HeroSuperStats {
         () => this.grade >= 60
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -205,7 +190,7 @@ export class HeroSuperStats {
         () => this.grade >= 70
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.skillSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.skillSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -213,7 +198,7 @@ export class HeroSuperStats {
         () => this.grade >= 80
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -221,7 +206,7 @@ export class HeroSuperStats {
         () => this.grade >= 90
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -229,7 +214,7 @@ export class HeroSuperStats {
         () => this.grade >= 100
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -237,7 +222,7 @@ export class HeroSuperStats {
         () => this.grade >= 110
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -245,7 +230,7 @@ export class HeroSuperStats {
         () => this.grade >= 120
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -253,7 +238,7 @@ export class HeroSuperStats {
         () => this.grade >= 130
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -261,7 +246,7 @@ export class HeroSuperStats {
         () => this.grade >= 140
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -269,7 +254,7 @@ export class HeroSuperStats {
         () => this.grade >= 150
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -277,7 +262,7 @@ export class HeroSuperStats {
         () => this.grade >= 160
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -285,7 +270,7 @@ export class HeroSuperStats {
         () => this.grade >= 170
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -293,7 +278,7 @@ export class HeroSuperStats {
         () => this.grade >= 180
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -301,7 +286,7 @@ export class HeroSuperStats {
         () => this.grade >= 190
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -309,7 +294,7 @@ export class HeroSuperStats {
         () => this.grade >= 200
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.skillSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.skillSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -317,7 +302,7 @@ export class HeroSuperStats {
         () => this.grade >= 210
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -325,7 +310,7 @@ export class HeroSuperStats {
         () => this.grade >= 220
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -333,7 +318,7 @@ export class HeroSuperStats {
         () => this.grade >= 230
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -341,7 +326,7 @@ export class HeroSuperStats {
         () => this.grade >= 240
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -349,7 +334,7 @@ export class HeroSuperStats {
         () => this.grade >= 250
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -357,7 +342,7 @@ export class HeroSuperStats {
         () => this.grade >= 260
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -365,7 +350,7 @@ export class HeroSuperStats {
         () => this.grade >= 270
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -373,7 +358,7 @@ export class HeroSuperStats {
         () => this.grade >= 280
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -381,7 +366,7 @@ export class HeroSuperStats {
         () => this.grade >= 290
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -389,7 +374,7 @@ export class HeroSuperStats {
         () => this.grade >= 300
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -397,7 +382,7 @@ export class HeroSuperStats {
         () => this.grade >= 310
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -405,7 +390,7 @@ export class HeroSuperStats {
         () => this.grade >= 320
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -413,7 +398,7 @@ export class HeroSuperStats {
         () => this.grade >= 330
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -421,7 +406,7 @@ export class HeroSuperStats {
         () => this.grade >= 340
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -429,7 +414,7 @@ export class HeroSuperStats {
         () => this.grade >= 350
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -437,7 +422,7 @@ export class HeroSuperStats {
         () => this.grade >= 360
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -445,7 +430,7 @@ export class HeroSuperStats {
         () => this.grade >= 370
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -453,7 +438,7 @@ export class HeroSuperStats {
         () => this.grade >= 380
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -461,7 +446,7 @@ export class HeroSuperStats {
         () => this.grade >= 390
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -469,7 +454,7 @@ export class HeroSuperStats {
         () => this.grade >= 400
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -477,7 +462,7 @@ export class HeroSuperStats {
         () => this.grade >= 410
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -485,7 +470,7 @@ export class HeroSuperStats {
         () => this.grade >= 420
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -493,7 +478,7 @@ export class HeroSuperStats {
         () => this.grade >= 430
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -501,7 +486,7 @@ export class HeroSuperStats {
         () => this.grade >= 440
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -509,7 +494,7 @@ export class HeroSuperStats {
         () => this.grade >= 450
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -517,7 +502,7 @@ export class HeroSuperStats {
         () => this.grade >= 460
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -525,7 +510,7 @@ export class HeroSuperStats {
         () => this.grade >= 470
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -533,7 +518,7 @@ export class HeroSuperStats {
         () => this.grade >= 480
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -541,7 +526,7 @@ export class HeroSuperStats {
         () => this.grade >= 490
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -549,7 +534,7 @@ export class HeroSuperStats {
         () => this.grade >= 500
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -557,7 +542,7 @@ export class HeroSuperStats {
         () => this.grade >= 510
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -565,7 +550,7 @@ export class HeroSuperStats {
         () => this.grade >= 520
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -573,7 +558,7 @@ export class HeroSuperStats {
         () => this.grade >= 530
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -581,7 +566,7 @@ export class HeroSuperStats {
         () => this.grade >= 540
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -589,7 +574,7 @@ export class HeroSuperStats {
         () => this.grade >= 550
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.skillSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.skillSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -597,7 +582,7 @@ export class HeroSuperStats {
         () => this.grade >= 560
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -605,7 +590,7 @@ export class HeroSuperStats {
         () => this.grade >= 570
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -613,7 +598,7 @@ export class HeroSuperStats {
         () => this.grade >= 580
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -621,7 +606,7 @@ export class HeroSuperStats {
         () => this.grade >= 590
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -629,7 +614,7 @@ export class HeroSuperStats {
         () => this.grade >= 600
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -637,7 +622,7 @@ export class HeroSuperStats {
         () => this.grade >= 610
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -645,7 +630,7 @@ export class HeroSuperStats {
         () => this.grade >= 620
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -653,7 +638,7 @@ export class HeroSuperStats {
         () => this.grade >= 630
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -661,7 +646,7 @@ export class HeroSuperStats {
         () => this.grade >= 640
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -669,7 +654,7 @@ export class HeroSuperStats {
         () => this.grade >= 650
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -677,7 +662,7 @@ export class HeroSuperStats {
         () => this.grade >= 660
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -685,7 +670,7 @@ export class HeroSuperStats {
         () => this.grade >= 670
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -693,7 +678,7 @@ export class HeroSuperStats {
         () => this.grade >= 680
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -701,7 +686,7 @@ export class HeroSuperStats {
         () => this.grade >= 690
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -709,7 +694,7 @@ export class HeroSuperStats {
         () => this.grade >= 700
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -717,7 +702,7 @@ export class HeroSuperStats {
         () => this.grade >= 710
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -725,7 +710,7 @@ export class HeroSuperStats {
         () => this.grade >= 720
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -733,7 +718,7 @@ export class HeroSuperStats {
         () => this.grade >= 730
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -741,7 +726,7 @@ export class HeroSuperStats {
         () => this.grade >= 740
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -749,7 +734,7 @@ export class HeroSuperStats {
         () => this.grade >= 750
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -757,7 +742,7 @@ export class HeroSuperStats {
         () => this.grade >= 760
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,
@@ -765,7 +750,7 @@ export class HeroSuperStats {
         () => this.grade >= 770
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -773,7 +758,7 @@ export class HeroSuperStats {
         () => this.grade >= 780
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -781,7 +766,7 @@ export class HeroSuperStats {
         () => this.grade >= 790
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -789,7 +774,7 @@ export class HeroSuperStats {
         () => this.grade >= 800
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -797,7 +782,7 @@ export class HeroSuperStats {
         () => this.grade >= 810
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.armoredFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -805,7 +790,7 @@ export class HeroSuperStats {
         () => this.grade >= 820
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.wardedFury.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Mul,
@@ -813,7 +798,7 @@ export class HeroSuperStats {
         () => this.grade >= 830
       )
     );
-    globalThis.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.RegisterMultiplier(
+    this.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.GradeMilestone,
         MultiplierType.Add,

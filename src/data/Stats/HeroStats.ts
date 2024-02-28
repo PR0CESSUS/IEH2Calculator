@@ -1,17 +1,17 @@
-import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { DATA } from "..";
+import { Enums } from "../../Enums";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
+import { Parameter } from "../Parameter";
+import { AbilityKind } from "../../type/AbilityKind";
+import { BasicStatsKind } from "../../type/BasicStatsKind";
+import { HeroKind } from "../../type/HeroKind";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
-import { BasicStatsKind } from "../../type/BasicStatsKind";
-import { Stats } from "../../type/Stats";
-import { MonsterSpecies } from "../../type/MonsterSpecies";
-import { HeroKind } from "../../type/HeroKind";
-import { Debuff } from "../../type/Debuff";
-import { AbilityKind } from "../../type/AbilityKind";
-import { Enums, Enum } from "../../Enums";
-import { Parameter } from "../../Parameter";
+import { NumberType } from "../../type/NumberType";
 import { HeroAbility } from "./HeroAbility";
 
 export class HeroStats {
+  data: DATA;
   basicStats: Multiplier[] = Array(Enums.BasicStatsKind);
   basicStatsPerLevel: Multiplier[] = Array(Enums.BasicStatsKind);
   stats: Multiplier[] = Array(Enums.Stats);
@@ -46,21 +46,22 @@ export class HeroStats {
   abilities = Array(Enums.AbilityKind);
   abilityPointLeft;
 
-  constructor(kind: HeroKind) {
+  constructor(DATA: DATA, kind: HeroKind) {
+    this.data = DATA;
     this.heroKind = kind;
-    this.level = globalThis.data.source.heroLevel[this.heroKind];
-    // console.log(this.level, globalThis.data.source.heroLevel);
+    this.level = this.data.source.heroLevel[this.heroKind];
+    // console.log(this.level, this.data.source.heroLevel);
 
     this.abilityPointLeft = this.AbilityPointLeft(this.heroKind);
     // console.log(this.stats);
-    for (let kind1 = 0; kind1 < this.abilities.length; kind1++) this.abilities[kind1] = new HeroAbility(kind, kind1, this.abilityPointLeft);
+    for (let kind1 = 0; kind1 < this.abilities.length; kind1++) this.abilities[kind1] = new HeroAbility(this.data, kind, kind1, this.abilityPointLeft);
     this.SetStats();
   }
 
   AbilityPointLeft(heroKind) {
-    // console.log(globalThis.data);
+    // console.log(this.data);
 
-    return globalThis.data.source.abilityPoints[heroKind];
+    return this.data.source.abilityPoints[heroKind];
   }
 
   Ability(kind: AbilityKind) {
@@ -111,6 +112,7 @@ export class HeroStats {
           return this.AbilityStats(index);
         })
       );
+      this.basicStats[index].numberType = NumberType.Normal;
 
       this.basicStatsPerLevel[index] = new Multiplier();
       this.basicStats[index].RegisterMultiplier(
@@ -120,18 +122,22 @@ export class HeroStats {
       );
     }
     for (let index = 0; index < this.stats.length; index++) this.stats[index] = new Multiplier();
+
     this.stats[0].maxValue = () => {
       return 0.9;
     };
     this.stats[1].maxValue = () => {
       return 0.9;
     };
+
     this.stats[2].maxValue = () => {
       return 0.9;
     };
+
     this.stats[3].maxValue = () => {
       return 0.9;
     };
+
     this.stats[4].maxValue = () => {
       return 0.9;
     };
@@ -199,6 +205,7 @@ export class HeroStats {
     this.stats[10].minValue = () => {
       return 50.0;
     };
+    this.stats[10].numberType = NumberType.Meter;
     this.stats[11].RegisterMultiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
         return 1.0;
@@ -273,6 +280,8 @@ export class HeroStats {
         return 0.0;
       }
     );
+    this.hpRegenerate.numberType = NumberType.Normal;
+    this.mpRegenerate.numberType = NumberType.Normal;
     this.skillSlotNum = new Multiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
         return 1.0;

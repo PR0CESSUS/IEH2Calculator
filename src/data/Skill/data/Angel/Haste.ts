@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../../Multiplier";
+import { MultiplierInfo } from "../../../Multiplier";
 import { SkillPassiveEffect } from "../../SkillPassiveEffect";
 import { SKILL } from "../../SKILL";
 import { MultiplierType } from "../../../../type/MultiplierType";
@@ -11,8 +11,8 @@ import { Buff } from "../../../../type/Buff";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 
 export class Haste extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 5, SkillPassiveEffectKind.BasicStats, BasicStatsKind.SPD, MultiplierType.Add, 50.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.HeroStats, Stats.MoveSpeed, MultiplierType.Mul, 0.05));
@@ -46,14 +46,14 @@ export class Haste extends SKILL {
       () => this.BuffPercent,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.BasicStats(heroKind, BasicStatsKind.SPD).RegisterMultiplier(multiplierInfo1);
+    this.data.stats.BasicStats(heroKind, BasicStatsKind.SPD).RegisterMultiplier(multiplierInfo1);
     let multiplierInfo2 = new MultiplierInfo(
       MultiplierKind.Buff,
       MultiplierType.Mul,
       () => this.MoveSpeedValue,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.HeroStats(heroKind, Stats.MoveSpeed).RegisterMultiplier(multiplierInfo2);
+    this.data.stats.HeroStats(heroKind, Stats.MoveSpeed).RegisterMultiplier(multiplierInfo2);
   }
 
   MoveSpeedValue() {

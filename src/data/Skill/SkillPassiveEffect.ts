@@ -1,15 +1,14 @@
-import { MultiplierInfo } from "../../Multiplier";
+import { DATA } from "..";
 import { Enums } from "../../Enums";
-import { MultiplierType } from "../../type/MultiplierType";
-import { MultiplierKind } from "../../type/MultiplierKind";
+import { MultiplierInfo } from "../Multiplier";
 import { HeroKind } from "../../type/HeroKind";
-import { BasicStatsKind } from "../../type/BasicStatsKind";
-import { GlobalStats } from "../../type/GlobalStats";
+import { MultiplierKind } from "../../type/MultiplierKind";
+import { MultiplierType } from "../../type/MultiplierType";
 import { SkillPassiveEffectKind } from "../../type/SkillPassiveEffectKind";
-import { Stats } from "../../type/Stats";
 import { SKILL } from "./SKILL";
 
 export class SkillPassiveEffect {
+  data: DATA;
   skill: SKILL;
   level: number;
   requiredLevel;
@@ -22,6 +21,7 @@ export class SkillPassiveEffect {
   kind: number;
 
   constructor(skill: SKILL, requiredLevel, type: SkillPassiveEffectKind, kind: number, multiplierType: MultiplierType, value) {
+    this.data = skill.data;
     this.effectKind = type;
     this.skill = skill;
     this.level = skill.level;
@@ -100,7 +100,7 @@ export class SkillPassiveEffect {
             () => this.EffectValue(index),
             () => this.IsActivated
           );
-          globalThis.data.stats.BasicStats(index, this.kind).RegisterMultiplier(multiplierInfo);
+          this.data.stats.BasicStats(index, this.kind).RegisterMultiplier(multiplierInfo);
         }
         break;
       case SkillPassiveEffectKind.HeroStats:
@@ -111,24 +111,24 @@ export class SkillPassiveEffect {
             () => this.EffectValue(index),
             () => this.IsActivated
           );
-          globalThis.data.stats.HeroStats(index, this.kind).RegisterMultiplier(multiplierInfo);
+          this.data.stats.HeroStats(index, this.kind).RegisterMultiplier(multiplierInfo);
         }
         break;
       case SkillPassiveEffectKind.GlobalStats:
         let multiplierInfo1 = new MultiplierInfo(
           MultiplierKind.SkillPassive,
           this.multiplierType,
-          () => this.value * globalThis.data.skill.skillPassiveShareFactors[this.skill.heroKind].Value(),
+          () => this.value * this.data.skill.skillPassiveShareFactors[this.skill.heroKind].Value(),
           () => this.IsActivated()
         );
-        globalThis.data.stats.globalStats[this.kind].RegisterMultiplier(multiplierInfo1);
+        this.data.stats.globalStats[this.kind].RegisterMultiplier(multiplierInfo1);
         break;
     }
   }
 
   EffectValue(heroKind: HeroKind) {
     let num = this.value;
-    if (heroKind != this.skill.heroKind) num *= globalThis.data.skill.skillPassiveShareFactors[this.skill.heroKind].Value();
+    if (heroKind != this.skill.heroKind) num *= this.data.skill.skillPassiveShareFactors[this.skill.heroKind].Value();
     return num;
   }
 }

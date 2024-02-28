@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../../Multiplier";
+import { MultiplierInfo } from "../../../Multiplier";
 import { SkillPassiveEffect } from "../../SkillPassiveEffect";
 import { SKILL } from "../../SKILL";
 import { MultiplierType } from "../../../../type/MultiplierType";
@@ -12,8 +12,8 @@ import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind"
 import { GlobalStats } from "../../../../type/GlobalStats";
 
 export class BreedingKnowledge extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.HP, MultiplierType.Add, 200.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 20, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MP, MultiplierType.Add, 100.0));
@@ -47,14 +47,14 @@ export class BreedingKnowledge extends SKILL {
       () => this.BuffPercent,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.heroes[heroKind].petExpGainPerDefeat.RegisterMultiplier(multiplierInfo1);
+    this.data.stats.heroes[heroKind].petExpGainPerDefeat.RegisterMultiplier(multiplierInfo1);
     let multiplierInfo2 = new MultiplierInfo(
       MultiplierKind.Buff,
       MultiplierType.Mul,
       () => this.LoyaltyGain,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.heroes[heroKind].loyaltyPoingGain.RegisterMultiplier(multiplierInfo2);
+    this.data.stats.heroes[heroKind].loyaltyPoingGain.RegisterMultiplier(multiplierInfo2);
   }
 
   LoyaltyGain() {

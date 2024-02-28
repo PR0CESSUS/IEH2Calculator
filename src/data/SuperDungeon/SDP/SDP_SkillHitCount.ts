@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 import { SuperDungeonController } from "../SuperDungeonController";
 import { MultiplierType } from "../../../type/MultiplierType";
@@ -29,7 +29,7 @@ export class SDP_SkillHitCount extends SuperDungeonPowerup {
   SetEffect() {
     // console.log(this.EffectValue(), this.kind, this.sdgCtrl.powerupEffectMultiplier[this.kind]);
 
-    globalThis.data.skill.extraSkillHitCount[this.heroKind].RegisterMultiplier(
+    this.ctrl.data.skill.extraSkillHitCount[this.heroKind].RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.Add,
@@ -42,8 +42,8 @@ export class SDP_SkillHitCount extends SuperDungeonPowerup {
   }
 
   SetGlobalEffect() {
-    for (let index = 0; index < globalThis.data.skill.skillLevelBonus.length; index++)
-      globalThis.data.skill.skillLevelBonus[index].RegisterMultiplier(
+    for (let index = 0; index < this.ctrl.data.skill.skillLevelBonus.length; index++)
+      this.ctrl.data.skill.skillLevelBonus[index].RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.DungeonItemPermanent,
           MultiplierType.After,

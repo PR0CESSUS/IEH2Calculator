@@ -1,19 +1,14 @@
-import { MultiplierInfo, Multiplier } from "../../Multiplier";
-import { MultiplierType } from "../../type/MultiplierType";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { MultiplierKind } from "../../type/MultiplierKind";
-import { Enums } from "../../Enums";
+import { MultiplierType } from "../../type/MultiplierType";
 import { DataCatalyst } from "../Catalyst";
 
 export class DataAlchemy {
   catalyst = new DataCatalyst();
-  alchemyPoint;
-  talismanFragment;
-  mysteriousWater;
-  mysteriousWaterProgress;
   mysteriousWaterProductionPerSec: Multiplier;
   mysteriousWaterCap: Multiplier;
   maxMysteriousWaterExpandedCapNum: Multiplier;
-  mysteriousWaterExpandedCapNum;
+  mysteriousWaterExpandedCapNum = 0;
   doubleAlchemyPointChance: Multiplier;
   alchemyPointGainMultiplier: Multiplier;
   alchemyUpgrades = [];
@@ -27,7 +22,7 @@ export class DataAlchemy {
     // this.talismanFragment = new TalismanFragment();
     this.maxMysteriousWaterExpandedCapNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 50.0));
     // this.mysteriousWaterExpandedCapNum = new MysteriousWaterExpandedCapNum(() => this.maxMysteriousWaterExpandedCapNum.Value());
-    this.mysteriousWaterCap = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => this.mysteriousWaterExpandedCapNum.value));
+    this.mysteriousWaterCap = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => this.mysteriousWaterExpandedCapNum));
     // this.mysteriousWater = new MysteriousWater(() => this.mysteriousWaterCap.Value());
     // this.mysteriousWaterProgress = new MysteriousWaterProgress((NUMBER) this.mysteriousWater, () => 1.0);
     this.mysteriousWaterProductionPerSec = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.1));

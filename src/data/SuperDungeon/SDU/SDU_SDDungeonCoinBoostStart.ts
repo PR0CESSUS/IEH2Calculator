@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { Enums } from "../../../Enums";
 import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 import { MultiplierType } from "../../../type/MultiplierType";
@@ -17,7 +17,7 @@ export class SDU_SDDungeonCoinBoostStart extends SuperDungeonUpgrade {
 
   SetEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.initialDungeonCoin.RegisterMultiplier(
+      this.sdgCtrl.data.battles[index].superDungeonCtrl.initialDungeonCoin.RegisterMultiplier(
         new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Add, () => this.EffectValue())
       );
   }

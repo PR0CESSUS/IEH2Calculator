@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../../Multiplier";
+import { MultiplierInfo } from "../../../Multiplier";
 import { SkillPassiveEffect } from "../../SkillPassiveEffect";
 import { SKILL } from "../../SKILL";
 import { Debuff } from "../../../../type/Debuff";
@@ -8,12 +8,12 @@ import { HeroKind } from "../../../../type/HeroKind";
 import { BasicStatsKind } from "../../../../type/BasicStatsKind";
 import { Element } from "../../../../type/Element";
 import { Stats } from "../../../../type/Stats";
-import { Buff } from "../../../../type/Buff";
+
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 
 export class ExplodingArrow extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 20, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MATK, MultiplierType.Add, 20.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 30, SkillPassiveEffectKind.HeroStats, Stats.FireRes, MultiplierType.Add, 0.05));
@@ -35,7 +35,7 @@ export class ExplodingArrow extends SKILL {
       () => this.DamageValue,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.ElementDamage(heroKind, Element.Fire).RegisterMultiplier(multiplierInfo);
+    this.data.stats.ElementDamage(heroKind, Element.Fire).RegisterMultiplier(multiplierInfo);
   }
 
   DamageValue() {

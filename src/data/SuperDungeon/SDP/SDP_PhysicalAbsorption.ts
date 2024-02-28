@@ -1,12 +1,11 @@
-import { MultiplierInfo } from "../../../Multiplier";
-import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
-import { SuperDungeonController } from "../SuperDungeonController";
-import { MultiplierType } from "../../../type/MultiplierType";
-import { MultiplierKind } from "../../../type/MultiplierKind";
+import { MultiplierInfo } from "../../Multiplier";
 import { BasicStatsKind } from "../../../type/BasicStatsKind";
 import { Element } from "../../../type/Element";
-import { Stats } from "../../../type/Stats";
+import { MultiplierKind } from "../../../type/MultiplierKind";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonPowerupKind } from "../../../type/SuperDungeonPowerupKind";
+import { SuperDungeonController } from "../SuperDungeonController";
+import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 
 export class SDP_PhysicalAbsorption extends SuperDungeonPowerup {
   get kind() {
@@ -30,7 +29,7 @@ export class SDP_PhysicalAbsorption extends SuperDungeonPowerup {
   }
 
   SetEffect() {
-    return globalThis.data.stats.ElementAbsorption(this.heroKind, Element.Physical).RegisterMultiplier(
+    return this.ctrl.data.stats.ElementAbsorption(this.heroKind, Element.Physical).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.After,
@@ -43,7 +42,7 @@ export class SDP_PhysicalAbsorption extends SuperDungeonPowerup {
   }
 
   SetGlobalEffect() {
-    globalThis.data.stats.SetEffectBasicStats(
+    this.ctrl.data.stats.SetEffectBasicStats(
       BasicStatsKind.DEF,
       new MultiplierInfo(
         MultiplierKind.DungeonItemPermanent,

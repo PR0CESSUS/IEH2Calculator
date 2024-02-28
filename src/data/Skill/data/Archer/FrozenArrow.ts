@@ -1,19 +1,18 @@
-import { MultiplierInfo } from "../../../../Multiplier";
-import { SkillPassiveEffect } from "../../SkillPassiveEffect";
-import { SKILL } from "../../SKILL";
-import { Debuff } from "../../../../type/Debuff";
-import { MultiplierType } from "../../../../type/MultiplierType";
-import { MultiplierKind } from "../../../../type/MultiplierKind";
-import { HeroKind } from "../../../../type/HeroKind";
+import { MultiplierInfo } from "../../../Multiplier";
 import { BasicStatsKind } from "../../../../type/BasicStatsKind";
+import { Debuff } from "../../../../type/Debuff";
 import { Element } from "../../../../type/Element";
-import { Stats } from "../../../../type/Stats";
-import { Buff } from "../../../../type/Buff";
+import { HeroKind } from "../../../../type/HeroKind";
+import { MultiplierKind } from "../../../../type/MultiplierKind";
+import { MultiplierType } from "../../../../type/MultiplierType";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
+import { Stats } from "../../../../type/Stats";
+import { SKILL } from "../../SKILL";
+import { SkillPassiveEffect } from "../../SkillPassiveEffect";
 
 export class FrozenArrow extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 20, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MP, MultiplierType.Add, 50.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 30, SkillPassiveEffectKind.HeroStats, Stats.MagCritChance, MultiplierType.Add, 0.02));
@@ -40,7 +39,7 @@ export class FrozenArrow extends SKILL {
       () => this.DamageValue,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.ElementDamage(heroKind, Element.Ice).RegisterMultiplier(multiplierInfo);
+    this.data.stats.ElementDamage(heroKind, Element.Ice).RegisterMultiplier(multiplierInfo);
   }
 
   DamageValue() {

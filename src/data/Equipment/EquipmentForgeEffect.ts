@@ -1,8 +1,5 @@
-import { MultiplierInfo } from "../../Multiplier";
-import { Util } from "../../Util";
 import { Localization } from "../../localization";
 import { EquipmentForgeEffectKind } from "../../type/EquipmentForgeEffectKind";
-import { HeroKind } from "../../type/HeroKind";
 import { Equipment } from "./Equipment";
 
 export class EquipmentForgeEffect {
@@ -18,19 +15,19 @@ export class EquipmentForgeEffect {
   get effectValue() {
     switch (this.kind) {
       case EquipmentForgeEffectKind.ReduceRequiredHeroLevel:
-        return globalThis.data.source.equipment1stForgeValues[this.equipment.id];
+        return this.equipment.data.source.equipment1stForgeValues[this.equipment.id];
       case EquipmentForgeEffectKind.ReduceRequiredAbility:
-        return globalThis.data.source.equipment2ndForgeValues[this.equipment.id];
+        return this.equipment.data.source.equipment2ndForgeValues[this.equipment.id];
       case EquipmentForgeEffectKind.IncreaseProficiencyGain:
-        return globalThis.data.source.equipment3rdForgeValues[this.equipment.id];
+        return this.equipment.data.source.equipment3rdForgeValues[this.equipment.id];
       case EquipmentForgeEffectKind.IncreaseEffect:
-        return globalThis.data.source.equipment4thForgeValues[this.equipment.id];
+        return this.equipment.data.source.equipment4thForgeValues[this.equipment.id];
       case EquipmentForgeEffectKind.PurifyCurseEffect:
-        return globalThis.data.source.equipment5thForgeValues[this.equipment.id];
+        return this.equipment.data.source.equipment5thForgeValues[this.equipment.id];
       case EquipmentForgeEffectKind.IncreaseEffectIncrement:
-        return globalThis.data.source.equipment6thForgeValues[this.equipment.id];
+        return this.equipment.data.source.equipment6thForgeValues[this.equipment.id];
       case EquipmentForgeEffectKind.EqLevel:
-        return globalThis.data.source.equipment7thForgeValues[this.equipment.id];
+        return this.equipment.data.source.equipment7thForgeValues[this.equipment.id];
 
       default:
         return 0;
@@ -40,25 +37,25 @@ export class EquipmentForgeEffect {
   SetEffectValue(value) {
     switch (this.kind) {
       case EquipmentForgeEffectKind.ReduceRequiredHeroLevel:
-        globalThis.data.source.equipment1stForgeValues[this.equipment.id] = value;
+        this.equipment.data.source.equipment1stForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.ReduceRequiredAbility:
-        globalThis.data.source.equipment2ndForgeValues[this.equipment.id] = value;
+        this.equipment.data.source.equipment2ndForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.IncreaseProficiencyGain:
-        globalThis.data.source.equipment3rdForgeValues[this.equipment.id] = value;
+        this.equipment.data.source.equipment3rdForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.IncreaseEffect:
-        globalThis.data.source.equipment4thForgeValues[this.equipment.id] = value;
+        this.equipment.data.source.equipment4thForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.PurifyCurseEffect:
-        globalThis.data.source.equipment5thForgeValues[this.equipment.id] = value;
+        this.equipment.data.source.equipment5thForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.IncreaseEffectIncrement:
-        globalThis.data.source.equipment6thForgeValues[this.equipment.id] = value;
+        this.equipment.data.source.equipment6thForgeValues[this.equipment.id] = value;
         break;
       case EquipmentForgeEffectKind.EqLevel:
-        globalThis.data.source.equipment7thForgeValues[this.equipment.id] = value;
+        this.equipment.data.source.equipment7thForgeValues[this.equipment.id] = value;
         break;
 
       default:
@@ -67,8 +64,8 @@ export class EquipmentForgeEffect {
   }
   set effectValue(value) {
     if (this.equipment.ForgedSlotNum() >= 4 && value > 0 && this.effectValue == 0) return;
-    const newValue = Math.min(value, this.equipment.ForgeEffectMaxValue(this.kind, this.equipment.globalInfo.isArtifact));
-    this.SetEffectValue(newValue);
+    // const newValue = Math.min(value, this.equipment.ForgeEffectMaxValue(this.kind, this.equipment.globalInfo.isArtifact));
+    this.SetEffectValue(value);
 
     // console.log(this.kind, "forgeEffects set effectValue", this.effectValue, " > ", newValue);
   }

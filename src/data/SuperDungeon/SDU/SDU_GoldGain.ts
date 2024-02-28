@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -14,9 +14,7 @@ export class SDU_GoldGain extends SuperDungeonUpgrade {
   }
 
   SetEffect() {
-    return globalThis.data.stats
-      .GoldGain()
-      .RegisterMultiplier(new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
+    return this.sdgCtrl.data.stats.GoldGain().RegisterMultiplier(new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
   }
 
   get maxLevel() {

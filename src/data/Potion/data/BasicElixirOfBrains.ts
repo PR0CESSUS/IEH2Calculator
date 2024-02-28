@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { PotionGlobalInformation } from "../PotionGlobalInformation";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -15,7 +15,7 @@ export class BasicElixirOfBrains extends PotionGlobalInformation {
 
   SetEffect(heroKind: HeroKind, equipNum: Function) {
     return [
-      globalThis.data.stats.ElementDamage(heroKind, Element.Fire).RegisterMultiplier(
+      this.data.stats.ElementDamage(heroKind, Element.Fire).RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.Potion,
           MultiplierType.Add,
@@ -23,7 +23,7 @@ export class BasicElixirOfBrains extends PotionGlobalInformation {
           () => this.IsActiveEffect(heroKind, equipNum)
         )
       ),
-      globalThis.data.stats.ElementDamage(heroKind, Element.Ice).RegisterMultiplier(
+      this.data.stats.ElementDamage(heroKind, Element.Ice).RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.Potion,
           MultiplierType.Add,
@@ -31,7 +31,7 @@ export class BasicElixirOfBrains extends PotionGlobalInformation {
           () => this.IsActiveEffect(heroKind, equipNum)
         )
       ),
-      globalThis.data.stats.ElementDamage(heroKind, Element.Thunder).RegisterMultiplier(
+      this.data.stats.ElementDamage(heroKind, Element.Thunder).RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.Potion,
           MultiplierType.Add,
@@ -39,7 +39,7 @@ export class BasicElixirOfBrains extends PotionGlobalInformation {
           () => this.IsActiveEffect(heroKind, equipNum)
         )
       ),
-      globalThis.data.stats.ElementDamage(heroKind, Element.Light).RegisterMultiplier(
+      this.data.stats.ElementDamage(heroKind, Element.Light).RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.Potion,
           MultiplierType.Add,
@@ -47,7 +47,7 @@ export class BasicElixirOfBrains extends PotionGlobalInformation {
           () => this.IsActiveEffect(heroKind, equipNum)
         )
       ),
-      globalThis.data.stats.ElementDamage(heroKind, Element.Dark).RegisterMultiplier(
+      this.data.stats.ElementDamage(heroKind, Element.Dark).RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.Potion,
           MultiplierType.Add,
@@ -63,6 +63,6 @@ export class BasicElixirOfBrains extends PotionGlobalInformation {
   }
 
   AlchemyPointGain(level) {
-    return 4.0 * globalThis.data.alchemy.alchemyPointGainMultiplier.Value();
+    return 4.0 * this.data.alchemy.alchemyPointGainMultiplier.Value();
   }
 }

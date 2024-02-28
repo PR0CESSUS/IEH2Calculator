@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { Talisman } from "../Talisman";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -25,14 +25,11 @@ export class CertificateOfCompetence extends Talisman {
   }
 
   SetPassiveEffect() {
-    globalThis.data.stats.SetEffectStats(
-      Stats.SkillProficiencyGain,
-      new MultiplierInfo(MultiplierKind.TalismanPassive, MultiplierType.Mul, () => this.passiveEffectValue)
-    );
+    this.data.stats.SetEffectStats(Stats.SkillProficiencyGain, new MultiplierInfo(MultiplierKind.TalismanPassive, MultiplierType.Mul, () => this.passiveEffectValue));
   }
 
   SetEffect(heroKind: HeroKind, equipNum: Function) {
-    return globalThis.data.skill.skillCooltimeReduction[heroKind].RegisterMultiplier(
+    return this.data.skill.skillCooltimeReduction[heroKind].RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.Talisman,
         MultiplierType.Add,

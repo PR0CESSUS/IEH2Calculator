@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../../Multiplier";
+import { MultiplierInfo } from "../../../Multiplier";
 import { SkillPassiveEffect } from "../../SkillPassiveEffect";
 import { SKILL } from "../../SKILL";
 import { MultiplierType } from "../../../../type/MultiplierType";
@@ -11,8 +11,8 @@ import { Buff } from "../../../../type/Buff";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 
 export class AnthemOfEnthusiasm extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MP, MultiplierType.Add, 250.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 20, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Mul, 0.05));
@@ -51,15 +51,15 @@ export class AnthemOfEnthusiasm extends SKILL {
       () => this.BuffPercent,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.heroes[heroKind].summonPetATKMATKMultiplier.RegisterMultiplier(multiplierInfo1);
+    this.data.stats.heroes[heroKind].summonPetATKMATKMultiplier.RegisterMultiplier(multiplierInfo1);
     let multiplierInfo2 = new MultiplierInfo(
       MultiplierKind.Buff,
       MultiplierType.Add,
       () => this.CritChance,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.HeroStats(heroKind, Stats.PetPhysCritChance).RegisterMultiplier(multiplierInfo2);
-    globalThis.data.stats.HeroStats(heroKind, Stats.PetMagCritChance).RegisterMultiplier(multiplierInfo2);
+    this.data.stats.HeroStats(heroKind, Stats.PetPhysCritChance).RegisterMultiplier(multiplierInfo2);
+    this.data.stats.HeroStats(heroKind, Stats.PetMagCritChance).RegisterMultiplier(multiplierInfo2);
   }
 
   CritChance() {

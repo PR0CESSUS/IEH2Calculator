@@ -24,6 +24,8 @@ import { RebirthUpgradeKind } from "./type/RebirthUpgradeKind";
 import { EquipmentForgeEffectKind } from "./type/EquipmentForgeEffectKind";
 import { DictionaryUpgradeKind } from "./type/DictionaryUpgradeKind";
 import { Debuff } from "./type/Debuff";
+import { ChallengeKind } from "./type/ChallengeKind";
+import { QuestKindTitle } from "./type/QuestKindTitle";
 
 export const Enums = {
   HeroKind: Object.entries(HeroKind).length / 2,
@@ -52,12 +54,6 @@ export const Enums = {
   EquipmentForgeEffectKind: Object.entries(EquipmentForgeEffectKind).length / 2,
   DictionaryUpgradeKind: Object.entries(DictionaryUpgradeKind).length / 2,
   Debuff: Object.entries(Debuff).length / 2,
+  ChallengeKind: Object.entries(ChallengeKind).length / 2,
+  QuestKindTitle: Object.entries(QuestKindTitle).length / 2,
 };
-
-export const Enum = {
-  GetNames: (kind) => {
-    return kind;
-  },
-};
-
-// console.log(Stats);

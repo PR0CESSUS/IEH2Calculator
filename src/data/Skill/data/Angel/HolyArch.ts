@@ -1,7 +1,7 @@
-import { MultiplierInfo } from "../../../../Multiplier";
+import { MultiplierInfo } from "../../../Multiplier";
 import { SkillPassiveEffect } from "../../SkillPassiveEffect";
 import { SKILL } from "../../SKILL";
-import { Debuff } from "../../../../type/Debuff";
+
 import { MultiplierType } from "../../../../type/MultiplierType";
 import { MultiplierKind } from "../../../../type/MultiplierKind";
 import { HeroKind } from "../../../../type/HeroKind";
@@ -11,8 +11,8 @@ import { Buff } from "../../../../type/Buff";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 
 export class HolyArch extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 500, SkillPassiveEffectKind.HeroStats, Stats.SkillProficiencyGain, MultiplierType.Add, 1.0));
   }
@@ -32,14 +32,14 @@ export class HolyArch extends SKILL {
       () => this.BuffPercent,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.skill.skillLevelBonusFromHolyArch[heroKind].RegisterMultiplier(multiplierInfo1);
+    this.data.skill.skillLevelBonusFromHolyArch[heroKind].RegisterMultiplier(multiplierInfo1);
     let multiplierInfo2 = new MultiplierInfo(
       MultiplierKind.Buff,
       MultiplierType.Add,
       () => this.DebuffResValue,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.HeroStats(heroKind, Stats.DebuffRes).RegisterMultiplier(multiplierInfo2);
+    this.data.stats.HeroStats(heroKind, Stats.DebuffRes).RegisterMultiplier(multiplierInfo2);
   }
 
   DebuffResValue() {
@@ -50,7 +50,7 @@ export class HolyArch extends SKILL {
   }
 
   get levelBonus() {
-    return globalThis.data.skill.skillLevelBonus[this.heroKind].Value();
+    return this.data.skill.skillLevelBonus[this.heroKind].Value();
   }
 
   BuffPercent() {

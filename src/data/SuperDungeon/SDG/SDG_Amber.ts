@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SDGem } from "../SDGem";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -18,9 +18,7 @@ export class SDG_Amber extends SDGem {
   }
 
   SetEffect() {
-    return globalThis.data.area.SetEffectDungeonClearCount(
-      new MultiplierInfo(MultiplierKind.SDGemRitual, MultiplierType.Add, () => this.EffectValue())
-    );
+    return this.data.area.SetEffectDungeonClearCount(new MultiplierInfo(MultiplierKind.SDGemRitual, MultiplierType.Add, () => this.EffectValue()));
   }
 
   get initEffectValue() {

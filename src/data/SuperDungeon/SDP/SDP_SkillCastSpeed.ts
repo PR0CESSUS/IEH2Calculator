@@ -1,11 +1,10 @@
-import { MultiplierInfo } from "../../../Multiplier";
-import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
-import { SuperDungeonController } from "../SuperDungeonController";
-import { MultiplierType } from "../../../type/MultiplierType";
-import { MultiplierKind } from "../../../type/MultiplierKind";
 import { BasicStatsKind } from "../../../type/BasicStatsKind";
-import { Stats } from "../../../type/Stats";
+import { MultiplierKind } from "../../../type/MultiplierKind";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonPowerupKind } from "../../../type/SuperDungeonPowerupKind";
+import { MultiplierInfo } from "../../Multiplier";
+import { SuperDungeonController } from "../SuperDungeonController";
+import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 
 export class SDP_SkillCastSpeed extends SuperDungeonPowerup {
   get kind() {
@@ -29,7 +28,7 @@ export class SDP_SkillCastSpeed extends SuperDungeonPowerup {
   }
 
   SetEffect() {
-    return globalThis.data.skill.skillCastSpeedModifier[this.heroKind].RegisterMultiplier(
+    return this.ctrl.data.skill.skillCastSpeedModifier[this.heroKind].RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.Add,
@@ -42,7 +41,7 @@ export class SDP_SkillCastSpeed extends SuperDungeonPowerup {
   }
 
   SetGlobalEffect() {
-    globalThis.data.stats.SetEffectBasicStats(
+    this.ctrl.data.stats.SetEffectBasicStats(
       BasicStatsKind.SPD,
       new MultiplierInfo(
         MultiplierKind.DungeonItemPermanent,

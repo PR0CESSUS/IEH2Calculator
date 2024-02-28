@@ -1,49 +1,46 @@
 import { Enums } from "../../Enums";
-import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
-import { StatueOfHeroes } from "./StatueOfHeroes";
-import { AdventuringParty } from "./AdventuringParty";
-import { AlchemistsHut } from "./AlchemistsHut";
-import { ArcaneResearcher } from "./ArcaneResearcher";
-import { MysticArena } from "./MysticArena";
-import { Dojo } from "./Dojo";
-import { Cartographer } from "./Cartographer";
-import { SlimeBank } from "./SlimeBank";
-import { Tavern } from "./Tavern";
-import { Temple } from "./Temple";
-import { Trapper } from "./Trapper";
-import { Blacksmith } from "./Blacksmith";
+import { DATA } from "..";
+import { BUILDING } from "./BUILDING";
+import { BuildingKind } from "../../type/BuildingKind";
+import { NumberType } from "../../type/NumberType";
 
 export class DataTown {
-  maxRank = new Multiplier();
+  data: DATA;
+  maxRank: Multiplier;
   townMaterials = [];
-  townMaterialGainMultiplier: Multiplier[] = Array(Enums.HeroKind).fill(new Multiplier());
-  townLevelEffectMultiplier: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+  townMaterialGainMultiplier: Multiplier[] = Array(Enums.HeroKind);
+  townLevelEffectMultiplier: Multiplier;
   townLevelEffectMultipliers: Multiplier[] = Array(Enums.ResourceKind);
-  levelCostReduction: Multiplier = new Multiplier(
-    new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
-    () => 0.9,
-    () => 0.0
-  );
-  buildings: any[] = [];
-  researchPower: Multiplier[] = Array(3);
+  levelCostReduction: Multiplier;
+  buildings: BUILDING[] = [];
+  researchPower: Multiplier[] = Array(Enums.ResourceKind);
 
-  maxResearchNum: Multiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-  researchEffectMultipliers: Multiplier[] = Array(3);
+  maxResearchNum: Multiplier;
+  researchEffectMultipliers: Multiplier[] = Array(Enums.ResourceKind);
 
-  constructor() {
-    // globalThis.data.stat.townCtrl = this;
-    // for (let index = 0; index < this.townMaterialGainMultiplier.length; index++)
-    //   this.townMaterialGainMultiplier[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+  constructor(DATA: DATA) {
+    this.data = DATA;
+    for (let index = 0; index < this.townMaterialGainMultiplier.length; index++) {
+      this.townMaterialGainMultiplier[index] = new Multiplier();
+    }
+    this.maxResearchNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.townLevelEffectMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.maxRank = new Multiplier();
+    this.levelCostReduction = new Multiplier(
+      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
+      () => 0.9,
+      () => 0.0
+    );
     for (let index = 0; index < this.researchPower.length; index++) {
       this.researchPower[index] = new Multiplier(
-        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () =>
-          Math.log10(10.0 + globalThis.data.resource.Resource(index).value)
-        ),
+        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => Math.log10(10.0 + this.data.resource.Resource(index))),
         () => 1e20,
         () => 1.0
       );
+      this.researchPower[index].numberType = NumberType.Normal;
       this.researchEffectMultipliers[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     }
 
@@ -53,33 +50,32 @@ export class DataTown {
   }
 
   Start() {
-    this.buildings[0] = new StatueOfHeroes();
-    this.buildings[3] = new Blacksmith();
-    this.buildings[1] = new Cartographer();
-    this.buildings[9] = new Tavern();
-    this.buildings[4] = new Temple();
-    this.buildings[10] = new Dojo();
-    this.buildings[5] = new Trapper();
-    this.buildings[7] = new MysticArena();
-    this.buildings[6] = new SlimeBank();
-    this.buildings[8] = new ArcaneResearcher();
-    this.buildings[2] = new AlchemistsHut();
-    this.buildings[11] = new AdventuringParty();
+    this.buildings[0] = new BUILDING(this.data, BuildingKind.StatueOfHeroes);
+    this.buildings[3] = new BUILDING(this.data, BuildingKind.Blacksmith);
+    this.buildings[1] = new BUILDING(this.data, BuildingKind.Cartographer);
+    this.buildings[9] = new BUILDING(this.data, BuildingKind.Tavern);
+    this.buildings[4] = new BUILDING(this.data, BuildingKind.Temple);
+    this.buildings[10] = new BUILDING(this.data, BuildingKind.Dojo);
+    this.buildings[5] = new BUILDING(this.data, BuildingKind.Trapper);
+    this.buildings[7] = new BUILDING(this.data, BuildingKind.MysticArena);
+    this.buildings[6] = new BUILDING(this.data, BuildingKind.SlimeBank);
+    this.buildings[8] = new BUILDING(this.data, BuildingKind.ArcaneResearcher);
+    this.buildings[2] = new BUILDING(this.data, BuildingKind.AlchemistsHut);
+    this.buildings[11] = new BUILDING(this.data, BuildingKind.AdventuringParty);
     // this.SetEffectLevelBonusForAllBuilding()
   }
 
   SetEffectTownMatGain(info) {
-    for (let index = 0; index < this.townMaterialGainMultiplier.length; index++)
-      this.townMaterialGainMultiplier[index].RegisterMultiplier(info);
+    for (let index = 0; index < this.townMaterialGainMultiplier.length; index++) this.townMaterialGainMultiplier[index].RegisterMultiplier(info);
   }
 
   TotalBuildingLevel() {
     let num = 0;
-    for (let index = 0; index < this.buildings.length; index++) num += this.buildings[index].level.value;
+    for (let index = 0; index < this.buildings.length; index++) num += this.buildings[index].Level();
     return num;
   }
 
-  SetEffectLevelBonusForAllBuilding(info) {
+  SetEffectLevelBonusForAllBuilding(info: MultiplierInfo) {
     // console.log(info);
 
     for (let index = 0; index < this.buildings.length; index++) {
@@ -89,8 +85,8 @@ export class DataTown {
 
   MaxTownMaterialGainMultiplier() {
     let num = 0.0;
-    for (let kind = 0; kind < this.townMaterialGainMultiplier.length; ++kind) {
-      if (this.townMaterialGainMultiplier[kind].Value() > num) num = this.townMaterialGainMultiplier[kind].Value();
+    for (let index = 0; index < this.townMaterialGainMultiplier.length; ++index) {
+      if (this.townMaterialGainMultiplier[index].Value() > num && this.data.source.isActiveBattle[index]) num = this.townMaterialGainMultiplier[index].Value();
     }
     return num;
   }

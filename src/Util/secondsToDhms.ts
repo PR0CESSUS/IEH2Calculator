@@ -1,5 +1,5 @@
 //@ts-nocheck
-export function secondsToDhms(seconds) {
+export function secondsToDhms(seconds, spread = true) {
   seconds = parseInt(seconds);
   let d = Math.floor(seconds / (3600 * 24));
   let h = Math.floor((seconds % (3600 * 24)) / 3600);
@@ -14,5 +14,6 @@ export function secondsToDhms(seconds) {
 
   if (d == 0 && h == 0) return `${m}m${s}s`;
   if (d == 0) return `${h}h${m}m${s}s`;
-  return `${d}d ${h}:${m}:${s}`;
+  if (spread) return `${d}d ${h}:${m}:${s}`;
+  return `${d}d${h}h${m}m${s}s`;
 }

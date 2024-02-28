@@ -9,8 +9,8 @@ import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind"
 import { GlobalStats } from "../../../../type/GlobalStats";
 
 export class StaffAttack extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MP, MultiplierType.Add, 25.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 20, SkillPassiveEffectKind.GlobalStats, GlobalStats.CrystalGain, MultiplierType.Mul, 0.1));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 30, SkillPassiveEffectKind.GlobalStats, GlobalStats.CrystalGain, MultiplierType.Mul, 0.2));
@@ -24,10 +24,10 @@ export class StaffAttack extends SKILL {
   }
 
   get debuff() {
-    return globalThis.data.skill.baseAttackPoisonChance[this.heroKind].Value() > 0.0 ? Debuff.Poison : Debuff.Nothing;
+    return this.data.skill.baseAttackPoisonChance[this.heroKind].Value() > 0.0 ? Debuff.Poison : Debuff.Nothing;
   }
 
   DebuffChance() {
-    return globalThis.data.skill.baseAttackPoisonChance[this.heroKind].Value();
+    return this.data.skill.baseAttackPoisonChance[this.heroKind].Value();
   }
 }

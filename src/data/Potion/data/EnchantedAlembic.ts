@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { Talisman } from "../Talisman";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -31,13 +31,11 @@ export class EnchantedAlembic extends Talisman {
   }
 
   SetPassiveEffect() {
-    globalThis.data.alchemy.mysteriousWaterProductionPerSec.RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.TalismanPassive, MultiplierType.Add, () => this.passiveEffectValue)
-    );
+    this.data.alchemy.mysteriousWaterProductionPerSec.RegisterMultiplier(new MultiplierInfo(MultiplierKind.TalismanPassive, MultiplierType.Add, () => this.passiveEffectValue));
   }
 
   SetEffect(heroKind: HeroKind, equipNum: Function) {
-    return globalThis.data.potion.effectMultiplier.RegisterMultiplier(
+    return this.data.potion.effectMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.Talisman,
         MultiplierType.Mul,

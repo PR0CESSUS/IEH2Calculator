@@ -1,4 +1,3 @@
-import { HeroKind } from "../../type/HeroKind";
 import { PotionKind } from "../../type/PotionKind";
 import { PotionType } from "../../type/PotionType";
 import { TalismanRarity } from "../../type/TalismanRarity";

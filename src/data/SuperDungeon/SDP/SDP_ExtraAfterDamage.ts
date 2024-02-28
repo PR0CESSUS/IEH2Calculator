@@ -1,11 +1,10 @@
-import { MultiplierInfo } from "../../../Multiplier";
 import { Enums } from "../../../Enums";
-import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
-import { SuperDungeonController } from "../SuperDungeonController";
-import { MultiplierType } from "../../../type/MultiplierType";
+import { MultiplierInfo } from "../../Multiplier";
 import { MultiplierKind } from "../../../type/MultiplierKind";
-import { HeroKind } from "../../../type/HeroKind";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonPowerupKind } from "../../../type/SuperDungeonPowerupKind";
+import { SuperDungeonController } from "../SuperDungeonController";
+import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 
 export class SDP_ExtraAfterDamage extends SuperDungeonPowerup {
   get kind() {
@@ -29,7 +28,7 @@ export class SDP_ExtraAfterDamage extends SuperDungeonPowerup {
   }
 
   SetEffect() {
-    return globalThis.data.stats.Hero(this.heroKind).extraAfterDamage.RegisterMultiplier(
+    return this.ctrl.data.stats.Hero(this.heroKind).extraAfterDamage.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.Add,
@@ -43,7 +42,7 @@ export class SDP_ExtraAfterDamage extends SuperDungeonPowerup {
 
   SetGlobalEffect() {
     for (let kind = 0; kind < Enums.HeroKind; kind++)
-      globalThis.data.stats.Hero(kind).extraAfterDamage.RegisterMultiplier(
+      this.ctrl.data.stats.Hero(kind).extraAfterDamage.RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.DungeonItemPermanent,
           MultiplierType.Add,

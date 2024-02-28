@@ -1,23 +1,19 @@
-import { HeroKind } from "../../type/HeroKind";
-import { MonsterSpecies } from "../../type/MonsterSpecies";
-import { Stats } from "../../type/Stats";
-import { MonsterColor } from "../../type/MonsterColor";
-import { MONSTER_BATTLE } from "./MONSTER_BATTLE";
-import { BATTLE_CONTROLLER } from ".";
+import { DataBattle } from ".";
+import { DATA } from "..";
 import { ChallengeMonsterKind } from "../../type/ChallengeMonsterKind";
+import { MonsterSpecies } from "../../type/MonsterSpecies";
+import { MONSTER_BATTLE } from "./MONSTER_BATTLE";
 
 export class CHALLENGE_BATTLE extends MONSTER_BATTLE {
-  get globalInformation() {
-    return globalThis.data.monster.GlobalInformationChallengeBoss(this.challengeMonsterKind);
-  }
-
   //   get defeatedNum() {return this.globalInformation.defeatedNums[this.battleCtrl.heroKind];}
 
-  constructor(battleCtrl: BATTLE_CONTROLLER) {
-    super(battleCtrl);
+  constructor(DATA: DATA, battleCtrl: DataBattle) {
+    super(DATA, battleCtrl);
     this.species = MonsterSpecies.ChallengeBoss;
   }
-
+  get globalInformation() {
+    return this.battleCtrl.data.monster.GlobalInformationChallengeBoss(this.challengeMonsterKind);
+  }
   get hp() {
     let base = this.globalInformation.Hp(this.level, this.difficulty);
     let level = this.level;
@@ -44,7 +40,7 @@ export class CHALLENGE_BATTLE extends MONSTER_BATTLE {
   }
 
   DamageModifier(value) {
-    return globalThis.data.custom.isSuperDungeon
+    return this.battleCtrl.data.source.isSuperDungeon
       ? value * this.battleCtrl.superDungeonCtrl.damageMultiplier.Value() * this.battleCtrl.superDungeonCtrl.sdChallengeBossDamageMultiplier.Value()
       : value;
   }

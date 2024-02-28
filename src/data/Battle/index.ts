@@ -1,18 +1,14 @@
 import { Enums } from "../../Enums";
-import { Debuff } from "../../type/Debuff";
-import { ResourceKind } from "../../type/ResourceKind";
 import { HeroKind } from "../../type/HeroKind";
-
-import { EquipmentKind } from "../../type/EquipmentKind";
-
 import { Element } from "../../type/Element";
 import { SuperDungeonController } from "../SuperDungeon/SuperDungeonController";
-import { BATTLE } from "./BATTLE";
+import { CHALLENGE_BATTLE } from "./CHALLENGE_BATTLE";
 import { HERO_BATTLE } from "./HERO_BATTLE";
 import { MONSTER_BATTLE } from "./MONSTER_BATTLE";
-import { CHALLENGE_BATTLE } from "./CHALLENGE_BATTLE";
+import { DATA } from "..";
 
-export class BATTLE_CONTROLLER {
+export class DataBattle {
+  data: DATA;
   heroKind: HeroKind;
   hero: HERO_BATTLE;
   //   List<> heroAllys = new List<>();
@@ -33,19 +29,20 @@ export class BATTLE_CONTROLLER {
   superDungeonCtrl: SuperDungeonController;
   isSuperDungeon = true;
 
-  constructor(heroKind: HeroKind) {
+  constructor(DATA: DATA, heroKind: HeroKind) {
+    this.data = DATA;
     this.heroKind = heroKind;
     this.superDungeonCtrl = new SuperDungeonController(this);
-    this.monster = new MONSTER_BATTLE(this);
-    this.challengeMonster = new CHALLENGE_BATTLE(this);
-    this.hero = new HERO_BATTLE(this.heroKind, this);
+    this.monster = new MONSTER_BATTLE(DATA, this);
+    this.challengeMonster = new CHALLENGE_BATTLE(DATA, this);
+    this.hero = new HERO_BATTLE(DATA, this.heroKind, this);
     // if (this.heroKind == HeroKind.Warrior) {
 
     // }
   }
 
   Start() {
-    // this.skillSet = globalThis.data.battle.skillSet;
+    // this.skillSet = this.data.battle.skillSet;
     // this.hero.Start();
 
     this.superDungeonCtrl.Start();
@@ -54,7 +51,7 @@ export class BATTLE_CONTROLLER {
   CurrentSlayerElement(): Element {
     for (let index = 0; index < Enums.Element; ++index) {
       let kind = index;
-      if (globalThis.data.stats.ElementSlayerDamage(this.heroKind, kind).Value() > 0.0) return kind;
+      if (this.data.stats.ElementSlayerDamage(this.heroKind, kind).Value() > 0.0) return kind;
     }
     return Element.Physical;
   }

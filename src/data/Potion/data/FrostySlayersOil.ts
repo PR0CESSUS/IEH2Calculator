@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { PotionGlobalInformation } from "../PotionGlobalInformation";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -14,7 +14,7 @@ export class FrostySlayersOil extends PotionGlobalInformation {
   }
 
   SetEffect(heroKind: HeroKind, equipNum: Function) {
-    return globalThis.data.stats.ElementSlayerDamage(heroKind, Element.Ice).RegisterMultiplier(
+    return this.data.stats.ElementSlayerDamage(heroKind, Element.Ice).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.Potion,
         MultiplierType.Add,
@@ -29,6 +29,6 @@ export class FrostySlayersOil extends PotionGlobalInformation {
   }
 
   AlchemyPointGain(level) {
-    return 10.0 * globalThis.data.alchemy.alchemyPointGainMultiplier.Value();
+    return 10.0 * this.data.alchemy.alchemyPointGainMultiplier.Value();
   }
 }

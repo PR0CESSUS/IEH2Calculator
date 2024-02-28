@@ -1,12 +1,10 @@
-import { Multiplier } from "../../Multiplier";
-import { MultiplierInfo } from "../../Multiplier";
-import { MultiplierType } from "../../type/MultiplierType";
-import { MultiplierKind } from "../../type/MultiplierKind";
+import { DATA } from "..";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { BasicStatsKind } from "../../type/BasicStatsKind";
-import { Element } from "../../type/Element";
-import { Stats } from "../../type/Stats";
+import { MultiplierKind } from "../../type/MultiplierKind";
+import { MultiplierType } from "../../type/MultiplierType";
 import { SuperDungeonPowerupKind } from "../../type/SuperDungeonPowerupKind";
-import { BATTLE_CONTROLLER } from "../Battle/index";
+import { DataBattle } from "../Battle/index";
 import { SDP_ChallengeBossDamageMultiplier } from "./SDP/SDP_ChallengeBossDamageMultiplier";
 import { SDP_CriticalDamage } from "./SDP/SDP_CriticalDamage";
 import { SDP_DamageCutMultiplier } from "./SDP/SDP_DamageCutMultiplier";
@@ -31,7 +29,8 @@ import { SDP_TimeLimit } from "./SDP/SDP_TimeLimit";
 import { SuperDungeonPowerup } from "./SuperDungeonPowerup";
 
 export class SuperDungeonController {
-  battleCtrl: BATTLE_CONTROLLER;
+  data: DATA;
+  battleCtrl: DataBattle;
   //   dungeonCoin: DungeonCoin;
   initialDungeonCoin: Multiplier;
   //   powerupList: SuperDungeonPowerup[] = [];
@@ -60,11 +59,12 @@ export class SuperDungeonController {
   }
 
   get sdgCtrl() {
-    return globalThis.data.sdg;
+    return this.battleCtrl.data.sdg;
   }
 
-  constructor(battleCtrl: BATTLE_CONTROLLER) {
+  constructor(battleCtrl: DataBattle) {
     this.battleCtrl = battleCtrl;
+    this.data = battleCtrl.data;
     // this.dungeonCoin = new DungeonCoin(this);
     this.initialDungeonCoin = new Multiplier();
     this.skillSlotNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
@@ -100,14 +100,14 @@ export class SuperDungeonController {
       new MultiplierInfo(
         MultiplierKind.ArmoredFury,
         MultiplierType.Mul,
-        () => this.armoredFury.Value() * Math.log2(Math.max(1.0, globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.DEF).After()))
+        () => this.armoredFury.Value() * Math.log2(Math.max(1.0, this.battleCtrl.data.stats.BasicStats(this.heroKind, BasicStatsKind.DEF).After()))
       )
     );
     this.damageMultiplier.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.WardedFury,
         MultiplierType.Mul,
-        () => this.wardedFury.Value() * Math.log2(Math.max(1.0, globalThis.data.stats.BasicStats(this.heroKind, BasicStatsKind.MDEF).After()))
+        () => this.wardedFury.Value() * Math.log2(Math.max(1.0, this.battleCtrl.data.stats.BasicStats(this.heroKind, BasicStatsKind.MDEF).After()))
       )
     );
     for (let index = 0; index < this.powerupList.length; index++) this.powerupList[index].Start();
@@ -163,7 +163,7 @@ export class SuperDungeonController {
   // }
 
   // CurrentAvailableFilterSlotNum() {
-  //   return Math.max(0, globalThis.data.sdg.powerupFilterSlot.Value() - this.CurrentFilterSlotUsed());
+  //   return Math.max(0, this.battleCtrl.data.sdg.powerupFilterSlot.Value() - this.CurrentFilterSlotUsed());
   // }
 
   // CurrentFilterSlotUsed() {

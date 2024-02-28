@@ -1,10 +1,9 @@
-import { MultiplierInfo } from "../../../Multiplier";
 import { Enums } from "../../../Enums";
-import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
-import { MultiplierType } from "../../../type/MultiplierType";
+import { MultiplierInfo } from "../../Multiplier";
 import { MultiplierKind } from "../../../type/MultiplierKind";
-import { HeroKind } from "../../../type/HeroKind";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonUpgradeKind } from "../../../type/SuperDungeonUpgradeKind";
+import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 
 export class SDU_TownMatGainMul extends SuperDungeonUpgrade {
   get kind() {
@@ -17,9 +16,7 @@ export class SDU_TownMatGainMul extends SuperDungeonUpgrade {
 
   SetEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.town.townMaterialGainMultiplier[index].RegisterMultiplier(
-        new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue())
-      );
+      this.sdgCtrl.data.town.townMaterialGainMultiplier[index].RegisterMultiplier(new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
   }
 
   get maxLevel() {

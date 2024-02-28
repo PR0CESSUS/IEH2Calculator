@@ -1,17 +1,16 @@
-import { MultiplierInfo } from "../../../../Multiplier";
-import { SkillPassiveEffect } from "../../SkillPassiveEffect";
-import { SKILL } from "../../SKILL";
-import { MultiplierType } from "../../../../type/MultiplierType";
-import { MultiplierKind } from "../../../../type/MultiplierKind";
-import { HeroKind } from "../../../../type/HeroKind";
 import { BasicStatsKind } from "../../../../type/BasicStatsKind";
-import { Stats } from "../../../../type/Stats";
-import { Buff } from "../../../../type/Buff";
+import { HeroKind } from "../../../../type/HeroKind";
+import { MultiplierKind } from "../../../../type/MultiplierKind";
+import { MultiplierType } from "../../../../type/MultiplierType";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
+import { Stats } from "../../../../type/Stats";
+import { MultiplierInfo } from "../../../Multiplier";
+import { SKILL } from "../../SKILL";
+import { SkillPassiveEffect } from "../../SkillPassiveEffect";
 
 export class LuckyBlow extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 5, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Add, 10.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.SPD, MultiplierType.Add, 20.0));
@@ -35,11 +34,11 @@ export class LuckyBlow extends SKILL {
       () => this.CriticalValue,
       () => this.IsActiveBuff(heroKind)
     );
-    globalThis.data.stats.HeroStats(heroKind, Stats.PhysCritChance).RegisterMultiplier(multiplierInfo);
+    this.data.stats.HeroStats(heroKind, Stats.PhysCritChance).RegisterMultiplier(multiplierInfo);
   }
 
   EffectRange() {
-    return this.level >= 100 ? this.EffectRange() + 100 * globalThis.data.skill.skillEffectRangeMultiplier[this.heroKind].Value() : this.EffectRange();
+    return this.level >= 100 ? this.EffectRange() + 100 * this.data.skill.skillEffectRangeMultiplier[this.heroKind].Value() : this.EffectRange();
   }
 
   ThisSkillCriticalChance() {

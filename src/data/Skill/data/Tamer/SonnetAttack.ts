@@ -1,20 +1,19 @@
-import { MultiplierInfo } from "../../../../Multiplier";
-import { SkillPassiveEffect } from "../../SkillPassiveEffect";
-import { SKILL } from "../../SKILL";
-import { Debuff } from "../../../../type/Debuff";
-import { MultiplierType } from "../../../../type/MultiplierType";
-import { MultiplierKind } from "../../../../type/MultiplierKind";
-import { HeroKind } from "../../../../type/HeroKind";
 import { BasicStatsKind } from "../../../../type/BasicStatsKind";
+import { Debuff } from "../../../../type/Debuff";
 import { Element } from "../../../../type/Element";
-import { Stats } from "../../../../type/Stats";
-import { Buff } from "../../../../type/Buff";
-import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 import { GlobalStats } from "../../../../type/GlobalStats";
+import { HeroKind } from "../../../../type/HeroKind";
+import { MultiplierKind } from "../../../../type/MultiplierKind";
+import { MultiplierType } from "../../../../type/MultiplierType";
+import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
+import { Stats } from "../../../../type/Stats";
+import { MultiplierInfo } from "../../../Multiplier";
+import { SKILL } from "../../SKILL";
+import { SkillPassiveEffect } from "../../SkillPassiveEffect";
 
 export class SonnetAttack extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.HP, MultiplierType.Add, 100.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 20, SkillPassiveEffectKind.GlobalStats, GlobalStats.LeafGain, MultiplierType.Mul, 0.1));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 30, SkillPassiveEffectKind.GlobalStats, GlobalStats.LeafGain, MultiplierType.Mul, 0.2));
@@ -41,7 +40,7 @@ export class SonnetAttack extends SKILL {
   }
 
   SetBuff(heroKind: HeroKind) {
-    return globalThis.data.stats.heroes[heroKind].summonPetSlot.RegisterMultiplier(
+    return this.data.stats.heroes[heroKind].summonPetSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.Skill,
         MultiplierType.Add,
@@ -58,10 +57,10 @@ export class SonnetAttack extends SKILL {
   }
 
   get debuff() {
-    return globalThis.data.skill.baseAttackPoisonChance[this.heroKind].Value() > 0.0 ? Debuff.Poison : Debuff.Nothing;
+    return this.data.skill.baseAttackPoisonChance[this.heroKind].Value() > 0.0 ? Debuff.Poison : Debuff.Nothing;
   }
 
   DebuffChance() {
-    return globalThis.data.skill.baseAttackPoisonChance[this.heroKind].Value();
+    return this.data.skill.baseAttackPoisonChance[this.heroKind].Value();
   }
 }

@@ -1,8 +1,6 @@
-import { MultiplierInfo } from "../../Multiplier";
-import { Enums } from "../../Enums";
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
-import { EquipmentParameter } from "./EquipmentParameter";
 import { Equipment } from "./Equipment";
+import { EquipmentParameter } from "./EquipmentParameter";
 
 export class EquipmentOptionEffect {
   equipment: Equipment;
@@ -14,13 +12,13 @@ export class EquipmentOptionEffect {
   optionLottery;
   optionId;
 
-  constructor(equipment, createId, optionId) {
+  constructor(equipment: Equipment, createId, optionId) {
     this.equipment = equipment;
     this.createId = createId;
     this.optionId = optionId;
     // this.optionId = optionId;
 
-    // this.level = globalThis.data
+    // this.level = this.equipment.data
   }
 
   CanEnchant() {
@@ -37,19 +35,19 @@ export class EquipmentOptionEffect {
   get kind() {
     switch (this.optionId) {
       case 0:
-        return globalThis.data.source.equipment1stOptionEffectKinds[this.createId];
+        return this.equipment.data.source.equipment1stOptionEffectKinds[this.createId];
       case 1:
-        return globalThis.data.source.equipment2ndOptionEffectKinds[this.createId];
+        return this.equipment.data.source.equipment2ndOptionEffectKinds[this.createId];
       case 2:
-        return globalThis.data.source.equipment3rdOptionEffectKinds[this.createId];
+        return this.equipment.data.source.equipment3rdOptionEffectKinds[this.createId];
       case 3:
-        return globalThis.data.source.equipment4thOptionEffectKinds[this.createId];
+        return this.equipment.data.source.equipment4thOptionEffectKinds[this.createId];
       case 4:
-        return globalThis.data.source.equipment5thOptionEffectKinds[this.createId];
+        return this.equipment.data.source.equipment5thOptionEffectKinds[this.createId];
       case 5:
-        return globalThis.data.source.equipment6thOptionEffectKinds[this.createId];
+        return this.equipment.data.source.equipment6thOptionEffectKinds[this.createId];
       case 6:
-        return globalThis.data.source.equipment7thOptionEffectKinds[this.createId];
+        return this.equipment.data.source.equipment7thOptionEffectKinds[this.createId];
       default:
         return 0;
     }
@@ -58,25 +56,25 @@ export class EquipmentOptionEffect {
   SetKind(value) {
     switch (this.optionId) {
       case 0:
-        globalThis.data.source.equipment1stOptionEffectKinds[this.createId] = value;
+        this.equipment.data.source.equipment1stOptionEffectKinds[this.createId] = value;
         break;
       case 1:
-        globalThis.data.source.equipment2ndOptionEffectKinds[this.createId] = value;
+        this.equipment.data.source.equipment2ndOptionEffectKinds[this.createId] = value;
         break;
       case 2:
-        globalThis.data.source.equipment3rdOptionEffectKinds[this.createId] = value;
+        this.equipment.data.source.equipment3rdOptionEffectKinds[this.createId] = value;
         break;
       case 3:
-        globalThis.data.source.equipment4thOptionEffectKinds[this.createId] = value;
+        this.equipment.data.source.equipment4thOptionEffectKinds[this.createId] = value;
         break;
       case 4:
-        globalThis.data.source.equipment5thOptionEffectKinds[this.createId] = value;
+        this.equipment.data.source.equipment5thOptionEffectKinds[this.createId] = value;
         break;
       case 5:
-        globalThis.data.source.equipment6thOptionEffectKinds[this.createId] = value;
+        this.equipment.data.source.equipment6thOptionEffectKinds[this.createId] = value;
         break;
       case 6:
-        globalThis.data.source.equipment7thOptionEffectKinds[this.createId] = value;
+        this.equipment.data.source.equipment7thOptionEffectKinds[this.createId] = value;
         break;
       default:
         break;
@@ -86,6 +84,7 @@ export class EquipmentOptionEffect {
   set kind(value) {
     this.equipment.IsEffectRegisteredClear();
     this.SetKind(value);
+    this.equipment.Start();
     // change level and value
     this.level = this.MaxLevel();
 
@@ -98,19 +97,19 @@ export class EquipmentOptionEffect {
     if (this.optionId >= this.equipment.totalOptionNum.Value()) return 0;
     switch (this.optionId) {
       case 0:
-        return globalThis.data.source.equipment1stOptionEffectValues[this.createId];
+        return this.equipment.data.source.equipment1stOptionEffectValues[this.createId];
       case 1:
-        return globalThis.data.source.equipment2ndOptionEffectValues[this.createId];
+        return this.equipment.data.source.equipment2ndOptionEffectValues[this.createId];
       case 2:
-        return globalThis.data.source.equipment3rdOptionEffectValues[this.createId];
+        return this.equipment.data.source.equipment3rdOptionEffectValues[this.createId];
       case 3:
-        return globalThis.data.source.equipment4thOptionEffectValues[this.createId];
+        return this.equipment.data.source.equipment4thOptionEffectValues[this.createId];
       case 4:
-        return globalThis.data.source.equipment5thOptionEffectValues[this.createId];
+        return this.equipment.data.source.equipment5thOptionEffectValues[this.createId];
       case 5:
-        return globalThis.data.source.equipment6thOptionEffectValues[this.createId];
+        return this.equipment.data.source.equipment6thOptionEffectValues[this.createId];
       case 6:
-        return globalThis.data.source.equipment7thOptionEffectValues[this.createId];
+        return this.equipment.data.source.equipment7thOptionEffectValues[this.createId];
       default:
         return 0;
     }
@@ -119,25 +118,25 @@ export class EquipmentOptionEffect {
   SetEffectValue(value) {
     switch (this.optionId) {
       case 0:
-        globalThis.data.source.equipment1stOptionEffectValues[this.createId] = value;
+        this.equipment.data.source.equipment1stOptionEffectValues[this.createId] = value;
         break;
       case 1:
-        globalThis.data.source.equipment2ndOptionEffectValues[this.createId] = value;
+        this.equipment.data.source.equipment2ndOptionEffectValues[this.createId] = value;
         break;
       case 2:
-        globalThis.data.source.equipment3rdOptionEffectValues[this.createId] = value;
+        this.equipment.data.source.equipment3rdOptionEffectValues[this.createId] = value;
         break;
       case 3:
-        globalThis.data.source.equipment4thOptionEffectValues[this.createId] = value;
+        this.equipment.data.source.equipment4thOptionEffectValues[this.createId] = value;
         break;
       case 4:
-        globalThis.data.source.equipment5thOptionEffectValues[this.createId] = value;
+        this.equipment.data.source.equipment5thOptionEffectValues[this.createId] = value;
         break;
       case 5:
-        globalThis.data.source.equipment6thOptionEffectValues[this.createId] = value;
+        this.equipment.data.source.equipment6thOptionEffectValues[this.createId] = value;
         break;
       case 6:
-        globalThis.data.source.equipment7thOptionEffectValues[this.createId] = value;
+        this.equipment.data.source.equipment7thOptionEffectValues[this.createId] = value;
         break;
       default:
         break;
@@ -150,19 +149,19 @@ export class EquipmentOptionEffect {
   get level() {
     switch (this.optionId) {
       case 0:
-        return globalThis.data.source.equipment1stOptionLevels[this.createId];
+        return this.equipment.data.source.equipment1stOptionLevels[this.createId];
       case 1:
-        return globalThis.data.source.equipment2ndOptionLevels[this.createId];
+        return this.equipment.data.source.equipment2ndOptionLevels[this.createId];
       case 2:
-        return globalThis.data.source.equipment3rdOptionLevels[this.createId];
+        return this.equipment.data.source.equipment3rdOptionLevels[this.createId];
       case 3:
-        return globalThis.data.source.equipment4thOptionLevels[this.createId];
+        return this.equipment.data.source.equipment4thOptionLevels[this.createId];
       case 4:
-        return globalThis.data.source.equipment5thOptionLevels[this.createId];
+        return this.equipment.data.source.equipment5thOptionLevels[this.createId];
       case 5:
-        return globalThis.data.source.equipment6thOptionLevels[this.createId];
+        return this.equipment.data.source.equipment6thOptionLevels[this.createId];
       case 6:
-        return globalThis.data.source.equipment7thOptionLevels[this.createId];
+        return this.equipment.data.source.equipment7thOptionLevels[this.createId];
       default:
         return 0;
     }
@@ -171,25 +170,25 @@ export class EquipmentOptionEffect {
   SetLevel(value) {
     switch (this.optionId) {
       case 0:
-        globalThis.data.source.equipment1stOptionLevels[this.createId] = value;
+        this.equipment.data.source.equipment1stOptionLevels[this.createId] = value;
         break;
       case 1:
-        globalThis.data.source.equipment2ndOptionLevels[this.createId] = value;
+        this.equipment.data.source.equipment2ndOptionLevels[this.createId] = value;
         break;
       case 2:
-        globalThis.data.source.equipment3rdOptionLevels[this.createId] = value;
+        this.equipment.data.source.equipment3rdOptionLevels[this.createId] = value;
         break;
       case 3:
-        globalThis.data.source.equipment4thOptionLevels[this.createId] = value;
+        this.equipment.data.source.equipment4thOptionLevels[this.createId] = value;
         break;
       case 4:
-        globalThis.data.source.equipment5thOptionLevels[this.createId] = value;
+        this.equipment.data.source.equipment5thOptionLevels[this.createId] = value;
         break;
       case 5:
-        globalThis.data.source.equipment6thOptionLevels[this.createId] = value;
+        this.equipment.data.source.equipment6thOptionLevels[this.createId] = value;
         break;
       case 6:
-        globalThis.data.source.equipment7thOptionLevels[this.createId] = value;
+        this.equipment.data.source.equipment7thOptionLevels[this.createId] = value;
         break;
       default:
         break;

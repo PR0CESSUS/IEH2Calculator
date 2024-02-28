@@ -2,7 +2,8 @@ import { EquipmentEffectName } from "./EquipmentEffectName";
 import { EquipmentName } from "./EquipmentName";
 import { StatsBreakdown } from "./StatsBreakdown";
 import { SDUpgradeString } from "./SDUpgradeString";
-import { SDShopString } from "./SDShopString";
+import { SDShopNameString } from "./SDShopNameString";
+import { SDShopEffectValueString } from "./SDShopEffectValueString";
 import { SDGemString } from "./SDGemString";
 import { PotionName } from "./PotionName";
 import { ExpeditionGlobalInformationString } from "./ExpeditionGlobalInformationString";
@@ -15,13 +16,14 @@ import { PotionEffect } from "./PotionEffect";
 import { PotionTypeString } from "./PotionType";
 import { SkillName } from "./SkillName";
 import { SDPowerupString } from "./SDPowerupString";
+import { TownMaterialNameString } from "./TownMaterialNameString";
 
 export const Localization = {
   EquipmentEffectName,
   EquipmentName,
   StatsBreakdown,
   SDUpgradeString,
-  SDShopString,
+  SDShopNameString,
   SDGemString,
   PotionName,
   ExpeditionGlobalInformationString,
@@ -34,4 +36,6 @@ export const Localization = {
   PotionTypeString,
   SkillName,
   SDPowerupString,
+  SDShopEffectValueString,
+  TownMaterialNameString,
 };

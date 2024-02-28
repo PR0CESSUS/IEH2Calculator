@@ -1,18 +1,14 @@
-import { SlimeBankUpgradeKind } from "./../../type/SlimeBankUpgradeKind";
-import { Multiplier } from "../../Multiplier";
-import { MultiplierInfo } from "../../Multiplier";
-import { Debuff } from "../../type/Debuff";
-import { ResourceKind } from "../../type/ResourceKind";
-import { MultiplierType } from "../../type/MultiplierType";
-import { MultiplierKind } from "../../type/MultiplierKind";
-import { BasicStatsKind } from "../../type/BasicStatsKind";
-import { Stats } from "../../type/Stats";
-import { UPGRADE } from "./UPGRADE";
-import { UpgradeKind } from "../../type/UpgradeKind";
+import { DATA } from "..";
 import { Enums } from "../../Enums";
-import { SB_CritDamage } from "./data/SB_CritDamage";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
+import { MultiplierKind } from "../../type/MultiplierKind";
+import { MultiplierType } from "../../type/MultiplierType";
+import { UpgradeKind } from "../../type/UpgradeKind";
+import { SlimeBankUpgradeKind } from "./../../type/SlimeBankUpgradeKind";
+import { UPGRADE } from "./UPGRADE";
 
-export class UpgradeController {
+export class DataUpgrade {
+  #data: DATA;
   upgrades: UPGRADE[][];
   //   resourceUpgrades: ResourceUpgrade[] = new ResourceUpgrade[Parameter.resourceUpgradeTier];
   //   basicStatsUpgrades: BasicStatsUpgrade[] = new BasicStatsUpgrade[Enum.GetNames(typeof (BasicStatsKind)).length];
@@ -42,18 +38,8 @@ export class UpgradeController {
   tempCheapestid;
   tempCost;
 
-  Upgrade(kind: UpgradeKind, id) {
-    return this.upgrades[kind][id];
-  }
-
-  SlimeBankUpgrade(kind: SlimeBankUpgradeKind) {
-    for (let index = 0; index < this.slimebankUpgradeList.length; index++) {
-      if (this.slimebankUpgradeList[index].slimebankKind == kind) return this.slimebankUpgradeList[index];
-    }
-    return this.slimebankUpgradeList[0];
-  }
-
-  constructor() {
+  constructor(DATA: DATA) {
+    this.#data = DATA;
     this.costReduction = new Multiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0),
       () => 0.99,
@@ -131,7 +117,7 @@ export class UpgradeController {
     // this.sb3ist.push((UPGRADE) new SB_EquipmentProf());
     // this.sb3ist.push((UPGRADE) new SB_MaterialFinder());
     // this.sb3ist.push((UPGRADE) new SB_ShopTimer());
-    this.sb3ist.push(new SB_CritDamage());
+    this.sb3ist.push(new UPGRADE(this.#data, UpgradeKind.SlimeBank, SlimeBankUpgradeKind.CritDamage));
     // this.sb3ist.push((UPGRADE) new SB_ResearchPower());
     // this.slimebankUpgradeList.AddRange((IEnumerable<UPGRADE>) this.sb1ist);
     // this.slimebankUpgradeList.AddRange((IEnumerable<UPGRADE>) this.sb2ist);
@@ -156,7 +142,16 @@ export class UpgradeController {
   Start() {
     for (let index = 0; index < this.upgradeList.length; index++) this.upgradeList[index].Start();
   }
+  Upgrade(kind: UpgradeKind, id) {
+    return this.upgrades[kind][id];
+  }
 
+  SlimeBankUpgrade(kind: SlimeBankUpgradeKind) {
+    for (let index = 0; index < this.slimebankUpgradeList.length; index++) {
+      if (this.slimebankUpgradeList[index].slimebankKind == kind) return this.slimebankUpgradeList[index];
+    }
+    return this.slimebankUpgradeList[0];
+  }
   TotalLevel(kind: UpgradeKind) {
     let num = 0;
     for (let index = 0; index < this.upgrades[kind].length; index++) num += this.upgrades[kind][index].level;

@@ -1,9 +1,7 @@
-import { MultiplierInfo } from "../../Multiplier";
-import { Debuff } from "../../type/Debuff";
-import { EquipmentPart } from "../../type/EquipmentPart";
-import { EquipmentKind } from "../../type/EquipmentKind";
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
 import { EquipmentForgeEffectKind } from "../../type/EquipmentForgeEffectKind";
+import { EquipmentKind } from "../../type/EquipmentKind";
+import { EquipmentPart } from "../../type/EquipmentPart";
 import { EquipmentRarity } from "../../type/EquipmentRarity";
 
 export const EquipmentParameter = {

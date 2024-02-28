@@ -3,8 +3,8 @@ import { SuperDungeonShop } from "./SuperDungeonShop";
 export class SuperDungeonShop_StatBonus extends SuperDungeonShop {
   //   get kind() {return SuperDungeonShopKind.Stats;}
 
-  constructor(id) {
-    super(id);
+  constructor(DATA, id) {
+    super(DATA, id);
   }
 
   EffectValue(level) {

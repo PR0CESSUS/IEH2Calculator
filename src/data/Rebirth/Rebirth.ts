@@ -1,28 +1,28 @@
-import { MultiplierInfo, Multiplier } from "../../Multiplier";
+import { MultiplierInfo, Multiplier } from "../Multiplier";
 import { MultiplierType } from "../../type/MultiplierType";
 import { MultiplierKind } from "../../type/MultiplierKind";
-import { RebirthParameter } from "./RebirthParameter";
 import { RebirthUpgradeKind } from "../../type/RebirthUpgradeKind";
 import { RebirthUpgrade } from "./RebirthUpgrade";
 import { HeroKind } from "../../type/HeroKind";
+import { DATA } from "..";
+import { DataRebirth } from ".";
 
 export class Rebirth {
-  rebirthCtrl;
-  accomplish;
+  data: DATA;
+  rebirthCtrl: DataRebirth;
   additionalAbilityPoint: Multiplier;
   bonusEffectFactorOneDownTier: Multiplier;
   rebirthPointGainFactor: Multiplier;
   rebirthPointKinds = [];
-  isTrying;
-  rebirthUIAction;
-  heroKind;
-  tier;
+  heroKind: HeroKind;
+  tier: number;
   rebirthPoint;
   initRebirthPoint: Multiplier;
   rebirthUpgrades: RebirthUpgrade[];
 
-  constructor(rebirthCtrl, tier, heroKind) {
-    this.rebirthCtrl = rebirthCtrl;
+  constructor(DATA: DATA, tier, heroKind) {
+    this.data = DATA;
+    this.rebirthCtrl = this.data.rebirth;
     this.tier = tier;
     this.heroKind = heroKind;
     this.Awake();

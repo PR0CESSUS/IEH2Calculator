@@ -1,15 +1,13 @@
-import { Util } from "./../../Util/index";
+import { DataBattle } from ".";
+import { DATA } from "..";
 import { Debuff } from "../../type/Debuff";
-import { HeroKind } from "../../type/HeroKind";
 import { Element } from "../../type/Element";
-import { MonsterSpecies } from "../../type/MonsterSpecies";
-import { Stats } from "../../type/Stats";
+import { HeroKind } from "../../type/HeroKind";
 import { MonsterColor } from "../../type/MonsterColor";
-import { TitleKind } from "../../type/TitleKind";
-import { ChallengeMonsterKind } from "../../type/ChallengeMonsterKind";
-import { BATTLE_CONTROLLER } from ".";
+import { MonsterSpecies } from "../../type/MonsterSpecies";
 
 export class BATTLE {
+  data: DATA;
   heroKind: HeroKind;
   species: MonsterSpecies;
   color: MonsterColor; // MonsterColor;
@@ -32,7 +30,7 @@ export class BATTLE {
   slayerOilDamage = 0;
   poisonDamagePerSec;
   isPilfered;
-  battleCtrl: BATTLE_CONTROLLER;
+  battleCtrl: DataBattle;
   fieldDebuffElement;
   fieldDebuffPhyCrit;
   fieldDebuffMagCrit;
@@ -40,7 +38,8 @@ export class BATTLE {
   fieldDebuffDebuffRes;
   isHero = false;
 
-  constructor(battleCtrl: BATTLE_CONTROLLER) {
+  constructor(DATA: DATA, battleCtrl: DataBattle) {
+    this.data = DATA;
     this.heroKind = battleCtrl.heroKind;
     this.battleCtrl = battleCtrl;
     this.fieldDebuffElement = Array(5).fill(0);
@@ -74,17 +73,17 @@ export class BATTLE {
 
     switch (element) {
       case Element.Physical:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Physical].Value();
+        return this.battleCtrl.data.stats.heroes[this.heroKind].elementDamages[Element.Physical].Value();
       case Element.Fire:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Fire].Value();
+        return this.battleCtrl.data.stats.heroes[this.heroKind].elementDamages[Element.Fire].Value();
       case Element.Ice:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Ice].Value();
+        return this.battleCtrl.data.stats.heroes[this.heroKind].elementDamages[Element.Ice].Value();
       case Element.Thunder:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Thunder].Value();
+        return this.battleCtrl.data.stats.heroes[this.heroKind].elementDamages[Element.Thunder].Value();
       case Element.Light:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Light].Value();
+        return this.battleCtrl.data.stats.heroes[this.heroKind].elementDamages[Element.Light].Value();
       case Element.Dark:
-        return globalThis.data.stats.heroes[this.heroKind].elementDamages[Element.Dark].Value();
+        return this.battleCtrl.data.stats.heroes[this.heroKind].elementDamages[Element.Dark].Value();
 
       default:
         return 1.0;
@@ -175,11 +174,11 @@ export class BATTLE {
   }
 
   DamageModifier(value) {
-    return globalThis.data.custom.isSuperDungeon ? value * this.battleCtrl.superDungeonCtrl.damageMultiplier.Value() : value;
+    return this.battleCtrl.data.source.isSuperDungeon ? value * this.battleCtrl.superDungeonCtrl.damageMultiplier.Value() : value;
   }
 
   DamageCutModifier(value) {
-    return this.isHero && globalThis.data.custom.isSuperDungeon ? value * this.battleCtrl.superDungeonCtrl.damageCutMultiplier.Value() : value;
+    return this.isHero && this.battleCtrl.data.source.isSuperDungeon ? value * this.battleCtrl.superDungeonCtrl.damageCutMultiplier.Value() : value;
   }
 
   CalculateDamage(originDamage, critDamage, element: Element, isCrit) {
@@ -191,7 +190,7 @@ export class BATTLE {
     this.tempValue = Math.max(1.0, this.tempValue);
     if (isCrit) this.tempValue *= critDamage;
     // if (this.color == MonsterColor.Metal)
-    //   this.tempValue += globalThis.data.quest.TitleEffectValue(this.battleCtrl.heroKind, TitleKind.MetalHunter).main;
+    //   this.tempValue += this.battleCtrl.data.quest.TitleEffectValue(this.battleCtrl.heroKind, TitleKind.MetalHunter).main;
     // if (this.tempValue <= this.guardianKorInvalidChanceDamageHpPercent * this.hp) this.tempValue = 0.0;
     return this.tempValue;
   }
@@ -218,7 +217,7 @@ export class BATTLE {
 
     // this.electricDamage = this.debuffings[7].isDebuff ? this.tempTotalDamage * 0.1 : 0.0;
 
-    this.slayerOilDamage = this.isSlayerOil ? this.tempTotalDamage * globalThis.data.stats.ElementSlayerDamage(this.battleCtrl.heroKind, element).Value() : 0.0;
+    this.slayerOilDamage = this.isSlayerOil ? this.tempTotalDamage * this.battleCtrl.data.stats.ElementSlayerDamage(this.battleCtrl.heroKind, element).Value() : 0.0;
     this.totalDamage = this.tempTotalDamage + this.electricDamage + this.slayerOilDamage;
 
     this.tempExtraAfterDamage = this.totalDamage * battle.extraAfterDamage;
@@ -251,7 +250,7 @@ export class BATTLE {
     };
 
     info.tempTotalDamage = info.DamagePerHit * hitCount;
-    info.slayerOilDamage = isSlayerOil ? info.tempTotalDamage * globalThis.data.stats.ElementSlayerDamage(this.battleCtrl.heroKind, element).Value() : 0.0;
+    info.slayerOilDamage = isSlayerOil ? info.tempTotalDamage * this.battleCtrl.data.stats.ElementSlayerDamage(this.battleCtrl.heroKind, element).Value() : 0.0;
     info.totalBeforeExtraAfter = info.tempTotalDamage + info.electricDamage + info.slayerOilDamage;
     info.extraAfterDamagePerHit = info.DamagePerHit * battle.extraAfterDamage;
     info.extraAfterDamage = info.totalBeforeExtraAfter * battle.extraAfterDamage;

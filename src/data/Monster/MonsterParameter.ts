@@ -2,6 +2,7 @@ import { MonsterSpecies } from "./../../type/MonsterSpecies";
 import { MonsterColor } from "./../../type/MonsterColor";
 import { Element } from "../../type/Element";
 import { PetPassiveEffectKind } from "../../type/PetPassiveEffectKind";
+import { TownMaterialKind } from "../../type/TownMaterialKind";
 
 export const MonsterParameter = {
   colorDropChanceBase: 0.001,
@@ -493,5 +494,43 @@ export const MonsterParameter = {
 
       [2000.0, 0.0, 5.0, 5.0, 200.0, 200.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0],
     ],
+  ],
+
+  townMatBricks: [
+    TownMaterialKind.MudBrick,
+    TownMaterialKind.MudBrick,
+    TownMaterialKind.LimestoneBrick,
+    TownMaterialKind.LimestoneBrick,
+    TownMaterialKind.MarbleBrick,
+    TownMaterialKind.MarbleBrick,
+    TownMaterialKind.GraniteBrick,
+    TownMaterialKind.GraniteBrick,
+    TownMaterialKind.BasaltBrick,
+    TownMaterialKind.BasaltBrick,
+  ],
+  townMatLogs: [
+    TownMaterialKind.PineLog,
+    TownMaterialKind.PineLog,
+    TownMaterialKind.MapleLog,
+    TownMaterialKind.MapleLog,
+    TownMaterialKind.AshLog,
+    TownMaterialKind.AshLog,
+    TownMaterialKind.MahoganyLog,
+    TownMaterialKind.MahoganyLog,
+    TownMaterialKind.RosewoodLog,
+    TownMaterialKind.RosewoodLog,
+  ],
+
+  townMatShards: [
+    TownMaterialKind.JasperShard,
+    TownMaterialKind.JasperShard,
+    TownMaterialKind.OpalShard,
+    TownMaterialKind.OpalShard,
+    TownMaterialKind.OnyxShard,
+    TownMaterialKind.OnyxShard,
+    TownMaterialKind.JadeShard,
+    TownMaterialKind.JadeShard,
+    TownMaterialKind.SapphireShard,
+    TownMaterialKind.SapphireShard,
   ],
 };

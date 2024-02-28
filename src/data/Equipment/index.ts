@@ -1,15 +1,17 @@
-import { Multiplier, MultiplierInfo } from "../../Multiplier";
-import { MultiplierKind } from "../../type/MultiplierKind";
-import { MultiplierType } from "../../type/MultiplierType";
+import { DATA } from "..";
+import { Enums } from "../../Enums";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { EquipmentKind } from "../../type/EquipmentKind";
 import { EquipmentSetKind } from "../../type/EquipmentSetKind";
-import { HeroKind } from "../../type/HeroKind";
-import { Enums } from "../../Enums";
+import { MultiplierKind } from "../../type/MultiplierKind";
+import { MultiplierType } from "../../type/MultiplierType";
+import { DictionaryUpgrade } from "./DictionaryUpgrade";
 import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
 import { EquipmentParameter } from "./EquipmentParameter";
-import { DictionaryUpgrade } from "./DictionaryUpgrade";
+import { SDModifierKind } from "../../type/SDModifierKind";
 
 export class DataEquipment {
+  data: DATA;
   globalInformations: EquipmentGlobalInformation[] = Array(Enums.EquipmentKind);
   setItemArray: EquipmentKind[][] = Array(Enums.EquipmentSetKind);
   dictionaryUpgradeEffectMultiplier: Multiplier;
@@ -31,8 +33,9 @@ export class DataEquipment {
   autoDisassembleAvailableNum: Multiplier;
   dictionaryEquipmentArray: EquipmentKind[];
 
-  constructor() {
-    for (let kind = 0; kind < this.globalInformations.length; kind++) this.globalInformations[kind] = new EquipmentGlobalInformation(kind);
+  constructor(DATA: DATA) {
+    this.data = DATA;
+    for (let kind = 0; kind < this.globalInformations.length; kind++) this.globalInformations[kind] = new EquipmentGlobalInformation(this.data, kind);
     this.autoDisassembleAvailableNum = new Multiplier();
     this.forgeEffectCapAdderEQLevel = new Multiplier();
     this.forgeEffectCapAdderEffectIncrement = new Multiplier();
@@ -63,9 +66,13 @@ export class DataEquipment {
   }
 
   Start() {
-    // for (let index = 0; index < this.equipments.length; index++) this.equipments[index].Start();
+    for (let index = 0; index < this.dictionaryUpgrades.length; index++) this.dictionaryUpgrades[index].Start();
   }
   EffectMultiplier() {
+    if (this.data.source.isSuperDungeon && this.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveEquipmentEffectBonuses]) {
+      return 1;
+    }
+
     return this.effectMultiplier.Value();
   }
 

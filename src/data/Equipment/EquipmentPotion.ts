@@ -1,24 +1,27 @@
+import { DATA } from "..";
 import { HeroKind } from "../../type/HeroKind";
 import { PotionKind } from "../../type/PotionKind";
 import { PotionType } from "../../type/PotionType";
 
 export class EquipmentPotion {
+  data: DATA;
   slotId: number;
   effectRegister = [];
 
-  constructor(slotId: number) {
+  constructor(DATA: DATA, slotId: number) {
+    this.data = DATA;
     this.slotId = slotId;
   }
 
   get id() {
-    return globalThis.data.source.potionId[this.slotId];
+    return this.data.source.potionId[this.slotId];
   }
   get kind(): PotionKind {
-    return globalThis.data.source.potionKinds[this.id];
+    return this.data.source.potionKinds[this.id];
   }
 
   set kind(value) {
-    globalThis.data.source.potionKinds[this.id] = value;
+    this.data.source.potionKinds[this.id] = value;
     this.Start();
   }
 
@@ -28,15 +31,18 @@ export class EquipmentPotion {
   }
 
   get stack() {
-    return globalThis.data.source.potionStackNums[this.id];
+    return this.data.source.potionStackNums[this.id];
+  }
+  set stack(value) {
+    this.data.source.potionStackNums[this.id] = Math.min(30, value);
   }
 
   get level() {
-    return globalThis.data.potion.GlobalInfo(this.kind).level;
+    return this.data.potion.GlobalInfo(this.kind).level;
   }
 
   get type() {
-    return globalThis.data.potion.GlobalInfo(this.kind).type;
+    return this.data.potion.GlobalInfo(this.kind).type;
   }
 
   get heroKind() {
@@ -56,10 +62,10 @@ export class EquipmentPotion {
   }
 
   get effectValue() {
-    if (globalThis.data.potion.GlobalInfo(this.kind).type == PotionType.Talisman) {
-      return globalThis.data.potion.GlobalInfo(this.kind).effectValue * this.stack;
+    if (this.data.potion.GlobalInfo(this.kind).type == PotionType.Talisman) {
+      return this.data.potion.GlobalInfo(this.kind).effectValue * this.stack;
     } else {
-      return globalThis.data.potion.GlobalInfo(this.kind).effectValue;
+      return this.data.potion.GlobalInfo(this.kind).effectValue;
     }
   }
 
@@ -75,20 +81,20 @@ export class EquipmentPotion {
     this.UnregisterEffects();
     if (this.slotId < 260 || this.kind == 0) return;
 
-    if (globalThis.data.potion.GlobalInfo(this.kind).SetEffect != undefined && !this.isDisabled()) {
-      const register = globalThis.data.potion.GlobalInfo(this.kind).SetEffect(this.heroKind, () => this.stack);
+    if (this.data.potion.GlobalInfo(this.kind).SetEffect != undefined && !this.isDisabled()) {
+      const register = this.data.potion.GlobalInfo(this.kind).SetEffect(this.heroKind, () => this.stack);
       Array.isArray(register) ? this.effectRegister.push(...register) : this.effectRegister.push(register);
     }
   }
 
   isDisabled() {
-    if (this.slotId < 260 || !globalThis.data.source.isActiveBattle[this.heroKind]) return true;
-    if (globalThis.data.custom.isSuperDungeon && this.heroKind == globalThis.data.source.currentHero) {
-      // console.log("hero", HeroKind[this.heroKind], "slot", slot, "superdungeon", globalThis.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.Value() <= slot);
-      return globalThis.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.Value() <= this.slot;
+    if (this.slotId < 260 || !this.data.source.isActiveBattle[this.heroKind]) return true;
+    if (this.data.source.isSuperDungeon && this.heroKind == this.data.source.currentHero) {
+      // console.log("hero", HeroKind[this.heroKind], "slot", slot, "superdungeon", this.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.Value() <= slot);
+      return this.data.battles[this.heroKind].superDungeonCtrl.utilitySlotNum.Value() <= this.slot;
     } else {
-      // console.log("hero", HeroKind[this.heroKind], "slot", slot, " normal", globalThis.data.inventory.equipPotionUnlockedNum[this.heroKind].Value() <= slot);
-      return globalThis.data.inventory.equipPotionUnlockedNum[this.heroKind].Value() <= this.slot;
+      // console.log("hero", HeroKind[this.heroKind], "slot", slot, " normal", this.data.inventory.equipPotionUnlockedNum[this.heroKind].Value() <= slot);
+      return this.data.inventory.equipPotionUnlockedNum[this.heroKind].Value() <= this.slot;
     }
   }
 }

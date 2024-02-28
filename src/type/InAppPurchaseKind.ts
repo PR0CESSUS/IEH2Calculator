@@ -1,4 +1,4 @@
-export enum inAppPurchaseKind {
+export enum InAppPurchaseKind {
   EpicCoin500,
   EpicCoin1050,
   EpicCoin2650,
@@ -8,4 +8,5 @@ export enum inAppPurchaseKind {
   EpicCoin31000,
   EpicCoin70000,
   UpdateBundle1,
+  UpdateBundle2,
 }

@@ -1,5 +1,5 @@
-import { Multiplier } from "../../Multiplier";
-import { MultiplierInfo } from "../../Multiplier";
+import { Multiplier } from "../Multiplier";
+import { MultiplierInfo } from "../Multiplier";
 import { MultiplierType } from "../../type/MultiplierType";
 import { MultiplierKind } from "../../type/MultiplierKind";
 
@@ -14,8 +14,10 @@ import { SDS_StatBonus_SlimeCoinCap } from "./SDS/SDS_StatBonus_SlimeCoinCap";
 import { SDS_StatBonus_TamingPointGain } from "./SDS/SDS_StatBonus_TamingPointGain";
 import { SuperDungeonShop_StatBonus } from "./SuperDungeonShop_StatBonus";
 import { SuperDungeonShop } from "./SuperDungeonShop";
+import { DATA } from "..";
 
 export class SuperDungeonShopController {
+  data: DATA;
   itemList: SuperDungeonShop[] = [];
   //   itemArtifactList: SuperDungeonShop_Artifact[] = [];
   //   itemScrollList: SuperDungeonShop_Scroll[] = [];
@@ -27,7 +29,8 @@ export class SuperDungeonShopController {
   rubyConverterPieceOfRubyCost: Multiplier;
   pieceOfRubyConverterPieceOfRubyGain: Multiplier;
 
-  constructor() {
+  constructor(DATA: DATA) {
+    this.data = DATA;
     this.rubyConverterPieceOfRubyCost = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 50000.0));
     this.pieceOfRubyConverterPieceOfRubyGain = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 5000.0));
   }
@@ -38,15 +41,15 @@ export class SuperDungeonShopController {
   }
 
   SetItem() {
-    this.itemStatBonusList.push(new SDS_StatBonus_ArtifactEffectModifier(27));
-    this.itemStatBonusList.push(new SDS_StatBonus_SDStatRewardMultiplier(57));
-    this.itemStatBonusList.push(new SDS_StatBonus_GoldCap(58));
-    this.itemStatBonusList.push(new SDS_StatBonus_GoldGain(59));
-    this.itemStatBonusList.push(new SDS_StatBonus_SlimeCoinCap(60));
-    this.itemStatBonusList.push(new SDS_StatBonus_GuildEXPGain(61));
-    this.itemStatBonusList.push(new SDS_StatBonus_TamingPointGain(62));
-    this.itemStatBonusList.push(new SDS_StatBonus_LoyaltyPointGain(63));
-    this.itemStatBonusList.push(new SDS_StatBonus_ResearchPower(64));
+    this.itemStatBonusList.push(new SDS_StatBonus_ArtifactEffectModifier(this.data, 27));
+    this.itemStatBonusList.push(new SDS_StatBonus_SDStatRewardMultiplier(this.data, 57));
+    this.itemStatBonusList.push(new SDS_StatBonus_GoldCap(this.data, 58));
+    this.itemStatBonusList.push(new SDS_StatBonus_GoldGain(this.data, 59));
+    this.itemStatBonusList.push(new SDS_StatBonus_SlimeCoinCap(this.data, 60));
+    this.itemStatBonusList.push(new SDS_StatBonus_GuildEXPGain(this.data, 61));
+    this.itemStatBonusList.push(new SDS_StatBonus_TamingPointGain(this.data, 62));
+    this.itemStatBonusList.push(new SDS_StatBonus_LoyaltyPointGain(this.data, 63));
+    this.itemStatBonusList.push(new SDS_StatBonus_ResearchPower(this.data, 64));
 
     this.itemList = [...this.itemStatBonusList];
   }

@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 import { SuperDungeonController } from "../SuperDungeonController";
 import { MultiplierType } from "../../../type/MultiplierType";
@@ -30,7 +30,7 @@ export class SDP_CriticalDamage extends SuperDungeonPowerup {
   SetEffect() {
     // console.log(this.heroKind);
 
-    globalThis.data.stats.HeroStats(this.heroKind, Stats.CriticalDamage).RegisterMultiplier(
+    this.ctrl.data.stats.HeroStats(this.heroKind, Stats.CriticalDamage).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.After,
@@ -43,7 +43,7 @@ export class SDP_CriticalDamage extends SuperDungeonPowerup {
   }
 
   SetGlobalEffect() {
-    globalThis.data.stats.SetEffectStats(
+    this.ctrl.data.stats.SetEffectStats(
       Stats.CriticalDamage,
       new MultiplierInfo(
         MultiplierKind.DungeonItemPermanent,

@@ -1,7 +1,6 @@
-import { Multiplier } from "../../Multiplier";
-import { MultiplierInfo } from "../../Multiplier";
+import { Multiplier } from "../Multiplier";
+import { MultiplierInfo } from "../Multiplier";
 import { Enums } from "../../Enums";
-import { SDGem } from "./SDGem";
 import { SDGemRitual } from "./SDGemRitual";
 import { MultiplierType } from "../../type/MultiplierType";
 import { MultiplierKind } from "../../type/MultiplierKind";
@@ -9,8 +8,10 @@ import { SuperDungeonPowerupKind } from "../../type/SuperDungeonPowerupKind";
 import { SuperDungeonUpgradeController } from "./SuperDungeonUpgradeController";
 import { SuperDungeonShopController } from "./SuperDungeonShopController";
 import { SDModifierMilestoneController } from "./SDModifierMilestoneController";
+import { DATA } from "..";
 
-export class SuperDungeonGlobalController {
+export class DataSuperDungeonGlobal {
+  data: DATA;
   //   dungeonCoinPermanent: DungeonCoinPermanent;
   //   topaz: Topaz;
   //   ruby: Ruby;
@@ -41,7 +42,8 @@ export class SuperDungeonGlobalController {
   autoBuyPowerupsTimesEveryFloor: Multiplier;
   upgradeCtrl: SuperDungeonUpgradeController;
 
-  constructor() {
+  constructor(DATA: DATA) {
+    this.data = DATA;
     // this.dungeonCoinPermanent = new DungeonCoinPermanent();
     // this.topaz = new Topaz();
     // this.ruby = new Ruby();
@@ -71,18 +73,18 @@ export class SuperDungeonGlobalController {
     // this.unlockRubyShopTab = new Unlock();
     // this.unlockGemRitualTab = new Unlock();
     this.upgradeCtrl = new SuperDungeonUpgradeController(this);
-    this.shopCtrl = new SuperDungeonShopController();
-    this.sdGemRitualCtrl = new SDGemRitual();
+    this.shopCtrl = new SuperDungeonShopController(this.data);
+    this.sdGemRitualCtrl = new SDGemRitual(this.data);
     // this.unlockLeaveAndRetry = new Unlock();
-    this.modifierMilestoneCtrl = new SDModifierMilestoneController();
+    this.modifierMilestoneCtrl = new SDModifierMilestoneController(this.data);
     this.modifierLoadoutSlot = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
   }
 
   SetPowerupGlobalEffect() {
     for (let index = 0; index < Enums.SuperDungeonPowerupKind; index++) {
-      globalThis.data.battle.superDungeonCtrl.powerupList[index].SetGlobalEffect();
+      this.data.battle.superDungeonCtrl.powerupList[index].SetGlobalEffect();
     }
-    // console.log(globalThis.data.stats.heroes[0].basicStats[0]);
+    // console.log(this.data.stats.heroes[0].basicStats[0]);
   }
 
   Start() {
@@ -99,26 +101,26 @@ export class SuperDungeonGlobalController {
   }
 
   SetEffectSDDamageMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.damageMultiplier.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) this.data.battles[index].superDungeonCtrl.damageMultiplier.RegisterMultiplier(info);
   }
 
   SetEffectSDDamageCutMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) this.data.battles[index].superDungeonCtrl.damageCutMultiplier.RegisterMultiplier(info);
   }
 
   SetEffectSDChallengeBossDamageMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) this.data.battles[index].superDungeonCtrl.sdChallengeBossDamageMultiplier.RegisterMultiplier(info);
   }
 
   SetEffectSDChallengeBossDamageCutMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) this.data.battles[index].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(info);
   }
 
   SetEffectSDArmoredFuryMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.armoredFury.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) this.data.battles[index].superDungeonCtrl.armoredFury.RegisterMultiplier(info);
   }
 
   SetEffectSDWardedFuryMultiplier(info: MultiplierInfo) {
-    for (let index = 0; index < Enums.HeroKind; index++) globalThis.data.battles[index].superDungeonCtrl.wardedFury.RegisterMultiplier(info);
+    for (let index = 0; index < Enums.HeroKind; index++) this.data.battles[index].superDungeonCtrl.wardedFury.RegisterMultiplier(info);
   }
 }

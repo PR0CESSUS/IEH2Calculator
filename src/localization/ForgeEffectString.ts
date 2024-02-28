@@ -20,6 +20,6 @@ export function ForgeEffectString(kind: EquipmentForgeEffectKind, value: number,
     case EquipmentForgeEffectKind.EqLevel:
       return "This equipment's level + " + Util.tDigit(value) + " (Max: " + Util.tDigit(maxValue) + ")";
     default:
-      return kind;
+      return EquipmentForgeEffectKind[kind];
   }
 }

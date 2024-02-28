@@ -1,17 +1,20 @@
-import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { Enums } from "../../Enums";
 import { ClassSkill } from "./ClassSkill";
-import { AngelSkill } from "./AngelSkill";
-import { WarriorSkill } from "./WarriorSkill";
-import { WizardSkill } from "./WizardSkill";
-import { ThiefSkill } from "./ThiefSkill";
-import { ArcherSkill } from "./ArcherSkill";
-import { TamerSkill } from "./TamerSkill";
+import { AngelSkill } from "./data/Angel/AngelSkill";
+import { WarriorSkill } from "./data/Warrior/WarriorSkill";
+import { WizardSkill } from "./data/Wizard/WizardSkill";
+import { ThiefSkill } from "./data/Thief/ThiefSkill";
+import { ArcherSkill } from "./data/Archer/ArcherSkill";
+import { TamerSkill } from "./data/Tamer/TamerSkill";
 import { HeroKind } from "../../type/HeroKind";
+import { DATA } from "..";
+import { NumberType } from "../../type/NumberType";
 
 export class DataSkill {
+  #data: DATA;
   ladyEmeldaEffectMultiplier: Multiplier[] = Array(Enums.HeroKind);
   skillLevelBonus: Multiplier[] = Array(Enums.HeroKind);
   skillLevelBonusValue: number[] = Array(Enums.HeroKind);
@@ -30,7 +33,8 @@ export class DataSkill {
   classSkills: ClassSkill[] = Array(Enums.HeroKind);
   isLog = Array(Enums.HeroKind);
 
-  constructor() {
+  constructor(DATA: DATA) {
+    this.#data = DATA;
     for (let index = 0; index < this.skillRankCostFactors.length; index++)
       this.skillRankCostFactors[index] = new Multiplier(
         new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0),
@@ -81,18 +85,19 @@ export class DataSkill {
         () => 0.0
       );
       this.skillLevelBonusFromHolyArch[index] = new Multiplier();
+      this.skillLevelBonus[index].numberType = NumberType.Normal;
     }
     for (let index = 0; index < this.skillPassiveShareFactors.length; index++) this.skillPassiveShareFactors[index] = new Multiplier();
     for (let index = 0; index < this.baseAttackPoisonChance.length; index++) this.baseAttackPoisonChance[index] = new Multiplier();
     for (let index = 0; index < this.baseAttackSlimeBall.length; index++) this.baseAttackSlimeBall[index] = new Multiplier();
     this.globalSkillProfGainRate = new Multiplier();
 
-    this.classSkills[0] = new WarriorSkill();
-    this.classSkills[1] = new WizardSkill();
-    this.classSkills[2] = new AngelSkill();
-    this.classSkills[3] = new ThiefSkill();
-    this.classSkills[4] = new ArcherSkill();
-    this.classSkills[5] = new TamerSkill();
+    this.classSkills[0] = new WarriorSkill(this.#data);
+    this.classSkills[1] = new WizardSkill(this.#data);
+    this.classSkills[2] = new AngelSkill(this.#data);
+    this.classSkills[3] = new ThiefSkill(this.#data);
+    this.classSkills[4] = new ArcherSkill(this.#data);
+    this.classSkills[5] = new TamerSkill(this.#data);
   }
 
   Skill(slot: number, heroKind: HeroKind) {

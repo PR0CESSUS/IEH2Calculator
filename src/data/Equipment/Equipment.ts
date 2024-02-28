@@ -1,26 +1,21 @@
-import { EquipmentPart } from "./../../type/EquipmentPart";
-import { MultiplierInfo, Multiplier } from "../../Multiplier";
+import { DATA } from "..";
 import { Enums } from "../../Enums";
-import { Debuff } from "../../type/Debuff";
-import { ResourceKind } from "../../type/ResourceKind";
-import { MultiplierType } from "../../type/MultiplierType";
-import { MultiplierKind } from "../../type/MultiplierKind";
-import { HeroKind } from "../../type/HeroKind";
-import { BasicStatsKind } from "../../type/BasicStatsKind";
-import { Element } from "../../type/Element";
-import { MonsterSpecies } from "../../type/MonsterSpecies";
-import { EquipmentKind } from "../../type/EquipmentKind";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
+import { CopyKind } from "../../type/CopyKind";
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
 import { EquipmentForgeEffectKind } from "../../type/EquipmentForgeEffectKind";
-import { Stats } from "../../type/Stats";
-import { EquipmentParameter } from "./EquipmentParameter";
-import { EquipmentOptionEffect } from "./EquipmentOptionEffect";
+import { EquipmentKind } from "../../type/EquipmentKind";
+import { HeroKind } from "../../type/HeroKind";
+import { MultiplierKind } from "../../type/MultiplierKind";
+import { MultiplierType } from "../../type/MultiplierType";
+import { EquipmentPart } from "./../../type/EquipmentPart";
 import { EquipmentForgeEffect } from "./EquipmentForgeEffect";
-import { InventoryParameter } from "../Inventory/InventoryParameter";
+import { EquipmentOptionEffect } from "./EquipmentOptionEffect";
+import { EquipmentParameter } from "./EquipmentParameter";
 import { SetEffect } from "./SetEffect";
-import { CopyKind } from "../../type/CopyKind";
 
 export class Equipment {
+  data: DATA;
   isEffectRegistered: Function[] = [];
   isMasteryEffectRegistered;
   isOptionEffectRegistered: boolean[][] = Array(Enums.HeroKind);
@@ -43,11 +38,12 @@ export class Equipment {
   // kind: EquipmentKind;
   // set: EquipmentSet;
 
-  constructor(id) {
-    this.id = globalThis.data.source.equipmentId[id];
+  constructor(DATA: DATA, id) {
+    this.data = DATA;
+    this.id = this.data.source.equipmentId[id];
     this.slotId = id;
-    // this.slotId = globalThis.data.source.equipmentId[id];
-    // this.kind = globalThis.data.source.equipmentKinds[id];
+    // this.slotId = this.data.source.equipmentId[id];
+    // this.kind = this.data.source.equipmentKinds[id];
 
     // for (let index = 0; index < this.isOptionEffectRegistered.length; index++) {
     //   this.isOptionEffectRegistered[index] = Array(Enums.HeroKind).fill(false);
@@ -73,7 +69,7 @@ export class Equipment {
   }
 
   get globalInfo() {
-    return globalThis.data.equipment.globalInformations[this.kind];
+    return this.data.equipment.globalInformations[this.kind];
   }
 
   get level() {
@@ -81,7 +77,7 @@ export class Equipment {
   }
 
   get kind() {
-    return globalThis.data.source.equipmentKinds[this.id];
+    return this.data.source.equipmentKinds[this.id];
   }
 
   get setKind() {
@@ -91,9 +87,9 @@ export class Equipment {
   set kind(value) {
     // console.log("current kind", EquipmentKind[this.kind], ">", EquipmentKind[value]);
     // console.log("current part", EquipmentPart[this.globalInfo.part], ">", EquipmentPart[EquipmentParameter.Part(value)], EquipmentPart[this.slotPart]);
-    // globalThis.data.source.equipmentKinds[this.id] = value;
-    if (EquipmentParameter.Part(value) == this.slotPart || value == EquipmentKind.Nothing) globalThis.data.source.equipmentKinds[this.id] = value;
-    // globalThis.data.inventory.UpdateSetItemEquippedNumHero(this.heroKind);
+    // this.data.source.equipmentKinds[this.id] = value;
+    if (EquipmentParameter.Part(value) == this.slotPart || value == EquipmentKind.Nothing) this.data.source.equipmentKinds[this.id] = value;
+    // this.data.inventory.UpdateSetItemEquippedNumHero(this.heroKind);
     this.Start();
   }
 
@@ -131,13 +127,13 @@ export class Equipment {
   Start() {
     this.CalculateRequiredLevel();
 
-    if (!this.isDisabled()) this.SetAgainAllEffect();
+    this.SetAgainAllEffect();
 
     //
     // this.CalculateRequiredAbilityPoint();
-    if (this.heroKind == HeroKind.Warrior && this.loadout == 2) {
-      // console.log("warrior gear", this.slotId, this.loadoutSlot, this.IsEquipped(), this.isDisabled());
-    }
+    // if (this.heroKind == HeroKind.Angel && (this.slotId == 2021 || this.slotId == 2022)) {
+    //   console.log("gear", this.slotId, this.loadoutSlot, this.IsEquipped(), this.isDisabled(), this.isEffectRegistered);
+    // }
   }
 
   public IsSkillLevelEnchant(kind: EquipmentEffectKind) {
@@ -202,13 +198,13 @@ export class Equipment {
         }
         break;
       case EquipmentForgeEffectKind.IncreaseEffect:
-        val1 += globalThis.data.equipment.forgeEffectCapAdderEQEffect.Value();
+        val1 += this.data.equipment.forgeEffectCapAdderEQEffect.Value();
         break;
       case EquipmentForgeEffectKind.IncreaseEffectIncrement:
-        val1 += globalThis.data.equipment.forgeEffectCapAdderEffectIncrement.Value();
+        val1 += this.data.equipment.forgeEffectCapAdderEffectIncrement.Value();
         break;
       case EquipmentForgeEffectKind.EqLevel:
-        val1 += globalThis.data.equipment.forgeEffectCapAdderEQLevel.Value();
+        val1 += this.data.equipment.forgeEffectCapAdderEQLevel.Value();
         break;
     }
     return val1;
@@ -258,55 +254,45 @@ export class Equipment {
   }
   IsEquipped() {
     if (this.slotId < 520 || this.slotId >= 4840) return false;
-    if (this.loadout != globalThis.data.source.equipmentLoadoutIds[this.heroKind] || !globalThis.data.source.isActiveBattle[this.heroKind] || this.kind == 0) return false;
+    if (this.loadout != this.data.source.equipmentLoadoutIds[this.heroKind] || !this.data.source.isActiveBattle[this.heroKind] || this.kind == 0) return false;
 
     // if (this.slotId == 717) {
     //   console.log("IsEquipped after first filter");
-    //   console.log(globalThis.data.source.isActiveBattle[this.heroKind]);
+    //   console.log(this.data.source.isActiveBattle[this.heroKind]);
+    // }
+    // if (this.slotId == 2021 || this.slotId == 2022) {
+    //   console.log("IsEquipped", HeroKind[this.heroKind], this.slotId, this.loadoutSlot - 48, this.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value());
     // }
     if (this.loadoutSlot < 24) {
-      return globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() > this.loadoutSlot;
+      return this.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() > this.loadoutSlot;
     } else if (this.loadoutSlot >= 24 && this.loadoutSlot < 48) {
-      return globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 24;
+      return this.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 24;
     } else if (this.loadoutSlot >= 48) {
-      return globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 48;
+      return this.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 48;
     }
-    // if (this.loadoutSlot < 24) {
-    //   return globalThis.data.custom.isSuperDungeon
-    //     ? globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() > this.loadoutSlot
-    //     : globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() > this.loadoutSlot;
-    // } else if (this.loadoutSlot >= 24 && this.loadoutSlot < 48) {
-    //   return globalThis.data.custom.isSuperDungeon
-    //     ? globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.Value() > this.loadoutSlot - 24
-    //     : globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 24;
-    // } else if (this.loadoutSlot >= 48) {
-    //   return globalThis.data.custom.isSuperDungeon
-    //     ? globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.Value() > this.loadoutSlot - 48
-    //     : globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() > this.loadoutSlot - 48;
-    // }
   }
 
   isDisabled() {
     if (this.slotId < 520 || this.slotId >= 4840) return true;
-    if (globalThis.data.custom.isSuperDungeon && this.heroKind == globalThis.data.source.currentHero) {
+    if (this.data.source.isSuperDungeon && this.heroKind == this.data.source.currentHero) {
       switch (this.slotPart) {
         case EquipmentPart.Weapon:
-          return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() <= this.loadoutSlot;
+          return this.data.battles[this.heroKind].superDungeonCtrl.eqWeaponSlotNum.Value() <= this.loadoutSlot;
         case EquipmentPart.Armor:
-          return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.Value() <= this.loadoutSlot - 24;
+          return this.data.battles[this.heroKind].superDungeonCtrl.eqArmorSlotNum.Value() <= this.loadoutSlot - 24;
         case EquipmentPart.Jewelry:
-          return globalThis.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.Value() <= this.loadoutSlot - 48;
+          return this.data.battles[this.heroKind].superDungeonCtrl.eqJewelrySlotNum.Value() <= this.loadoutSlot - 48;
         default:
           return true;
       }
     } else {
       switch (this.slotPart) {
         case EquipmentPart.Weapon:
-          return globalThis.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() <= this.loadoutSlot;
+          return this.data.inventory.equipWeaponUnlockedNum[this.heroKind].Value() <= this.loadoutSlot;
         case EquipmentPart.Armor:
-          return globalThis.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() <= this.loadoutSlot - 24;
+          return this.data.inventory.equipArmorUnlockedNum[this.heroKind].Value() <= this.loadoutSlot - 24;
         case EquipmentPart.Jewelry:
-          return globalThis.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() <= this.loadoutSlot - 48;
+          return this.data.inventory.equipJewelryUnlockedNum[this.heroKind].Value() <= this.loadoutSlot - 48;
         default:
           return true;
       }
@@ -319,6 +305,7 @@ export class Equipment {
     for (let index = 0; index < this.globalInfo.levelMaxEffects.length; index++) {
       if (this.globalInfo.levelMaxEffects[index].kind == 0) continue;
       const register = this.SetEffect(
+        this.data,
         heroKind,
         this.globalInfo.levelMaxEffects[index].kind,
         () => this.globalInfo.levelMaxEffects[index].EffectValue(0),
@@ -334,6 +321,7 @@ export class Equipment {
     for (let index = 0; index < this.globalInfo.effects.length; index++) {
       // this.SetEffect(heroKind, this.globalInfo.effects[index].kind, () => this.OriginalEffectValue(index));
       const register = this.SetEffect(
+        this.data,
         heroKind,
         this.globalInfo.effects[index].kind,
         () => this.OriginalEffectValue(index),
@@ -346,6 +334,7 @@ export class Equipment {
 
       if (this.optionEffects[index].kind != 0) {
         const register = this.SetEffect(
+          this.data,
           heroKind,
           this.optionEffects[index].kind,
           () => this.optionEffects[index].effectValue,
@@ -390,9 +379,9 @@ export class Equipment {
   // IsEnoughLevel(heroKind: HeroKind, isGrade) {
   //   return isGrade
   //     ? this.RequiredLevel(false, true) <= 0 ||
-  //         globalThis.data.superStats.Hero(heroKind).GradeForEquipment() >= this.RequiredLevel(false, true)
+  //         this.data.superStats.Hero(heroKind).GradeForEquipment() >= this.RequiredLevel(false, true)
   //     : this.RequiredLevel(false, false) <= 0 ||
-  //         globalThis.data.stats.LevelForEquipment(heroKind).Value() >= this.RequiredLevel(false, false);
+  //         this.data.stats.LevelForEquipment(heroKind).Value() >= this.RequiredLevel(false, false);
   // }
   get isSetItem() {
     return this.globalInfo.setKind != 0 && this.globalInfo.setKind != undefined;
@@ -400,7 +389,7 @@ export class Equipment {
   EffectMultiplierFromSetItem(heroKind: HeroKind) {
     if (!this.isSetItem || this.isSetItem == undefined) return 1;
 
-    switch (globalThis.data.inventory.SetItemEquippedNum(this.globalInfo.setKind, heroKind)) {
+    switch (this.data.inventory.SetItemEquippedNum(this.globalInfo.setKind, heroKind)) {
       case 2:
         return 1.05;
       case 3:
@@ -422,8 +411,8 @@ export class Equipment {
 
   EffectValue(baseEffectValue, heroKind: HeroKind) {
     let num = baseEffectValue * this.EffectMultiplierFromSetItem(heroKind) * (1.0 + this.forgeEffects[3].EffectValue());
-    if (!this.globalInfo.isArtifact) num *= globalThis.data.equipment.EffectMultiplier();
-    else if (globalThis.data.equipment.effectMultiplierModifierForArtifact.Value() > 0.0) num *= globalThis.data.equipment.ArtifactEffectMultiplier();
+    if (!this.globalInfo.isArtifact) num *= this.data.equipment.EffectMultiplier();
+    else if (this.data.equipment.effectMultiplierModifierForArtifact.Value() > 0.0) num *= this.data.equipment.ArtifactEffectMultiplier();
     if (num < 0.0) num *= Math.max(0.0, 1 - this.forgeEffects[4].EffectValue());
     return num;
   }
@@ -482,7 +471,7 @@ export class Equipment {
         this.optionEffects.map((effect, index) => effect.Paste(data.optionEffects[index]));
         this.kind = data.kind;
         this.forgeEffects.map((forge, index) => forge.Paste(data.forgeEffects[index]));
-        globalThis.data.inventory.UpdateSetItemEquippedNumHero(this.heroKind);
+        this.data.inventory.UpdateSetItemEquippedNumHero(this.heroKind);
         break;
       case CopyKind.OptionEffect:
         this.optionEffects.map((effect, index) => effect.Paste(data[index]));

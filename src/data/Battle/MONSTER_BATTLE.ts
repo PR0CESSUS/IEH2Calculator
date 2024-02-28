@@ -1,24 +1,30 @@
+import { DataBattle } from ".";
+import { ChallengeMonsterKind } from "../../type/ChallengeMonsterKind";
 import { Debuff } from "../../type/Debuff";
 import { Element } from "../../type/Element";
-import { MonsterSpecies } from "../../type/MonsterSpecies";
 import { MonsterColor } from "../../type/MonsterColor";
-import { ChallengeMonsterKind } from "../../type/ChallengeMonsterKind";
 import { TitleKind } from "../../type/TitleKind";
 import { BATTLE } from "./BATTLE";
-import { BATTLE_CONTROLLER } from ".";
-import { Stats } from "../../type/Stats";
+import { DATA } from "../index";
 
 export class MONSTER_BATTLE extends BATTLE {
   level = 1;
   difficulty = 0;
   challengeMonsterKind: ChallengeMonsterKind = ChallengeMonsterKind.Florzporb;
+  constructor(DATA: DATA, battleCtrl: DataBattle) {
+    super(DATA, battleCtrl);
 
+    // for (let index = 0; index < this.debuffings.length; index++) {
+    //   num = index;
+    //   this.debuffings[index] = new Debuffing((BATTLE) this, (Debuff) num);
+    // }
+  }
   get isPet() {
     return false;
   }
 
   get globalInformation() {
-    return globalThis.data.monster.GlobalInformation(this.species, this.color);
+    return this.battleCtrl.data.monster.GlobalInformation(this.species, this.color);
   }
 
   get attackElement() {
@@ -90,13 +96,13 @@ export class MONSTER_BATTLE extends BATTLE {
   }
 
   get damageFactor() {
-    globalThis.data.stats.MonsterDamage(this.battleCtrl.heroKind, this.species).isLog = globalThis.data.custom.isSuperDungeon;
-    return globalThis.data.stats.MonsterDamage(this.battleCtrl.heroKind, this.species).Value();
+    this.battleCtrl.data.stats.MonsterDamage(this.battleCtrl.heroKind, this.species).isLog = this.battleCtrl.data.source.isSuperDungeon;
+    return this.battleCtrl.data.stats.MonsterDamage(this.battleCtrl.heroKind, this.species).Value();
   }
 
   DamageFactorElement(element: Element) {
-    globalThis.data.stats.ElementDamage(this.battleCtrl.heroKind, element).isLog = globalThis.data.custom.isSuperDungeon;
-    return globalThis.data.stats.ElementDamage(this.battleCtrl.heroKind, element).Value();
+    this.battleCtrl.data.stats.ElementDamage(this.battleCtrl.heroKind, element).isLog = this.battleCtrl.data.source.isSuperDungeon;
+    return this.battleCtrl.data.stats.ElementDamage(this.battleCtrl.heroKind, element).Value();
   }
 
   get exp() {
@@ -116,17 +122,6 @@ export class MONSTER_BATTLE extends BATTLE {
   //   get debuffChance() {return this.globalInformation.DebuffChance(this.level, this.difficulty, this.isPet, this.battleCtrl.heroKind);}
 
   //   Debuff LotteryDebuff() => UsefulMethod.WithinRandom(this.debuffChance) ? this.debuff : Debuff.Nothing;
-
-  constructor(battleCtrl: BATTLE_CONTROLLER) {
-    super(battleCtrl);
-    this.battleCtrl = battleCtrl;
-
-    // for (let index = 0; index < this.debuffings.length; index++) {
-    //   num = index;
-    //   this.debuffings[index] = new Debuffing((BATTLE) this, (Debuff) num);
-    // }
-    this.heroKind = battleCtrl.heroKind;
-  }
 
   CalculatedExp(level) {
     let exp = this.exp;
@@ -155,12 +150,12 @@ export class MONSTER_BATTLE extends BATTLE {
             : exp * 1.3
           : exp * 1.15
         : exp * 1.0;
-    if (this.color == MonsterColor.Metal) num2 *= 1.0 + globalThis.data.quest.TitleEffectValue(this.battleCtrl.heroKind, TitleKind.MetalHunter).sub;
+    if (this.color == MonsterColor.Metal) num2 *= 1.0 + this.battleCtrl.data.quest.TitleEffectValue(this.battleCtrl.heroKind, TitleKind.MetalHunter).sub;
     return num2;
   }
 
   get gainFactor() {
-    return globalThis.data.guild.Member(this.battleCtrl.heroKind).gainRate;
+    return this.battleCtrl.data.guild.Member(this.battleCtrl.heroKind).gainRate;
   }
 
   //   Attack(damageMultiplier = 1.0, hitCount = 0) {return this.attack[0].NormalAttack((BATTLE) this, damageMultiplier: damageMultiplier, hitCount: hitCount);}

@@ -8,8 +8,8 @@ import { Stats } from "../../../../type/Stats";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 
 export class ChargeSwing extends SKILL {
-  constructor(heroKind: HeroKind, id) {
-    super(heroKind, id);
+  constructor(data, heroKind: HeroKind, id) {
+    super(data, heroKind, id);
 
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 5, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Add, 50.0));
     this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Add, 100.0));
@@ -31,12 +31,12 @@ export class ChargeSwing extends SKILL {
   }
 
   Range() {
-    return this.level >= 100 ? this.Range() + 30 * globalThis.data.skill.skillRangeMultiplier[this.heroKind].Value() : this.Range();
+    return this.level >= 100 ? this.Range() + 30 * this.data.skill.skillRangeMultiplier[this.heroKind].Value() : this.Range();
   }
 
   EffectRange() {
-    if (this.level >= 150) return this.EffectRange() + 170 * globalThis.data.skill.skillEffectRangeMultiplier[this.heroKind].Value();
-    return this.level >= 30 ? this.EffectRange() + 70 * globalThis.data.skill.skillEffectRangeMultiplier[this.heroKind].Value() : this.EffectRange();
+    if (this.level >= 150) return this.EffectRange() + 170 * this.data.skill.skillEffectRangeMultiplier[this.heroKind].Value();
+    return this.level >= 30 ? this.EffectRange() + 70 * this.data.skill.skillEffectRangeMultiplier[this.heroKind].Value() : this.EffectRange();
   }
 
   Interval() {

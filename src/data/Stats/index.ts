@@ -1,30 +1,40 @@
-import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { DATA } from "..";
+import { Enums } from "../../Enums";
+import { BasicStatsKind } from "../../type/BasicStatsKind";
+import { Debuff } from "../../type/Debuff";
+import { Element } from "../../type/Element";
+import { HeroKind } from "../../type/HeroKind";
+import { MonsterSpecies } from "../../type/MonsterSpecies";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
-import { GlobalStats } from "../../type/GlobalStats";
-import { HeroKind } from "../../type/HeroKind";
+import { NumberType } from "../../type/NumberType";
 import { ResourceKind } from "../../type/ResourceKind";
-import { BasicStatsKind } from "../../type/BasicStatsKind";
-import { MonsterSpecies } from "../../type/MonsterSpecies";
-import { Element } from "../../type/Element";
-import { Debuff } from "../../type/Debuff";
 import { Stats } from "../../type/Stats";
-import { Enums, Enum } from "../../Enums";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { HeroStats } from "./HeroStats";
-import { Util } from "../../Util";
 
 export class DataStats {
+  data: DATA;
   heroLevelIncrementLimit: Multiplier;
   globalStats: Multiplier[] = Array(Enums.GlobalStats);
   globalSkillSlotNum: Multiplier;
   heroes: HeroStats[] = Array(Enums.HeroKind);
+  memoMaxTPGAmongHeroes: number;
 
-  constructor() {
-    for (let kind = 0; kind < this.heroes.length; kind++) this.heroes[kind] = new HeroStats(kind);
+  constructor(DATA: DATA) {
+    this.data = DATA;
+
+    for (let kind = 0; kind < this.heroes.length; kind++) this.heroes[kind] = new HeroStats(this.data, kind);
     for (let index = 0; index < this.globalStats.length; index++) this.globalStats[index] = new Multiplier();
     this.globalStats[0].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-
+    this.globalStats[1].numberType = NumberType.Normal;
+    this.globalStats[2].numberType = NumberType.Normal;
+    this.globalStats[3].numberType = NumberType.Normal;
     this.heroLevelIncrementLimit = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 30.0));
+  }
+
+  get currentHero(): HeroStats {
+    return this.heroes[this.data.source.currentHero];
   }
 
   GoldGain() {
@@ -72,8 +82,8 @@ export class DataStats {
 
   ModifiedExpGain(heroKind: HeroKind, areaKind) {
     return (
-      (this.HeroStats(heroKind, Stats.ExpGain).Value() / (1.0 + globalThis.data.area.expBonuses[globalThis.data.battle[heroKind].areaBattle.CurrentArea().kind].Value())) *
-      (1.0 + globalThis.data.area.expBonuses[areaKind].Value())
+      (this.HeroStats(heroKind, Stats.ExpGain).Value() / (1.0 + this.data.area.expBonuses[this.data.battle[heroKind].areaBattle.CurrentArea().kind].Value())) *
+      (1.0 + this.data.area.expBonuses[areaKind].Value())
     );
   }
 
@@ -213,19 +223,23 @@ export class DataStats {
 
   MaxPetEXPGainAmongHeroes() {
     let num = 0.0;
-    for (let kind = 0; kind < Enums.HeroKind; ++kind) {
-      if (this.Hero(kind).petExpGainPerDefeat.Value() > num) num = this.Hero(kind).petExpGainPerDefeat.Value();
+    for (let index = 0; index < Enums.HeroKind; ++index) {
+      let value = this.Hero(index).petExpGainPerDefeat.Value();
+      if (value > num && this.data.source.isActiveBattle[index]) num = value;
     }
     return num;
   }
 
+  // using memo breaks reactivity  but greatly increase performance
   MaxTPGAmongHeroes() {
+    if (this.memoMaxTPGAmongHeroes) return this.memoMaxTPGAmongHeroes;
     let num = 0.0;
-    for (let index = 0; index < Enums.HeroKind; index++) {
-      if (this.Hero(index).stats[Stats.TamingPointGain].Value() > num) num = this.Hero(index).stats[Stats.TamingPointGain].Value();
-    }
-    // console.log("MaxTPGAmongHeroes", Util.convertTo(num));
 
+    for (let index = 0; index < Enums.HeroKind; index++) {
+      let value = this.Hero(index).stats[Stats.TamingPointGain].Value();
+      if (value > num && this.data.source.isActiveBattle[index]) num = value;
+    }
+    this.memoMaxTPGAmongHeroes = num;
     return num;
   }
 }

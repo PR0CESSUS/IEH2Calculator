@@ -1,16 +1,19 @@
-import { MultiplierInfo } from "../../Multiplier";
-import { SDGem } from "./SDGem";
-import { MultiplierType } from "../../type/MultiplierType";
+import { DATA } from "..";
+import { MultiplierInfo } from "../Multiplier";
 import { MultiplierKind } from "../../type/MultiplierKind";
-import { Stats } from "../../type/Stats";
-import { SDGemKind } from "../../type/SDGemKind";
+import { MultiplierType } from "../../type/MultiplierType";
 import { SuperDungeonPowerupKind } from "../../type/SuperDungeonPowerupKind";
 
 export class SDModifierMilestoneController {
   //   mMList: SDMM[] = [];
+  data: DATA;
+
+  constructor(DATA: DATA) {
+    this.data = DATA;
+  }
 
   Total() {
-    return globalThis.data.source.maxModifierCleareds.reduce((a, b) => {
+    return this.data.source.maxModifierCleareds.reduce((a, b) => {
       return a + b;
     }, 0);
   }
@@ -24,7 +27,7 @@ export class SDModifierMilestoneController {
   }
 
   SetModifierMilestones() {
-    globalThis.data.sdg.upgradeCtrl.availableSuperQueue.RegisterMultiplier(
+    this.data.sdg.upgradeCtrl.availableSuperQueue.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -33,7 +36,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.powerupFilterSlot.RegisterMultiplier(
+    this.data.sdg.powerupFilterSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -42,7 +45,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.powerupFilterSlot.RegisterMultiplier(
+    this.data.sdg.powerupFilterSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -51,7 +54,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.powerupFilterLoadoutSlot.RegisterMultiplier(
+    this.data.sdg.powerupFilterLoadoutSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -59,7 +62,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(100)
       )
     );
-    globalThis.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
+    this.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -68,7 +71,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.powerupFilterSlot.RegisterMultiplier(
+    this.data.sdg.powerupFilterSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -77,7 +80,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
+    this.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -86,7 +89,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.lootGainOnDie.RegisterMultiplier(
+    this.data.sdg.lootGainOnDie.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -94,7 +97,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(170)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageMultiplier).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageMultiplier).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -103,7 +106,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
+    this.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -112,7 +115,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.powerupMaxRank.RegisterMultiplier(
+    this.data.sdg.powerupMaxRank.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -120,7 +123,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(300)
       )
     );
-    globalThis.data.sdg.powerupFilterSlot.RegisterMultiplier(
+    this.data.sdg.powerupFilterSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -129,7 +132,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
+    this.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -138,7 +141,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalDamage).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalDamage).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -146,7 +149,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(400)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalDamage).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalDamage).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -154,7 +157,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(420)
       )
     );
-    globalThis.data.sdg.modifierLoadoutSlot.RegisterMultiplier(
+    this.data.sdg.modifierLoadoutSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -163,7 +166,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
+    this.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -171,7 +174,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(480)
       )
     );
-    globalThis.data.sdg.powerupFilterSlot.RegisterMultiplier(
+    this.data.sdg.powerupFilterSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -180,7 +183,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.CriticalDamage).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.CriticalDamage).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -189,7 +192,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
+    this.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -197,7 +200,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(600)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalCriticalChance).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalCriticalChance).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -205,7 +208,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(625)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalCriticalChance).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalCriticalChance).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -213,7 +216,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(650)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageMultiplier).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageMultiplier).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -221,7 +224,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(675)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.ChallengeBossDamageMultiplier).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.ChallengeBossDamageMultiplier).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -229,7 +232,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(700)
       )
     );
-    globalThis.data.sdg.powerupMaxRank.RegisterMultiplier(
+    this.data.sdg.powerupMaxRank.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -238,7 +241,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageCutMultiplier).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageCutMultiplier).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -247,7 +250,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
+    this.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -255,7 +258,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(875)
       )
     );
-    globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
+    this.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -263,7 +266,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(900)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DungeonCoinGain).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DungeonCoinGain).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -271,7 +274,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(925)
       )
     );
-    globalThis.data.sdg.upgradeCtrl.availableSuperQueue.RegisterMultiplier(
+    this.data.sdg.upgradeCtrl.availableSuperQueue.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -279,7 +282,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(950)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.ChallengeBossDamageMultiplier).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.ChallengeBossDamageMultiplier).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -287,7 +290,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(975)
       )
     );
-    globalThis.data.quest.sdRefreshTicketFromDailyQuest.RegisterMultiplier(
+    this.data.quest.sdRefreshTicketFromDailyQuest.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -295,7 +298,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1000)
       )
     );
-    globalThis.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
+    this.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -303,7 +306,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1025)
       )
     );
-    globalThis.data.sdg.powerupFilterSlot.RegisterMultiplier(
+    this.data.sdg.powerupFilterSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -311,7 +314,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1050)
       )
     );
-    globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
+    this.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -319,7 +322,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1075)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.FameGain).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.FameGain).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -327,7 +330,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1100)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalAbsorption).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalAbsorption).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -335,7 +338,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1125)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalAbsorption).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalAbsorption).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -343,7 +346,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1150)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.SkillCastSpeed).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.SkillCastSpeed).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -352,7 +355,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
+    this.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -361,7 +364,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
+    this.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -369,7 +372,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1275)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.SkillHitCount).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.SkillHitCount).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -377,7 +380,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1300)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.ExtraAfterDamage).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.ExtraAfterDamage).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -385,7 +388,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1325)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalDamage).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalDamage).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -393,7 +396,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1350)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalDamage).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalDamage).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -401,7 +404,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1375)
       )
     );
-    globalThis.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
+    this.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -409,7 +412,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1425)
       )
     );
-    globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
+    this.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -418,7 +421,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalCriticalChance).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalCriticalChance).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -426,7 +429,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1550)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalCriticalChance).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalCriticalChance).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -434,7 +437,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1575)
       )
     );
-    globalThis.data.sdg.powerupFilterSlot.RegisterMultiplier(
+    this.data.sdg.powerupFilterSlot.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -442,7 +445,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1600)
       )
     );
-    globalThis.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
+    this.data.sdg.shopCtrl.pieceOfRubyConverterPieceOfRubyGain.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -450,7 +453,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1625)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DungeonCoinGain).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DungeonCoinGain).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -458,7 +461,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1650)
       )
     );
-    globalThis.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
+    this.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -467,7 +470,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.FameGain).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.FameGain).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -476,7 +479,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageCutMultiplier).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageCutMultiplier).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -484,7 +487,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(1850)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageMultiplier).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.DamageMultiplier).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -493,7 +496,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.EquipmentDropChance).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.EquipmentDropChance).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -501,7 +504,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(2100)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.ChallengeBossDamageMultiplier).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.ChallengeBossDamageMultiplier).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -509,7 +512,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(2200)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalCriticalChance).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.PhysicalCriticalChance).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -517,7 +520,7 @@ export class SDModifierMilestoneController {
         () => this.isCleared(2250)
       )
     );
-    globalThis.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalCriticalChance).RegisterMultiplier(
+    this.data.sdg.PowerupEffectMultiplier(SuperDungeonPowerupKind.MagicalCriticalChance).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Mul,
@@ -526,7 +529,7 @@ export class SDModifierMilestoneController {
       )
     );
 
-    globalThis.data.quest.sdRefreshTicketFromDailyQuest.RegisterMultiplier(
+    this.data.quest.sdRefreshTicketFromDailyQuest.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.SDModifierMilestone,
         MultiplierType.Add,
@@ -538,7 +541,7 @@ export class SDModifierMilestoneController {
 
   //   SetUnlockShopItem(int[] ids, Func<bool> condition, Func<string> lockString) {
   //     for (let index = 0; index < ids.length; index++)
-  //       globalThis.data.sdg.shopCtrl.Item(ids[index]).unlock.RegisterCondition(condition, lockString);
+  //       this.data.sdg.shopCtrl.Item(ids[index]).unlock.RegisterCondition(condition, lockString);
   //   }
 
   //   SetUnlockModifier(
@@ -547,6 +550,6 @@ export class SDModifierMilestoneController {
   //     Func<string> lockString)
   //   {
   //     for (let index = 0; index < kinds.length; index++)
-  //       globalThis.data.sdg.SetUnlockModifier(kinds[index], condition, lockString);
+  //       this.data.sdg.SetUnlockModifier(kinds[index], condition, lockString);
   //   }
 }

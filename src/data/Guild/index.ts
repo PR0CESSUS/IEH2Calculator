@@ -1,22 +1,17 @@
-import { MultiplierInfo, Multiplier } from "../../Multiplier";
-import { MultiplierType } from "../../type/MultiplierType";
-import { MultiplierKind } from "../../type/MultiplierKind";
 import { GuildAbilityKind } from "../../type/GuildAbilityKind";
 import { HeroKind } from "../../type/HeroKind";
-import { Enums } from "../../Enums";
+import { MultiplierKind } from "../../type/MultiplierKind";
+import { MultiplierType } from "../../type/MultiplierType";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { GuildParameter } from "./GuildParameter";
 
 export class DataGuild {
-  guildLevelCap = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => GuildParameter.maxGuildLevel));
+  guildLevelCap: Multiplier;
   timecountSec;
-  activableNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 3.0));
+  activableNum: Multiplier;
   level;
   exp;
-  expRequirementReduction = new Multiplier(
-    new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
-    () => 0.99,
-    () => 0.0
-  );
+  expRequirementReduction: Multiplier;
   members; //= new GuildMember[Enums.HeroKind)];
   abilityPointLeft;
   abilities; //= new GuildAbility[Enums.GuildAbilityKind)];
@@ -25,9 +20,16 @@ export class DataGuild {
   fame;
   superAbilityPointLeft;
   //   accomplishGuildLevels = new AccomplishGuildLevel[GuildParameter.maxGuildLevelCap + 1];
-  isTryingSwitchPlay;
 
   constructor() {
+    this.expRequirementReduction = new Multiplier(
+      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
+      () => 0.99,
+      () => 0.0
+    );
+    this.guildLevelCap = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => GuildParameter.maxGuildLevel));
+    this.activableNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 3.0));
+
     //TODO super guild ability
     // this.level = new GuildLevel((Func<long>) (() => this.guildLevelCap.Value()));
     // this.exp = new GuildExp(new Func<long, double>(this.RequiredExp), this.level);

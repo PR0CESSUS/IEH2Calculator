@@ -1,9 +1,10 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { Enums } from "../../../Enums";
 import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
 import { SuperDungeonUpgradeKind } from "../../../type/SuperDungeonUpgradeKind";
+import { SDModifierKind } from "../../../type/SDModifierKind";
 
 export class SDU_SDWardedFury extends SuperDungeonUpgrade {
   get kind() {
@@ -16,7 +17,7 @@ export class SDU_SDWardedFury extends SuperDungeonUpgrade {
 
   SetEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.wardedFury.RegisterMultiplier(
+      this.sdgCtrl.data.battles[index].superDungeonCtrl.wardedFury.RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.SDUpgrade,
           MultiplierType.Add,
@@ -36,5 +37,9 @@ export class SDU_SDWardedFury extends SuperDungeonUpgrade {
 
   get incrementEffectValuePerLevel() {
     return 0.01;
+  }
+
+  IsActive() {
+    return !this.sdgCtrl.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveSDUpgrade1];
   }
 }

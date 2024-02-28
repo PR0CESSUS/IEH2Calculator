@@ -1,10 +1,9 @@
-import { MultiplierInfo } from "../../../Multiplier";
-import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
-import { MultiplierType } from "../../../type/MultiplierType";
-import { MultiplierKind } from "../../../type/MultiplierKind";
+import { MultiplierInfo } from "../../Multiplier";
 import { BasicStatsKind } from "../../../type/BasicStatsKind";
-import { Stats } from "../../../type/Stats";
+import { MultiplierKind } from "../../../type/MultiplierKind";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonUpgradeKind } from "../../../type/SuperDungeonUpgradeKind";
+import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 
 export class SDU_SPDMultiplier extends SuperDungeonUpgrade {
   get kind() {
@@ -16,10 +15,7 @@ export class SDU_SPDMultiplier extends SuperDungeonUpgrade {
   }
 
   SetEffect() {
-    return globalThis.data.stats.SetEffectBasicStats(
-      BasicStatsKind.SPD,
-      new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue())
-    );
+    return this.sdgCtrl.data.stats.SetEffectBasicStats(BasicStatsKind.SPD, new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
   }
 
   get maxLevel() {

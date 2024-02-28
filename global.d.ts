@@ -1,7 +1,8 @@
-import { App } from "./src/App";
 import { DATA } from "./src/Data";
-
+import { DataDefault } from "./src/Data/DataDefault";
 declare global {
-  var app: App;
-  var data: DATA;
+  var SaveFileSnapshot: DATA;
+  var SaveFileData: DATA;
+  var SaveFileDataSource: DataDefault;
+  var SaveFileSnapshotSource: DataDefault;
 }

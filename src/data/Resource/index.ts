@@ -1,4 +1,4 @@
-import { Multiplier, MultiplierInfo } from "../../Multiplier";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { ResourceKind } from "../../type/ResourceKind";
@@ -23,9 +23,10 @@ export class DataResource {
       () => 0.5,
       () => 0.0
     );
-    //   for (let kind = 0; kind < this.resources.length; kind++) {
-    //     this.resources[kind] = new global::Resource((ResourceKind) kind);
-    //   }
+    for (let kind = 0; kind < this.resources.length; kind++) {
+      //TODO Resource Stone, etc
+      this.resources[kind] = 1;
+    }
   }
 
   HeroResourceKind(heroKind) {

@@ -1,10 +1,10 @@
-import { MultiplierInfo } from "../../../Multiplier";
 import { Enums } from "../../../Enums";
-import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
-import { MultiplierType } from "../../../type/MultiplierType";
+import { MultiplierInfo } from "../../Multiplier";
 import { MultiplierKind } from "../../../type/MultiplierKind";
-import { HeroKind } from "../../../type/HeroKind";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonUpgradeKind } from "../../../type/SuperDungeonUpgradeKind";
+import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
+import { SDModifierKind } from "../../../type/SDModifierKind";
 
 export class SDU_SDChallengeBossDamageCutMultiplier extends SuperDungeonUpgrade {
   get kind() {
@@ -17,7 +17,7 @@ export class SDU_SDChallengeBossDamageCutMultiplier extends SuperDungeonUpgrade 
 
   SetEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.battles[index].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
+      this.sdgCtrl.data.battles[index].superDungeonCtrl.sdChallengeBossDamageCutMultiplier.RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.SDUpgrade,
           MultiplierType.Mul,
@@ -37,5 +37,9 @@ export class SDU_SDChallengeBossDamageCutMultiplier extends SuperDungeonUpgrade 
 
   get incrementEffectValuePerLevel() {
     return 0.025;
+  }
+
+  IsActive() {
+    return !this.sdgCtrl.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveSDUpgrade1];
   }
 }

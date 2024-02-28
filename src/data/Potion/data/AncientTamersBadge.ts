@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { Talisman } from "../Talisman";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -29,11 +29,11 @@ export class AncientTamersBadge extends Talisman {
   }
 
   SetPassiveEffect() {
-    globalThis.data.sdg.dungeonCoinGain.RegisterMultiplier(new MultiplierInfo(MultiplierKind.TalismanPassive, MultiplierType.Mul, () => this.passiveEffectValue));
+    this.data.sdg.dungeonCoinGain.RegisterMultiplier(new MultiplierInfo(MultiplierKind.TalismanPassive, MultiplierType.Mul, () => this.passiveEffectValue));
   }
 
   SetEffect(heroKind: HeroKind, equipNum: Function) {
-    return globalThis.data.stats.HeroStats(heroKind, Stats.TamingPointGain).RegisterMultiplier(
+    return this.data.stats.HeroStats(heroKind, Stats.TamingPointGain).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.Talisman,
         MultiplierType.Mul,

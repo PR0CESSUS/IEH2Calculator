@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 import { SuperDungeonController } from "../SuperDungeonController";
 import { MultiplierType } from "../../../type/MultiplierType";
@@ -28,7 +28,7 @@ export class SDP_PhysicalCriticalChance extends SuperDungeonPowerup {
   }
 
   SetEffect() {
-    return globalThis.data.stats.HeroStats(this.heroKind, Stats.PhysCritChance).RegisterMultiplier(
+    return this.ctrl.data.stats.HeroStats(this.heroKind, Stats.PhysCritChance).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.After,
@@ -41,7 +41,7 @@ export class SDP_PhysicalCriticalChance extends SuperDungeonPowerup {
   }
 
   SetGlobalEffect() {
-    globalThis.data.stats.SetEffectStats(
+    this.ctrl.data.stats.SetEffectStats(
       Stats.PhysCritChance,
       new MultiplierInfo(
         MultiplierKind.DungeonItemPermanent,

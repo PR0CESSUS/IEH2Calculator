@@ -1,12 +1,10 @@
-import { MultiplierInfo } from "../../../Multiplier";
 import { Enums } from "../../../Enums";
-import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
-import { SuperDungeonController } from "../SuperDungeonController";
-import { MultiplierType } from "../../../type/MultiplierType";
+import { MultiplierInfo } from "../../Multiplier";
 import { MultiplierKind } from "../../../type/MultiplierKind";
-import { HeroKind } from "../../../type/HeroKind";
-import { Stats } from "../../../type/Stats";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonPowerupKind } from "../../../type/SuperDungeonPowerupKind";
+import { SuperDungeonController } from "../SuperDungeonController";
+import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 
 export class SDP_FameGain extends SuperDungeonPowerup {
   get kind() {
@@ -30,7 +28,7 @@ export class SDP_FameGain extends SuperDungeonPowerup {
   }
 
   SetEffect() {
-    return globalThis.data.superStats.Hero(this.heroKind).fameGain.RegisterMultiplier(
+    return this.ctrl.data.superStats.Hero(this.heroKind).fameGain.RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.Add,
@@ -44,7 +42,7 @@ export class SDP_FameGain extends SuperDungeonPowerup {
 
   SetGlobalEffect() {
     for (let index = 0; index < Enums.HeroKind; index++)
-      globalThis.data.superStats.Hero(index).fameGain.RegisterMultiplier(
+      this.ctrl.data.superStats.Hero(index).fameGain.RegisterMultiplier(
         new MultiplierInfo(
           MultiplierKind.DungeonItemPermanent,
           MultiplierType.Mul,

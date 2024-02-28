@@ -1,18 +1,19 @@
+import { DATA } from "..";
 import { Enums } from "../../Enums";
-import { Debuff } from "../../type/Debuff";
-import { HeroKind } from "../../type/HeroKind";
 import { AbilityKind } from "../../type/AbilityKind";
-import { EquipmentPart } from "../../type/EquipmentPart";
-import { EquipmentKind } from "../../type/EquipmentKind";
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
-import { EquipmentSetKind } from "../../type/EquipmentSetKind";
+import { EquipmentKind } from "../../type/EquipmentKind";
+import { EquipmentPart } from "../../type/EquipmentPart";
 import { EquipmentRarity } from "../../type/EquipmentRarity";
-import { EquipmentParameter } from "./EquipmentParameter";
-import { EquipmentLevel } from "./EquipmentLevel";
+import { EquipmentSetKind } from "../../type/EquipmentSetKind";
+import { HeroKind } from "../../type/HeroKind";
 import { EquipmentEffect } from "./EquipmentEffect";
+import { EquipmentLevel } from "./EquipmentLevel";
+import { EquipmentParameter } from "./EquipmentParameter";
 import { EquipmentRequiredAbility } from "./EquipmentRequiredAbility";
 
 export class EquipmentGlobalInformation {
+  data: DATA;
   kind: EquipmentKind;
   levels: EquipmentLevel[] = Array(Enums.HeroKind);
   // proficiencies: EquipmentProficiency[] = Array(Enums.HeroKind);
@@ -22,12 +23,13 @@ export class EquipmentGlobalInformation {
   setKind: EquipmentSetKind = EquipmentSetKind.Nothing;
   isArtifact;
 
-  constructor(kind: EquipmentKind) {
+  constructor(DATA: DATA, kind: EquipmentKind) {
+    this.data = DATA;
     this.kind = kind;
     this.SetEffectAndRequiredAbility();
     this.SetLevelMaxEffect();
     for (let index = 0; index < this.levels.length; index++) {
-      this.levels[index] = new EquipmentLevel(kind, index);
+      this.levels[index] = new EquipmentLevel(this.data, kind, index);
       // this.proficiencies[index] = new EquipmentProficiency(kind, count, (level => this.RequiredProficiency(count, level)), this.levels[count], this.isArtifact);
     }
   }
@@ -6642,7 +6644,7 @@ export class EquipmentGlobalInformation {
   //       }
   //       break;
   //   }
-  //   return globalThis.data.town.TownMaterial(kind);
+  //   return this.data.town.TownMaterial(kind);
   // }
 
   DisassembleMaterialNum() {
@@ -6650,10 +6652,10 @@ export class EquipmentGlobalInformation {
   }
 
   CraftCostMaterialNum() {
-    let num = this.DisassembleMaterialNum() * 500.0 * (1.0 - globalThis.data.craft.costReduction.Value()) * (1 + this.rarity * 2);
+    let num = this.DisassembleMaterialNum() * 500.0 * (1.0 - this.data.craft.costReduction.Value()) * (1 + this.rarity * 2);
     if (this.rarity >= EquipmentRarity.Epic) num *= 1000000.0;
-    if (num < this.DisassembleMaterialNum() * globalThis.data.equipment.disassembleMultiplier.Value() * 4.0)
-      num = this.DisassembleMaterialNum() * globalThis.data.equipment.disassembleMultiplier.Value() * 4.0;
+    if (num < this.DisassembleMaterialNum() * this.data.equipment.disassembleMultiplier.Value() * 4.0)
+      num = this.DisassembleMaterialNum() * this.data.equipment.disassembleMultiplier.Value() * 4.0;
     return num;
   }
 

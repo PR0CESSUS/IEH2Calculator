@@ -1,9 +1,9 @@
-import { SuperDungeonGlobalController } from ".";
+import { DataSuperDungeonGlobal } from ".";
 import { Localization } from "../../localization";
 import { SuperDungeonUpgradeKind } from "../../type/SuperDungeonUpgradeKind";
 
 export class SuperDungeonUpgrade {
-  sdgCtrl: SuperDungeonGlobalController;
+  sdgCtrl: DataSuperDungeonGlobal;
   effectValue: Function;
 
   get sdUpgradeCtrl() {
@@ -14,15 +14,15 @@ export class SuperDungeonUpgrade {
     return SuperDungeonUpgradeKind.MorePowerups;
   }
 
-  constructor(sdgCtrl: SuperDungeonGlobalController) {
+  constructor(sdgCtrl: DataSuperDungeonGlobal) {
     this.sdgCtrl = sdgCtrl;
   }
 
   get level() {
-    return globalThis.data.source.superDungeonUpgradeLevels[this.kind];
+    return this.sdgCtrl.data.source.superDungeonUpgradeLevels[this.kind];
   }
   set level(value) {
-    globalThis.data.source.superDungeonUpgradeLevels[this.kind] = Math.min(value, this.maxLevel);
+    this.sdgCtrl.data.source.superDungeonUpgradeLevels[this.kind] = Math.min(value, this.maxLevel);
   }
   Start() {
     this.SetEffect();
@@ -36,6 +36,13 @@ export class SuperDungeonUpgrade {
 
   Cost(level) {
     return 1e300;
+  }
+  TotalCost() {
+    let total = 0;
+    for (let index = 0; index < this.level; index++) {
+      total += this.Cost(index);
+    }
+    return total;
   }
 
   ModifiedCost(level) {

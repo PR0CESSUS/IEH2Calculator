@@ -1,12 +1,11 @@
-import { MultiplierInfo } from "../../../Multiplier";
-import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
-import { SuperDungeonController } from "../SuperDungeonController";
-import { MultiplierType } from "../../../type/MultiplierType";
-import { MultiplierKind } from "../../../type/MultiplierKind";
+import { MultiplierInfo } from "../../Multiplier";
 import { BasicStatsKind } from "../../../type/BasicStatsKind";
 import { Element } from "../../../type/Element";
-import { Stats } from "../../../type/Stats";
+import { MultiplierKind } from "../../../type/MultiplierKind";
+import { MultiplierType } from "../../../type/MultiplierType";
 import { SuperDungeonPowerupKind } from "../../../type/SuperDungeonPowerupKind";
+import { SuperDungeonController } from "../SuperDungeonController";
+import { SuperDungeonPowerup } from "../SuperDungeonPowerup";
 
 export class SDP_MagicalDamage extends SuperDungeonPowerup {
   get kind() {
@@ -30,7 +29,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
   }
 
   SetEffect() {
-    globalThis.data.stats.ElementDamage(this.heroKind, Element.Fire).RegisterMultiplier(
+    this.ctrl.data.stats.ElementDamage(this.heroKind, Element.Fire).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.After,
@@ -40,7 +39,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
         }
       )
     );
-    globalThis.data.stats.ElementDamage(this.heroKind, Element.Ice).RegisterMultiplier(
+    this.ctrl.data.stats.ElementDamage(this.heroKind, Element.Ice).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.After,
@@ -50,7 +49,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
         }
       )
     );
-    globalThis.data.stats.ElementDamage(this.heroKind, Element.Thunder).RegisterMultiplier(
+    this.ctrl.data.stats.ElementDamage(this.heroKind, Element.Thunder).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.After,
@@ -60,7 +59,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
         }
       )
     );
-    globalThis.data.stats.ElementDamage(this.heroKind, Element.Light).RegisterMultiplier(
+    this.ctrl.data.stats.ElementDamage(this.heroKind, Element.Light).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.After,
@@ -70,7 +69,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
         }
       )
     );
-    globalThis.data.stats.ElementDamage(this.heroKind, Element.Dark).RegisterMultiplier(
+    this.ctrl.data.stats.ElementDamage(this.heroKind, Element.Dark).RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.DungeonItem,
         MultiplierType.After,
@@ -83,7 +82,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
   }
 
   SetGlobalEffect() {
-    globalThis.data.stats.SetEffectBasicStats(
+    this.ctrl.data.stats.SetEffectBasicStats(
       BasicStatsKind.MATK,
       new MultiplierInfo(
         MultiplierKind.DungeonItemPermanent,

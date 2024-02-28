@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 import { ResourceKind } from "../../../type/ResourceKind";
 import { MultiplierType } from "../../../type/MultiplierType";
@@ -15,9 +15,7 @@ export class SDU_LeafGain extends SuperDungeonUpgrade {
   }
 
   SetEffect() {
-    return globalThis.data.stats
-      .ResourceGain(ResourceKind.Leaf)
-      .RegisterMultiplier(new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
+    return this.sdgCtrl.data.stats.ResourceGain(ResourceKind.Leaf).RegisterMultiplier(new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Mul, () => this.EffectValue()));
   }
 
   get maxLevel() {

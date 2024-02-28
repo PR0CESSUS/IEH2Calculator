@@ -1,4 +1,4 @@
-import { MultiplierInfo } from "../../../Multiplier";
+import { MultiplierInfo } from "../../Multiplier";
 import { SuperDungeonUpgrade } from "../SuperDungeonUpgrade";
 import { MultiplierType } from "../../../type/MultiplierType";
 import { MultiplierKind } from "../../../type/MultiplierKind";
@@ -18,9 +18,7 @@ export class SDU_PowerupFilterSlot extends SuperDungeonUpgrade {
   }
 
   SetEffect() {
-    return this.sdgCtrl.powerupFilterSlot.RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Add, () => this.EffectValue())
-    );
+    return this.sdgCtrl.powerupFilterSlot.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SDUpgrade, MultiplierType.Add, () => this.EffectValue()));
   }
 
   get maxLevel() {
