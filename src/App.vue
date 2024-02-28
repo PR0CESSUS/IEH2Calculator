@@ -15,7 +15,7 @@ const dialog = ref<HTMLDialogElement>();
 function importSaveFile(event: Event & { target: HTMLInputElement }) {
   if (!event.target.files) return;
   const script = document.createElement("script");
-  script.src = "/SaveFileDencrypt.js";
+  script.src = "./SaveFileDencrypt.js";
   script.onload = function () {
     console.log("script loaded");
     const filereader = new FileReader();
