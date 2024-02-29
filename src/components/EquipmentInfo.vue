@@ -241,7 +241,9 @@ function pasteEvent() {
             </template>
           </p>
           <br />
-          <p v-for="forge in equipment.forgeEffects" class="orange"><input type="text" v-model.number.lazy="forge.effectValue" name="forgeValue" />- {{ forge.EffectString() }}</p>
+          <p v-for="forge in equipment.forgeEffects" class="orange">
+            <input type="text" v-model.number.lazy="forge.effectValue" name="forgeValue" size="8" />- {{ forge.EffectString() }}
+          </p>
           <br />
           <button @click="copyEvent(CopyKind.OptionEffect)" class="btn btn-gray">Copy All Enchantments</button>
           <button @click="copyEvent(CopyKind.ForgeEffects)" class="btn btn-gray">Copy All Anvil Effects</button>

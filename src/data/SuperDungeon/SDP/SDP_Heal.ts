@@ -29,9 +29,7 @@ export class SDP_Heal extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.Add,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
   }

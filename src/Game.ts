@@ -1,6 +1,7 @@
 import { watch } from "vue";
 import { DATA } from "./Data";
 import { Util } from "./Util";
+import { useGlobalStore } from "./stores/global";
 
 type ReplacePrimitives<T> = T extends Record<any, any>
   ? { [K in keyof T]: T[K] extends Function ? T[K] : ReplacePrimitives<T[K]> }
@@ -112,14 +113,18 @@ export class Game {
   }
 
   Synchronization() {
+    const globalStore = useGlobalStore();
+
     watch(this.data.source, (newValue, oldValue) => {
       console.log("watch data.source");
 
       this.data.requireUpdate.value = true;
-
-      if (newValue.isSuperDungeon) {
-      }
     });
+
+    watch(globalStore.monster, (newValue, oldValue) => {
+      this.data.requireUpdate.value = true;
+    });
+
     watch(
       () => this.data.source.isSuperDungeon,
       (newValue, oldValue) => {

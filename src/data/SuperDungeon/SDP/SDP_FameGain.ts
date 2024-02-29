@@ -33,9 +33,7 @@ export class SDP_FameGain extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.Add,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
   }

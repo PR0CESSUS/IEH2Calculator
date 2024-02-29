@@ -32,9 +32,17 @@ export class ExpeditionGlobalInformation {
   set level(value: any) {
     this.data.source.expeditionLevels[this.kind] = parseInt(value);
   }
-  // ExpGainPerSecPerPet() => 1.0 * this.#data.expedition.expGainMultiplier.Value();
 
-  // PetExpGainPerSec() => 5.0 * (1.0 + 0.5 * this.level.value) * this.#data.expedition.petExpGainMultiplier.Value() * this.#data.stat.statsCtrl.MaxPetEXPGainAmongHeroes();
+  GetExp(petNum) {
+    return petNum * this.ExpGainPerSecPerPet();
+  }
+  ExpGainPerSecPerPet() {
+    return 1.0 * this.data.expedition.expGainMultiplier.Value();
+  }
+
+  PetExpGainPerSec() {
+    return 5.0 * (1.0 + 0.5 * this.level) * this.data.expedition.petExpGainMultiplier.Value() * this.data.stats.MaxPetEXPGainAmongHeroes();
+  }
 
   SpeedModifierByExpeditionLevel() {
     return Math.pow(1.1, Math.floor(this.level / 10.0));

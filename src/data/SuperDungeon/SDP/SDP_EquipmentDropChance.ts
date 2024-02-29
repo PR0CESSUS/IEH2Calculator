@@ -33,9 +33,7 @@ export class SDP_EquipmentDropChance extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.After,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
   }

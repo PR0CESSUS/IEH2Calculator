@@ -13,7 +13,7 @@ const INITIAL_OFFSET = 520 + game.data.source.currentHero * 720;
 function getEquipmentList() {
   let list = {};
   for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
-    if (game.data.inventory.equipmentSlots[index].kind == 0) continue;
+    if (game.data.inventory.equipmentSlots[index].kind == 0 || game.data.inventory.equipmentSlots[index].isDisabled()) continue;
     let equipment = Localization.EquipmentName(game.data.inventory.equipmentSlots[index].kind);
     list[equipment] = list[equipment] ? list[equipment] + 1 : 1;
   }
@@ -24,10 +24,11 @@ function getEquipmentList() {
 function getEquipmentEffectList() {
   let list = {};
   for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
-    if (game.data.inventory.equipmentSlots[index].kind == 0) continue;
-    for (let i = 0; i < game.data.inventory.equipmentSlots[index].optionEffects.length; i++) {
-      if (game.data.inventory.equipmentSlots[index].optionEffects[i].kind == 0) continue;
-      const effect = Localization.EquipmentEffectName(game.data.inventory.equipmentSlots[index].optionEffects[i].kind);
+    const equipment = game.data.inventory.equipmentSlots[index];
+    if (equipment.kind == 0 || equipment.isDisabled()) continue;
+    for (let i = 0; i < equipment.optionEffects.length; i++) {
+      if (equipment.optionEffects[i].kind == 0) continue;
+      const effect = Localization.EquipmentEffectName(equipment.optionEffects[i].kind);
       list[effect] = list[effect] ? list[effect] + 1 : 1;
     }
   }

@@ -34,9 +34,7 @@ export class SDP_SkillHitCount extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.Add,
         () => this.EffectValue() * this.level,
-        () => {
-          return this.isActive();
-        }
+        () => this.isActive()
       )
     );
   }

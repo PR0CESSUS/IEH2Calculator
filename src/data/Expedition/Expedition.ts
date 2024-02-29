@@ -140,6 +140,9 @@ export class Expedition {
     return Math.max(this.minTime, val2);
   }
 
+  GetExpeditionExp() {
+    return this.globalInfo.GetExp(this.PetNum());
+  }
   // ProgressPercent() {return Math.min(1.0, Math.max(0.0, this.progress / this.RequiredTimesec()));}
 
   // TimesecLeft() {return Math.max(0.0, this.RequiredTimesec() - this.progress);}

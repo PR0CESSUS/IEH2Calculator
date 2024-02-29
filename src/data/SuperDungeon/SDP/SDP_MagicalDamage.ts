@@ -34,9 +34,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.After,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
     this.ctrl.data.stats.ElementDamage(this.heroKind, Element.Ice).RegisterMultiplier(
@@ -44,9 +42,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.After,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
     this.ctrl.data.stats.ElementDamage(this.heroKind, Element.Thunder).RegisterMultiplier(
@@ -54,9 +50,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.After,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
     this.ctrl.data.stats.ElementDamage(this.heroKind, Element.Light).RegisterMultiplier(
@@ -64,9 +58,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.After,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
     this.ctrl.data.stats.ElementDamage(this.heroKind, Element.Dark).RegisterMultiplier(
@@ -74,9 +66,7 @@ export class SDP_MagicalDamage extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.After,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
   }

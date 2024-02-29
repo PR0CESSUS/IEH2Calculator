@@ -33,9 +33,7 @@ export class SDP_ChallengeBossDamageMultiplier extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.Add,
         () => this.EffectValue() * this.level,
-        () => {
-          return this.isActive();
-        }
+        () => this.isActive()
       )
     );
   }

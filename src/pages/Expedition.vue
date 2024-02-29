@@ -5,6 +5,7 @@ import { Util } from "../Util/index";
 import MultiplierInformation from "../components/MultiplierInformation.vue";
 const game = inject<Game>("game");
 
+const xxx = game.data.expedition.expeditions.reduce((accumulator, currentValue) => accumulator + currentValue.GetExpeditionExp(), 0);
 // console.log(game.data.source.expeditionPetIsSet);
 // console.log(game.data.source.expeditionPetSpecies);
 // console.log(game.data.source.expeditionPetColors);
@@ -15,7 +16,8 @@ const game = inject<Game>("game");
   <h1>Expedition</h1>
   <div>
     <MultiplierInformation name="Expedition Slots" :multiplier="`expedition.unlockedExpeditionSlotNum`" :inline="true" />
-    Expedition Minimum time: {{ Util.secondsToDhms(game.data.expedition.lowerLimitTime.Value()) }}
+    Expedition Minimum time: {{ Util.secondsToDhms(game.data.expedition.lowerLimitTime.Value()) }}<br />
+    Total EXP per second: {{ Util.tDigit(xxx) }}
   </div>
 
   <template v-for="(expedition, index) in game.data.expedition.expeditions">
@@ -59,11 +61,15 @@ const game = inject<Game>("game");
   background: url(/img/buttonleft.png);
   background-size: contain;
   border-style: none;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .button-right {
   background: url(/img/buttonright.png);
   background-size: contain;
   border-style: none;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .expedition {
   padding-top: 7px;

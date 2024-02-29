@@ -34,9 +34,7 @@ export class SDP_PhysicalAbsorption extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.After,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
   }

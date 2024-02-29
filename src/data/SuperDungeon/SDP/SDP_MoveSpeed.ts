@@ -29,9 +29,7 @@ export class SDP_MoveSpeed extends SuperDungeonPowerup {
         MultiplierKind.DungeonItem,
         MultiplierType.After,
         () => this.EffectValue() * this.level,
-        () => {
-          this.isActive();
-        }
+        () => this.isActive()
       )
     );
   }

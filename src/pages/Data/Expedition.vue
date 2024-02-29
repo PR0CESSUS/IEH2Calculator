@@ -14,7 +14,7 @@ const game = inject<Game>("game");
     <tr v-for="expedition in game.data.expedition.globalInfoList">
       <td>{{ expedition.NameString() }}: {{}}</td>
       <td>
-        <input type="text" size="12" v-model.lazy.number="expedition.level" />
+        <input type="text" size="8" v-model.lazy.number="expedition.level" />
       </td>
       <td>{{ expedition.EffectValueString() }}</td>
     </tr>

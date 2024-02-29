@@ -49,6 +49,10 @@ const info = monster.AttackedInfo(hero, damage, skillCount, true, element);
         <td>= {{ Util.tDigit(damage) }}</td>
       </tr>
       <tr>
+        <td>Monster Damage Resistance</td>
+        <td>* {{ Util.percent(monster.DamageCutRate(damage, element), 4) }} vs {{ Element[element] }}</td>
+      </tr>
+      <tr>
         <td>Knowledge {{ MonsterSpecies[monster.species] }}</td>
         <td>* {{ Util.percent(monster.damageFactor) }}</td>
       </tr>
@@ -79,30 +83,26 @@ const info = monster.AttackedInfo(hero, damage, skillCount, true, element);
         <td>Hit Count</td>
         <td>* {{ Util.tDigit(skill.HitCount(), 0) }}</td>
       </tr>
-      <tr style="border-bottom: 1px solid #fff">
+      <!-- <tr style="border-bottom: 1px solid #fff">
         <td>Total Damage Before Oil</td>
         <td>= {{ Util.tDigit(info.tempTotalDamage) }}</td>
-      </tr>
-      <tr>
-        <td>Slayer Oil Bonus</td>
-        <td>* {{ Util.percent(SlayerOilValue) }}</td>
-      </tr>
-      <tr style="border-bottom: 1px solid #fff">
-        <td>Slayer Oil Damage</td>
-        <td>= {{ Util.tDigit(info.slayerOilDamage) }}</td>
-      </tr>
-      <tr style="border-bottom: 1px solid #fff">
+      </tr> -->
+      <template v-if="info.slayerOilDamage > 0">
+        <tr>
+          <td>Slayer Oil Bonus</td>
+          <td>* {{ Util.percent(SlayerOilValue) }} ({{ Util.tDigit(info.slayerOilDamage) }})</td>
+        </tr>
+      </template>
+
+      <!-- <tr style="border-bottom: 1px solid #fff">
         <td>Total Damage Before Extra After</td>
         <td>= {{ Util.tDigit(info.totalBeforeExtraAfter) }}</td>
-      </tr>
+      </tr> -->
       <tr>
         <td>Extra After Bonus</td>
-        <td>* {{ Util.percent(hero.extraAfterDamage) }}</td>
+        <td>* {{ Util.percent(hero.extraAfterDamage) }} ({{ Util.tDigit(info.extraAfterDamage) }})</td>
       </tr>
-      <tr style="border-bottom: 1px solid #fff">
-        <td>Extra After Damage</td>
-        <td>= {{ Util.tDigit(info.extraAfterDamage) }}</td>
-      </tr>
+
       <tr style="border-bottom: 1px solid #fff">
         <td>Total Damage</td>
         <td>= {{ Util.tDigit(info.totalDamage) }}</td>

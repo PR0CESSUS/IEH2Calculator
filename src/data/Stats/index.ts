@@ -21,6 +21,8 @@ export class DataStats {
   heroes: HeroStats[] = Array(Enums.HeroKind);
   memoMaxTPGAmongHeroes: number;
 
+  memoMaxPetEXPGainAmongHeroes: number;
+
   constructor(DATA: DATA) {
     this.data = DATA;
 
@@ -222,11 +224,13 @@ export class DataStats {
   //  Exp(heroKind: HeroKind) => this.heroes[heroKind].exp;
 
   MaxPetEXPGainAmongHeroes() {
+    if (this.memoMaxPetEXPGainAmongHeroes) return this.memoMaxPetEXPGainAmongHeroes;
     let num = 0.0;
     for (let index = 0; index < Enums.HeroKind; ++index) {
       let value = this.Hero(index).petExpGainPerDefeat.Value();
       if (value > num && this.data.source.isActiveBattle[index]) num = value;
     }
+    this.memoMaxPetEXPGainAmongHeroes = num;
     return num;
   }
 
