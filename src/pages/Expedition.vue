@@ -1,23 +1,49 @@
 <script setup lang="ts">
-import { inject } from "vue";
+import { inject, computed } from "vue";
 import { Game } from "../Game";
 import { Util } from "../Util/index";
 import MultiplierInformation from "../components/MultiplierInformation.vue";
+import { useGlobalStore } from "../stores/global";
 const game = inject<Game>("game");
+const globalStore = useGlobalStore();
+const expPerSec = game.data.expedition.expeditions.reduce((accumulator, currentValue) => accumulator + currentValue.GetExpeditionExp(), 0);
+function ModifiedOfflineTimesec(nitro) {
+  let num = 0.0;
+  for (let index = 1; index < 10; ++index) {
+    if (nitro >= index * 86400) {
+      num += 86400.0 / index;
+    } else {
+      num += (nitro - 86400 * (index - 1)) / index;
+      break;
+    }
+  }
+  return num;
+}
 
-const xxx = game.data.expedition.expeditions.reduce((accumulator, currentValue) => accumulator + currentValue.GetExpeditionExp(), 0);
-// console.log(game.data.source.expeditionPetIsSet);
-// console.log(game.data.source.expeditionPetSpecies);
-// console.log(game.data.source.expeditionPetColors);
-// :key="index + 'a' + expedition.timeId"
+const nitroSinkTime = ModifiedOfflineTimesec(game.data.nitro.nitroCap.Value());
+const nitroSinkExp = nitroSinkTime * expPerSec;
+const expPerPlaytime = computed(() => {
+  return expPerSec * globalStore.expedition.playtime * 3600;
+});
 </script>
 
 <template>
   <h1>Expedition</h1>
-  <div>
-    <MultiplierInformation name="Expedition Slots" :multiplier="`expedition.unlockedExpeditionSlotNum`" :inline="true" />
-    Expedition Minimum time: {{ Util.secondsToDhms(game.data.expedition.lowerLimitTime.Value()) }}<br />
-    Total EXP per second: {{ Util.tDigit(xxx) }}
+  <div style="display: flex">
+    <div>
+      <MultiplierInformation name="Expedition Slots" :multiplier="`expedition.unlockedExpeditionSlotNum`" :inline="true" />
+      Expedition Minimum time: {{ Util.secondsToDhms(game.data.expedition.lowerLimitTime.Value()) }}<br />
+      Total EXP per second: {{ Util.tDigit(expPerSec) }}<br />
+      Time per Nitro Sink: {{ Util.secondsToDhms(nitroSinkTime, false) }}<br />
+    </div>
+    <div style="margin-left: 10px">
+      <MultiplierInformation name="Max Nitro" :multiplier="`nitro.nitroCap`" :inline="true" />
+      Playtime in day (hours): <input type="text" size="4" v-model.lazy.number="globalStore.expedition.playtime" /><br />
+
+      EXP per day: {{ Util.tDigit(expPerPlaytime) }}<br />
+      EXP per Nitro Sink: {{ Util.tDigit(nitroSinkExp) }}<br />
+      Total EXP per day: {{ Util.tDigit(expPerPlaytime + nitroSinkExp * 5) }}
+    </div>
   </div>
 
   <template v-for="(expedition, index) in game.data.expedition.expeditions">

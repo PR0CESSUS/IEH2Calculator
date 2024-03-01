@@ -1,0 +1,15 @@
+export enum GuildSuperAbilityKind {
+  SuperMining,
+  SuperSynthesizing,
+  SuperGathering,
+  SuperTraining,
+  SuperTrapping,
+  SuperBanking,
+  SuperFinancing,
+  Finding,
+  Racing,
+  Socializing,
+  Ritualizing,
+  Artificing,
+  Haggling,
+}

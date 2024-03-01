@@ -409,10 +409,6 @@ export class QUEST {
   }
   SetRewardEffect() {
     switch (this.kindGlobal) {
-      case QuestKindGlobal.Nitro1:
-        this.SetRewardNitro(500);
-
-        break;
       case QuestKindGlobal.Nitro2:
         this.SetRewardNitro(1000);
         break;

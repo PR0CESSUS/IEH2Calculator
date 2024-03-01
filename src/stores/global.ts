@@ -29,6 +29,9 @@ const DEFAULT_DATA = {
   talisman: {
     perWA: Array(47).fill(0),
   },
+  expedition: {
+    playtime: 0,
+  },
 };
 
 export const useGlobalStore = defineStore(STORE_NAME, {

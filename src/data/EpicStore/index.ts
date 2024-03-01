@@ -34,5 +34,16 @@ export class DataEpicStore {
     this.data.expedition.unlockedExpeditionSlotNum.RegisterMultiplier(
       new MultiplierInfo(MultiplierKind.EpicStore, MultiplierType.Add, () => this.data.source.inAppPurchasedNum[InAppPurchaseKind.UpdateBundle2])
     );
+    this.data.nitro.nitroCap.RegisterMultiplier(
+      new MultiplierInfo(MultiplierKind.EpicStore, MultiplierType.Mul, () => 0.1 * this.data.source.epicStorePurchasedNum[EpicStoreKind.NitroCapExpansion])
+    );
+    this.data.nitro.nitroCap.RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.EpicStore,
+        MultiplierType.Mul,
+        () => 0.5,
+        () => this.data.source.inAppPurchasedNum[InAppPurchaseKind.UpdateBundle1]
+      )
+    );
   }
 }

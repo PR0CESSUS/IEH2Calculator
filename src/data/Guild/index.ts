@@ -1,4 +1,6 @@
+import { DATA } from "..";
 import { GuildAbilityKind } from "../../type/GuildAbilityKind";
+import { GuildSuperAbilityKind } from "../../type/GuildSuperAbilityKind";
 import { HeroKind } from "../../type/HeroKind";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
@@ -6,6 +8,7 @@ import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { GuildParameter } from "./GuildParameter";
 
 export class DataGuild {
+  data: DATA;
   guildLevelCap: Multiplier;
   timecountSec;
   activableNum: Multiplier;
@@ -21,7 +24,8 @@ export class DataGuild {
   superAbilityPointLeft;
   //   accomplishGuildLevels = new AccomplishGuildLevel[GuildParameter.maxGuildLevelCap + 1];
 
-  constructor() {
+  constructor(DATA: DATA) {
+    this.data = DATA;
     this.expRequirementReduction = new Multiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
       () => 0.99,
@@ -31,6 +35,7 @@ export class DataGuild {
     this.activableNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 3.0));
 
     //TODO super guild ability
+
     // this.level = new GuildLevel((Func<long>) (() => this.guildLevelCap.Value()));
     // this.exp = new GuildExp(new Func<long, double>(this.RequiredExp), this.level);
     // for (let index = 0; index < this.members.length; index++)
@@ -64,6 +69,10 @@ export class DataGuild {
     //   this.abilities[index].Start();
     // for (let index = 0; index < this.superAbilityList.Count; index++)
     //   this.superAbilityList[index].Start();
+
+    this.data.nitro.nitroCap.RegisterMultiplier(
+      new MultiplierInfo(MultiplierKind.GuildSuperAbility, MultiplierType.Mul, () => 0.05 * this.data.source.guildSuperAbilityLevels[GuildSuperAbilityKind.Racing])
+    );
   }
 
   Member(kind: HeroKind) {

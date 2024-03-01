@@ -59,14 +59,14 @@ export class DATA {
   requireUpdate = ref(false);
   constructor(sourceData) {
     this.source = sourceData;
-
+    globalThis.save = this;
     // console.log(globalThis.data);
 
     // this.source = globalThis.app.database.Connect("customData", this.source);
     // globalThis.app.database.Watch("isSuperDungeon", this.SuperDungeonToggle.bind(this));
     // this.database.Watch("currentHero", this.SetLog10.bind(this));
 
-    this.guild = new DataGuild();
+    this.guild = new DataGuild(this);
     this.potion = new DataPotion(this);
     this.challenge = new DataChallenge(this);
     this.rebirth = new DataRebirth(this);
@@ -100,8 +100,6 @@ export class DATA {
   }
 
   get battle(): DataBattle {
-    // console.log("batle");
-
     return this.battles[this.source.currentHero];
   }
 
@@ -112,7 +110,7 @@ export class DATA {
     this.town.Start();
     this.ascension.Start();
     this.mission.Start();
-
+    this.guild.Start();
     this.monster.Start();
     this.sdg.Start();
     this.superStats.Start();
