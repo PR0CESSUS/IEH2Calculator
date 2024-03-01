@@ -23,5 +23,12 @@ const game = inject<Game>("game");
       <td>{{ Util.tDigit(expedition.exp, 3) }} / {{ Util.tDigit(expedition.RequiredExp(expedition.level), 3) }}</td>
       <td>{{ Util.tDigit(expedition.TotalExp(), 3) }}</td>
     </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>{{ Util.tDigit(game.data.expedition.TotalExp(), 3) }}</td>
+    </tr>
   </table>
 </template>

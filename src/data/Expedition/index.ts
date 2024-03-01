@@ -64,6 +64,15 @@ export class DataExpedition {
     });
   }
 
+  TotalExp() {
+    let total = 0;
+    for (let index = 0; index < this.globalInfoList.length; index++) {
+      total += this.globalInfoList[index].TotalExp();
+    }
+
+    return total;
+  }
+
   SetMilestone() {
     const totalLevel = this.TotalLevel();
 
