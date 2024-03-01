@@ -574,7 +574,7 @@ export class DataDefault {
   expeditionPetIsSet: boolean[] = Array(100).fill(false);
   expeditionKinds: number[] = Array(100).fill(0);
   expeditionLevels: number[] = Array(7).fill(0);
-  expeditionExps?: number[]; // = Array(7).fill(0);
+  expeditionExps: number[] = Array(7).fill(0);
   expeditionCompletedNums?: number[]; // = Array(7).fill(0);
   expeditionTimes?: number[]; // = Array(7).fill(0);
   maxGuildLevel: number = 0;

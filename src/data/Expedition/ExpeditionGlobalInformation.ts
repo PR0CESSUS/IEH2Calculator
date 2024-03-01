@@ -32,6 +32,26 @@ export class ExpeditionGlobalInformation {
   set level(value: any) {
     this.data.source.expeditionLevels[this.kind] = parseInt(value);
   }
+  get exp() {
+    return this.data.source.expeditionExps[this.kind];
+  }
+
+  RequiredExp(level: number) {
+    let num = 86400.0 * (1 + level + 0.25 * Math.pow(Math.max(0, level - 3), 2.0));
+    if (level >= 200) num *= Math.pow(2.0, (level - 200.0) / 50.0);
+    if (level >= 300) num *= Math.pow(2.0, (level - 300.0) / 50.0);
+    if (level >= 400) num *= Math.pow(2.0, (level - 400.0) / 50.0);
+    if (level >= 500) num *= Math.pow(2.0, (level - 500.0) / 50.0);
+    return num;
+  }
+
+  TotalExp() {
+    let total = 0;
+    for (let i = 0; i < this.level; i++) {
+      total += this.RequiredExp(i);
+    }
+    return total + this.exp;
+  }
 
   GetExp(petNum) {
     return petNum * this.ExpGainPerSecPerPet();
