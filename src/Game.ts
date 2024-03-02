@@ -18,7 +18,7 @@ export class Game {
   constructor(main: DATA, snap: DATA) {
     this.snap = snap;
     this.data = main;
-    // this.compare = new Proxy(this.data, this.Proxy());
+    this.compare = new Proxy(this.data, this.Proxy());
     // this.data = createPathProxy(test);
     this.Synchronization();
     // console.log(this);
@@ -48,9 +48,6 @@ export class Game {
     const handler = {
       isProxy: new WeakMap(),
       $snap: new WeakMap(),
-      apply(target, thisArg, args) {
-        console.log("apply");
-      },
       get(target, prop, receiver) {
         if (this.$snap.has(target)) {
           targetSnap = this.$snap.get(target);
@@ -73,6 +70,8 @@ export class Game {
           }
         } else {
           if (typeof target[prop] === "function") {
+            console.log("target is function", Reflect.apply(target[prop], target, []));
+
             return () => {
               return Reflect.apply(target[prop], target, []);
             };
@@ -80,7 +79,7 @@ export class Game {
           if (Array.isArray(target)) return Reflect.get(target, prop, receiver);
 
           // if (typeof target[prop] === "function") return Reflect.get(target, prop, receiver);
-          if (typeof target[prop] === "function") return Reflect.get(target, prop, receiver);
+          // if (typeof target[prop] === "function") return Reflect.get(target, prop, receiver);
 
           const value = target[prop];
           const snap = targetSnap[prop];

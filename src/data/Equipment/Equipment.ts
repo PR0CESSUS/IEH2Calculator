@@ -485,4 +485,10 @@ export class Equipment {
 
     // this.Start();
   }
+
+  SlotString() {
+    if (this.slotId < 520) return `Inventory tab ${Math.floor(this.slotId / 52) + 1} position ${this.slotId}`;
+    const slot = this.slotPart == EquipmentPart.Weapon ? this.loadoutSlot : this.slotPart == EquipmentPart.Armor ? this.loadoutSlot - 24 : this.loadoutSlot - 48;
+    return `${HeroKind[this.heroKind]} Loadout ${this.loadout + 1} - ${EquipmentPart[this.slotPart]} position ${slot + 1}`;
+  }
 }

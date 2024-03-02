@@ -68,6 +68,7 @@ function createSnapshot() {
           return route.path != '/';
         })"
         :to="route.path"
+        :class="route.name.length > 12 ? 'small' : ''"
       >
         {{ route.name }}
       </router-link>
@@ -129,6 +130,10 @@ function createSnapshot() {
 </template>
 
 <style scoped>
+.small {
+  font-size: 16px;
+}
+
 nav a.router-link-active {
   color: rgb(255, 251, 0);
 }

@@ -1,6 +1,6 @@
 import { Children1 } from "./Children1";
 import { Children2 } from "./Children2";
-import { Parent } from "./Data";
+import { Parent } from "./Parent";
 
 export class Game {
   static data: Parent;

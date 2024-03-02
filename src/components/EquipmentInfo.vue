@@ -33,6 +33,7 @@ const freeForgeslot = computed(() => {
 
 function getIconPath() {
   const basePath = "img/equip";
+  if (equipment.slotId < 500) return `${basePath}/${EquipmentKind[equipment.kind]}.png`;
   if (equipment.kind == 0) {
     switch (equipment.slotPart) {
       case EquipmentPart.Weapon:
@@ -95,7 +96,7 @@ function pasteEvent() {
         @click="equipment.isDisabled() ? null : dialog.showModal()"
         @mouseover.once="init = true"
         @mouseover="img.focus()"
-        :class="equipment.isDisabled() ? 'disabled' : ''"
+        :class="equipment.isDisabled() && equipment.slotId > 500 ? 'disabled' : ''"
         @keydown.ctrl.c="copyEvent(CopyKind.Equipment)"
         @keydown.ctrl.v="pasteEvent()"
       />
