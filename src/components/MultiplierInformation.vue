@@ -206,5 +206,10 @@ div {
   /* background-color: aqua; */
   /* overflow-x: visible; */
 }
+.underline {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #fff;
+}
 </style>
 ../data/Multiplier

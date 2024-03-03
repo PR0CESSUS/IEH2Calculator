@@ -10,6 +10,7 @@ import { PetPassiveEffectKind } from "../../type/PetPassiveEffectKind";
 import { Stats } from "../../type/Stats";
 import { MonsterGlobalInformation } from "./MonsterGlobalInformation";
 import { MonsterParameter } from "./MonsterParameter";
+import { Localization } from "../../localization";
 
 export class MonsterPet {
   #data: DATA;
@@ -17,10 +18,7 @@ export class MonsterPet {
   species: MonsterSpecies;
   color: MonsterColor;
   challengeMonsterKind: ChallengeMonsterKind = 0;
-  rank: number;
-  level: number;
-  //   exp: MonsterPetExp;
-  loyalty: number;
+  unlockActiveEffectImprovement;
   //   loyaltyExp: MonsterPetLoyaltyExp;
   //   MonsterPetTamingPotamingPoint;
   //   unlockActiveEffectImprovement: Unlock;
@@ -32,20 +30,26 @@ export class MonsterPet {
     this.color = color;
     if (this.species == MonsterSpecies.ChallengeBoss) this.challengeMonsterKind = color as any;
     // this.rank = new MonsterPetRank(species, color, new Func<long>(this.MaxRank));
-
-    this.level = this.#data.source.monsterPetLevels[this.color + 10 * this.species + this.challengeMonsterKind];
-    this.rank = this.#data.source.monsterPetRanks[this.color + 10 * this.species + this.challengeMonsterKind];
-    this.loyalty = this.#data.source.monsterPetLoyalty[this.color + 10 * this.species + this.challengeMonsterKind];
-    // this.level = new MonsterPetLevel(species, color, new Func<long>(this.MaxLevel));
-    // this.exp = new MonsterPetExp(species, color, new Func<long, double>(this.RequiredExp), (INTEGER) this.level);
-    // this.loyalty = new MonsterPetLoyalty(species, color);
-    // this.loyaltyExp = new MonsterPetLoyaltyExp(species, color, new Func<long, double>(this.LoyaltyRequiredExp), (INTEGER) this.loyalty);
-    // this.tamingPo= new MonsterPetTamingPoint(species, color, (INTEGER) this.rank, new Func<long, double>(this.RequiredTamingPoint));
-    // this.unlockActiveEffectImprovement = new Unlock();
-    // this.unlockActiveEffectImprovement.isLockedInDefault = true;
   }
 
-  unlockActiveEffectImprovement;
+  get level() {
+    return this.#data.source.monsterPetLevels[this.saveId];
+  }
+  set level(value: number) {
+    this.#data.source.monsterPetLevels[this.saveId] = value;
+  }
+  get rank() {
+    return this.#data.source.monsterPetRanks[this.saveId];
+  }
+  set rank(value: number) {
+    this.#data.source.monsterPetRanks[this.saveId] = value;
+  }
+  get loyalty() {
+    return this.#data.source.monsterPetLoyalty[this.saveId];
+  }
+  set loyalty(value: number) {
+    this.#data.source.monsterPetLoyalty[this.saveId] = value;
+  }
 
   MonsterPet(globalInfo: MonsterGlobalInformation, challengeMonsterKind: ChallengeMonsterKind) {
     this.globalInfo = globalInfo;
@@ -260,5 +264,9 @@ export class MonsterPet {
 
   TPGByCapture() {
     return Math.log2(1.0 + this.globalInfo.CapturedNum() / 10000.0);
+  }
+
+  PassiveEffectString() {
+    return Localization.MonsterPetPassiveEffectString(this);
   }
 }

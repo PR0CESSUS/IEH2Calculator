@@ -4,7 +4,7 @@ import App from "./App.vue";
 import { DATA } from "./data";
 import { useSaveFileData } from "./stores/data";
 import { useSaveFileSnapshot } from "./stores/snap";
-import "./style.css";
+import "./css/index.css";
 import { Game } from "./Game";
 
 import { createRouter, createWebHashHistory } from "vue-router";

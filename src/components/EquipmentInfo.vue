@@ -274,5 +274,34 @@ dialog {
   height: 100%;
   opacity: 0.4;
 }
+.icon96 {
+  position: relative;
+  left: 0px;
+  float: left;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: #c2a500;
+  border-bottom-color: #c2a500;
+  border-left-color: #c2a500;
+  border-right-color: #c2a500;
+  width: 96px;
+  height: 96px;
+  margin-right: 10px;
+}
+.icon48 {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  left: 0px;
+  float: left;
+  padding: 0;
+  padding-bottom: 0px;
+  margin: 0;
+  vertical-align: middle;
+}
 </style>
 ../data2 ../stores/heroStats

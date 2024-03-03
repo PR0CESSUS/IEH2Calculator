@@ -53,12 +53,12 @@ function createSnapshot() {
     <div class="header">
       <h1 id="title"><router-link to="/">IEH2Calculator</router-link>{{ router.currentRoute.value.path }}</h1>
       <div id="settings">
-        <button class="btn btn-gray" style="font-size: 12px" @click="dialog.showModal()">&#9776;</button>
+        <button style="font-size: 12px" @click="dialog.showModal()">&#9776;</button>
 
-        <button id="data-snapshot" class="btn btn-gray" @click="createSnapshot">Create Snapshot</button>
-        <label for="saveFileImport" class="btn btn-orange">Import Save File</label>
+        <button @click="createSnapshot()">Create Snapshot</button>
+        <label for="saveFileImport"><button class="orange">Import Save File</button></label>
         <input type="file" id="saveFileImport" accept=".txt" @change="importSaveFile" />
-        <button id="data-restart" type="reset" class="btn btn-gray" @click="hardReset">Hard Reset</button>
+        <button id="data-restart" type="reset" @click="hardReset()">Hard Reset</button>
       </div>
     </div>
 

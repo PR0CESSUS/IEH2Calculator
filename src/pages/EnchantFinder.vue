@@ -49,7 +49,7 @@ function isInRange(tab) {
   Search Enchant: <AppSelect :type="CustomSelectType.EquipmentEffectKind" v-model="searchKind" />
 
   <div>
-    <button v-for="i in 9" @click="tab = i" class="btn btn-gray" :class="tab == i ? 'yellow' : isInRange(i)">{{ i }}</button>
+    <button v-for="i in 9" @click="tab = i" :class="tab == i ? 'yellow' : isInRange(i)">{{ i }}</button>
   </div>
   <div class="container">
     <div v-for="i in 52" :class="foundListIds.includes(52 * (tab - 1) + i - 1) ? 'found' : ''">{{ 52 * (tab - 1) + i - 1 }}</div>
@@ -64,7 +64,6 @@ function isInRange(tab) {
   grid-template-columns: repeat(13, 48px [col-start]);
 }
 .container div {
-  background-image: url(./img/equip/Nothing.png);
   width: 48px;
   height: 48px;
   line-height: 48px;

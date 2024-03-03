@@ -34,20 +34,20 @@ function Update() {
   <div style="width: 250px; margin-left: 10px">
     <h3>Enemy</h3>
     Species:
-    <select v-model.number="globalStore.monster.species">
+    <select v-model.number="globalStore.monster.species" name="monsterSpecies">
       <option v-for="(_, i) in Enums.MonsterSpecies" :value="i">{{ MonsterSpecies[i] }}</option></select
     ><br />
     <template v-if="globalStore.monster.species != MonsterSpecies.Mimic">
       Color:&nbsp;&nbsp;&nbsp;&nbsp;
-      <select v-model.number="globalStore.monster.challange" v-if="globalStore.monster.species == MonsterSpecies.ChallengeBoss">
+      <select v-model.number="globalStore.monster.challange" v-if="globalStore.monster.species == MonsterSpecies.ChallengeBoss" name="monsterColorChallange">
         <option v-for="(_, i) in Enums.ChallengeMonsterKind" :value="i">{{ ChallengeMonsterKind[i] }}</option>
       </select>
-      <select v-model.number="globalStore.monster.color" v-else-if="globalStore.monster.species != MonsterSpecies.ChallengeBoss">
+      <select v-model.number="globalStore.monster.color" v-else-if="globalStore.monster.species != MonsterSpecies.ChallengeBoss" name="monsterColor">
         <option v-for="(_, i) in Enums.MonsterColor" :value="i">{{ MonsterColor[i] }}</option>
       </select>
       <br />
     </template>
-    Level: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input v-model.lazy.number="globalStore.monster.level" size="8" />
+    Level: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input v-model.lazy.number="globalStore.monster.level" size="8" name="monsterLevel" />
 
     <p>
       HP: <span name="HP"> {{ Util.tDigit(monster.hp) }}</span>

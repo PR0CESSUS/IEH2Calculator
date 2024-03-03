@@ -11,6 +11,7 @@ import RubyShop from "./RubyShop.vue";
 import ExpeditionVue from "./Expedition.vue";
 import SDUpgrade from "./SDUpgrade.vue";
 import SDPowerup from "./SDPowerup.vue";
+import Bestiary from "./Bestiary.vue";
 
 const globalStore = useGlobalStore();
 </script>
@@ -25,6 +26,7 @@ const globalStore = useGlobalStore();
     "
   >
     <TabItem title="Main"><DataMain /></TabItem>
+    <TabItem title="Bestiary"><Bestiary /></TabItem>
     <TabItem title="Talisman"><DataTalisman /></TabItem>
     <TabItem title="Expedition"><ExpeditionVue /></TabItem>
     <TabItem title="SD Ritual"><Ritual /></TabItem>

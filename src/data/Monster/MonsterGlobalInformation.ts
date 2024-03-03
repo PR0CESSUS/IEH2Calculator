@@ -1,5 +1,6 @@
 import { DATA } from "..";
 import { Enums } from "../../Enums";
+import { Localization } from "../../localization";
 import { ChallengeMonsterKind } from "../../type/ChallengeMonsterKind";
 import { Element } from "../../type/Element";
 import { HeroKind } from "../../type/HeroKind";
@@ -316,5 +317,11 @@ export class MonsterGlobalInformation {
       default:
         return 0.0;
     }
+  }
+
+  MonsterName() {
+    return this.species == MonsterSpecies.ChallengeBoss
+      ? ChallengeMonsterKind[this.challengeMonsterKind]
+      : `${Localization.MonsterSpeciesName(this.species)} ${MonsterColor[this.color]}`;
   }
 }

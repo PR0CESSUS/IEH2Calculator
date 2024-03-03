@@ -17,6 +17,8 @@ import { PotionTypeString } from "./PotionType";
 import { SkillName } from "./SkillName";
 import { SDPowerupString } from "./SDPowerupString";
 import { TownMaterialNameString } from "./TownMaterialNameString";
+import { MonsterSpeciesName } from "./MonsterSpeciesName";
+import { MonsterPetPassiveEffectString } from "./MonsterPetPassiveEffectString";
 
 export const Localization = {
   EquipmentEffectName,
@@ -38,4 +40,6 @@ export const Localization = {
   SDPowerupString,
   SDShopEffectValueString,
   TownMaterialNameString,
+  MonsterSpeciesName,
+  MonsterPetPassiveEffectString,
 };
