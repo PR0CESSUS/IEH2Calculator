@@ -56,7 +56,7 @@ function createSnapshot() {
         <button style="font-size: 12px" @click="dialog.showModal()">&#9776;</button>
 
         <button @click="createSnapshot()">Create Snapshot</button>
-        <label for="saveFileImport"><button class="orange">Import Save File</button></label>
+        <label for="saveFileImport" class="button orange">Import Save File</label>
         <input type="file" id="saveFileImport" accept=".txt" @change="importSaveFile" />
         <button id="data-restart" type="reset" @click="hardReset()">Hard Reset</button>
       </div>
