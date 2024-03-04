@@ -54,13 +54,13 @@ function copyEvent(type: CopyKind) {
   clipboard.type = type;
   switch (type) {
     case CopyKind.Equipment:
-      clipboard.data = this.equipment.Copy(CopyKind.Equipment);
+      clipboard.data = equipment.Copy(CopyKind.Equipment);
       break;
     case CopyKind.OptionEffect:
-      clipboard.data = this.equipment.Copy(CopyKind.OptionEffect);
+      clipboard.data = equipment.Copy(CopyKind.OptionEffect);
       break;
     case CopyKind.ForgeEffects:
-      clipboard.data = this.equipment.Copy(CopyKind.ForgeEffects);
+      clipboard.data = equipment.Copy(CopyKind.ForgeEffects);
       break;
     default:
       break;
