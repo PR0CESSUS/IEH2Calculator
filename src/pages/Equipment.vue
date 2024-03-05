@@ -11,7 +11,7 @@ const game = inject<Game>("game");
 <template>
   <div class="grid">
     <div>
-      <EquipmentLoadout :key="game.data.source.currentHero" />
+      <EquipmentLoadout :key="game.data.source.currentHero + game.data.source.equipmentLoadoutIds[game.data.source.currentHero]" />
       <HeroStats :key="game.data.requireUpdate.value ? 'xxx' : 'yyy'" />
     </div>
     <div>

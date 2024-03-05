@@ -19,6 +19,7 @@ export class MonsterPet {
   color: MonsterColor;
   challengeMonsterKind: ChallengeMonsterKind = 0;
   unlockActiveEffectImprovement;
+  saveId: number;
   //   loyaltyExp: MonsterPetLoyaltyExp;
   //   MonsterPetTamingPotamingPoint;
   //   unlockActiveEffectImprovement: Unlock;
@@ -29,9 +30,13 @@ export class MonsterPet {
     this.species = species;
     this.color = color;
     if (this.species == MonsterSpecies.ChallengeBoss) this.challengeMonsterKind = color as any;
+
+    this.saveId = this.color + 10 * this.species + this.challengeMonsterKind;
     // this.rank = new MonsterPetRank(species, color, new Func<long>(this.MaxRank));
   }
-
+  // get saveId() {
+  //   return this.color + 10 * this.species + this.challengeMonsterKind;
+  // }
   get level() {
     return this.#data.source.monsterPetLevels[this.saveId];
   }
@@ -83,10 +88,6 @@ export class MonsterPet {
 
   MaxRank() {
     return this.#data.monster.petRankCap.Value();
-  }
-
-  get saveId() {
-    return this.color + 10 * this.species + this.challengeMonsterKind;
   }
 
   //   isActive {

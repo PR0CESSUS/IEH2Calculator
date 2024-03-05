@@ -8,7 +8,7 @@ import { HeroKind } from "../type/HeroKind";
 import { Localization } from "../localization/index";
 const game = inject<Game>("game");
 const dialog = ref<HTMLDialogElement>();
-const INITIAL_OFFSET = 520 + game.data.source.currentHero * 720;
+const INITIAL_OFFSET = 520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72;
 
 function getEquipmentList() {
   let list = {};
@@ -57,7 +57,30 @@ function getEquipmentEffectList() {
       <button class="btn btn-blue btn-small" @click="dialog.showModal()">&#9776;</button>
     </div>
 
-    <template v-for="(_, i) in 7">
+    <div>
+      <div class="part">
+        <div class="block">
+          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index" class="equipment" />
+        </div>
+      </div>
+      <div class="part">
+        <div class="block">
+          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 24" class="equipment" />
+        </div>
+      </div>
+      <div class="part">
+        <div class="block">
+          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 48" class="equipment" />
+        </div>
+      </div>
+      <div class="part">
+        <div class="block-potion">
+          <PotionInfo v-for="(_, index) in 6" :id="260 + index + game.data.source.currentHero * 6" class="equipment" />
+        </div>
+      </div>
+    </div>
+
+    <!-- <template v-for="(_, i) in 7">
       <div v-if="i == game.data.source.equipmentLoadoutIds[game.data.source.currentHero]">
         <div class="part">
           <div class="block">
@@ -80,7 +103,7 @@ function getEquipmentEffectList() {
           </div>
         </div>
       </div>
-    </template>
+    </template> -->
   </div>
 
   <dialog ref="dialog" @mousedown="if (($event.target as HTMLDialogElement).nodeName == dialog.nodeName) dialog.close();">
