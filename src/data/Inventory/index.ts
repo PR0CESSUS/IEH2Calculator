@@ -39,15 +39,15 @@ export class DataInventory {
   SetUnlockedNum() {
     this.equipInventoryUnlockedNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 26.0));
     this.equipInventoryUnlockedNum.maxValue = () => InventoryParameter.equipmentInventorySlotNum;
+    this.enchantUnlockedNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 6.0));
+    this.potionUnlockedNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 6.0));
+
     for (let index = 0; index < Enums.HeroKind; index++) {
       this.equipWeaponUnlockedNum[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
       this.equipArmorUnlockedNum[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
       this.equipJewelryUnlockedNum[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
-    }
-    this.enchantUnlockedNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 6.0));
-    this.potionUnlockedNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 6.0));
-    for (let index = 0; index < this.equipPotionUnlockedNum.length; index++)
       this.equipPotionUnlockedNum[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    }
   }
 
   Start() {

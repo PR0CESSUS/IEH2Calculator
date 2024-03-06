@@ -29,7 +29,14 @@ onMounted(() => {
     >
       <TabItem title="Main">
         <template v-if="globalStore.heroStatsTabSelected == 0">
-          <h3>Main Stats</h3>
+          <h3>
+            Main Stats ({{ HeroKind[game.data.source.currentHero] }}
+            {{
+              game.data.source.isSuperDungeon
+                ? `Grade: ${game.data.source.heroGrade[game.data.source.currentHero]}`
+                : `Level: ${game.data.source.heroLevel[game.data.source.currentHero]}`
+            }})
+          </h3>
           <div class="block">
             <MultiplierInformation
               v-for="(_, index) in game.data.stats.currentHero.basicStats"

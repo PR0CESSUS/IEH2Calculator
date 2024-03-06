@@ -21,5 +21,10 @@ const game = inject<Game>("game");
       <td><input type="text" size="6" v-model.lazy.number="monster.pet.loyalty" /></td>
       <td>{{ monster.pet.PassiveEffectString() }}</td>
     </tr>
+    <tr class="summary">
+      <td>Total:</td>
+      <td></td>
+      <td>{{ game.data.monster.TotalPetRank() }}</td>
+    </tr>
   </table>
 </template>

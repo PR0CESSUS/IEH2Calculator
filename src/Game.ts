@@ -20,8 +20,11 @@ export class Game {
     this.data = main;
     this.compare = new Proxy(this.data, this.Proxy());
     // this.data = createPathProxy(test);
+
+    // this.data.Snapshot();
     this.Synchronization();
     // console.log(this);
+    // this.Worker();
   }
 
   // Watch(prop: string, callback: Function) {
@@ -145,4 +148,6 @@ export class Game {
       this.snap.inventory.Update();
     });
   }
+
+  Worker() {}
 }

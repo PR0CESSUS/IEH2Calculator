@@ -38,11 +38,14 @@ const expPerPlaytime = computed(() => {
     </div>
     <div style="margin-left: 10px">
       <MultiplierInformation name="Max Nitro" :multiplier="`nitro.nitroCap`" :inline="true" />
+      Nitro Speed:
+      <input size="5" :value="Util.tDigit(game.data.source.nitroSpeed, 1)" @change="game.data.source.nitroSpeed = parseFloat(($event.target as HTMLInputElement).value)" /><br />
       Playtime in day (hours): <input type="text" size="4" v-model.lazy.number="globalStore.expedition.playtime" /><br />
 
-      EXP per day: {{ Util.tDigit(expPerPlaytime) }}<br />
+      EXP per day: {{ Util.tDigit(expPerPlaytime) }} x {{ game.data.source.nitroSpeed.toFixed(1) }} = {{ Util.tDigit(game.data.source.nitroSpeed * expPerPlaytime) }}
+      <br />
       EXP per Nitro Sink: {{ Util.tDigit(nitroSinkExp) }}<br />
-      Total EXP per day: {{ Util.tDigit(expPerPlaytime + nitroSinkExp * 5) }}
+      Total EXP per day: {{ Util.tDigit(expPerPlaytime * game.data.source.nitroSpeed + nitroSinkExp * 5) }}
     </div>
   </div>
 

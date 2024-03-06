@@ -20,11 +20,11 @@ export class DataAlchemy {
   constructor() {
     // this.alchemyPoint = new AlchemyPoint();
     // this.talismanFragment = new TalismanFragment();
-    this.maxMysteriousWaterExpandedCapNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 50.0));
     // this.mysteriousWaterExpandedCapNum = new MysteriousWaterExpandedCapNum(() => this.maxMysteriousWaterExpandedCapNum.Value());
-    this.mysteriousWaterCap = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => this.mysteriousWaterExpandedCapNum));
-    // this.mysteriousWater = new MysteriousWater(() => this.mysteriousWaterCap.Value());
     // this.mysteriousWaterProgress = new MysteriousWaterProgress((NUMBER) this.mysteriousWater, () => 1.0);
+    // this.mysteriousWater = new MysteriousWater(() => this.mysteriousWaterCap.Value());
+    this.maxMysteriousWaterExpandedCapNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 50.0));
+    this.mysteriousWaterCap = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => this.mysteriousWaterExpandedCapNum));
     this.mysteriousWaterProductionPerSec = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.1));
     this.doubleAlchemyPointChance = new Multiplier();
     this.alchemyPointGainMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));

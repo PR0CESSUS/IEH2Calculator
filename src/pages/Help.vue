@@ -15,7 +15,7 @@ globalThis.Game.data.source.maxModifierCleareds[0] = TotalModifier</textarea
     <div style="padding-top: 10px; padding-bottom: 10px">
       <ul>
         <li>Create Stat Snapshot</li>
-        <li>Click on item and modify it, new values should shown in Stats Panel (it compares current values to Snapshot)</li>
+        <li>Click on item and modify it, new values should be shown in Stats Panel (it compares current values to Snapshot)</li>
         <li>You can use Copy button to copy values to internal clipboard and use CTRL+V while hovering on another item to paste them</li>
         <li>You can copy entire item by using CTRL+C and CTRL+V</li>
       </ul>

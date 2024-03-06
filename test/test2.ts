@@ -8,15 +8,28 @@
 // console.log("game.data.children2.value", game.data.children2.value);
 // console.log("game.data.Test()", game.data.Test());
 
-const obj1 = {
-  base: 1,
-  ability: 10,
-  talisman: 4,
-};
+class Test {
+  static data;
 
-const obj2 = {
-  base: 1,
-  ability: 20,
-};
+  data;
+  constructor() {
+    this.data = { ale: "piwo" };
+    Test.data = this.data;
+  }
+}
 
-console.log({ ...obj1, ...obj2 });
+console.log(new Test());
+console.log(Test.data);
+
+// const obj1 = {
+//   base: 1,
+//   ability: 10,
+//   talisman: 4,
+// };
+
+// const obj2 = {
+//   base: 1,
+//   ability: 20,
+// };
+
+// console.log({ ...obj1, ...obj2 });
