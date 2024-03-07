@@ -68,7 +68,6 @@ function createSnapshot() {
           return route.path != '/';
         })"
         :to="route.path"
-        :class="route.name.length > 12 ? 'small' : ''"
       >
         {{ route.name }}
       </router-link>
@@ -196,14 +195,14 @@ nav a {
   border-style: outset;
   background-clip: padding-box;
   background-color: #232c37;
-  font-size: 20px;
+  font-size: 16px;
   color: #ffffff;
   margin: 0;
   padding-top: 7px;
   padding-bottom: 7px;
   padding-left: 5px;
   padding-right: 5px;
-  background-image: linear-gradient(#a0a0a0, #535353);
+  background-image: linear-gradient(#868686, #535353);
 }
 
 nav a:hover {

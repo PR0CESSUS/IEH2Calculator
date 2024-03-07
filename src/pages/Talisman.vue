@@ -71,7 +71,7 @@ efficiency(game.data.potion.talismans[5], 5);
       <td><input v-model.number="talisman.level" size="4" /></td>
       <td style="padding-right: 10px" :class="talisman.level == 50 ? 'orange' : ''">{{ talisman.level == 50 ? "MAX" : Util.tDigit(cost(talisman)) }}</td>
       <td>{{ talisman.talismanDisassembleFragmentNumPerLevel * talisman.level * state.perWA[index] }}</td>
-      <td><input v-model="state.perWA[index]" size="6" /></td>
+      <td><input v-model="state.perWA[index]" size="4" /></td>
       <td>{{ efficiency(talisman, index) }}</td>
     </tr>
   </table>

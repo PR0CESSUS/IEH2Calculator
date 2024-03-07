@@ -23,29 +23,28 @@ function ModifiedOfflineTimesec(nitro) {
 const nitroSinkTime = ModifiedOfflineTimesec(game.data.nitro.nitroCap.Value());
 const nitroSinkExp = nitroSinkTime * expPerSec;
 const expPerPlaytime = computed(() => {
-  return expPerSec * globalStore.expedition.playtime * 3600;
+  return expPerSec * globalStore.expedition.playtime * 3600 * game.data.source.nitroSpeed;
 });
 </script>
 
 <template>
-  <h1>Expedition</h1>
   <div style="display: flex">
     <div>
-      <MultiplierInformation name="Expedition Slots" :multiplier="`expedition.unlockedExpeditionSlotNum`" :inline="true" />
-      Expedition Minimum time: {{ Util.secondsToDhms(game.data.expedition.lowerLimitTime.Value()) }}<br />
-      Total EXP per second: {{ Util.tDigit(expPerSec) }}<br />
-      Time per Nitro Sink: {{ Util.secondsToDhms(nitroSinkTime, false) }}<br />
-    </div>
-    <div style="margin-left: 10px">
       <MultiplierInformation name="Max Nitro" :multiplier="`nitro.nitroCap`" :inline="true" />
+      <MultiplierInformation name="Expedition Slots" :multiplier="`expedition.unlockedExpeditionSlotNum`" :inline="true" />
+      <MultiplierInformation name="Efficiency penalty" :multiplier="`expedition.rewardModifierPerHour`" :inline="true" />
+      Expedition Minimum time: {{ Util.secondsToDhms(game.data.expedition.lowerLimitTime.Value()) }}<br />
       Nitro Speed:
       <input size="5" :value="Util.tDigit(game.data.source.nitroSpeed, 1)" @change="game.data.source.nitroSpeed = parseFloat(($event.target as HTMLInputElement).value)" /><br />
       Playtime in day (hours): <input type="text" size="4" v-model.lazy.number="globalStore.expedition.playtime" /><br />
+    </div>
+    <div style="margin-left: 10px; border-left: 1px solid #fff; padding-left: 10px">
+      EXP per second: {{ Util.tDigit(expPerSec) }}<br />
+      EXP per playtime: {{ Util.tDigit(expPerPlaytime) }}<br />
 
-      EXP per day: {{ Util.tDigit(expPerPlaytime) }} x {{ game.data.source.nitroSpeed.toFixed(1) }} = {{ Util.tDigit(game.data.source.nitroSpeed * expPerPlaytime) }}
-      <br />
-      EXP per Nitro Sink: {{ Util.tDigit(nitroSinkExp) }}<br />
-      Total EXP per day: {{ Util.tDigit(expPerPlaytime * game.data.source.nitroSpeed + nitroSinkExp * 5) }}
+      EXP per Nitro Sink: {{ Util.tDigit(nitroSinkExp) }} ( {{ Util.secondsToDhms(nitroSinkTime, false) }})<br />
+      <hr />
+      Total EXP per day: {{ Util.tDigit(expPerPlaytime + nitroSinkExp * 5) }}<br />
     </div>
   </div>
 

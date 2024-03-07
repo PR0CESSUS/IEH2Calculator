@@ -33,7 +33,7 @@ function useCompareMultiplier(path: string) {
       additive: data.main.additive - data.snap.additive,
       additiveKind: useDifferenceObject(data.main.additiveKind, data.snap.additiveKind),
       multiplicativeKind: useDifferenceObject(data.main.multiplicativeKind, data.snap.multiplicativeKind),
-      multiplicative: data.main.multiplicative - data.main.multiplicative,
+      multiplicative: data.main.multiplicative - data.snap.multiplicative,
       after: data.main.after - data.snap.after,
       afterKind: useDifferenceObject(data.main.afterKind, data.snap.afterKind),
     },
@@ -67,17 +67,10 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
 
 <template>
   <Tooltip>
-    <p :class="!props.inline ? 'underline' : ''" @mouseover.once="init = true" @click="console.log(multiplier)">
-      <span class="nameWrap" :class="multiplier.main.isLog ? 'yellow' : ''"
-        >{{ name }}
-        <template v-if="props.inline">
-          <span :class="useCompareColor(multiplier.diff.value)">
-            {{ multiplier.compare.value }} {{ Util.convertTo(multiplier.main.Value(), props.precision, multiplier.main.numberType) }} {{ props.valueSuffix }}</span
-          >
-        </template>
-      </span>
+    <p @mouseover.once="init = true" @click="console.log(multiplier)" :class="{ underline: !props.inline }">
+      <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }">{{ name }}</span>
 
-      <span class="right" :class="useCompareColor(multiplier.diff.value)" v-if="!props.inline"
+      <span :class="[useCompareColor(multiplier.diff.value)]" class="right"
         >{{ multiplier.compare.value }} {{ Util.convertTo(multiplier.main.Value(), props.precision, multiplier.main.numberType) }} {{ props.valueSuffix }}</span
       >
     </p>
@@ -189,23 +182,6 @@ div {
   max-width: 160px;
 }
 
-.value {
-  float: right;
-  overflow: visible;
-  /* unicode-bidi: bidi-override; */
-  direction: rtl;
-  /* overflow-x: visible; */
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100px;
-}
-[name="value"] {
-  float: right;
-  unicode-bidi: bidi-override;
-  direction: ltr;
-  /* background-color: aqua; */
-  /* overflow-x: visible; */
-}
 .underline {
   border-bottom-style: solid;
   border-bottom-width: 1px;

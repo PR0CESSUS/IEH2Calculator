@@ -29,7 +29,7 @@ button.orange,
   border-right-color: #98460f;
 }
 
-.btn-blue {
+button.blue {
   background-image: linear-gradient(#2b487f, #203860);
   background-color: #2b487f;
   border-top-color: #5476ae;
@@ -38,7 +38,7 @@ button.orange,
   border-right-color: #223e6a;
 }
 
-.btn-small {
+button.small {
   height: 24px;
   font-size: 12px;
   padding-top: 0;

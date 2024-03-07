@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref } from "vue";
+import { inject, onUpdated, ref } from "vue";
 import EquipmentInfo from "./EquipmentInfo.vue";
 import PotionInfo from "./PotionInfo.vue";
 import { Game } from "../Game";
@@ -8,11 +8,11 @@ import { HeroKind } from "../type/HeroKind";
 import { Localization } from "../localization/index";
 const game = inject<Game>("game");
 const dialog = ref<HTMLDialogElement>();
-const INITIAL_OFFSET = 520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72;
+const INITIAL_OFFSET = ref(520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72);
 
 function getEquipmentList() {
   let list = {};
-  for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+  for (let index = INITIAL_OFFSET.value; index < INITIAL_OFFSET.value + 72; index++) {
     if (game.data.inventory.equipmentSlots[index].kind == 0 || game.data.inventory.equipmentSlots[index].isDisabled()) continue;
     let equipment = Localization.EquipmentName(game.data.inventory.equipmentSlots[index].kind);
     list[equipment] = list[equipment] ? list[equipment] + 1 : 1;
@@ -21,9 +21,13 @@ function getEquipmentList() {
   return list;
 }
 
+onUpdated(() => {
+  // console.log("update equipment loadout");
+  INITIAL_OFFSET.value = 520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72;
+});
 function getEquipmentEffectList() {
   let list = {};
-  for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+  for (let index = INITIAL_OFFSET.value; index < INITIAL_OFFSET.value + 72; index++) {
     const equipment = game.data.inventory.equipmentSlots[index];
     if (equipment.kind == 0 || equipment.isDisabled()) continue;
     for (let i = 0; i < equipment.optionEffects.length; i++) {
@@ -54,23 +58,24 @@ function getEquipmentEffectList() {
           Loadout {{ n }}
         </li>
       </ul>
-      <button class="btn btn-blue btn-small" @click="dialog.showModal()">&#9776;</button>
+      <button class="blue small" title="loadout breakdown" @click="dialog.showModal()">&#9776;</button>
+      <!-- <button class="blue small" title="search">&#x1F50E;&#xFE0E;</button> -->
     </div>
 
-    <div>
+    <div :key="game.data.source.currentHero">
       <div class="part">
         <div class="block">
-          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index" class="equipment" />
+          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index" class="equipment" :key="INITIAL_OFFSET + index" />
         </div>
       </div>
       <div class="part">
         <div class="block">
-          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 24" class="equipment" />
+          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 24" class="equipment" :key="INITIAL_OFFSET + index" />
         </div>
       </div>
       <div class="part">
         <div class="block">
-          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 48" class="equipment" />
+          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 48" class="equipment" :key="INITIAL_OFFSET + index" />
         </div>
       </div>
       <div class="part">
