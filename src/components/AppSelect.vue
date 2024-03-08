@@ -39,7 +39,7 @@ function getType(type: CustomSelectType) {
       <div style="display: flex">
         <img
           v-for="(_, index) in 6"
-          :src="`/img/hero/${HeroKind[index]}.png`"
+          :src="`img/hero/${HeroKind[index]}.png`"
           :class="{ inactive: index != game.data.source.currentHero }"
           :title="HeroKind[index]"
           @click="game.data.source.currentHero = index"
