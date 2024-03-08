@@ -1,1 +1,1 @@
-npx tsx watch --ignore DataDefault.ts test2.ts 
+npx tsx watch --ignore DataDefault.ts idlewizard/main.ts 

@@ -21,19 +21,7 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "test/run.ts",
-    "test/run.ts",
-    "test/encoder.ts",
-    "test/compress.ts",
-    "test/encoder.ts",
-    "test/compress.ts",
-    "test/SaveFileDencrypt.ts",
-    "test/SaveFileDencrypt.ts"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "test/**/*.ts"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "exclude": ["test/**/*.ts"],
   "files": ["global.d.ts"]

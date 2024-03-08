@@ -1,68 +1,51 @@
 <script setup lang="ts">
-import { inject, onUpdated, ref } from "vue";
+import { computed, inject } from "vue";
 import EquipmentInfo from "./EquipmentInfo.vue";
 import PotionInfo from "./PotionInfo.vue";
 import { Game } from "../Game";
-import { Enums } from "../Enums";
+import AppDialog from "./AppDialog.vue";
+import EquipmentBreakdown from "./EquipmentBreakdown.vue";
+import AppSelect from "./AppSelect.vue";
+import { CustomSelectType } from "../type/CustomSelectType";
 import { HeroKind } from "../type/HeroKind";
-import { Localization } from "../localization/index";
+import EnchantFinder from "./EnchantFinder.vue";
 const game = inject<Game>("game");
-const dialog = ref<HTMLDialogElement>();
-const INITIAL_OFFSET = ref(520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72);
 
-function getEquipmentList() {
-  let list = {};
-  for (let index = INITIAL_OFFSET.value; index < INITIAL_OFFSET.value + 72; index++) {
-    if (game.data.inventory.equipmentSlots[index].kind == 0 || game.data.inventory.equipmentSlots[index].isDisabled()) continue;
-    let equipment = Localization.EquipmentName(game.data.inventory.equipmentSlots[index].kind);
-    list[equipment] = list[equipment] ? list[equipment] + 1 : 1;
-  }
-
-  return list;
-}
-
-onUpdated(() => {
-  // console.log("update equipment loadout");
-  INITIAL_OFFSET.value = 520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72;
-});
-function getEquipmentEffectList() {
-  let list = {};
-  for (let index = INITIAL_OFFSET.value; index < INITIAL_OFFSET.value + 72; index++) {
-    const equipment = game.data.inventory.equipmentSlots[index];
-    if (equipment.kind == 0 || equipment.isDisabled()) continue;
-    for (let i = 0; i < equipment.optionEffects.length; i++) {
-      if (equipment.optionEffects[i].kind == 0) continue;
-      const effect = Localization.EquipmentEffectName(equipment.optionEffects[i].kind);
-      list[effect] = list[effect] ? list[effect] + 1 : 1;
-    }
-  }
-
-  return list;
-}
+const INITIAL_OFFSET = computed(() => 520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72);
 </script>
 
 <template>
   <div>
-    <div style="display: flex">
-      <select v-model.number="game.data.source.currentHero" style="height: 24px" name="hero">
-        <option v-for="(_, index) in Enums.HeroKind" :value="index" :selected="game.data.source.currentHero == index">
-          {{ HeroKind[index] }}
-        </option>
-      </select>
-      <ul>
-        <li
-          v-for="(n, i) in 7"
-          :class="i == game.data.source.equipmentLoadoutIds[game.data.source.currentHero] ? 'yellow' : ''"
-          @click="game.data.source.equipmentLoadoutIds[game.data.source.currentHero] = i"
-        >
-          Loadout {{ n }}
-        </li>
-      </ul>
-      <button class="blue small" title="loadout breakdown" @click="dialog.showModal()">&#9776;</button>
-      <!-- <button class="blue small" title="search">&#x1F50E;&#xFE0E;</button> -->
+    <div style="display: flex; height: 24px">
+      <button
+        v-for="(n, i) in 7"
+        class="blue small"
+        :class="{ yellow: i == game.data.source.equipmentLoadoutIds[game.data.source.currentHero] }"
+        @click="game.data.source.equipmentLoadoutIds[game.data.source.currentHero] = i"
+      >
+        Loadout {{ n }}
+      </button>
+
+      <AppDialog>
+        <template #trigger><button class="blue small" title="Equipment Breakdown">&#9776;</button></template>
+        <template #content><EquipmentBreakdown /></template>
+      </AppDialog>
+
+      <AppDialog>
+        <template #trigger><button class="blue small" title="Search">&#x1F50E;&#xFE0E;</button></template>
+        <template #content><EnchantFinder /></template>
+      </AppDialog>
+    </div>
+    <div style="display: flex; margin: 3px 0; align-items: center">
+      <AppSelect :type="CustomSelectType.HeroKind" />&nbsp; {{ HeroKind[game.data.source.currentHero] }}
+      {{
+        game.data.source.isSuperDungeon
+          ? `Grade: ${game.data.source.heroGrade[game.data.source.currentHero]}`
+          : `Level: ${game.data.source.heroLevel[game.data.source.currentHero]}`
+      }}
     </div>
 
-    <div :key="game.data.source.currentHero">
+    <div>
       <div class="part">
         <div class="block">
           <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index" class="equipment" :key="INITIAL_OFFSET + index" />
@@ -84,45 +67,7 @@ function getEquipmentEffectList() {
         </div>
       </div>
     </div>
-
-    <!-- <template v-for="(_, i) in 7">
-      <div v-if="i == game.data.source.equipmentLoadoutIds[game.data.source.currentHero]">
-        <div class="part">
-          <div class="block">
-            <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72" class="equipment" />
-          </div>
-        </div>
-        <div class="part">
-          <div class="block">
-            <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 24 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72" class="equipment" />
-          </div>
-        </div>
-        <div class="part">
-          <div class="block">
-            <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 48 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72" class="equipment" />
-          </div>
-        </div>
-        <div class="part">
-          <div class="block-potion">
-            <PotionInfo v-for="(_, index) in 6" :id="260 + index + game.data.source.currentHero * 6" class="equipment" />
-          </div>
-        </div>
-      </div>
-    </template> -->
   </div>
-
-  <dialog ref="dialog" @mousedown="if (($event.target as HTMLDialogElement).nodeName == dialog.nodeName) dialog.close();">
-    <div class="wrapper">
-      <div style="float: left; margin-right: 20px">
-        <h3>Equipment List</h3>
-        <p v-for="(value, key) in getEquipmentList()">{{ key }} x{{ value }}</p>
-      </div>
-      <div style="float: left">
-        <h3>Equipment List</h3>
-        <p v-for="(value, key) in getEquipmentEffectList()">{{ key }} x{{ value }}</p>
-      </div>
-    </div>
-  </dialog>
 </template>
 
 <style scoped>
@@ -194,17 +139,6 @@ li:hover {
   border-color: #01f304;
   border-style: solid;
   border-width: 1px;
-}
-dialog {
-  padding: 0;
-  background: rgba(51, 51, 51, 0.95);
-  color: #fff;
-  border-width: 1px;
-  border-color: #525252;
-}
-.wrapper {
-  padding: 10px;
-  width: 700px;
 }
 </style>
 ../data2 ../stores/heroStats
