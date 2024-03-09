@@ -5,6 +5,7 @@ import { Game } from "../Game";
 import { Localization } from "../localization/index";
 import { CustomSelectType } from "../type/CustomSelectType";
 import { HeroKind } from "../type/HeroKind";
+import { MonsterColor } from "../type/MonsterColor";
 
 const props = defineProps<{ type: CustomSelectType }>();
 const game = inject<Game>("game");
@@ -16,21 +17,27 @@ function getType(type: CustomSelectType) {
 
   switch (type) {
     case CustomSelectType.EquipmentEffectKind:
-      for (let index = 0; index < Enums.EquipmentEffectKind; index++) {
-        result.push(Localization.EquipmentEffectName(index));
-      }
+      for (let index = 0; index < Enums.EquipmentEffectKind; index++) result.push(Localization.EquipmentEffectName(index));
       break;
-
+    case CustomSelectType.MonsterSpecies:
+      for (let index = 0; index < Enums.MonsterSpecies; index++) result.push(Localization.MonsterSpeciesName(index));
+      break;
+    case CustomSelectType.MonsterColor:
+      for (let index = 0; index < Enums.MonsterColor; index++) result.push(MonsterColor[index]);
+      break;
+    case CustomSelectType.ChallengeMonsterKind:
+      return ["Florzporb", "Arachnetta", "Guardian Kor", "Nostro", "Lady Emelda", "Nari Sune", "Octobaddie", "Bananoon", "Glorbliorbus", "Distortion Slime"];
     default:
       break;
   }
+
   return result;
 }
 </script>
 
 <template>
   <template v-if="props.type != CustomSelectType.HeroKind">
-    <select v-model="model">
+    <select v-model="model" name="select">
       <option v-for="(name, index) in getType(props.type)" :value="index">{{ name }}</option>
     </select>
   </template>

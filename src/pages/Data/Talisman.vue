@@ -16,10 +16,10 @@ const game = inject<Game>("game");
     <tr v-for="talisman in game.data.potion.talismans">
       <td>{{ talisman.NameString() }}:</td>
       <td>
-        <input type="text" size="12" v-model.lazy.number="talisman.disassembledNum" />
+        <input type="text" size="12" v-model.lazy.number="talisman.disassembledNum" name="talisman.disassembledNum" />
       </td>
       <td>
-        <input type="text" size="5" v-model.lazy.number="talisman.level" />
+        <input type="text" size="5" v-model.lazy.number="talisman.level" name="talisman.level" />
       </td>
       <td>{{ talisman.EffectValueString() }}</td>
     </tr>

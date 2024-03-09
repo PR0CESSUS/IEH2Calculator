@@ -1,7 +1,6 @@
 import { watch } from "vue";
 import { DATA } from "./Data";
 import { Util } from "./Util";
-import { useGlobalStore } from "./stores/global";
 
 type ReplacePrimitives<T> = T extends Record<any, any>
   ? { [K in keyof T]: T[K] extends Function ? T[K] : ReplacePrimitives<T[K]> }
@@ -115,15 +114,9 @@ export class Game {
   }
 
   Synchronization() {
-    const globalStore = useGlobalStore();
-
     watch(this.data.source, (newValue, oldValue) => {
       console.log("watch data.source");
 
-      this.data.requireUpdate.value = true;
-    });
-
-    watch(globalStore.monster, (newValue, oldValue) => {
       this.data.requireUpdate.value = true;
     });
 
@@ -131,6 +124,8 @@ export class Game {
       () => this.data.source.isSuperDungeon,
       (newValue, oldValue) => {
         this.snap.source.isSuperDungeon = newValue;
+        // console.log("this.snap.source.isSuperDungeon", this.snap.source.isSuperDungeon);
+
         this.snap.SuperDungeonToggle();
         this.data.SuperDungeonToggle();
       }
@@ -147,6 +142,22 @@ export class Game {
       this.data.inventory.Update();
       this.snap.inventory.Update();
     });
+    watch(
+      () => this.data.source.enemyColor,
+      (newValue, oldValue) => (this.snap.source.enemyColor = newValue)
+    );
+    watch(
+      () => this.data.source.enemySpecies,
+      (newValue, oldValue) => (this.snap.source.enemySpecies = newValue)
+    );
+    watch(
+      () => this.data.source.enemyLevel,
+      (newValue, oldValue) => (this.snap.source.enemyLevel = newValue)
+    );
+    watch(
+      () => this.data.source.enemyChallenge,
+      (newValue, oldValue) => (this.snap.source.enemyChallenge = newValue)
+    );
   }
 
   Worker() {}

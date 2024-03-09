@@ -15,7 +15,7 @@ const game = inject<Game>("game");
     <tr v-for="ritual in game.data.sdg.sdGemRitualCtrl.sdGemList">
       <td>{{ ritual.NameString() }}:</td>
       <td>
-        <input type="text" size="6" v-model.lazy.number="ritual.level" />
+        <input type="text" size="6" v-model.lazy.number="ritual.level" name="ritual.level" />
       </td>
       <td>{{ ritual.EffectValueString() }}</td>
     </tr>

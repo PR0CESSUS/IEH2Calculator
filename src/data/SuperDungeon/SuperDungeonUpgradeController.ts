@@ -146,7 +146,7 @@ export class SuperDungeonUpgradeController {
     this.upgrade4ist.push(new SDU_StoneResearchPowerMul(this.sdgCtrl));
     this.upgrade4ist.push(new SDU_CrystalResearchPowerMul(this.sdgCtrl));
     this.upgrade4ist.push(new SDU_LeafResearchPowerMul(this.sdgCtrl));
-    this.upgradeList = [...this.upgrade1ist, ...this.upgrade2ist, ...this.upgrade3ist, ...this.upgrade4ist];
+    this.upgradeList = [...this.automationList, ...this.upgrade1ist, ...this.upgrade2ist, ...this.upgrade3ist, ...this.upgrade4ist];
     this.upgradeListArray[0] = this.automationList;
     this.upgradeListArray[1] = this.upgrade1ist;
     this.upgradeListArray[2] = this.upgrade2ist;

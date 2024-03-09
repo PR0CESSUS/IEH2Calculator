@@ -31,7 +31,7 @@ const globalStore = useGlobalStore();
     <TabItem title="Expedition"><ExpeditionVue /></TabItem>
     <TabItem title="SD Ritual"><Ritual /></TabItem>
     <TabItem title="Ruby Shop"><RubyShop /></TabItem>
-    <TabItem title="SD Upgrade 1"><SDUpgrade /></TabItem>
+    <TabItem title="SD Upgrade"><SDUpgrade /></TabItem>
     <TabItem title="SD Powerup"><SDPowerup /></TabItem>
   </TabPanel>
 </template>

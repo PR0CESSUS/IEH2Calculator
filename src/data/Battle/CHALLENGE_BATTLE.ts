@@ -9,11 +9,19 @@ export class CHALLENGE_BATTLE extends MONSTER_BATTLE {
 
   constructor(DATA: DATA, battleCtrl: DataBattle) {
     super(DATA, battleCtrl);
-    this.species = MonsterSpecies.ChallengeBoss;
+  }
+
+  get species() {
+    return MonsterSpecies.ChallengeBoss;
   }
   get globalInformation() {
     return this.battleCtrl.data.monster.GlobalInformationChallengeBoss(this.challengeMonsterKind);
   }
+
+  get challengeMonsterKind() {
+    return this.battleCtrl.data.source.enemyChallenge;
+  }
+
   get hp() {
     let base = this.globalInformation.Hp(this.level, this.difficulty);
     let level = this.level;

@@ -7,6 +7,7 @@ import { BasicStatsKind } from "../../../../type/BasicStatsKind";
 import { Stats } from "../../../../type/Stats";
 import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
 import { GlobalStats } from "../../../../type/GlobalStats";
+import { Element } from "../../../../type/Element";
 
 export class StaffAttack extends SKILL {
   constructor(data, heroKind: HeroKind, id) {
@@ -25,6 +26,10 @@ export class StaffAttack extends SKILL {
 
   get debuff() {
     return this.data.skill.baseAttackPoisonChance[this.heroKind].Value() > 0.0 ? Debuff.Poison : Debuff.Nothing;
+  }
+
+  get element() {
+    return Element.Fire;
   }
 
   DebuffChance() {

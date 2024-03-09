@@ -5,12 +5,6 @@ const STORE_NAME = "GlobalStore";
 const DEFAULT_DATA = {
   dataTabSelected: 0,
   heroStatsTabSelected: 0,
-  monster: {
-    species: 0,
-    color: 0,
-    level: 1,
-    challange: 0,
-  },
   rubyShard: {
     ticket: 0,
     failure: 0,

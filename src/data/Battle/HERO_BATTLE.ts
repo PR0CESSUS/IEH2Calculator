@@ -19,8 +19,10 @@ export class HERO_BATTLE extends BATTLE {
     super(DATA, battleCtrl);
     this.battleCtrl = battleCtrl;
     this.heroKind = heroKind;
+  }
 
-    this.level = this.battleCtrl.data.source.heroLevel[heroKind];
+  get level() {
+    return this.battleCtrl.data.source.heroLevel[this.heroKind];
   }
 
   StatsModifier(value) {

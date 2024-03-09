@@ -1,23 +1,16 @@
 import { DataBattle } from ".";
-import { ChallengeMonsterKind } from "../../type/ChallengeMonsterKind";
 import { Debuff } from "../../type/Debuff";
 import { Element } from "../../type/Element";
 import { MonsterColor } from "../../type/MonsterColor";
 import { TitleKind } from "../../type/TitleKind";
-import { BATTLE } from "./BATTLE";
 import { DATA } from "../index";
+import { BATTLE } from "./BATTLE";
 
 export class MONSTER_BATTLE extends BATTLE {
-  level = 1;
   difficulty = 0;
-  challengeMonsterKind: ChallengeMonsterKind = ChallengeMonsterKind.Florzporb;
+
   constructor(DATA: DATA, battleCtrl: DataBattle) {
     super(DATA, battleCtrl);
-
-    // for (let index = 0; index < this.debuffings.length; index++) {
-    //   num = index;
-    //   this.debuffings[index] = new Debuffing((BATTLE) this, (Debuff) num);
-    // }
   }
   get isPet() {
     return false;
@@ -33,7 +26,7 @@ export class MONSTER_BATTLE extends BATTLE {
 
   get hp() {
     return this.globalInformation.Hp(this.level, this.difficulty);
-  } // * (1 + 4 * Convert.ToInt16(this.isMutant))
+  }
 
   get mp() {
     return this.globalInformation.Mp(this.level, this.difficulty);

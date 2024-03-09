@@ -6,6 +6,7 @@ import { CHALLENGE_BATTLE } from "./CHALLENGE_BATTLE";
 import { HERO_BATTLE } from "./HERO_BATTLE";
 import { MONSTER_BATTLE } from "./MONSTER_BATTLE";
 import { DATA } from "..";
+import { MonsterSpecies } from "../../type/MonsterSpecies";
 
 export class DataBattle {
   data: DATA;
@@ -54,5 +55,9 @@ export class DataBattle {
       if (this.data.stats.ElementSlayerDamage(this.heroKind, kind).Value() > 0.0) return kind;
     }
     return Element.Physical;
+  }
+
+  Enemy() {
+    return this.data.source.enemySpecies == MonsterSpecies.ChallengeBoss ? this.challengeMonster : this.monster;
   }
 }

@@ -24,6 +24,8 @@ export function MonsterSpeciesName(species: MonsterSpecies) {
       return "Unicorn";
     case MonsterSpecies.Mimic:
       return "Mimic";
+    case MonsterSpecies.ChallengeBoss:
+      return "Challenge Boss";
     default:
       return species;
   }

@@ -81,8 +81,9 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
         <p v-for="[key, value] in Object.entries(multiplier.diff.additiveKind)">
           <template v-if="multiplier.main.additiveKind[key] > 0 || key == 'Base' || multiplier.snap.additiveKind[key] > 0">
             -{{ Localization.StatsBreakdown(MultiplierKind[key]) }}
-            <span class="right" :class="useCompareColor(value as number)"
-              >{{ multiplier.compare.additiveKind[key] }} {{ Util.convertTo(multiplier.main.additiveKind[key], props.precision, multiplier.main.numberType) }}</span
+            <span class="right" :class="useCompareColor(value as number)">
+              {{ multiplier.compare.additiveKind[key] }} {{ key != "Base" ? "+" : "" }}
+              {{ Util.convertTo(multiplier.main.additiveKind[key], props.precision, multiplier.main.numberType) }}</span
             >
           </template>
         </p>
@@ -96,8 +97,9 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
         <p v-for="[key, value] in Object.entries(multiplier.diff.multiplicativeKind)">
           <template v-if="multiplier.main.multiplicativeKind[key] > 1 || key == 'Base'">
             -{{ Localization.StatsBreakdown(MultiplierKind[key]) }}
-            <span class="right" :class="useCompareColor(value as number)"
-              >{{ multiplier.compare.multiplicativeKind[key] }} {{ Util.convertTo(multiplier.main.multiplicativeKind[key], props.precision, NumberType.Percent) }}</span
+            <span class="right" :class="useCompareColor(value as number)">
+              {{ multiplier.compare.multiplicativeKind[key] }} {{ key != "Base" ? "*" : "" }}
+              {{ Util.convertTo(multiplier.main.multiplicativeKind[key], props.precision, NumberType.Percent) }}</span
             >
           </template>
         </p>
@@ -126,7 +128,7 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
             <template v-if="multiplier.main.afterKind[key] > 1">
               -{{ Localization.StatsBreakdown(MultiplierKind[key]) }}
               <span class="right" :class="useCompareColor(value as number)"
-                >{{ multiplier.compare.afterKind[key] }} {{ Util.convertTo(multiplier.main.afterKind[key] | 0, props.precision, multiplier.main.numberType) }}</span
+                >{{ multiplier.compare.afterKind[key] }} + {{ Util.convertTo(multiplier.main.afterKind[key] | 0, props.precision, multiplier.main.numberType) }}</span
               ></template
             >
           </div>

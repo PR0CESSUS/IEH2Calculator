@@ -15,7 +15,7 @@ const game = inject<Game>("game");
     <tr v-for="upgrade in game.data.sdg.shopCtrl.itemStatBonusList">
       <td>{{ upgrade.NameString() }}:</td>
       <td>
-        <input type="text" size="8" v-model.lazy.number="upgrade.purchasedNum" />
+        <input type="text" size="8" v-model.lazy.number="upgrade.purchasedNum" name="upgrade.purchasedNum" />
       </td>
       <td>{{ upgrade.EffectValueString() }}</td>
     </tr>

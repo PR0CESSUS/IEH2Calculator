@@ -16,9 +16,9 @@ const game = inject<Game>("game");
     </tr>
     <tr v-for="monster in game.data.monster.globalInfoList">
       <td>{{ monster.MonsterName() }}</td>
-      <td><input type="text" size="6" v-model.lazy.number="monster.pet.level" /></td>
-      <td><input type="text" size="6" v-model.lazy.number="monster.pet.rank" /></td>
-      <td><input type="text" size="6" v-model.lazy.number="monster.pet.loyalty" /></td>
+      <td><input type="text" size="6" v-model.lazy.number="monster.pet.level" name="monster.pet.level" /></td>
+      <td><input type="text" size="6" v-model.lazy.number="monster.pet.rank" name="monster.pet.rank" /></td>
+      <td><input type="text" size="6" v-model.lazy.number="monster.pet.loyalty" name="monster.pet.loyalty" /></td>
       <td>{{ monster.pet.PassiveEffectString() }}</td>
     </tr>
     <tr class="summary">

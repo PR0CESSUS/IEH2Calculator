@@ -1,7 +1,6 @@
-import { SuperDungeonUpgradeKind } from "../type/SuperDungeonUpgradeKind";
-import { BasicStatsKind } from "../type/BasicStatsKind";
-import { Stats } from "../type/Stats";
 import { Util } from "../Util";
+import { Stats } from "../type/Stats";
+import { SuperDungeonUpgradeKind } from "../type/SuperDungeonUpgradeKind";
 
 export function SDUpgradeString(kind: SuperDungeonUpgradeKind, value = 0) {
   let str1 = "";
@@ -94,38 +93,38 @@ export function SDUpgradeString(kind: SuperDungeonUpgradeKind, value = 0) {
       str3 = "by " + Util.percent(value);
       break;
     case SuperDungeonUpgradeKind.HPMultiplier:
-      str1 = this.BasicStats(BasicStatsKind.HP) + " Multiplier";
-      str2 = "Multiplies " + this.BasicStats(BasicStatsKind.HP);
+      str1 = "HP Multiplier";
+      str2 = "Multiplies HP";
       str3 = "by " + Util.percent(value);
       break;
     case SuperDungeonUpgradeKind.MPMultiplier:
-      str1 = this.BasicStats(BasicStatsKind.MP) + " Multiplier";
-      str2 = "Multiplies " + this.BasicStats(BasicStatsKind.MP);
+      str1 = "MP Multiplier";
+      str2 = "Multiplies MP";
       str3 = "by " + Util.percent(value);
       break;
     case SuperDungeonUpgradeKind.ATKMultiplier:
-      str1 = this.BasicStats(BasicStatsKind.ATK) + " Multiplier";
-      str2 = "Multiplies " + this.BasicStats(BasicStatsKind.ATK);
+      str1 = "ATK Multiplier";
+      str2 = "Multiplies ATK";
       str3 = "by " + Util.percent(value);
       break;
     case SuperDungeonUpgradeKind.MATKMultiplier:
-      str1 = this.BasicStats(BasicStatsKind.MATK) + " Multiplier";
-      str2 = "Multiplies " + this.BasicStats(BasicStatsKind.MATK);
+      str1 = "MATK Multiplier";
+      str2 = "Multiplies MATK";
       str3 = "by " + Util.percent(value);
       break;
     case SuperDungeonUpgradeKind.DEFMultiplier:
-      str1 = this.BasicStats(BasicStatsKind.DEF) + " Multiplier";
-      str2 = "Multiplies " + this.BasicStats(BasicStatsKind.DEF);
+      str1 = "DEF Multiplier";
+      str2 = "Multiplies DEF";
       str3 = "by " + Util.percent(value);
       break;
     case SuperDungeonUpgradeKind.MDEFMultiplier:
-      str1 = this.BasicStats(BasicStatsKind.MDEF) + " Multiplier";
-      str2 = "Multiplies " + this.BasicStats(BasicStatsKind.MDEF);
+      str1 = "MDEF Multiplier";
+      str2 = "Multiplies MDEF";
       str3 = "by " + Util.percent(value);
       break;
     case SuperDungeonUpgradeKind.SPDMultiplier:
-      str1 = this.BasicStats(BasicStatsKind.SPD) + " Multiplier";
-      str2 = "Multiplies " + this.BasicStats(BasicStatsKind.SPD);
+      str1 = "SPD Multiplier";
+      str2 = "Multiplies SPD";
       str3 = "by " + Util.percent(value);
       break;
     case SuperDungeonUpgradeKind.PhysicalCriticalChanceMul:
@@ -170,14 +169,7 @@ export function SDUpgradeString(kind: SuperDungeonUpgradeKind, value = 0) {
       break;
     case SuperDungeonUpgradeKind.ElementResistanceMultiplier:
       str1 = "Element Resistance Multiplier";
-      str2 =
-        "Multiplies " +
-        this.Stat(Stats.FireRes, true) +
-        this.Stat(Stats.IceRes, true) +
-        this.Stat(Stats.ThunderRes, true) +
-        this.Stat(Stats.LightRes, true) +
-        this.Stat(Stats.DarkRes, true) +
-        " Resistance";
+      str2 = "Multiplies All Resistance";
       str3 = "by " + Util.percent(value);
       break;
     case SuperDungeonUpgradeKind.PhysicalDamageMultiplier:

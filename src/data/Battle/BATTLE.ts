@@ -9,15 +9,11 @@ import { MonsterSpecies } from "../../type/MonsterSpecies";
 export class BATTLE {
   data: DATA;
   heroKind: HeroKind;
-  species: MonsterSpecies;
-  color: MonsterColor; // MonsterColor;
-  isAlive;
   //   currentHp: NUMBER;
   //   currentMp: NUMBER;
   //   debuffings: Debuffing[] = new Debuffing[Enum.GetNames(typeof (Debuff)).length];
   //   double[] zeroDebuffElements = new double[6];
   //   attack: Attack[] = [];
-  level;
   tempValue;
   isSlayerOil;
   calculatedDamage;
@@ -47,6 +43,18 @@ export class BATTLE {
     this.fieldDebuffMagCrit = 0;
     this.fieldCurseMoveSpeedMul = 0;
     this.fieldDebuffDebuffRes = 0;
+  }
+
+  get level() {
+    return this.data.source.enemyLevel;
+  }
+
+  get species() {
+    return this.data.source.enemySpecies;
+  }
+
+  get color() {
+    return this.species == MonsterSpecies.Mimic ? MonsterColor.Normal : this.data.source.enemyColor;
   }
 
   DebuffFactor(kind: Debuff) {
@@ -235,9 +243,18 @@ export class BATTLE {
     return this.totalDamage;
   }
 
-  AttackedInfo(battle: BATTLE, damage, hitCount, isCrit, element: Element) {
-    let isSlayerOil = !this.isHero && this.battleCtrl.CurrentSlayerElement() != 0;
+  // custom method for attack damage breakdown
+  AttackedInfo() {
+    const battle = this.data.battle.hero;
+    const skill = this.data.skill.Skill(0, this.data.source.currentHero);
+    const damage = skill.DamageOrigin(battle, false);
+    const isCrit = true;
+    const hitCount = this.data.source.currentHero == HeroKind.Angel ? skill.HitCount() / 5 : skill.HitCount();
+    let element = skill.element;
+
+    const isSlayerOil = !this.isHero && this.battleCtrl.CurrentSlayerElement() != 0;
     if (isSlayerOil) element = this.battleCtrl.CurrentSlayerElement();
+
     let info = {
       DamagePerHit: this.DamageModifier(this.CalculateDamage(damage, battle.critDamage, element, isCrit)),
       tempTotalDamage: 0,
@@ -247,14 +264,24 @@ export class BATTLE {
       extraAfterDamagePerHit: 0,
       extraAfterDamage: 0,
       totalDamage: 0,
+      skill: skill,
+      hero: battle,
+      damage: damage,
+      element: element,
+      SlayerOilValue: this.data.stats.ElementSlayerDamage(this.battleCtrl.heroKind, element).Value(),
+      castTime: skill.CalculateInterval(battle),
+      dps: 0,
+      realHitCount: hitCount,
     };
 
     info.tempTotalDamage = info.DamagePerHit * hitCount;
-    info.slayerOilDamage = isSlayerOil ? info.tempTotalDamage * this.battleCtrl.data.stats.ElementSlayerDamage(this.battleCtrl.heroKind, element).Value() : 0.0;
+    info.slayerOilDamage = isSlayerOil ? info.tempTotalDamage * info.SlayerOilValue : 0.0;
     info.totalBeforeExtraAfter = info.tempTotalDamage + info.electricDamage + info.slayerOilDamage;
     info.extraAfterDamagePerHit = info.DamagePerHit * battle.extraAfterDamage;
     info.extraAfterDamage = info.totalBeforeExtraAfter * battle.extraAfterDamage;
     info.totalDamage = info.tempTotalDamage + info.electricDamage + info.slayerOilDamage + info.extraAfterDamage;
+    info.dps = info.totalDamage / info.castTime;
+
     return info;
   }
 }

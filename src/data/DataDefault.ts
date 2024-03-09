@@ -1,9 +1,17 @@
+import { ChallengeMonsterKind } from "../type/ChallengeMonsterKind";
+import { MonsterColor } from "../type/MonsterColor";
+import { MonsterSpecies } from "../type/MonsterSpecies";
+
 export class DataDefault {
   // custom
   isSuperDungeon: boolean = false;
   isBlessing: boolean = false;
   superDungeonPowerupLevels: number[] = Array(21).fill(0);
   superDungeonPowerupIsActive: boolean = false;
+  enemyLevel: number = 1;
+  enemyColor: MonsterColor = 0;
+  enemySpecies: MonsterSpecies = 0;
+  enemyChallenge: ChallengeMonsterKind = 0;
   // isActiveSdModifiers is used to store modifier data it starts at index 950 + SDModifierKind
   // sdModifierValues is used to store modifier data it starts at index 950 + SDModifierKind
   // custom end

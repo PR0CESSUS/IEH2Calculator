@@ -28,14 +28,14 @@ const totalTopaz = computed(() => {
     <tr v-for="powerup in game.data.battle.superDungeonCtrl.powerupList">
       <td>{{ powerup.NameString() }}:</td>
       <td>
-        <input type="text" size="6" v-model.lazy.number="powerup.rank" />
+        <input type="text" size="6" v-model.lazy.number="powerup.rank" name="powerup.rank" />
       </td>
 
       <td>
-        <input type="text" size="10" v-model.lazy.number="powerup.purchasedNum" />
+        <input type="text" size="10" v-model.lazy.number="powerup.purchasedNum" name="powerup.purchasedNum" />
       </td>
       <td>
-        <input type="text" size="6" v-model.lazy.number="powerup.level" />
+        <input type="text" size="6" v-model.lazy.number="powerup.level" name="powerup.level" />
       </td>
       <td>{{ powerup.TotalRankCost() }}</td>
       <td>{{ powerup.EffectValueString() }}</td>

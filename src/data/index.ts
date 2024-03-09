@@ -130,29 +130,29 @@ export class DATA {
 
   SuperDungeonToggle() {
     // const heroKind = this.source.currentHero;
-    for (let index = 0; index < Enums.HeroKind; index++) {
-      const heroKind = index;
+    for (let heroKind = 0; heroKind < Enums.HeroKind; heroKind++) {
+      const value = this.source.isSuperDungeon;
       // skills
-      this.skill.isLog[heroKind] = this.source.isSuperDungeon;
-      this.skill.skillLevelBonus[heroKind].isLog = this.source.isSuperDungeon;
-      this.skill.skillRangeMultiplier[heroKind].isLog = this.source.isSuperDungeon;
-      this.skill.skillEffectRangeMultiplier[heroKind].isLog = this.source.isSuperDungeon;
+      this.skill.isLog[heroKind] = value;
+      this.skill.skillLevelBonus[heroKind].isLog = value;
+      this.skill.skillRangeMultiplier[heroKind].isLog = value;
+      this.skill.skillEffectRangeMultiplier[heroKind].isLog = value;
       // stats
-      this.stats.heroes[heroKind].stats[5].isLog = this.source.isSuperDungeon;
-      this.stats.heroes[heroKind].stats[6].isLog = this.source.isSuperDungeon;
-      this.stats.heroes[heroKind].stats[7].isLog = this.source.isSuperDungeon;
-      this.stats.heroes[heroKind].stats[8].isLog = this.source.isSuperDungeon;
-      this.stats.heroes[heroKind].stats[9].isLog = this.source.isSuperDungeon;
-      this.stats.heroes[heroKind].stats[10].isLog = this.source.isSuperDungeon;
-      this.stats.heroes[heroKind].hpRegenerate.isLog = this.source.isSuperDungeon;
-      this.stats.heroes[heroKind].mpRegenerate.isLog = this.source.isSuperDungeon;
+      this.stats.heroes[heroKind].stats[5].isLog = value;
+      this.stats.heroes[heroKind].stats[6].isLog = value;
+      this.stats.heroes[heroKind].stats[7].isLog = value;
+      this.stats.heroes[heroKind].stats[8].isLog = value;
+      this.stats.heroes[heroKind].stats[9].isLog = value;
+      this.stats.heroes[heroKind].stats[10].isLog = value;
+      this.stats.heroes[heroKind].hpRegenerate.isLog = value;
+      this.stats.heroes[heroKind].mpRegenerate.isLog = value;
 
-      for (let index = 0; index < Enums.BasicStatsKind; index++) this.stats.heroes[heroKind].basicStats[index].isLog = this.source.isSuperDungeon;
-      for (let index = 0; index < Enums.Element; index++) this.stats.heroes[heroKind].elementDamages[index].isLog = this.source.isSuperDungeon;
-      for (let index = 0; index < Enums.Element - 1; index++) this.stats.heroes[heroKind].stats[index].isLog = this.source.isSuperDungeon;
-      for (let index = 0; index < Enums.Element; index++) this.stats.heroes[heroKind].elementAbsoptions[index].isLog = this.source.isSuperDungeon;
-      for (let index = 0; index < Enums.Element; index++) this.stats.heroes[heroKind].elementInvalids[index].isLog = this.source.isSuperDungeon;
-      for (let index = 0; index < Enums.MonsterSpecies; index++) this.stats.heroes[heroKind].monsterDamages[index].isLog = this.source.isSuperDungeon;
+      for (let index = 0; index < Enums.BasicStatsKind; index++) this.stats.heroes[heroKind].basicStats[index].isLog = value;
+      for (let index = 0; index < Enums.Element; index++) this.stats.heroes[heroKind].elementDamages[index].isLog = value;
+      for (let index = 0; index < Enums.Element - 1; index++) this.stats.heroes[heroKind].stats[index].isLog = value;
+      for (let index = 0; index < Enums.Element; index++) this.stats.heroes[heroKind].elementAbsoptions[index].isLog = value;
+      for (let index = 0; index < Enums.Element; index++) this.stats.heroes[heroKind].elementInvalids[index].isLog = value;
+      for (let index = 0; index < Enums.MonsterSpecies; index++) this.stats.heroes[heroKind].monsterDamages[index].isLog = value;
     }
   }
 
