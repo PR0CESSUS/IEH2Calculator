@@ -1,6 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
+  <h2>0.1.20</h2>
+  <ul>
+    <li>Added Ability tab to Data page</li>
+    <li>Added Quest tab to Data page</li>
+  </ul>
   <h2>0.1.18</h2>
   <ul>
     <li>Some changes to skill breakdown layout plus added percentage comparison from snapshot</li>

@@ -111,7 +111,7 @@ select {
   border-right-color: #6d6f6d;
 }
 
-input.checkbox {
+input[type="checkbox"] {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -124,7 +124,7 @@ input.checkbox {
   height: 22px;
 }
 
-input.checkbox::before {
+input[type="checkbox"]::before {
   content: "\2714";
   font-size: 22px;
   text-align: center;
@@ -146,6 +146,6 @@ input.checkbox::before {
   border-right-color: #947a1a;
 }
 
-input.checkbox:checked:before {
+input[type="checkbox"]:checked:before {
   color: #ff0000 !important;
 }

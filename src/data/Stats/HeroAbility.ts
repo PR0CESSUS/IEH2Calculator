@@ -10,7 +10,7 @@ export class HeroAbility {
   data: DATA;
   heroKind: HeroKind;
   kind: AbilityKind;
-  point;
+  point: HeroAbilityPoint;
   pointMultiplicativeMultiplier: Multiplier;
 
   constructor(DATA: DATA, heroKind: HeroKind, kind: AbilityKind, pointLeft) {

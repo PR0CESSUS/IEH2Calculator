@@ -17,6 +17,7 @@ import { DataQuest } from "./index";
 import { DATA } from "..";
 import { Stats } from "../../type/Stats";
 import { Enums } from "../../Enums";
+import { Localization } from "../../localization";
 type QuestKindData =
   | {
       kind: QuestKind.Global;
@@ -641,13 +642,42 @@ export class QUEST {
       default:
         return false;
     }
-
-    return this.data.source.dailyQuestMonsterSpecies[this.kindDaily];
+  }
+  set isCleared(value: boolean) {
+    switch (this.kind) {
+      case QuestKind.Global:
+        this.data.source.isClearedQuestsGlobal[this.kindGlobal] = value;
+        break;
+      case QuestKind.Title:
+        switch (this.heroKind) {
+          case HeroKind.Warrior:
+            this.data.source.isClearedQuestsTitleWarrior[this.kindTitle] = value;
+            break;
+          case HeroKind.Wizard:
+            this.data.source.isClearedQuestsTitleWizard[this.kindTitle] = value;
+            break;
+          case HeroKind.Angel:
+            this.data.source.isClearedQuestsTitleAngel[this.kindTitle] = value;
+            break;
+          case HeroKind.Thief:
+            this.data.source.isClearedQuestsTitleThief[this.kindTitle] = value;
+            break;
+          case HeroKind.Archer:
+            this.data.source.isClearedQuestsTitleArcher[this.kindTitle] = value;
+            break;
+          case HeroKind.Tamer:
+            this.data.source.isClearedQuestsTitleTamer[this.kindTitle] = value;
+            break;
+        }
+    }
   }
   //   set isCleared(value) {
   //     this.data.source.dailyQuestMonsterSpecies[this.kindDaily] = value;
   //   }
 
+  NameString() {
+    return Localization.Quest(this);
+  }
   //   DefeatTargetMonsterDefeatedNum() {
   //     return !this.isAccepted || this.isCleared ? 0.0 : Math.max(0.0, this.defeatTargetMonsterDefeatNum - this.initDefeatedNum);
   //   }

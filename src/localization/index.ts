@@ -20,6 +20,8 @@ import { TownMaterialNameString } from "./TownMaterialNameString";
 import { MonsterSpeciesName } from "./MonsterSpeciesName";
 import { MonsterPetPassiveEffectString } from "./MonsterPetPassiveEffectString";
 import { Stat } from "./Stat";
+import { Quest } from "./Quest";
+import { Title } from "./Title";
 
 export const Localization = {
   EquipmentEffectName,
@@ -44,4 +46,6 @@ export const Localization = {
   MonsterSpeciesName,
   MonsterPetPassiveEffectString,
   Stat,
+  Quest,
+  Title,
 };
