@@ -22,6 +22,8 @@ import { MonsterPetPassiveEffectString } from "./MonsterPetPassiveEffectString";
 import { Stat } from "./Stat";
 import { Quest } from "./Quest";
 import { Title } from "./Title";
+import { BuildingString } from "./BuildingString";
+import { BuildingEffectString } from "./BuildingEffectString";
 
 export const Localization = {
   EquipmentEffectName,
@@ -48,4 +50,6 @@ export const Localization = {
   Stat,
   Quest,
   Title,
+  BuildingString,
+  BuildingEffectString,
 };

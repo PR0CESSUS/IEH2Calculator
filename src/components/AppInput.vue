@@ -21,7 +21,7 @@ const [model, modifiers] = defineModel({
   },
 });
 
-const size = ref(props.size | 8);
+const size = ref(props.size ? props.size : 8);
 
 // console.log(modifiers);
 </script>

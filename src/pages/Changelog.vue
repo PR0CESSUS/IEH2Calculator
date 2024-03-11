@@ -1,6 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
+  <h2>0.1.21</h2>
+  <ul>
+    <li>Added Town tab to Data page</li>
+  </ul>
   <h2>0.1.20</h2>
   <ul>
     <li>Added Ability tab to Data page</li>

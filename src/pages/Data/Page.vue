@@ -14,6 +14,7 @@ import SDPowerup from "./SDPowerup.vue";
 import Bestiary from "./Bestiary.vue";
 import Ability from "./Ability.vue";
 import Quest from "./Quest.vue";
+import Town from "./Town.vue";
 
 const globalStore = useGlobalStore();
 </script>
@@ -30,6 +31,7 @@ const globalStore = useGlobalStore();
     <TabItem title="Main"><DataMain /></TabItem>
     <TabItem title="Ability"><Ability /></TabItem>
     <TabItem title="Quest"><Quest /></TabItem>
+    <TabItem title="Town"><Town /></TabItem>
     <TabItem title="Bestiary"><Bestiary /></TabItem>
     <TabItem title="Talisman"><DataTalisman /></TabItem>
     <TabItem title="Expedition"><ExpeditionVue /></TabItem>
