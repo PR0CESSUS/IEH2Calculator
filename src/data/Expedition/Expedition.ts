@@ -1,4 +1,5 @@
 import { DataExpedition } from ".";
+import { Util } from "../../Util";
 import { ExpeditionPet } from "./ExpeditionPet";
 
 export class Expedition {
@@ -88,6 +89,14 @@ export class Expedition {
 
   TimeSpeedModifier() {
     return this.expeditionCtrl.speedMultiplier.Value() * this.globalInfo.SpeedModifierByExpeditionLevel();
+  }
+
+  RewardPerSec(petId: number) {
+    return this.globalInfo.RewardAmount(this, this.pets[petId].pet, this.timeHours[this.timeId]) / this.RequiredTimesec();
+  }
+
+  RewardPerSecString(petId: number) {
+    return Util.tDigit(this.RewardPerSec(petId));
   }
 
   MostEffective() {

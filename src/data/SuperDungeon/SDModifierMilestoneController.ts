@@ -13,9 +13,7 @@ export class SDModifierMilestoneController {
   }
 
   Total() {
-    return this.data.source.maxModifierCleareds.reduce((a, b) => {
-      return a + b;
-    }, 0);
+    return this.data.source.maxModifierCleareds.reduce((a, b) => a + b, 0);
   }
 
   Start() {

@@ -24,6 +24,7 @@ import { Quest } from "./Quest";
 import { Title } from "./Title";
 import { BuildingString } from "./BuildingString";
 import { BuildingEffectString } from "./BuildingEffectString";
+import { MonsterShortNameString } from "./MonsterShortNameString";
 
 export const Localization = {
   EquipmentEffectName,
@@ -52,4 +53,5 @@ export const Localization = {
   Title,
   BuildingString,
   BuildingEffectString,
+  MonsterShortNameString,
 };

@@ -4,6 +4,7 @@ import { Game } from "../Game";
 import { Util } from "../Util/index";
 import MultiplierInformation from "../components/MultiplierInformation.vue";
 import { useGlobalStore } from "../stores/global";
+import AppInput from "../components/AppInput.vue";
 const game = inject<Game>("game");
 const globalStore = useGlobalStore();
 const expPerSec = game.data.expedition.expeditions.reduce((accumulator, currentValue) => accumulator + currentValue.GetExpeditionExp(), 0);
@@ -45,6 +46,9 @@ const expPerPlaytime = computed(() => {
       EXP per Nitro Sink: {{ Util.tDigit(nitroSinkExp) }} ( {{ Util.secondsToDhms(nitroSinkTime, false) }})<br />
       <hr />
       Total EXP per day: {{ Util.tDigit(expPerPlaytime + nitroSinkExp * 5) }}<br />
+
+      Hackmanite <AppInput v-model="game.data.sdg.sdGemRitualCtrl.sdGemList[6].level" /><br />
+      Turquoise <AppInput v-model="game.data.sdg.sdGemRitualCtrl.sdGemList[7].level" />
     </div>
   </div>
 
@@ -65,8 +69,11 @@ const expPerPlaytime = computed(() => {
         </select>
       </div>
       <div>
+        <span class="yellow">({{ expedition.RewardPerSecString(0) }} / sec)</span>
         {{ expedition.globalInfo.RewardString(expedition, expedition.pets[0].pet, expedition.timeHour) }} <br />
+        <span class="yellow">({{ expedition.RewardPerSecString(1) }} / sec)</span>
         {{ expedition.globalInfo.RewardString(expedition, expedition.pets[1].pet, expedition.timeHour) }} <br />
+        <span class="yellow">({{ expedition.RewardPerSecString(2) }} / sec)</span>
         {{ expedition.globalInfo.RewardString(expedition, expedition.pets[2].pet, expedition.timeHour) }}
       </div>
       <div>
@@ -103,7 +110,7 @@ const expPerPlaytime = computed(() => {
   padding-top: 7px;
   padding-right: 5px;
   padding-left: 7px;
-  width: 700px;
+  width: 900px;
   background: linear-gradient(#005984, #003852);
   margin: 3px 0px;
   display: grid;

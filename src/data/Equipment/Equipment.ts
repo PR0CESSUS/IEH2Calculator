@@ -13,6 +13,7 @@ import { EquipmentForgeEffect } from "./EquipmentForgeEffect";
 import { EquipmentOptionEffect } from "./EquipmentOptionEffect";
 import { EquipmentParameter } from "./EquipmentParameter";
 import { SetEffect } from "./SetEffect";
+import { EnchantmentOptimizer } from "./EnchantmentOptimizer";
 
 export class Equipment {
   data: DATA;
@@ -490,5 +491,9 @@ export class Equipment {
     if (this.slotId < 520) return `Inventory tab ${Math.floor(this.slotId / 52) + 1} position ${this.slotId}`;
     const slot = this.slotPart == EquipmentPart.Weapon ? this.loadoutSlot : this.slotPart == EquipmentPart.Armor ? this.loadoutSlot - 24 : this.loadoutSlot - 48;
     return `${HeroKind[this.heroKind]} Loadout ${this.loadout + 1} - ${EquipmentPart[this.slotPart]} position ${slot + 1}`;
+  }
+
+  FindMaxEnchantDPS(optionId: number) {
+    EnchantmentOptimizer(this.data.battle.Enemy(), this, optionId);
   }
 }

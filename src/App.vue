@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { inject, ref } from "vue";
-import { Router } from "vue-router";
 import packageInfo from "../package.json";
-import { routes } from "./routes";
 import Clipboard from "./components/Clipboard.vue";
 import { Game } from "./Game";
 import { useSaveFileData } from "./stores/data";
 import { SDModifierKind } from "./type/SDModifierKind";
+import TheBreadcrumb from "./components/TheBreadcrumb.vue";
+import TheMenu from "./components/TheMenu.vue";
 
 const game = inject<Game>("game");
-const router = inject<Router>("router");
 const dialog = ref<HTMLDialogElement>();
 
 function importSaveFile(event: Event & { target: HTMLInputElement }) {
@@ -51,7 +50,9 @@ function createSnapshot() {
 <template>
   <div class="wrapper">
     <div class="header">
-      <h1 id="title"><router-link to="/">IEH2Calculator</router-link>{{ router.currentRoute.value.path }}</h1>
+      <h1 id="title">
+        <TheBreadcrumb />
+      </h1>
       <div id="settings">
         <button style="font-size: 12px" @click="dialog.showModal()">&#9776;</button>
 
@@ -62,16 +63,9 @@ function createSnapshot() {
       </div>
     </div>
 
-    <nav class="sidebar" id="menu">
-      <router-link
-        v-for="route in routes.filter((route) => {
-          return route.path != '/';
-        })"
-        :to="route.path"
-      >
-        {{ route.name }}
-      </router-link>
-    </nav>
+    <div class="sidebar" id="menu">
+      <TheMenu />
+    </div>
 
     <div id="content"><router-view></router-view></div>
 
@@ -210,28 +204,5 @@ nav a.router-link-active {
   grid-area: footer;
   /* background-color: #232c37; */
   border-top: #fff 1px solid;
-}
-nav a {
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  border-width: 4px 4px 4px 4px;
-  border-radius: 0px;
-  border-color: #b6b6b6 #8f8f8f #9e9e9e #969696;
-  border-style: outset;
-  background-clip: padding-box;
-  background-color: #232c37;
-  font-size: 16px;
-  color: #ffffff;
-  margin: 0;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  padding-left: 5px;
-  padding-right: 5px;
-  background-image: linear-gradient(#868686, #535353);
-}
-
-nav a:hover {
-  color: #fffbcf;
 }
 </style>

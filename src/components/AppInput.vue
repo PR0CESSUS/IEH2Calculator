@@ -21,13 +21,16 @@ const [model, modifiers] = defineModel({
   },
 });
 
+// console.log();
+
 const size = ref(props.size ? props.size : 8);
 
 // console.log(modifiers);
 </script>
 
 <template>
-  <input name="input" type="text" :size="size" v-model.lazy="model" />
+  <template v-if="Object.keys(modifiers).length"><input name="input" type="text" :size="size" v-model.lazy="model" /></template>
+  <template v-else><input name="input" type="text" :size="size" v-model.lazy.number="model" /></template>
 </template>
 
 <style scoped></style>

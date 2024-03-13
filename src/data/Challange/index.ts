@@ -7,11 +7,11 @@ import { CHALLENGE } from "./CHALLENGE";
 
 export class DataChallenge {
   #data: DATA;
-  raidbossList = [];
-  solobossList = [];
-  handicapList = [];
-  superdungeonList = [];
-  challengeList = [];
+  raidbossList: CHALLENGE[] = [];
+  solobossList: CHALLENGE[] = [];
+  handicapList: CHALLENGE[] = [];
+  superdungeonList: CHALLENGE[] = [];
+  challengeList: CHALLENGE[] = [];
   permanentRewardMultiplier: Multiplier;
   sdStatRewardMultiplier: Multiplier;
 

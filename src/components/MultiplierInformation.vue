@@ -70,9 +70,9 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
     <p @mouseover.once="init = true" @click="console.log(multiplier)" :class="{ underline: !props.inline }">
       <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }">{{ name }}</span>
 
-      <span :class="[useCompareColor(multiplier.diff.value)]" class="right"
-        >{{ multiplier.compare.value }} {{ Util.convertTo(multiplier.main.Value(), props.precision, multiplier.main.numberType) }} {{ props.valueSuffix }}</span
-      >
+      <span :class="[useCompareColor(multiplier.diff.value, multiplier.main.value, multiplier.snap.value)]" class="right"
+        >{{ multiplier.compare.value }} {{ Util.convertTo(multiplier.main.Value(), props.precision, multiplier.main.numberType) }} {{ props.valueSuffix }}
+      </span>
     </p>
     <template #content v-if="init">
       <div style="width: 400px">

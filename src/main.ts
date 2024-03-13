@@ -31,8 +31,5 @@ globalThis.SaveFileSnapshot = snap;
 
 app.config.performance = true;
 
-app.provide("data", data);
-app.provide("snap", snap);
-app.provide("router", router);
 app.provide("game", game);
 app.mount("#app");

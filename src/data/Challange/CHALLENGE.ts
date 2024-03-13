@@ -11,6 +11,8 @@ import { BasicStatsKind } from "../../type/BasicStatsKind";
 import { ResourceKind } from "../../type/ResourceKind";
 import { Stats } from "../../type/Stats";
 import { Element } from "../../type/Element";
+import { Localization } from "../../localization";
+import { Util } from "../../Util";
 
 export class CHALLENGE {
   #data: DATA;
@@ -21,6 +23,27 @@ export class CHALLENGE {
   constructor(DATA: DATA, kind: ChallengeKind) {
     this.#data = DATA;
     this.kind = kind;
+
+    switch (this.kind) {
+      case ChallengeKind.SDSlime:
+        this.superDungeonId = 0;
+        break;
+      case ChallengeKind.SDSpider:
+        this.superDungeonId = 1;
+        break;
+      case ChallengeKind.SDBatTreant:
+        this.superDungeonId = 2;
+        break;
+      case ChallengeKind.SDFairyFlametiger:
+        this.superDungeonId = 3;
+        break;
+      case ChallengeKind.SDSlimeMslime:
+        this.superDungeonId = 4;
+        break;
+
+      default:
+        break;
+    }
     // this.isReceivedRewardWarrior;
     // this.unlock = new Unlock();
     // this.disableUnlock = new Unlock();
@@ -34,6 +57,107 @@ export class CHALLENGE {
     this.SetReward();
   }
 
+  NameString() {
+    const kindName = ChallengeKind[this.kind];
+
+    switch (this.kind) {
+      case ChallengeKind.SDSlime:
+        return Localization.SDName(0);
+      case ChallengeKind.SDSpider:
+        return Localization.SDName(1);
+      case ChallengeKind.SDBatTreant:
+        return Localization.SDName(2);
+      case ChallengeKind.SDFairyFlametiger:
+        return Localization.SDName(3);
+      case ChallengeKind.SDSlimeMslime:
+        return Localization.SDName(4);
+      default:
+        return kindName;
+    }
+    return Localization.MonsterShortNameString(0);
+  }
+
+  EffectValueString(hero: HeroKind) {
+    switch (this.kind) {
+      case ChallengeKind.SDSlime:
+        switch (hero) {
+          case HeroKind.Warrior:
+            return `Stone Gain ${Util.percent(this.FloorRewardValue(HeroKind.Warrior))}`;
+          case HeroKind.Wizard:
+            return `Crystal Gain ${Util.percent(this.FloorRewardValue(HeroKind.Wizard))}`;
+          case HeroKind.Angel:
+            return `Leaf Gain ${Util.percent(this.FloorRewardValue(HeroKind.Angel))}`;
+          case HeroKind.Thief:
+            return `Gold Cap ${Util.percent(this.FloorRewardValue(HeroKind.Thief))}`;
+          case HeroKind.Archer:
+            return `Gold Gain ${Util.percent(this.FloorRewardValue(HeroKind.Archer))}`;
+          case HeroKind.Tamer:
+            return `Slime Coin Cap ${Util.percent(this.FloorRewardValue(HeroKind.Tamer))}`;
+        }
+      case ChallengeKind.SDSpider:
+        switch (hero) {
+          case HeroKind.Warrior:
+            return `HP ${Util.percent(this.FloorRewardValue(HeroKind.Warrior))}`;
+          case HeroKind.Wizard:
+            return `MP ${Util.percent(this.FloorRewardValue(HeroKind.Wizard))}`;
+          case HeroKind.Angel:
+            return `ATK ${Util.percent(this.FloorRewardValue(HeroKind.Angel))}`;
+          case HeroKind.Thief:
+            return `MATK ${Util.percent(this.FloorRewardValue(HeroKind.Thief))}`;
+          case HeroKind.Archer:
+            return `DEF ${Util.percent(this.FloorRewardValue(HeroKind.Archer))}`;
+          case HeroKind.Tamer:
+            return `MDEF ${Util.percent(this.FloorRewardValue(HeroKind.Tamer))}`;
+        }
+      case ChallengeKind.SDBatTreant:
+        switch (hero) {
+          case HeroKind.Warrior:
+            return `Physical Damage ${Util.percent(this.FloorRewardValue(HeroKind.Warrior))}`;
+          case HeroKind.Wizard:
+            return `Physical Critical Chance ${Util.percent(this.FloorRewardValue(HeroKind.Wizard))}`;
+          case HeroKind.Angel:
+            return `Armored Fury ${Util.percent(this.FloorRewardValue(HeroKind.Angel))}`;
+          case HeroKind.Thief:
+            return `Critical Damage ${Util.percent(this.FloorRewardValue(HeroKind.Thief))}`;
+          case HeroKind.Archer:
+            return `Pet Base Critical Damage ${Util.percent(this.FloorRewardValue(HeroKind.Archer))}`;
+          case HeroKind.Tamer:
+            return `Pet Base Physical Critical Chance ${Util.percent(this.FloorRewardValue(HeroKind.Tamer))}`;
+        }
+      case ChallengeKind.SDFairyFlametiger:
+        switch (hero) {
+          case HeroKind.Warrior:
+            return `Magical Damage ${Util.percent(this.FloorRewardValue(HeroKind.Warrior))}`;
+          case HeroKind.Wizard:
+            return `Magical Critical Chance ${Util.percent(this.FloorRewardValue(HeroKind.Wizard))}`;
+          case HeroKind.Angel:
+            return `Warded Fury ${Util.percent(this.FloorRewardValue(HeroKind.Angel))}`;
+          case HeroKind.Thief:
+            return `Debuff Resistance ${Util.percent(this.FloorRewardValue(HeroKind.Thief))}`;
+          case HeroKind.Archer:
+            return `Element Resistance ${Util.percent(this.FloorRewardValue(HeroKind.Archer))}`;
+          case HeroKind.Tamer:
+            return `Pet Base Magical Critical Chance ${Util.percent(this.FloorRewardValue(HeroKind.Tamer))}`;
+        }
+      case ChallengeKind.SDSlimeMslime:
+        switch (hero) {
+          case HeroKind.Warrior:
+            return `SD Damage Multiplier ${Util.percent(this.FloorRewardValue(HeroKind.Warrior))}`;
+          case HeroKind.Wizard:
+            return `SD Challenge BOSS Damage Multiplier ${Util.percent(this.FloorRewardValue(HeroKind.Wizard))}`;
+          case HeroKind.Angel:
+            return `SD Damage Cut Multiplier ${Util.percent(this.FloorRewardValue(HeroKind.Angel))}`;
+          case HeroKind.Thief:
+            return `SD Challenge Boss Damage Cut Multiplier ${Util.percent(this.FloorRewardValue(HeroKind.Thief))}`;
+          case HeroKind.Archer:
+            return `SD Armored Fury ${Util.percent(this.FloorRewardValue(HeroKind.Archer))}`;
+          case HeroKind.Tamer:
+            return `SD Warded Fury ${Util.percent(this.FloorRewardValue(HeroKind.Tamer))}`;
+        }
+      default:
+        return "-";
+    }
+  }
   //   sdId => 0;
 
   //   currentHeroKind: HeroKind => this.#data.challenge.heroKind;
@@ -195,8 +319,6 @@ export class CHALLENGE {
   }
 
   get isReceivedRewardAngel() {
-    // console.log(this.#data.source.isReceivedRewardsChallenge[3 + this.kind * 10]);
-
     return this.#data.source.isReceivedRewardsChallenge[3 + this.kind * 10];
   }
   set isReceivedRewardAngel(value) {
@@ -247,6 +369,31 @@ export class CHALLENGE {
         return this.isReceivedRewardTamer;
       default:
         return false;
+    }
+  }
+
+  SetReceivedRewardClass(heroKind: HeroKind, value: boolean) {
+    switch (heroKind) {
+      case HeroKind.Warrior:
+        this.isReceivedRewardWarrior = value;
+        break;
+      case HeroKind.Wizard:
+        this.isReceivedRewardWizard = value;
+        break;
+      case HeroKind.Angel:
+        this.isReceivedRewardAngel = value;
+        break;
+      case HeroKind.Thief:
+        this.isReceivedRewardThief = value;
+        break;
+      case HeroKind.Archer:
+        this.isReceivedRewardArcher = value;
+        break;
+      case HeroKind.Tamer:
+        this.isReceivedRewardTamer = value;
+        break;
+      default:
+        break;
     }
   }
 
@@ -485,19 +632,54 @@ export class CHALLENGE {
 
         break;
       case ChallengeKind.SDSlime:
-        this.superDungeonId = 0;
-        this.#data.stats
-          .ResourceGain(ResourceKind.Stone)
-          .RegisterMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Warrior)));
-        this.#data.stats
-          .ResourceGain(ResourceKind.Crystal)
-          .RegisterMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Wizard)));
-        this.#data.stats
-          .ResourceGain(ResourceKind.Leaf)
-          .RegisterMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Angel)));
-        this.#data.resource.goldCap.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Thief)));
-        this.#data.stats.GoldGain().RegisterMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Archer)));
-        this.#data.resource.slimeCoinCap.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Tamer)));
+        this.#data.stats.ResourceGain(ResourceKind.Stone).RegisterMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Warrior),
+            () => this.isReceivedRewardWarrior
+          )
+        );
+        this.#data.stats.ResourceGain(ResourceKind.Crystal).RegisterMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Wizard),
+            () => this.isReceivedRewardWizard
+          )
+        );
+        this.#data.stats.ResourceGain(ResourceKind.Leaf).RegisterMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Angel),
+            () => this.isReceivedRewardAngel
+          )
+        );
+        this.#data.resource.goldCap.RegisterMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Thief),
+            () => this.isReceivedRewardThief
+          )
+        );
+        this.#data.stats.GoldGain().RegisterMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Archer),
+            () => this.isReceivedRewardArcher
+          )
+        );
+        this.#data.resource.slimeCoinCap.RegisterMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Tamer),
+            () => this.isReceivedRewardTamer
+          )
+        );
         break;
       case ChallengeKind.RaidOctobaddie500:
         break;
@@ -521,45 +703,220 @@ export class CHALLENGE {
         this.SetRewardOcto([0.8, 0.8, 0.8, 125, 125, 125]);
         break;
       case ChallengeKind.SDSpider:
-        this.superDungeonId = 1;
-        this.#data.stats.SetEffectBasicStats(BasicStatsKind.HP, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Warrior)));
-        this.#data.stats.SetEffectBasicStats(BasicStatsKind.MP, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Wizard)));
-        this.#data.stats.SetEffectBasicStats(BasicStatsKind.ATK, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Angel)));
-        this.#data.stats.SetEffectBasicStats(BasicStatsKind.MATK, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Thief)));
-        this.#data.stats.SetEffectBasicStats(BasicStatsKind.DEF, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Archer)));
-        this.#data.stats.SetEffectBasicStats(BasicStatsKind.MDEF, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Tamer)));
+        this.#data.stats.SetEffectBasicStats(
+          BasicStatsKind.HP,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Warrior),
+            () => this.isReceivedRewardWarrior
+          )
+        );
+        this.#data.stats.SetEffectBasicStats(
+          BasicStatsKind.MP,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Wizard),
+            () => this.isReceivedRewardWizard
+          )
+        );
+        this.#data.stats.SetEffectBasicStats(
+          BasicStatsKind.ATK,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Angel),
+            () => this.isReceivedRewardAngel
+          )
+        );
+        this.#data.stats.SetEffectBasicStats(
+          BasicStatsKind.MATK,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Thief),
+            () => this.isReceivedRewardThief
+          )
+        );
+        this.#data.stats.SetEffectBasicStats(
+          BasicStatsKind.DEF,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Archer),
+            () => this.isReceivedRewardArcher
+          )
+        );
+        this.#data.stats.SetEffectBasicStats(
+          BasicStatsKind.MDEF,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Tamer),
+            () => this.isReceivedRewardTamer
+          )
+        );
         break;
       case ChallengeKind.SDBatTreant:
-        this.superDungeonId = 2;
         this.#data.stats.SetEffectElementDamage(
           Element.Physical,
-          new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Warrior))
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Warrior),
+            () => this.isReceivedRewardWarrior
+          )
         );
-        this.#data.stats.SetEffectStats(Stats.PhysCritChance, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Wizard)));
-        this.#data.stats.SetEffectStats(Stats.ArmoredFury, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Angel)));
-        this.#data.stats.SetEffectStats(Stats.CriticalDamage, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Thief)));
-        this.#data.stats.SetEffectStats(Stats.PetCriticalDamage, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Archer)));
-        this.#data.stats.SetEffectStats(Stats.PetPhysCritChance, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Tamer)));
+        this.#data.stats.SetEffectStats(
+          Stats.PhysCritChance,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Wizard),
+            () => this.isReceivedRewardWizard
+          )
+        );
+        this.#data.stats.SetEffectStats(
+          Stats.ArmoredFury,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Angel),
+            () => this.isReceivedRewardAngel
+          )
+        );
+        this.#data.stats.SetEffectStats(
+          Stats.CriticalDamage,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Thief),
+            () => this.isReceivedRewardThief
+          )
+        );
+        this.#data.stats.SetEffectStats(
+          Stats.PetCriticalDamage,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Archer),
+            () => this.isReceivedRewardArcher
+          )
+        );
+        this.#data.stats.SetEffectStats(
+          Stats.PetPhysCritChance,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Tamer),
+            () => this.isReceivedRewardTamer
+          )
+        );
         break;
       case ChallengeKind.SDFairyFlametiger:
-        this.superDungeonId = 3;
-        this.#data.stats.SetEffectMagicalDamage(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Warrior)));
-        this.#data.stats.SetEffectStats(Stats.MagCritChance, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Wizard)));
-        this.#data.stats.SetEffectStats(Stats.WardedFury, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Angel)));
-        this.#data.stats.SetEffectStats(Stats.DebuffRes, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Thief)));
-        this.#data.stats.SetEffectElementResistance(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Archer)));
-        this.#data.stats.SetEffectStats(Stats.PetMagCritChance, new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Tamer)));
+        this.#data.stats.SetEffectMagicalDamage(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Warrior),
+            () => this.isReceivedRewardWarrior
+          )
+        );
+        this.#data.stats.SetEffectStats(
+          Stats.MagCritChance,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Wizard),
+            () => this.isReceivedRewardWizard
+          )
+        );
+        this.#data.stats.SetEffectStats(
+          Stats.WardedFury,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Angel),
+            () => this.isReceivedRewardAngel
+          )
+        );
+        this.#data.stats.SetEffectStats(
+          Stats.DebuffRes,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Thief),
+            () => this.isReceivedRewardThief
+          )
+        );
+        this.#data.stats.SetEffectElementResistance(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Archer),
+            () => this.isReceivedRewardArcher
+          )
+        );
+        this.#data.stats.SetEffectStats(
+          Stats.PetMagCritChance,
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Tamer),
+            () => this.isReceivedRewardTamer
+          )
+        );
         break;
       case ChallengeKind.SDSlimeMslime:
-        this.superDungeonId = 4;
-        this.#data.sdg.SetEffectSDDamageMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Warrior)));
-        this.#data.sdg.SetEffectSDChallengeBossDamageMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Wizard)));
-        this.#data.sdg.SetEffectSDDamageCutMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Angel)));
-        this.#data.sdg.SetEffectSDChallengeBossDamageCutMultiplier(
-          new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Thief))
+        this.#data.sdg.SetEffectSDDamageMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Warrior),
+            () => this.isReceivedRewardWarrior
+          )
         );
-        this.#data.sdg.SetEffectSDArmoredFuryMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Archer)));
-        this.#data.sdg.SetEffectSDWardedFuryMultiplier(new MultiplierInfo(MultiplierKind.SuperDungeon, MultiplierType.Mul, () => this.FloorRewardValue(HeroKind.Tamer)));
+        this.#data.sdg.SetEffectSDChallengeBossDamageMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Wizard),
+            () => this.isReceivedRewardWizard
+          )
+        );
+        this.#data.sdg.SetEffectSDDamageCutMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Angel),
+            () => this.isReceivedRewardAngel
+          )
+        );
+        this.#data.sdg.SetEffectSDChallengeBossDamageCutMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Thief),
+            () => this.isReceivedRewardThief
+          )
+        );
+        this.#data.sdg.SetEffectSDArmoredFuryMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Archer),
+            () => this.isReceivedRewardArcher
+          )
+        );
+        this.#data.sdg.SetEffectSDWardedFuryMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SuperDungeon,
+            MultiplierType.Mul,
+            () => this.FloorRewardValue(HeroKind.Tamer),
+            () => this.isReceivedRewardTamer
+          )
+        );
         break;
       default:
         break;
