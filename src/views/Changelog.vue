@@ -1,6 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
+  <h2>0.1.25</h2>
+  <li>Fixed broken quest link</li>
   <h2>0.1.23</h2>
   <ul>
     <li>Added Hackmanite and Turquoise input to <router-link to="/expedition">Expedition</router-link> for easier comparision</li>

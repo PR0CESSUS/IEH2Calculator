@@ -49,7 +49,7 @@ export const routes: Readonly<RouteRecordRaw[]> = [
         meta: { name: "Quest" },
         component: ViewDataQuest,
         children: [
-          { path: "global", meta: { name: "Global" }, component: ViewDataQuestGlobal },
+          { path: "", meta: { name: "Global" }, component: ViewDataQuestGlobal },
           { path: "title", meta: { name: "Title", parent: "Quest" }, component: ViewDataQuestTitle },
         ],
       },
