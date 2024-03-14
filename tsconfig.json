@@ -19,10 +19,22 @@
     "strict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "types": ["unplugin-vue-router/client"],
+    "paths": {
+      "@use/*": ["./src/composable/*"],
+      "@/*": ["./src/*"],
+      "@assets/*": ["./src/shared/assets/*"],
+      "@localization/*": ["./src/localization/*"],
+      "@components/*": ["./src/components/*"],
+      "@util": ["./src/Util/index.ts"],
+      "@stores/*": ["./src/stores/*"],
+      "@type/*": ["./src/type/*"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "test/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "test/**/*.ts", "test/backup/test.vue"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "exclude": ["test/**/*.ts"],
-  "files": ["global.d.ts"]
+  "files": ["global.d.ts", "typed-router.d.ts"]
 }

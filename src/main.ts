@@ -7,12 +7,10 @@ import { DATA } from "./data";
 import { useSaveFileData } from "./stores/data";
 import { useSaveFileSnapshot } from "./stores/snap";
 
-import { createRouter, createWebHashHistory } from "vue-router";
-import { routes } from "./routes/index";
+import { createRouter, createWebHashHistory } from "vue-router/auto";
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
 });
 const app = createApp(App);
 const pinia = createPinia();

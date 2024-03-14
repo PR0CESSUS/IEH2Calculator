@@ -4,9 +4,9 @@ const inContentZone = ref(false);
 const inTriggerZone = ref(false);
 const isVisible = computed(() => inContentZone.value || inTriggerZone.value);
 const content = ref<HTMLDivElement>();
-
 const mouseEnter = (event) => {
   if (content.value.textContent == "") return;
+  inTriggerZone.value = true;
   const rect = event.target.getBoundingClientRect() as DOMRect;
   content.value.style.left = `${rect.right}px`;
   content.value.style.top = `${rect.top}px`;
@@ -15,14 +15,7 @@ const mouseEnter = (event) => {
 
 <template>
   <div>
-    <div
-      class="trigger"
-      @mouseenter="
-        inTriggerZone = true;
-        mouseEnter($event);
-      "
-      @mouseleave="inTriggerZone = false"
-    >
+    <div class="trigger" @mouseenter="mouseEnter($event)" @mouseleave="inTriggerZone = false">
       <slot name="trigger"></slot>
     </div>
 
@@ -34,19 +27,12 @@ const mouseEnter = (event) => {
 
 <style scoped>
 .tooltip {
-  font-family: "NotoSansBlack";
-  font-size: 12px;
-  position: absolute;
+  position: fixed;
   max-width: 700px;
-  overflow: hidden;
-  color: #fff;
-  border-radius: 0px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
-
+  min-width: 100px;
   background: rgba(51, 51, 51, 0.95);
   z-index: 1;
+  text-wrap: nowrap;
 }
 .trigger {
   display: inline;

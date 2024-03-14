@@ -1,11 +1,13 @@
-import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router/auto";
 
 export function useRouteChildren(withDefault: boolean = false) {
   const router = useRouter();
   const routes = router.getRoutes();
   const currentRoute = useRoute();
+  const firstPass = routes.filter((route) => route.path == currentRoute.path);
+  const secondPass = firstPass.filter((route) => route.children.length);
+  const children = secondPass[0].children;
+  if (withDefault) return children;
 
-  const children = routes.filter((route) => (withDefault ? route.path == currentRoute.path : route.path == currentRoute.path && !route.meta.default))[0].children;
-
-  return withDefault ? children : children.filter((route) => !route.meta.default);
+  return children.filter((route) => !route.meta?.default);
 }
