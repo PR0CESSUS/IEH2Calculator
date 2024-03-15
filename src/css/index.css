@@ -35,3 +35,7 @@ a {
 a:hover {
   color: #a8a8a8;
 }
+/* ::backdrop {
+  background-image: linear-gradient(magenta, rebeccapurple, dodgerblue, green);
+  opacity: 0.75;
+} */

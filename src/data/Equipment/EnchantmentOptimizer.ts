@@ -1,3 +1,4 @@
+import { Util } from "@/Util";
 import { Element } from "../../type/Element";
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
 import { HeroKind } from "../../type/HeroKind";
@@ -7,6 +8,7 @@ import { CHALLENGE_BATTLE } from "../Battle/CHALLENGE_BATTLE";
 import { MONSTER_BATTLE } from "../Battle/MONSTER_BATTLE";
 import { Equipment } from "./Equipment";
 import { EquipmentParameter } from "./EquipmentParameter";
+import { Localization } from "@/localization";
 
 export function EnchantmentOptimizer(enemy: CHALLENGE_BATTLE | MONSTER_BATTLE, equipment: Equipment, optionId: number) {
   // const enemy = this.data.battle.Enemy();
@@ -17,7 +19,7 @@ export function EnchantmentOptimizer(enemy: CHALLENGE_BATTLE | MONSTER_BATTLE, e
   const info = enemy.AttackedInfo();
   const species = addKnowledge(enemy.species);
   const element = addElement(info.element);
-  const basicStat = addBasicStat(enemy.data.source.isActiveSdModifiers[950 + SDModifierKind.SwapATKWithDEF]);
+  const basicStat = addBasicStat(enemy.data.source.isActiveSdModifiers[950 + SDModifierKind.SwapATKWithDEF] && enemy.data.source.isSuperDungeon);
   const blessing = addBlessing();
   const skill = addSkill(equipment.heroKind);
   const rest = addRest();
@@ -31,29 +33,41 @@ export function EnchantmentOptimizer(enemy: CHALLENGE_BATTLE | MONSTER_BATTLE, e
   // console.log("basicStat:", basicStat);
   // console.log("skill:", skill);
   // console.log("finalList:", finalList);
-  console.log("EnchantmentOptimizer: debug");
+  // console.log("EnchantmentOptimizer: debug");
 
   let dps = 0;
   let bestDps = 0;
   let bestKind = 0;
+  let summary = "";
+  summary += `Searching MAX DPS enchant for ${Localization.EquipmentName(equipment.kind)} in enchantements slot ${optionId + 1}\n`;
+
+  // document.dispatchEvent(new CustomEvent("test", { detail: { type: "start" } }));
 
   for (let index = 0; index < finalList.length; index++) {
     const enchantKind = finalList[index];
     if (EquipmentParameter.RequiredLevelIncrement(enchantKind, 1) > equipment.data.source.enemyLevel) continue;
+    if (EquipmentParameter.IsAfter(enchantKind) && !equipment.globalInfo.isArtifact) continue;
+
     equipment.optionEffects[optionId].kind = enchantKind;
     dps = enemy.AttackedInfo().dps;
     if (bestDps < dps) {
       bestDps = dps;
       bestKind = enchantKind;
     }
+
     // if (dps > orginalDPS) list.push(`EquipmentEffectKind.${EquipmentEffectKind[index]}`);
-    console.log("enchant kind:", EquipmentEffectKind[enchantKind], "dps:", dps);
+    // console.log("enchant kind:", EquipmentEffectKind[enchantKind], "dps:", dps);
+    summary += `dps: ${Util.tDigit(dps, 5)}: ${Localization.EquipmentEffectName(enchantKind)}\n`;
   }
   equipment.optionEffects[optionId].kind = bestKind;
-  // console.log("info:", info);
+  summary += "----------------------------------------\n";
+  summary += "Best found:\n";
+  summary += `dps: ${Util.tDigit(bestDps, 5)}: ${Localization.EquipmentEffectName(bestKind)}\n`;
 
-  console.log("bestDps:", bestDps);
-  console.log("bestKind:", bestKind);
+  // console.log("summary:", info);
+  document.dispatchEvent(new CustomEvent("log", { detail: { type: "msg", data: summary } }));
+  // console.log("bestDps:", bestDps);
+  // console.log("bestKind:", bestKind);
 }
 
 function addBasicStat(isSwapATKWithDEF: boolean) {

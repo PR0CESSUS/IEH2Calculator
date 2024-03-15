@@ -269,6 +269,7 @@ dialog {
   color: #fff;
   border-width: 1px;
   border-color: #525252;
+  z-index: 100;
 }
 .wrapper {
   padding: 10px;

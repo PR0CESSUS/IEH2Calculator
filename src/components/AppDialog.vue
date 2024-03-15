@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-// const props = defineProps<{ type: CustomSelectType }>();
 const dialog = ref<HTMLDialogElement>();
-
 function closeDialog(event: Event) {
   if ((event.target as HTMLDialogElement).nodeName == dialog.value.nodeName) dialog.value.close();
 }
+
+defineExpose({
+  dialog,
+});
 </script>
 
 <template>
   <span @click="dialog.showModal()">
-    <slot name="trigger">Dialog Open</slot>
+    <slot name="trigger"></slot>
   </span>
 
   <dialog ref="dialog" @mousedown="closeDialog">

@@ -46,5 +46,6 @@ declare module 'vue-router/auto-routes' {
     '/help': RouteRecordInfo<'/help', '/help', Record<never, never>, Record<never, never>>,
     '/ruby-shard': RouteRecordInfo<'/ruby-shard', '/ruby-shard', Record<never, never>, Record<never, never>>,
     '/talisman': RouteRecordInfo<'/talisman', '/talisman', Record<never, never>, Record<never, never>>,
+    '/test': RouteRecordInfo<'/test', '/test', Record<never, never>, Record<never, never>>,
   }
 }

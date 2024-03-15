@@ -1,1 +1,0 @@
-import{m as u,n as c}from"./index-xVAOHMAb.js";function d(r=!1){const o=u().getRoutes(),n=c(),e=o.filter(t=>t.path==n.path).filter(t=>t.children.length)[0].children;return r?e:e.filter(t=>{var s;return!((s=t.meta)!=null&&s.default)})}export{d as u};

@@ -10,6 +10,10 @@ definePage({
 </script>
 
 <template>
+  <h2>0.1.27</h2>
+  <ul>
+    <li>Added log button in top navigation for showing details about Find MAX DPS function</li>
+  </ul>
   <h2>0.1.26</h2>
   <ul>
     <li>Added submenu to some elements in data menu</li>

@@ -7,6 +7,7 @@ import { useSaveFileData } from "./stores/data";
 import { SDModifierKind } from "./type/SDModifierKind";
 import TheBreadcrumb from "./components/TheBreadcrumb.vue";
 import TheMenu from "./components/TheMenu.vue";
+import TheLog from "./components/TheLog.vue";
 
 const game = inject<Game>("game");
 const dialog = ref<HTMLDialogElement>();
@@ -48,12 +49,13 @@ function createSnapshot() {
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapper" @some-event.once="console.log('someevent')">
     <div class="header">
       <h1 id="title">
         <TheBreadcrumb />
       </h1>
       <div id="settings">
+        <TheLog />
         <button style="font-size: 12px" @click="dialog.showModal()">&#9776;</button>
 
         <button @click="createSnapshot()">Create Snapshot</button>
