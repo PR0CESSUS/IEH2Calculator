@@ -5,6 +5,7 @@ definePage({
   meta: {
     name: "Data",
     root: true,
+    submenu: true,
   },
 });
 </script>

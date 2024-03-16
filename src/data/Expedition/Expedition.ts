@@ -4,7 +4,7 @@ import { ExpeditionPet } from "./ExpeditionPet";
 
 export class Expedition {
   expeditionCtrl: DataExpedition;
-  timeHours = [0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 24.0, 48.0, 72.0, 120.0, 240.0, 480.0, 960.0, 1920.0, 3840.0];
+  timeHours = [0.5, 1.0, 2.0, 4.0, 8.0, 16.0, 24.0, 48.0, 72.0, 120.0, 240.0, 480.0, 960.0, 1920.0, 3840.0, 8760.0, 17520.0];
   id;
   // progress: ExpeditionProgress;
   // unlock: Unlock;

@@ -12,7 +12,7 @@ const routes = useRouter()
 <template>
   <nav>
     <template v-for="route in routes">
-      <template v-if="route.children?.length">
+      <template v-if="route.children?.length && route.meta.submenu">
         <AppDropdown>
           <template #trigger
             ><RouterLink :to="route.path" class="rightarrow"> {{ route.meta.name }} </RouterLink></template

@@ -35,6 +35,6 @@
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "test/**/*.ts", "src/pages/test.vue"],
   "references": [{ "path": "./tsconfig.node.json" }],
-  "exclude": ["test/**/*.ts"],
+  "exclude": ["test/**/*.ts", "build/*.ts"],
   "files": ["global.d.ts", "typed-router.d.ts"]
 }

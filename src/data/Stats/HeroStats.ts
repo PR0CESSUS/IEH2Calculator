@@ -379,7 +379,7 @@ export class HeroStats {
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
         return 0.0;
       }),
-      () => 100.0,
+      () => 100000.0,
       () => {
         return 0.0;
       }

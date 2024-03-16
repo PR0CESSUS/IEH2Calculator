@@ -1,0 +1,1 @@
+import{l as u,m as c}from"./index-AWyZn4a2.js";function d(r=!1){const o=u().getRoutes(),n=c(),e=o.filter(t=>t.path==n.path).filter(t=>t.children.length)[0].children;return r?e:e.filter(t=>{var s;return!((s=t.meta)!=null&&s.default)})}export{d as u};

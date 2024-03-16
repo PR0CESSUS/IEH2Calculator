@@ -29,17 +29,17 @@ const game = inject<Game>("game");
       <tr>
         <td>-Stone</td>
         <td><AppInput v-model="building.research[0].level" :size="4" /></td>
-        <td>{{ building.research[0].EffectValueString() }}</td>
+        <td>{{ building.ResearchEffectString(0) }}</td>
       </tr>
       <tr>
         <td>-Crystal</td>
         <td><AppInput v-model="building.research[1].level" :size="4" /></td>
-        <td>{{ building.research[1].EffectValueString() }}</td>
+        <td>{{ building.ResearchEffectString(1) }}</td>
       </tr>
       <tr>
         <td>-Leaf</td>
         <td><AppInput v-model="building.research[2].level" :size="4" /></td>
-        <td>{{ building.research[2].EffectValueString() }}</td>
+        <td>{{ building.ResearchEffectString(2) }}</td>
       </tr>
     </template>
   </table>

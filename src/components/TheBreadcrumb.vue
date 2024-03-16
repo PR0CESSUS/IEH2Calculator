@@ -11,3 +11,11 @@
     </template>
   </template>
 </template>
+<style scoped>
+a {
+  color: #fff;
+}
+a:hover {
+  color: #888888;
+}
+</style>

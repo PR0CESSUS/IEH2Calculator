@@ -26,6 +26,9 @@ const DEFAULT_DATA = {
   expedition: {
     playtime: 0,
   },
+  test: {
+    main1: [],
+  },
 };
 
 export const useGlobalStore = defineStore(STORE_NAME, {

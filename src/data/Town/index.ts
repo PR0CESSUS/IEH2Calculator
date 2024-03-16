@@ -1,11 +1,22 @@
+import { DATA } from "..";
 import { Enums } from "../../Enums";
-import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
-import { DATA } from "..";
-import { BUILDING } from "./BUILDING";
-import { BuildingKind } from "../../type/BuildingKind";
 import { NumberType } from "../../type/NumberType";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
+import { BUILDING } from "./BUILDING";
+import { AdventuringParty } from "./building/AdventuringParty";
+import { AlchemistsHut } from "./building/AlchemistsHut";
+import { ArcaneResearcher } from "./building/ArcaneResearcher";
+import { Blacksmith } from "./building/Blacksmith";
+import { Cartographer } from "./building/Cartographer";
+import { Dojo } from "./building/Dojo";
+import { MysticArena } from "./building/MysticArena";
+import { SlimeBank } from "./building/SlimeBank";
+import { StatueOfHeroes } from "./building/StatueOfHeroes";
+import { Tavern } from "./building/Tavern";
+import { Temple } from "./building/Temple";
+import { Trapper } from "./building/Trapper";
 
 export class DataTown {
   data: DATA;
@@ -50,18 +61,18 @@ export class DataTown {
   }
 
   Start() {
-    this.buildings[0] = new BUILDING(this.data, BuildingKind.StatueOfHeroes);
-    this.buildings[3] = new BUILDING(this.data, BuildingKind.Blacksmith);
-    this.buildings[1] = new BUILDING(this.data, BuildingKind.Cartographer);
-    this.buildings[9] = new BUILDING(this.data, BuildingKind.Tavern);
-    this.buildings[4] = new BUILDING(this.data, BuildingKind.Temple);
-    this.buildings[10] = new BUILDING(this.data, BuildingKind.Dojo);
-    this.buildings[5] = new BUILDING(this.data, BuildingKind.Trapper);
-    this.buildings[7] = new BUILDING(this.data, BuildingKind.MysticArena);
-    this.buildings[6] = new BUILDING(this.data, BuildingKind.SlimeBank);
-    this.buildings[8] = new BUILDING(this.data, BuildingKind.ArcaneResearcher);
-    this.buildings[2] = new BUILDING(this.data, BuildingKind.AlchemistsHut);
-    this.buildings[11] = new BUILDING(this.data, BuildingKind.AdventuringParty);
+    this.buildings[0] = new StatueOfHeroes(this.data);
+    this.buildings[3] = new Blacksmith(this.data);
+    this.buildings[1] = new Cartographer(this.data);
+    this.buildings[9] = new Tavern(this.data);
+    this.buildings[4] = new Temple(this.data);
+    this.buildings[10] = new Dojo(this.data);
+    this.buildings[5] = new Trapper(this.data);
+    this.buildings[7] = new MysticArena(this.data);
+    this.buildings[6] = new SlimeBank(this.data);
+    this.buildings[8] = new ArcaneResearcher(this.data);
+    this.buildings[2] = new AlchemistsHut(this.data);
+    this.buildings[11] = new AdventuringParty(this.data);
     // this.SetEffectLevelBonusForAllBuilding()
   }
 

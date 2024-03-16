@@ -27,7 +27,7 @@ useEventListener(document, "log", (evt: CustomEvent) => {
 
 <template>
   <AppDialog ref="dialog">
-    <template #trigger><button :class="{ yellow: newLog }" @click="newLog = !newLog">Log</button></template>
+    <template #trigger><button :class="{ yellow: newLog }" @click="newLog = false">Log</button></template>
     <template #content>
       <div style="width: 700px">
         <h1>Last log</h1>

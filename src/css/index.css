@@ -27,14 +27,16 @@ body {
 p {
   margin: 0;
 }
+
 a {
-  color: #fff;
+  color: #a7e6ff;
   text-decoration: none;
 }
 
 a:hover {
-  color: #a8a8a8;
+  color: #888888;
 }
+
 /* ::backdrop {
   background-image: linear-gradient(magenta, rebeccapurple, dodgerblue, green);
   opacity: 0.75;

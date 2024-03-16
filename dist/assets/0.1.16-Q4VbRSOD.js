@@ -1,0 +1,1 @@
+import{d as n,o as t,c as o,F as a,b as e}from"./index-AWyZn4a2.js";const s=e("h2",null,"Version 0.1.16",-1),l=e("ul",null,[e("li",null,"Image path fix")],-1),i=n({__name:"0.1.16",setup(c){return(r,_)=>(t(),o(a,null,[s,l],64))}});export{i as default};

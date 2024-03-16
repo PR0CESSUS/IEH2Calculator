@@ -22,9 +22,9 @@ export function BuildingEffectString(kind: BuildingKind, value: number) {
     case BuildingKind.ArcaneResearcher:
       return `Multiply Research Power by ${Util.percent(value)}`;
     case BuildingKind.Tavern:
-      return `-`;
+      return `Not Implemented`;
     case BuildingKind.Dojo:
-      return `-`;
+      return `Multiply Skill Proficiency Gain by ${Util.percent(value)}`;
     case BuildingKind.Trapper:
       return `Capturable Monster Max Lv : ${Util.tDigit(value, 0)}`;
     default:
