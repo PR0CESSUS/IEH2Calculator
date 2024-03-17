@@ -1,1 +1,0 @@
-import{d as e,o,c as t,F as a,b as n}from"./index-AWyZn4a2.js";const s=n("h2",null,"Version 0.1.27",-1),l=n("ul",null,[n("li",null,"Added log button in top navigation for showing details about Find MAX DPS function")],-1),_=e({__name:"0.1.27",setup(i){return(c,r)=>(o(),t(a,null,[s,l],64))}});export{_ as default};

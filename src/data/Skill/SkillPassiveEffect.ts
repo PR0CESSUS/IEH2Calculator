@@ -98,7 +98,7 @@ export class SkillPassiveEffect {
             MultiplierKind.SkillPassive,
             this.multiplierType,
             () => this.EffectValue(index),
-            () => this.IsActivated
+            () => this.IsActivated()
           );
           this.data.stats.BasicStats(index, this.kind).RegisterMultiplier(multiplierInfo);
         }
@@ -109,7 +109,7 @@ export class SkillPassiveEffect {
             MultiplierKind.SkillPassive,
             this.multiplierType,
             () => this.EffectValue(index),
-            () => this.IsActivated
+            () => this.IsActivated()
           );
           this.data.stats.HeroStats(index, this.kind).RegisterMultiplier(multiplierInfo);
         }

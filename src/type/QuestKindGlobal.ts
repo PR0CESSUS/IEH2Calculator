@@ -78,4 +78,10 @@ export enum QuestKindGlobal {
   SD6,
   SD7,
   SD8,
+  Nitro16,
+  Nitro17,
+  Nitro18,
+  Nitro19,
+  Capture17,
+  Capture18,
 }

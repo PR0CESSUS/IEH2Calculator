@@ -117,6 +117,7 @@ export class DATA {
     this.blessingInfo.Start();
     this.equipment.Start();
     this.inventory.Start();
+    this.stats.Start();
     this.SuperDungeonToggle();
   }
 

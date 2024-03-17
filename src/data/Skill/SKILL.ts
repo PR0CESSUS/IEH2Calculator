@@ -5,8 +5,10 @@ import { BATTLE } from "../Battle/BATTLE";
 import { SkillParameter } from "./SkillParameter";
 import { SkillPassiveEffect } from "./SkillPassiveEffect";
 
-import { Util } from "../../Util";
+import { MultiplierKind } from "@/type/MultiplierKind";
+import { MultiplierType } from "@/type/MultiplierType";
 import { DATA } from "..";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 
 export class SKILL {
   data: DATA;
@@ -16,20 +18,31 @@ export class SKILL {
   throwSpeed = 2000;
   attackLists = Array(Enums.HeroKind);
   //   proficiency: SkillProficiency;
-
+  damageMultiplier: Multiplier;
+  casttimeReductionPercent: Multiplier;
   mp = Array(Enums.HeroKind);
   tempDamage = Array(Enums.HeroKind);
-
+  extraHitCount: Multiplier;
   interval = Array(Enums.HeroKind);
-
+  exceededIntervalModifier = Array(Enums.HeroKind);
   attackArray = Array(Enums.HeroKind);
-
+  hitCount = Array(Enums.HeroKind);
   tempElement: Element;
 
   constructor(DATA: DATA, heroKind: HeroKind, id: number) {
     this.data = DATA;
     this.heroKind = heroKind;
     this.id = id;
+    this.damageMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.casttimeReductionPercent = new Multiplier(
+      new MultiplierInfo(
+        MultiplierKind.Base,
+        MultiplierType.Add,
+        () => 0,
+        () => 0.9
+      )
+    );
+    this.extraHitCount = new Multiplier();
     // if (id >= 0) {
     //   this.rank = new SkillRank(heroKind, id, (() => SkillParameter.maxSkillRank));
     //   this.level = new SkillLevel(heroKind, id, new Func<long>(this.MaxLevel));
@@ -198,15 +211,11 @@ export class SKILL {
   //   MaxLevel() {return this.Rank() * 5;}
 
   IncrementDamagePerLevel() {
-    return this.incrementDamage * this.Rank();
+    return this.incrementDamage * this.Rank() * this.damageMultiplier.Value();
   }
 
   Damage() {
-    return this.initDamage + this.IncrementDamagePerLevel() * this.Level();
-  }
-
-  Interval() {
-    return this.initInterval * Math.max(0.5, 1.0 - 0.0001 * this.Level());
+    return this.initDamage * this.damageMultiplier.Value() + this.IncrementDamagePerLevel() * this.Level();
   }
 
   IncrementMpGainPerLevel() {
@@ -306,27 +315,50 @@ export class SKILL {
 
   //   IsCrit(myself: BATTLE) {return this.element != Element.Physical ? UsefulMethod.WithinRandom(myself.magCrit) : UsefulMethod.WithinRandom(myself.phyCrit);}
 
+  // CalculateInterval(myself: BATTLE) {
+  //   return Math.max(0.1, this.Interval() * this.IntervalModifier(myself));
+  // }
+  Interval() {
+    return 0.5 * this.initInterval * (1.0 - this.casttimeReductionPercent.Value());
+  }
+  CalculateIntervalInternal(myself: BATTLE) {
+    let value = this.IntervalModifier(myself);
+    this.exceededIntervalModifier[myself.heroKind] = value >= 0.2 ? 0.0 : 1.0 + (0.2 / value - 1.0) * this.data.skill.excessSpeedForHitCount.Value();
+    this.interval[myself.heroKind] = this.Interval() * Math.max(0.2, value);
+    this.CalculateHitCount(myself.heroKind);
+  }
   CalculateInterval(myself: BATTLE) {
-    return Math.max(0.1, this.Interval() * this.IntervalModifier(myself));
+    this.CalculateIntervalInternal(myself);
+
+    return this.interval[myself.heroKind];
+  }
+  CalculateHitCount(heroKind: HeroKind) {
+    let num = this.initHitCount + this.extraHitCount.Value() + this.data.skill.extraSkillHitCount[heroKind].Value();
+    if (this.exceededIntervalModifier[heroKind] > 1.0) num = Math.floor(num * this.exceededIntervalModifier[heroKind]);
+    this.hitCount[heroKind] = num;
   }
 
   IntervalModifier(myself: BATTLE) {
-    let num = myself.spd;
-    if (num > 10000000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(9000000.0, 0.65) + Math.pow(num - 10000000.0, 0.6);
-    else if (num > 1000000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(num - 1000000.0, 0.65);
-    else if (num > 100000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(num - 100000.0, 0.7);
-    else if (num > 10000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(num - 10000.0, 0.8);
-    else if (num > 1000.0) num = 1000.0 + Math.pow(num - 1000.0, 0.9);
-
-    // console.log(num, this.data.skill.skillCastSpeedModifier[myself.heroKind]);
-    // console.log("log test", Util.getBaseLog(10, 2), Math.log2(10));
-
-    return Math.max(
-      0.1,
-      ((1.0 / Util.getBaseLog(1.4 + Math.max(0.0, num / 5.0) / 5000.0, 1.4)) * Math.max(0.5, 1.0 - this.data.skill.skillCooltimeReduction[myself.heroKind].Value())) /
-        this.data.skill.skillCastSpeedModifier[myself.heroKind].Value()
-    );
+    return Math.max(0.5, 1.0 - 0.0001 * this.Level()) / this.data.skill.skillCastSpeedModifier[myself.heroKind].Value();
   }
+
+  // IntervalModifier(myself: BATTLE) {
+  //   let num = myself.spd;
+  //   if (num > 10000000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(9000000.0, 0.65) + Math.pow(num - 10000000.0, 0.6);
+  //   else if (num > 1000000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(num - 1000000.0, 0.65);
+  //   else if (num > 100000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(num - 100000.0, 0.7);
+  //   else if (num > 10000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(num - 10000.0, 0.8);
+  //   else if (num > 1000.0) num = 1000.0 + Math.pow(num - 1000.0, 0.9);
+
+  //   // console.log(num, this.data.skill.skillCastSpeedModifier[myself.heroKind]);
+  //   // console.log("log test", Util.getBaseLog(10, 2), Math.log2(10));
+
+  //   return Math.max(
+  //     0.1,
+  //     ((1.0 / Util.getBaseLog(1.4 + Math.max(0.0, num / 5.0) / 5000.0, 1.4)) * Math.max(0.5, 1.0 - this.data.skill.skillCooltimeReduction[myself.heroKind].Value())) /
+  //       this.data.skill.skillCastSpeedModifier[myself.heroKind].Value()
+  //   );
+  // }
 
   //   ThrowSpeedModifier(myself: BATTLE) {return this.IntervalModifier(myself) <= 0.0 ? 1 : Math.min(5, Math.max(1, 0.5 / this.Interval(myself)));}
 

@@ -9,6 +9,7 @@ import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { NumberType } from "../../type/NumberType";
 import { HeroAbility } from "./HeroAbility";
+import { Util } from "@/Util";
 
 export class HeroStats {
   data: DATA;
@@ -63,7 +64,18 @@ export class HeroStats {
 
     return this.data.source.abilityPoints[heroKind];
   }
-
+  Start() {
+    this.data.skill.skillCastSpeedModifier[this.heroKind].RegisterMultiplier(new MultiplierInfo(MultiplierKind.SPD, MultiplierType.Mul, () => this.SkillCastSpeedFromSPD()));
+  }
+  SkillCastSpeedFromSPD() {
+    let num = this.basicStats[6].Value();
+    if (num > 10000000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(9000000.0, 0.65) + Math.pow(num - 10000000.0, 0.6);
+    else if (num > 1000000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(900000.0, 0.7) + Math.pow(num - 1000000.0, 0.65);
+    else if (num > 100000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(90000.0, 0.8) + Math.pow(num - 100000.0, 0.7);
+    else if (num > 10000.0) num = 1000.0 + Math.pow(9000.0, 0.9) + Math.pow(num - 10000.0, 0.8);
+    else if (num > 1000.0) num = 1000.0 + Math.pow(num - 1000.0, 0.9);
+    return Util.getBaseLog(1.4 + Math.max(0.0, num / 5.0) / 5000.0, 1.4) - 1.0;
+  }
   Ability(kind: AbilityKind) {
     return this.abilities[kind];
   }

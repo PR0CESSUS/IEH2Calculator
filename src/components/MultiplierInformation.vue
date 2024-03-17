@@ -13,7 +13,7 @@ import { useCompareObject } from "../composable/compareObject";
 const game = inject<Game>("game");
 const init = ref(false);
 
-const props = defineProps<{ name: string; multiplier: string; valueSuffix?: string; inline?: boolean; precision?: number }>();
+const props = defineProps<{ multiplier: string; name?: string; valueSuffix?: string; inline?: boolean; precision?: number }>();
 //
 
 function useCompareMultiplier(path: string) {
@@ -68,7 +68,7 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
 <template>
   <Tooltip>
     <p @mouseover.once="init = true" @click="console.log(multiplier)" :class="{ underline: !props.inline }">
-      <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }">{{ name }}</span>
+      <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }">{{ name }} {{ multiplier.raw.main.name }}</span>
 
       <span :class="[useCompareColor(multiplier.diff.value, multiplier.main.value, multiplier.snap.value)]" class="right"
         >{{ multiplier.compare.value }} {{ Util.convertTo(multiplier.main.Value(), props.precision, multiplier.main.numberType) }} {{ props.valueSuffix }}

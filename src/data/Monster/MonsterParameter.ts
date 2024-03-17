@@ -3,6 +3,7 @@ import { MonsterColor } from "./../../type/MonsterColor";
 import { Element } from "../../type/Element";
 import { PetPassiveEffectKind } from "../../type/PetPassiveEffectKind";
 import { TownMaterialKind } from "../../type/TownMaterialKind";
+import { PetPassiveEffectKind2 } from "@/type/PetPassiveEffectKind2";
 
 export const MonsterParameter = {
   colorDropChanceBase: 0.001,
@@ -61,6 +62,8 @@ export const MonsterParameter = {
   },
   PetPassiveEffectMaxValue(kind: PetPassiveEffectKind) {
     switch (kind) {
+      case PetPassiveEffectKind.TamingPointGain:
+        return 1000.0;
       case PetPassiveEffectKind.DoubleMaterialChance:
         return 1.0;
       case PetPassiveEffectKind.DisassembleTownMatGain:
@@ -151,6 +154,22 @@ export const MonsterParameter = {
         return 0.001 * rank;
       case PetPassiveEffectKind.AlchemyPointGain:
         return 0.01 * rank;
+      default:
+        return 0.0;
+    }
+  },
+  PetPassiveEffectValue2(kind: PetPassiveEffectKind2) {
+    switch (kind) {
+      case PetPassiveEffectKind2.GoldGain2:
+        return 0.001;
+      case PetPassiveEffectKind2.TamingPointGain2:
+        return 0.001;
+      case PetPassiveEffectKind2.RareMatChanceForBlueSlime2:
+        return 0.02;
+      case PetPassiveEffectKind2.RareMatChance2:
+        return 0.001;
+      case PetPassiveEffectKind2.ChestPortalOrbNumber2:
+        return 200.0;
       default:
         return 0.0;
     }
@@ -267,7 +286,73 @@ export const MonsterParameter = {
       PetPassiveEffectKind.Nothing,
       PetPassiveEffectKind.Nothing,
     ],
-    [PetPassiveEffectKind.DisassembleTownMatGain, PetPassiveEffectKind.SpiderSilkDropChance],
+    Array(9).fill(PetPassiveEffectKind.Nothing),
+    Array(13).fill(PetPassiveEffectKind.Nothing),
+  ],
+
+  petPassiveEffectKinds2: [
+    [
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.RareMatChanceForBlueSlime2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+    ],
+    Array(9).fill(PetPassiveEffectKind2.Nothing2),
+    [
+      PetPassiveEffectKind2.TamingPointGain2,
+      PetPassiveEffectKind2.TamingPointGain2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.TamingPointGain2,
+      PetPassiveEffectKind2.TamingPointGain2,
+      PetPassiveEffectKind2.TamingPointGain2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+    ],
+    [
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.RareMatChance2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.RareMatChance2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+    ],
+    [
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.ChestPortalOrbNumber2,
+      PetPassiveEffectKind2.TamingPointGain2,
+      PetPassiveEffectKind2.TamingPointGain2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+    ],
+    [
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.RareMatChance2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+      PetPassiveEffectKind2.Nothing2,
+    ],
+    Array(9).fill(PetPassiveEffectKind2.Nothing2),
+    Array(9).fill(PetPassiveEffectKind2.Nothing2),
+    Array(9).fill(PetPassiveEffectKind2.Nothing2),
+    Array(9).fill(PetPassiveEffectKind2.Nothing2),
+    Array(9).fill(PetPassiveEffectKind2.Nothing2),
+    Array(13).fill(PetPassiveEffectKind2.Nothing2),
   ],
 
   monsterAttackElements: [

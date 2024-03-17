@@ -25,6 +25,7 @@ export class BUILDING {
     this.research[1] = new Research(this, ResourceKind.Crystal);
     this.research[2] = new Research(this, ResourceKind.Leaf);
     this.SetEffect();
+    this.SetResearch();
   }
 
   NameString() {
@@ -61,7 +62,7 @@ export class BUILDING {
   SetCost() {}
 
   SetEffect() {}
-
+  SetResearch() {}
   ResearchEffectString(kind: ResourceKind) {
     return "Not Implemented";
   }

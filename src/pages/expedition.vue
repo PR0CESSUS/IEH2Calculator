@@ -26,6 +26,8 @@ function ModifiedOfflineTimesec(nitro) {
       break;
     }
   }
+  if (nitro >= 777600.0) num += (nitro - 777600.0) / 10.0;
+
   return num;
 }
 

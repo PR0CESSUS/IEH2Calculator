@@ -2,6 +2,7 @@ export enum MultiplierKind {
   Base,
   Ability,
   SuperAbility,
+  SPD,
   Title,
   Quest,
   Skill,

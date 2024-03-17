@@ -12,20 +12,20 @@ export class DataMission {
   }
 
   Start() {
-    if (this.clearNum > 5) this.data.stats.SetEffectStats(Stats.ExpGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 0.2));
-    if (this.clearNum > 10) this.data.stats.SetEffectStats(Stats.EquipmentProficiencyGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 0.1));
+    if (this.clearNum > 5) this.data.stats.SetEffectStats(Stats.ExpGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.2));
+    if (this.clearNum > 10) this.data.stats.SetEffectStats(Stats.EquipmentProficiencyGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.1));
     if (this.clearNum > 15) this.data.town.SetEffectTownMatGain(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 0.5));
     if (this.clearNum > 20) this.data.inventory.equipInventoryUnlockedNum.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 10.0));
-    if (this.clearNum > 25) this.data.stats.SetEffectStats(Stats.ExpGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 0.3));
+    if (this.clearNum > 25) this.data.stats.SetEffectStats(Stats.ExpGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.3));
     if (this.clearNum > 30) this.data.resource.goldCap.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.5));
-    if (this.clearNum > 35) this.data.stats.SetEffectStats(Stats.EquipmentProficiencyGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 0.2));
+    if (this.clearNum > 35) this.data.stats.SetEffectStats(Stats.EquipmentProficiencyGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.2));
     if (this.clearNum > 40)
       this.data.alchemy.mysteriousWaterProductionPerSec.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.5));
     if (this.clearNum > 45) this.data.inventory.equipInventoryUnlockedNum.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 10.0));
     if (this.clearNum > 50) this.data.town.SetEffectTownMatGain(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 0.5));
     if (this.clearNum > 60) this.data.stats.SetEffectResourceGain(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 1.0));
     if (this.clearNum > 70) this.data.stats.GoldGain().RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.5));
-    if (this.clearNum > 80) this.data.stats.SetEffectStats(Stats.ExpGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 0.5));
+    if (this.clearNum > 80) this.data.stats.SetEffectStats(Stats.ExpGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.5));
     if (this.clearNum > 90) this.data.monster.colorMaterialDropChance.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.5));
 
     if (this.clearNum > 120) this.data.expedition.expGainMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 1.0));

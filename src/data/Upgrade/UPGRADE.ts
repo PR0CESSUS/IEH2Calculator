@@ -40,7 +40,9 @@ export class UPGRADE {
           case SlimeBankUpgradeKind.CritDamage:
             this.data.stats.SetEffectStats(Stats.CriticalDamage, new MultiplierInfo(MultiplierKind.Upgrade, MultiplierType.Add, () => this.EffectValue()));
             break;
-
+          case SlimeBankUpgradeKind.SkillProf:
+            this.data.stats.SetEffectStats(Stats.SkillProficiencyGain, new MultiplierInfo(MultiplierKind.Upgrade, MultiplierType.Mul, () => this.EffectValue()));
+            break;
           default:
             break;
         }
@@ -92,7 +94,8 @@ export class UPGRADE {
         switch (this.slimebankKind) {
           case SlimeBankUpgradeKind.CritDamage:
             return 0.025 * this.level;
-
+          case SlimeBankUpgradeKind.SkillProf:
+            return 0.05 * this.level;
           default:
             return 0;
         }

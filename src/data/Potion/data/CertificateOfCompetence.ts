@@ -29,10 +29,10 @@ export class CertificateOfCompetence extends Talisman {
   }
 
   SetEffect(heroKind: HeroKind, equipNum: Function) {
-    return this.data.skill.skillCooltimeReduction[heroKind].RegisterMultiplier(
+    return this.data.skill.skillCastSpeedModifier[heroKind].RegisterMultiplier(
       new MultiplierInfo(
         MultiplierKind.Talisman,
-        MultiplierType.Add,
+        MultiplierType.Mul,
         () => this.effectValue * equipNum(),
         () => this.IsActiveEffect(heroKind, equipNum)
       )

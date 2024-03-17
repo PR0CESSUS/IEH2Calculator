@@ -1,3 +1,4 @@
+import { Enums } from "@/Enums";
 import { ChallengeMonsterKind } from "../type/ChallengeMonsterKind";
 import { MonsterColor } from "../type/MonsterColor";
 import { MonsterSpecies } from "../type/MonsterSpecies";
@@ -182,8 +183,8 @@ export class DataDefault {
   areaPrestigeResetNumsFlameTiger?: number[]; // = Array(20).fill(0);
   areaPrestigeResetNumsUnicorn?: number[]; // = Array(20).fill(0);
   isClearedMission: boolean[] = Array(10000).fill(false);
-  isClearedChallenge: boolean[] = Array(1080).fill(false);
-  isReceivedRewardsChallenge: boolean[] = Array(1080).fill(false);
+  isClearedChallenge: boolean[] = Array(Enums.ChallengeKind * 10).fill(false);
+  isReceivedRewardsChallenge: boolean[] = Array(Enums.ChallengeKind * 10).fill(false);
   accomplishedFirstTimesChallenge?: number[]; // = Array(108).fill(0);
   accomplishedTimesChallenge?: number[]; // = Array(108).fill(0);
   accomplishedBestTimesChallenge?: number[]; // = Array(108).fill(0);

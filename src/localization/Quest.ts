@@ -3,7 +3,7 @@ import { QuestKind } from "../type/QuestKind";
 import { QuestKindGlobal } from "../type/QuestKindGlobal";
 import { QuestKindTitle } from "../type/QuestKindTitle";
 import { TitleKind } from "../type/TitleKind";
-
+//TODO rewrite switch case
 export function Quest(quest: QUEST) {
   const kind = quest.kind;
   const kindGlobal = quest.kindGlobal;
@@ -75,16 +75,29 @@ export function Quest(quest: QUEST) {
           return "How to be a Nitro Booster Geek 7";
         case QuestKindGlobal.Nitro8:
           return "How to be a Nitro Booster Geek 8";
-        case QuestKindGlobal.Capture1:
-          return "Capturing Monsters 1";
-        case QuestKindGlobal.Capture2:
-          return "Capturing Monsters 2";
-        case QuestKindGlobal.Capture3:
-          return "Capturing Monsters 3";
-        case QuestKindGlobal.Capture4:
-          return "Capturing Monsters 4";
-        case QuestKindGlobal.Capture5:
-          return "Capturing Monsters 5";
+        case QuestKindGlobal.Nitro9:
+          return "How to be a Nitro Booster Geek 9";
+        case QuestKindGlobal.Nitro10:
+          return "How to be a Nitro Booster Geek 10";
+        case QuestKindGlobal.Nitro11:
+          return "How to be a Nitro Booster Geek 11";
+        case QuestKindGlobal.Nitro12:
+          return "How to be a Nitro Booster Geek 12";
+        case QuestKindGlobal.Nitro13:
+          return "How to be a Nitro Booster Geek 13";
+        case QuestKindGlobal.Nitro14:
+          return "How to be a Nitro Booster Geek 14";
+        case QuestKindGlobal.Nitro15:
+          return "How to be a Nitro Booster Geek 15";
+        case QuestKindGlobal.Nitro16:
+          return "How to be a Nitro Booster Geek 16";
+        case QuestKindGlobal.Nitro17:
+          return "How to be a Nitro Booster Geek 17";
+        case QuestKindGlobal.Nitro18:
+          return "How to be a Nitro Booster Geek 18";
+        case QuestKindGlobal.Nitro19:
+          return "How to be a Nitro Booster Geek 19";
+
         case QuestKindGlobal.Alchemy1:
           return "The Road of Alchemy 1";
         case QuestKindGlobal.Alchemy2:
@@ -111,20 +124,26 @@ export function Quest(quest: QUEST) {
           return "To Further Stage 12";
         case QuestKindGlobal.Upgrade13:
           return "To Further Stage 13";
-        case QuestKindGlobal.Nitro9:
-          return "How to be a Nitro Booster Geek 9";
-        case QuestKindGlobal.Nitro10:
-          return "How to be a Nitro Booster Geek 10";
-        case QuestKindGlobal.Nitro11:
-          return "How to be a Nitro Booster Geek 11";
-        case QuestKindGlobal.Nitro12:
-          return "How to be a Nitro Booster Geek 12";
-        case QuestKindGlobal.Nitro13:
-          return "How to be a Nitro Booster Geek 13";
-        case QuestKindGlobal.Nitro14:
-          return "How to be a Nitro Booster Geek 14";
-        case QuestKindGlobal.Nitro15:
-          return "How to be a Nitro Booster Geek 15";
+        case QuestKindGlobal.Upgrade14:
+          return "To Further Stage 14";
+        case QuestKindGlobal.Upgrade15:
+          return "To Further Stage 15";
+        case QuestKindGlobal.Upgrade16:
+          return "To Further Stage 16";
+        case QuestKindGlobal.Upgrade17:
+          return "To Further Stage 17";
+        case QuestKindGlobal.Upgrade18:
+          return "To Further Stage 18";
+        case QuestKindGlobal.Capture1:
+          return "Capturing Monsters 1";
+        case QuestKindGlobal.Capture2:
+          return "Capturing Monsters 2";
+        case QuestKindGlobal.Capture3:
+          return "Capturing Monsters 3";
+        case QuestKindGlobal.Capture4:
+          return "Capturing Monsters 4";
+        case QuestKindGlobal.Capture5:
+          return "Capturing Monsters 5";
         case QuestKindGlobal.Capture6:
           return "Capturing Monsters 6";
         case QuestKindGlobal.Capture7:
@@ -139,16 +158,6 @@ export function Quest(quest: QUEST) {
           return "Capturing Monsters 11";
         case QuestKindGlobal.Capture12:
           return "Capturing Monsters 12";
-        case QuestKindGlobal.Upgrade14:
-          return "To Further Stage 14";
-        case QuestKindGlobal.Upgrade15:
-          return "To Further Stage 15";
-        case QuestKindGlobal.Upgrade16:
-          return "To Further Stage 16";
-        case QuestKindGlobal.Upgrade17:
-          return "To Further Stage 17";
-        case QuestKindGlobal.Upgrade18:
-          return "To Further Stage 18";
         case QuestKindGlobal.Capture13:
           return "Capturing Monsters 13";
         case QuestKindGlobal.Capture14:
@@ -157,6 +166,10 @@ export function Quest(quest: QUEST) {
           return "Capturing Monsters 15";
         case QuestKindGlobal.Capture16:
           return "Capturing Monsters 16";
+        case QuestKindGlobal.Capture17:
+          return "Capturing Monsters 17";
+        case QuestKindGlobal.Capture18:
+          return "Capturing Monsters 18";
         case QuestKindGlobal.SD1:
           return "Super Dungeon 1";
         case QuestKindGlobal.SD2:

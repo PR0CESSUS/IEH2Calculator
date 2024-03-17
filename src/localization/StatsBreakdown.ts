@@ -8,6 +8,8 @@ export function StatsBreakdown(kind: MultiplierKind) {
       return "Ability";
     case MultiplierKind.SuperAbility:
       return "Super Ability";
+    case MultiplierKind.SPD:
+      return "SPD";
     case MultiplierKind.Title:
       return "Title";
     case MultiplierKind.Quest:

@@ -19,6 +19,7 @@ import { SDPowerupString } from "./SDPowerupString";
 import { TownMaterialNameString } from "./TownMaterialNameString";
 import { MonsterSpeciesName } from "./MonsterSpeciesName";
 import { MonsterPetPassiveEffectString } from "./MonsterPetPassiveEffectString";
+import { MonsterPetPassiveEffectString2 } from "./MonsterPetPassiveEffectString2";
 import { Stat } from "./Stat";
 import { Quest } from "./Quest";
 import { Title } from "./Title";
@@ -54,4 +55,5 @@ export const Localization = {
   BuildingString,
   BuildingEffectString,
   MonsterShortNameString,
+  MonsterPetPassiveEffectString2,
 };

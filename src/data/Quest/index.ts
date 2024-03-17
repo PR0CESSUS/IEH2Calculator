@@ -98,6 +98,10 @@ export class DataQuest {
     this.globalQuestListNitro.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Nitro, kindGlobal: QuestKindGlobal.Nitro13 }));
     this.globalQuestListNitro.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Nitro, kindGlobal: QuestKindGlobal.Nitro14 }));
     this.globalQuestListNitro.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Nitro, kindGlobal: QuestKindGlobal.Nitro15 }));
+    this.globalQuestListNitro.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Nitro, kindGlobal: QuestKindGlobal.Nitro16 }));
+    this.globalQuestListNitro.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Nitro, kindGlobal: QuestKindGlobal.Nitro17 }));
+    this.globalQuestListNitro.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Nitro, kindGlobal: QuestKindGlobal.Nitro18 }));
+    this.globalQuestListNitro.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Nitro, kindGlobal: QuestKindGlobal.Nitro19 }));
 
     this.globalQuestListCapture.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Capture, kindGlobal: QuestKindGlobal.Capture1 }));
     this.globalQuestListCapture.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Capture, kindGlobal: QuestKindGlobal.Capture2 }));
@@ -115,6 +119,8 @@ export class DataQuest {
     this.globalQuestListCapture.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Capture, kindGlobal: QuestKindGlobal.Capture14 }));
     this.globalQuestListCapture.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Capture, kindGlobal: QuestKindGlobal.Capture15 }));
     this.globalQuestListCapture.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Capture, kindGlobal: QuestKindGlobal.Capture16 }));
+    this.globalQuestListCapture.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Capture, kindGlobal: QuestKindGlobal.Capture17 }));
+    this.globalQuestListCapture.push(new QUEST(this.data, { kind: QuestKind.Global, globalQuestType: GlobalQuestType.Capture, kindGlobal: QuestKindGlobal.Capture18 }));
 
     //   this.globalQuestList.AddRange((IEnumerable<QUEST>) this.globalQuestListNitro);
 
@@ -223,7 +229,7 @@ export class DataQuest {
         for (let index = 0; index < Enums.HeroKind; index++) {
           const multiplierInfo1 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).main);
           this.data.stats.SkillSlotNum(index).RegisterMultiplier(multiplierInfo1);
-          const multiplierInfo2 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Add, () => this.TitleEffectValue(index, kind).sub);
+          const multiplierInfo2 = new MultiplierInfo(MultiplierKind.Title, MultiplierType.Mul, () => this.TitleEffectValue(index, kind).sub);
           this.data.stats.HeroStats(index, Stats.SkillProficiencyGain).RegisterMultiplier(multiplierInfo2);
         }
         break;

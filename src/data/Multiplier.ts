@@ -19,6 +19,7 @@ export class Multiplier {
   maxValue: Function;
   minValue: Function;
   debug = false;
+  name: string = "";
   constructor(multiplier: MultiplierInfo = new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0), maxValue: Function = () => 1e300, minValue: Function = () => 0) {
     // Func<double> maxValue = null, Func<double> minValue = null
     this.maxValue = maxValue;

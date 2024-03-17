@@ -144,6 +144,7 @@ onMounted(() => {
         ><template v-if="globalStore.heroStatsTabSelected == 4">
           <h3>Skills</h3>
           <div class="block">
+            <MultiplierInformation :multiplier="`skill.skillCastSpeedModifier[${game.data.source.currentHero}]`" />
             <MultiplierInformation
               v-for="(_, index) in game.data.skill.skillLevelBonus"
               :multiplier="`skill.skillLevelBonus[${index}]`"

@@ -14,7 +14,7 @@ import { DATA } from "..";
 import { NumberType } from "../../type/NumberType";
 
 export class DataSkill {
-  #data: DATA;
+  data: DATA;
   ladyEmeldaEffectMultiplier: Multiplier[] = Array(Enums.HeroKind);
   skillLevelBonus: Multiplier[] = Array(Enums.HeroKind);
   skillLevelBonusValue: number[] = Array(Enums.HeroKind);
@@ -23,6 +23,7 @@ export class DataSkill {
   skillPassiveShareFactors: Multiplier[] = Array(Enums.HeroKind);
   skillCooltimeReduction: Multiplier[] = Array(Enums.HeroKind);
   skillCastSpeedModifier: Multiplier[] = Array(Enums.HeroKind);
+  excessSpeedForHitCount: Multiplier;
   skillRangeMultiplier: Multiplier[] = Array(Enums.HeroKind);
   skillEffectRangeMultiplier: Multiplier[] = Array(Enums.HeroKind);
   extraSkillHitCount: Multiplier[] = Array(Enums.HeroKind);
@@ -34,7 +35,8 @@ export class DataSkill {
   isLog = Array(Enums.HeroKind);
 
   constructor(DATA: DATA) {
-    this.#data = DATA;
+    this.data = DATA;
+    this.excessSpeedForHitCount = new Multiplier();
     for (let index = 0; index < this.skillRankCostFactors.length; index++)
       this.skillRankCostFactors[index] = new Multiplier(
         new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0),
@@ -54,9 +56,10 @@ export class DataSkill {
     for (let index = 0; index < this.skillCastSpeedModifier.length; index++) {
       this.skillCastSpeedModifier[index] = new Multiplier(
         new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0),
-        () => 10.0,
+        () => 10000.0,
         () => 1.0
       );
+      this.skillCastSpeedModifier[index].name = "Skill Cast Speed";
     }
     for (let index = 0; index < this.skillRangeMultiplier.length; index++) {
       this.skillRangeMultiplier[index] = new Multiplier(
@@ -92,12 +95,12 @@ export class DataSkill {
     for (let index = 0; index < this.baseAttackSlimeBall.length; index++) this.baseAttackSlimeBall[index] = new Multiplier();
     this.globalSkillProfGainRate = new Multiplier();
 
-    this.classSkills[0] = new WarriorSkill(this.#data);
-    this.classSkills[1] = new WizardSkill(this.#data);
-    this.classSkills[2] = new AngelSkill(this.#data);
-    this.classSkills[3] = new ThiefSkill(this.#data);
-    this.classSkills[4] = new ArcherSkill(this.#data);
-    this.classSkills[5] = new TamerSkill(this.#data);
+    this.classSkills[0] = new WarriorSkill(this.data);
+    this.classSkills[1] = new WizardSkill(this.data);
+    this.classSkills[2] = new AngelSkill(this.data);
+    this.classSkills[3] = new ThiefSkill(this.data);
+    this.classSkills[4] = new ArcherSkill(this.data);
+    this.classSkills[5] = new TamerSkill(this.data);
   }
 
   Skill(slot: number, heroKind: HeroKind) {

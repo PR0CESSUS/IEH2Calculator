@@ -42,7 +42,7 @@ export class Cartographer extends BUILDING {
   ResearchEffectString(kind: ResourceKind) {
     switch (kind) {
       case ResourceKind.Stone:
-        return `Dungeon's Time Limit + Not Implemented sec`;
+        return `Dungeon's Time Limit + ${Util.tDigit(this.ResearchLevel(ResourceKind.Stone) * 5 * this.ResearchMul(ResourceKind.Stone), 0)} sec`;
       case ResourceKind.Crystal:
         return `Reduce Field Debuff effect by ${Util.percent(
           Math.min(0.9, this.ResearchLevel(ResourceKind.Crystal) * (3.0 / 400.0) * this.ResearchMul(ResourceKind.Crystal))

@@ -506,6 +506,18 @@ export class QUEST {
       case QuestKindGlobal.Nitro15:
         this.SetRewardNitro(50000);
         break;
+      case QuestKindGlobal.Nitro16:
+        this.SetRewardNitro(60000);
+        break;
+      case QuestKindGlobal.Nitro17:
+        this.SetRewardNitro(70000);
+        break;
+      case QuestKindGlobal.Nitro18:
+        this.SetRewardNitro(80000);
+        break;
+      case QuestKindGlobal.Nitro19:
+        this.SetRewardNitro(90000);
+        break;
       case QuestKindGlobal.Capture6:
         this.SetRewardCapture(0.75);
         break;
@@ -539,7 +551,12 @@ export class QUEST {
       case QuestKindGlobal.Capture16:
         this.SetRewardCapture(500);
         break;
-
+      case QuestKindGlobal.Capture17:
+        this.SetRewardCapture(750);
+        break;
+      case QuestKindGlobal.Capture18:
+        this.SetRewardCapture(1000);
+        break;
       case QuestKindGlobal.SD2:
         for (let index = 0; index < Enums.HeroKind; index++) this.SetReward(this.data.superStats.Hero(index).fameGain, MultiplierType.Mul, 0.1);
         break;

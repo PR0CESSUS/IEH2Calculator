@@ -35,6 +35,10 @@ export class DataStats {
     this.heroLevelIncrementLimit = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 30.0));
   }
 
+  Start() {
+    for (let index = 0; index < this.heroes.length; index++) this.heroes[index].Start();
+  }
+
   get currentHero(): HeroStats {
     return this.heroes[this.data.source.currentHero];
   }

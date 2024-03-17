@@ -8,7 +8,7 @@ import { SlimeBankUpgradeKind } from "./../../type/SlimeBankUpgradeKind";
 import { UPGRADE } from "./UPGRADE";
 
 export class DataUpgrade {
-  #data: DATA;
+  data: DATA;
   upgrades: UPGRADE[][];
   //   resourceUpgrades: ResourceUpgrade[] = new ResourceUpgrade[Parameter.resourceUpgradeTier];
   //   basicStatsUpgrades: BasicStatsUpgrade[] = new BasicStatsUpgrade[Enum.GetNames(typeof (BasicStatsKind)).length];
@@ -39,7 +39,7 @@ export class DataUpgrade {
   tempCost;
 
   constructor(DATA: DATA) {
-    this.#data = DATA;
+    this.data = DATA;
     this.costReduction = new Multiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0),
       () => 0.99,
@@ -117,7 +117,8 @@ export class DataUpgrade {
     // this.sb3ist.push((UPGRADE) new SB_EquipmentProf());
     // this.sb3ist.push((UPGRADE) new SB_MaterialFinder());
     // this.sb3ist.push((UPGRADE) new SB_ShopTimer());
-    this.sb3ist.push(new UPGRADE(this.#data, UpgradeKind.SlimeBank, SlimeBankUpgradeKind.CritDamage));
+    this.sb3ist.push(new UPGRADE(this.data, UpgradeKind.SlimeBank, SlimeBankUpgradeKind.SkillProf));
+    this.sb3ist.push(new UPGRADE(this.data, UpgradeKind.SlimeBank, SlimeBankUpgradeKind.CritDamage));
     // this.sb3ist.push((UPGRADE) new SB_ResearchPower());
     // this.slimebankUpgradeList.AddRange((IEnumerable<UPGRADE>) this.sb1ist);
     // this.slimebankUpgradeList.AddRange((IEnumerable<UPGRADE>) this.sb2ist);

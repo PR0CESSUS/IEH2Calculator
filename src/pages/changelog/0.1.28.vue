@@ -16,7 +16,6 @@ definePage({
       <li>Added Dojo</li>
       <li>Added overcap bonuses to Town buildings</li>
       <li>Changed Extra After Damage cap</li>
-      <li>Changed Extra After Damage cap</li>
     </ul>
   </div>
 </template>
