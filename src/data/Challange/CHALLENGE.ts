@@ -1,6 +1,5 @@
 import { DATA } from "..";
 import { Enums } from "../../Enums";
-import { Localization } from "../../localization";
 import { ChallengeKind } from "../../type/ChallengeKind";
 import { ChallengeType } from "../../type/ChallengeType";
 import { EquipmentPart } from "../../type/EquipmentPart";
@@ -30,21 +29,10 @@ export class CHALLENGE {
 
   NameString() {
     const kindName = ChallengeKind[this.kind];
-
-    switch (this.kind) {
-      case ChallengeKind.SDSlime:
-        return Localization.SDName(0);
-      case ChallengeKind.SDSpider:
-        return Localization.SDName(1);
-      case ChallengeKind.SDBatTreant:
-        return Localization.SDName(2);
-      case ChallengeKind.SDFairyFlametiger:
-        return Localization.SDName(3);
-      case ChallengeKind.SDSlimeMslime:
-        return Localization.SDName(4);
-      default:
-        return kindName;
-    }
+    const level = kindName.replace(/(?:HC|Solo)(.*?)(\d+)/, "$2");
+    const name = kindName.replace(/(?:HC|Solo)(.*?)(\d+)/, "$1");
+    // this.data.monster.GlobalInformationChallengeBoss(this.challengeMonsterKind).ShortName() + " Lv " + UsefulMethod.tDigit(this.area.MaxLevel());
+    return `${name} ${level}`;
   }
   ClassExclusiveRewardStringEquipmentSlot(part: EquipmentPart) {
     let array = [];

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Game } from "@/Game";
+import AppCollapse from "@/components/AppCollapse.vue";
 import AppInput from "@/components/AppInput.vue";
 import { HeroKind } from "@type/HeroKind";
 import { inject } from "vue";
@@ -14,31 +15,32 @@ const game = inject<Game>("game");
 </script>
 
 <template>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Done</th>
-      <th>Modifier</th>
-      <th>Effect</th>
-    </tr>
-    <template v-for="challenge in game.data.challenge.superdungeonList">
-      <tr class="heading">
-        <td>{{ challenge.NameString() }}</td>
-      </tr>
-      <tr v-for="(_, index) in 6">
-        <td>{{ HeroKind[index] }}</td>
-        <td>
-          <input type="checkbox" :checked="challenge.IsReceivedRewardClass(index)" @change="challenge.SetReceivedRewardClass(index, ($event.target as HTMLInputElement).checked)" />
-        </td>
-        <td><AppInput v-model="game.data.source.maxModifierCleareds[index + 10 * challenge.sdId]" /></td>
-        <td>{{ challenge.FloorRewardString(index) }}</td>
-      </tr>
+  <AppCollapse v-for="challenge in game.data.challenge.superdungeonList">
+    <template #trigger>{{ challenge.NameString() }}</template>
+    <template #content>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Done</th>
+          <th>Modifier</th>
+          <th>Effect</th>
+        </tr>
+        <tr v-for="(_, index) in 6">
+          <td>{{ HeroKind[index] }}</td>
+          <td>
+            <input
+              type="checkbox"
+              :checked="challenge.IsReceivedRewardClass(index)"
+              @change="challenge.SetReceivedRewardClass(index, ($event.target as HTMLInputElement).checked)"
+            />
+          </td>
+          <td><AppInput v-model="game.data.source.maxModifierCleareds[index + 10 * challenge.sdId]" /></td>
+          <td>{{ challenge.FloorRewardString(index) }}</td>
+        </tr>
+      </table>
     </template>
-    <tr class="summary">
-      <td>Total</td>
-      <td></td>
-      <td>{{ game.data.sdg.modifierMilestoneCtrl.Total() }}</td>
-    </tr>
-  </table>
+  </AppCollapse>
+  <hr />
+  Total Modifier: {{ game.data.sdg.modifierMilestoneCtrl.Total() }}
 </template>
 ../../../Game../../../type/HeroKind

@@ -7,11 +7,16 @@ import { fileURLToPath, URL } from "url";
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "./",
-  plugins: [VueRouter(), Vue(), visualizer()],
+  plugins: [VueRouter({ importMode: (filepath) => "sync" }), Vue(), visualizer()],
   build: {
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
     rollupOptions: {
       external: ["SaveFileDencrypt.js"],
+      // output: {
+      //   manualChunks: {
+      //     changelog0000: ["./src/pages/changelog/0.1.15.vue", "./src/pages/changelog/0.1.16.vue", "./src/pages/changelog/0.1.18.vue", "./src/pages/changelog/0.1.20.vue"],
+      //   },
+      // },
     },
   },
   resolve: {

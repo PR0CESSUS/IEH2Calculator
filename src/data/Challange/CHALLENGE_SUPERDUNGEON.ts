@@ -1,5 +1,6 @@
 import { HeroKind } from "@/type/HeroKind";
 import { CHALLENGE } from "./CHALLENGE";
+import { Localization } from "@/localization";
 
 export class CHALLENGE_SUPERDUNGEON extends CHALLENGE {
   get sdId() {
@@ -23,5 +24,8 @@ export class CHALLENGE_SUPERDUNGEON extends CHALLENGE {
   }
   FloorRewardString(heroKind: HeroKind) {
     return "";
+  }
+  NameString() {
+    return Localization.SDName(this.sdId);
   }
 }
