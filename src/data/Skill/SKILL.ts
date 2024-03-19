@@ -9,6 +9,8 @@ import { MultiplierKind } from "@/type/MultiplierKind";
 import { MultiplierType } from "@/type/MultiplierType";
 import { DATA } from "..";
 import { Multiplier, MultiplierInfo } from "../Multiplier";
+import { SkillType } from "@/type/SkillType";
+import { SkillTriggeredNum } from "./SkillTriggeredNum";
 
 export class SKILL {
   data: DATA;
@@ -29,6 +31,8 @@ export class SKILL {
   hitCount = Array(Enums.HeroKind);
   tempElement: Element;
 
+  triggeredNum: SkillTriggeredNum;
+
   constructor(DATA: DATA, heroKind: HeroKind, id: number) {
     this.data = DATA;
     this.heroKind = heroKind;
@@ -43,12 +47,36 @@ export class SKILL {
       )
     );
     this.extraHitCount = new Multiplier();
+    this.triggeredNum = new SkillTriggeredNum(this.data, heroKind, id);
     // if (id >= 0) {
     //   this.rank = new SkillRank(heroKind, id, (() => SkillParameter.maxSkillRank));
     //   this.level = new SkillLevel(heroKind, id, new Func<long>(this.MaxLevel));
     //   if (this.level < 0)
     //     this.level.ChangeValue(0);
     //   this.proficiency = new SkillProficiency(heroKind, id, new Func<long, double>(this.RequiredProficiency), this.level);
+  }
+
+  get type() {
+    return SkillType.Attack;
+  }
+
+  get maxReachedLevel() {
+    switch (this.heroKind) {
+      case HeroKind.Warrior:
+        return this.data.source.warriorMaxReachedSkillLevel[this.id];
+      case HeroKind.Wizard:
+        return this.data.source.wizardMaxReachedSkillLevel[this.id];
+      case HeroKind.Angel:
+        return this.data.source.angelMaxReachedSkillLevel[this.id];
+      case HeroKind.Thief:
+        return this.data.source.thiefMaxReachedSkillLevel[this.id];
+      case HeroKind.Archer:
+        return this.data.source.archerMaxReachedSkillLevel[this.id];
+      case HeroKind.Tamer:
+        return this.data.source.tamerMaxReachedSkillLevel[this.id];
+      default:
+        return 0;
+    }
   }
 
   get level() {

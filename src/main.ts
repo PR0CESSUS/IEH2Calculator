@@ -6,8 +6,8 @@ import "./css/index.css";
 import { DATA } from "./data";
 import { useSaveFileData } from "./stores/data";
 import { useSaveFileSnapshot } from "./stores/snap";
-
 import { createRouter, createWebHashHistory } from "vue-router/auto";
+import { useGlobalStore } from "./stores/global";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -22,6 +22,7 @@ const snap = new DATA(snapshotSaveFile);
 const game = new Game(data, snap);
 
 globalThis.Game = game;
+globalThis.globalStore = useGlobalStore();
 
 // deprecated
 globalThis.SaveFileData = data;

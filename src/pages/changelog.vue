@@ -6,6 +6,7 @@ definePage({
     name: "Changelog",
     root: true,
     submenu: false,
+    version: true,
   },
 });
 </script>

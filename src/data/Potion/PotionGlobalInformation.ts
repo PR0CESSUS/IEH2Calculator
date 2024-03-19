@@ -75,7 +75,7 @@ export class PotionGlobalInformation {
   get talismanDisassembleFragmentNumPerLevel() {
     return Math.pow(5.0, this.talismanRarity);
   }
-
+  SetEffect(heroKind, equipNum) {}
   NameString() {
     return Localization.PotionName(this.kind);
   }

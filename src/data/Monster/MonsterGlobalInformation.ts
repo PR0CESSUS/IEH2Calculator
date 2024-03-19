@@ -10,7 +10,7 @@ import { MonsterParameter } from "./MonsterParameter";
 import { MonsterPet } from "./MonsterPet";
 
 export class MonsterGlobalInformation {
-  #data: DATA;
+  data: DATA;
   pet: MonsterPet;
   isLogStats: boolean[] = Array(Enums.HeroKind);
   species: MonsterSpecies;
@@ -22,7 +22,7 @@ export class MonsterGlobalInformation {
   //   capturedMutantNums: MonsterCapturedNumber[] = Array(Enums.HeroKind);
 
   constructor(DATA: DATA, species: MonsterSpecies, color: number) {
-    this.#data = DATA;
+    this.data = DATA;
     this.species = species;
     this.color = color;
     if (species == MonsterSpecies.ChallengeBoss) this.challengeMonsterKind = color;
@@ -33,7 +33,7 @@ export class MonsterGlobalInformation {
     //   this.capturedNums[index2] = new MonsterCapturedNumber(species, color, index2);
     //   this.capturedMutantNums[index2] = new MonsterCapturedNumber(species, color, index2, true);
     // }
-    this.pet = new MonsterPet(this.#data, this, species, color);
+    this.pet = new MonsterPet(this.data, this, species, color);
   }
 
   Start() {
@@ -238,29 +238,29 @@ export class MonsterGlobalInformation {
     let saveIdChallenge = heroKind + 10 * this.challengeMonsterKind;
     switch (this.species) {
       case MonsterSpecies.Slime:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsSlime[saveId] : this.#data.source.monsterDefeatedNumsSlime[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsSlime[saveId] : this.data.source.monsterDefeatedNumsSlime[saveId];
       case MonsterSpecies.MagicSlime:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsMagicSlime[saveId] : this.#data.source.monsterDefeatedNumsMagicSlime[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsMagicSlime[saveId] : this.data.source.monsterDefeatedNumsMagicSlime[saveId];
       case MonsterSpecies.Spider:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsSpider[saveId] : this.#data.source.monsterDefeatedNumsSpider[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsSpider[saveId] : this.data.source.monsterDefeatedNumsSpider[saveId];
       case MonsterSpecies.Bat:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsBat[saveId] : this.#data.source.monsterDefeatedNumsBat[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsBat[saveId] : this.data.source.monsterDefeatedNumsBat[saveId];
       case MonsterSpecies.Fairy:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsFairy[saveId] : this.#data.source.monsterDefeatedNumsFairy[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsFairy[saveId] : this.data.source.monsterDefeatedNumsFairy[saveId];
       case MonsterSpecies.Fox:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsFox[saveId] : this.#data.source.monsterDefeatedNumsFox[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsFox[saveId] : this.data.source.monsterDefeatedNumsFox[saveId];
       case MonsterSpecies.DevilFish:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsDevilFish[saveId] : this.#data.source.monsterDefeatedNumsDevilFish[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsDevilFish[saveId] : this.data.source.monsterDefeatedNumsDevilFish[saveId];
       case MonsterSpecies.Treant:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsTreant[saveId] : this.#data.source.monsterDefeatedNumsTreant[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsTreant[saveId] : this.data.source.monsterDefeatedNumsTreant[saveId];
       case MonsterSpecies.FlameTiger:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsFlameTiger[saveId] : this.#data.source.monsterDefeatedNumsFlameTiger[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsFlameTiger[saveId] : this.data.source.monsterDefeatedNumsFlameTiger[saveId];
       case MonsterSpecies.Unicorn:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsUnicorn[saveId] : this.#data.source.monsterDefeatedNumsUnicorn[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsUnicorn[saveId] : this.data.source.monsterDefeatedNumsUnicorn[saveId];
       case MonsterSpecies.Mimic:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsMimic[saveId] : this.#data.source.monsterDefeatedNumsMimic[saveId];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsMimic[saveId] : this.data.source.monsterDefeatedNumsMimic[saveId];
       case MonsterSpecies.ChallengeBoss:
-        return isMutant ? this.#data.source.monsterMutantDefeatedNumsChallenge[saveIdChallenge] : this.#data.source.monsterDefeatedNumsChallenge[saveIdChallenge];
+        return isMutant ? this.data.source.monsterMutantDefeatedNumsChallenge[saveIdChallenge] : this.data.source.monsterDefeatedNumsChallenge[saveIdChallenge];
 
       default:
         return 0;
@@ -291,29 +291,29 @@ export class MonsterGlobalInformation {
     let saveIdChallenge = heroKind + 10 * this.challengeMonsterKind;
     switch (this.species) {
       case MonsterSpecies.Slime:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsSlime[saveId] : this.#data.source.monsterCapturedNumsSlime[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsSlime[saveId] : this.data.source.monsterCapturedNumsSlime[saveId];
       case MonsterSpecies.MagicSlime:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsMagicSlime[saveId] : this.#data.source.monsterCapturedNumsMagicSlime[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsMagicSlime[saveId] : this.data.source.monsterCapturedNumsMagicSlime[saveId];
       case MonsterSpecies.Spider:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsSpider[saveId] : this.#data.source.monsterCapturedNumsSpider[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsSpider[saveId] : this.data.source.monsterCapturedNumsSpider[saveId];
       case MonsterSpecies.Bat:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsBat[saveId] : this.#data.source.monsterCapturedNumsBat[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsBat[saveId] : this.data.source.monsterCapturedNumsBat[saveId];
       case MonsterSpecies.Fairy:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsFairy[saveId] : this.#data.source.monsterCapturedNumsFairy[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsFairy[saveId] : this.data.source.monsterCapturedNumsFairy[saveId];
       case MonsterSpecies.Fox:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsFox[saveId] : this.#data.source.monsterCapturedNumsFox[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsFox[saveId] : this.data.source.monsterCapturedNumsFox[saveId];
       case MonsterSpecies.DevilFish:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsDevilFish[saveId] : this.#data.source.monsterCapturedNumsDevilFish[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsDevilFish[saveId] : this.data.source.monsterCapturedNumsDevilFish[saveId];
       case MonsterSpecies.Treant:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsTreant[saveId] : this.#data.source.monsterCapturedNumsTreant[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsTreant[saveId] : this.data.source.monsterCapturedNumsTreant[saveId];
       case MonsterSpecies.FlameTiger:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsFlameTiger[saveId] : this.#data.source.monsterCapturedNumsFlameTiger[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsFlameTiger[saveId] : this.data.source.monsterCapturedNumsFlameTiger[saveId];
       case MonsterSpecies.Unicorn:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsUnicorn[saveId] : this.#data.source.monsterCapturedNumsUnicorn[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsUnicorn[saveId] : this.data.source.monsterCapturedNumsUnicorn[saveId];
       case MonsterSpecies.Mimic:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsMimic[saveId] : this.#data.source.monsterCapturedNumsMimic[saveId];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsMimic[saveId] : this.data.source.monsterCapturedNumsMimic[saveId];
       case MonsterSpecies.ChallengeBoss:
-        return isMutant ? this.#data.source.monsterMutantCapturedNumsChallenge[saveIdChallenge] : this.#data.source.monsterCapturedNumsChallenge[saveIdChallenge];
+        return isMutant ? this.data.source.monsterMutantCapturedNumsChallenge[saveIdChallenge] : this.data.source.monsterCapturedNumsChallenge[saveIdChallenge];
       default:
         return 0.0;
     }

@@ -106,4 +106,15 @@ export class DataSkill {
   Skill(slot: number, heroKind: HeroKind) {
     return this.classSkills[heroKind].skills[slot];
   }
+
+  TotalTriggeredNum() {
+    let num = 0;
+    for (let index = 0; index < this.classSkills.length; index++) {
+      for (let i = 0; i < this.classSkills[index].skills.length; i++) {
+        num += this.classSkills[index].skills[i].triggeredNum.value;
+      }
+    }
+
+    return num;
+  }
 }

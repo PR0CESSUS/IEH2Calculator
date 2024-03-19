@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
+import packageInfo from "../../package.json";
 
 const STORE_NAME = "GlobalStore";
 const DEFAULT_DATA = {
-  dataTabSelected: 0,
+  version: "0.0.0",
   heroStatsTabSelected: 0,
   rubyShard: {
     ticket: 0,
@@ -26,9 +27,6 @@ const DEFAULT_DATA = {
   expedition: {
     playtime: 0,
   },
-  test: {
-    main1: [],
-  },
 };
 
 export const useGlobalStore = defineStore(STORE_NAME, {
@@ -41,6 +39,16 @@ export const useGlobalStore = defineStore(STORE_NAME, {
     increment() {
       this.count++;
       // this.Save();
+    },
+    checkVersion() {
+      const [major, minor, patch] = this.version.split(".");
+      const [majorReal, minorReal, pathReal] = packageInfo.version.split(".");
+
+      return major < majorReal || minor < minorReal || patch < pathReal;
+    },
+
+    updateVersion() {
+      this.version = packageInfo.version;
     },
 
     Save() {

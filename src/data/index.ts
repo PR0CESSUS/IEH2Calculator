@@ -27,10 +27,12 @@ import { DataSuperStats } from "./SuperStats";
 import { DataTown } from "./Town";
 import { DataUpgrade } from "./Upgrade";
 import { DataAscension } from "./WorldAscension";
+import { DataAchievement } from "./Achievement";
 
 export class DATA {
   source: DataDefault;
   ascension: DataAscension;
+  achievement: DataAchievement;
   skill: DataSkill;
   potion: DataPotion;
   alchemy: DataAlchemy;
@@ -84,6 +86,7 @@ export class DATA {
     this.skill = new DataSkill(this);
     this.epicStore = new DataEpicStore(this);
     this.upgrade = new DataUpgrade(this);
+    this.achievement = new DataAchievement(this);
 
     for (let index = 0; index < this.battles.length; index++) {
       this.battles[index] = new DataBattle(this, index);
@@ -118,15 +121,8 @@ export class DATA {
     this.equipment.Start();
     this.inventory.Start();
     this.stats.Start();
+    this.achievement.Start();
     this.SuperDungeonToggle();
-  }
-
-  load() {
-    console.log("data manual load");
-  }
-
-  save() {
-    console.log("data manual save");
   }
 
   SuperDungeonToggle() {

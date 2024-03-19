@@ -1,8 +1,12 @@
+import { SkillType } from "@/type/SkillType";
 import { DATA } from "..";
 import { Enums } from "../../Enums";
 import { HeroKind } from "../../type/HeroKind";
 import { SKILL } from "./SKILL";
 import { Stance } from "./Stance";
+import { MultiplierInfo } from "../Multiplier";
+import { MultiplierKind } from "@/type/MultiplierKind";
+import { MultiplierType } from "@/type/MultiplierType";
 
 export class ClassSkill {
   data: DATA;
@@ -17,6 +21,20 @@ export class ClassSkill {
 
   get currentStanceId() {
     return 0;
+  }
+  Start() {
+    for (let index = 0; index < this.skills.length; index++) {
+      if (this.skills[index].type == SkillType.Attack)
+        this.skills[index].damageMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Skill, MultiplierType.Mul, () => this.DamageMultiplierEffectValue));
+    }
+  }
+  MaxReachedTotalLevel() {
+    let num = 0;
+    for (let index = 0; index < this.skills.length; index++) num += this.skills[index].maxReachedLevel;
+    return num;
+  }
+  DamageMultiplierEffectValue() {
+    return Math.pow(2.0, Math.floor(this.MaxReachedTotalLevel() / 100.0));
   }
   // public void SwitchStance(int id) {
   //   if (!this.CansSwitchStance(id))

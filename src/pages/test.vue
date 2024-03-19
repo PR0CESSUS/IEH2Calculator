@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { Game } from "@/Game";
-import AppInput from "@/components/AppInput.vue";
-import { useGlobalStore } from "@/stores/global";
 
 import { inject } from "vue";
 import { definePage } from "vue-router/auto";
-const globalStore = useGlobalStore();
+
 const game = inject<Game>("game");
 definePage({
   meta: {
     name: "Test",
     root: true,
+    debug: true,
   },
 });
 
@@ -23,7 +22,7 @@ function parse(event: ClipboardEvent) {
   // 44 elementy
   console.log(textArray);
   // inGameData.value = textArray;
-  globalStore.test.main1 = textArray;
+  // globalStore.test.main1 = textArray;
 }
 </script>
 
@@ -40,7 +39,7 @@ function parse(event: ClipboardEvent) {
     </tr>
     <tr>
       <td>HP</td>
-      <td><AppInput v-model="globalStore.test.main1[2]" :size="12" /></td>
+      <!-- <td><AppInput v-model="globalStore.test.main1[2]" :size="12" /></td> -->
       <td>{{ game.data.stats.currentHero.basicStats[0].ValueString() }}</td>
       <td>{{}}</td>
     </tr>

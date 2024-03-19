@@ -79,17 +79,16 @@ import { WizardsBadge } from "./data/WizardsBadge";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
 import { Multiplier, MultiplierInfo } from "../Multiplier";
-import { Potion } from "./Potion";
 import { Talisman } from "./Talisman";
 import { PotionGlobalInformation } from "./PotionGlobalInformation";
 import { DATA } from "..";
 
 export class DataPotion {
   #data: DATA;
-  potions: any[];
+  potions: PotionGlobalInformation[];
   traps: any[];
   talismans: Talisman[];
-  globalInformations;
+  globalInformations: PotionGlobalInformation[];
   maxStackNum: Multiplier;
   preventConsumeChance: Multiplier;
   effectMultiplier: Multiplier;
@@ -121,11 +120,15 @@ export class DataPotion {
     this.availableQueue = new Multiplier();
   }
 
-  GlobalInfo(potionKind): PotionGlobalInformation & Potion {
+  GlobalInfo(potionKind) {
     for (let index = 0; index < this.globalInformations.length; index++) {
       if (this.globalInformations[index].kind == potionKind) return this.globalInformations[index];
     }
     return this.globalInformations[0];
+  }
+
+  TotalPotionLevel() {
+    return this.potions.reduce((a, potion) => a + potion.level, 0);
   }
 
   TalismanGlobalInfo(talismanKind) {

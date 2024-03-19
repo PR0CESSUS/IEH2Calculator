@@ -26,6 +26,7 @@ import { Title } from "./Title";
 import { BuildingString } from "./BuildingString";
 import { BuildingEffectString } from "./BuildingEffectString";
 import { MonsterShortNameString } from "./MonsterShortNameString";
+import { AchievementString } from "./AchievementString";
 
 export const Localization = {
   EquipmentEffectName,
@@ -56,4 +57,5 @@ export const Localization = {
   BuildingEffectString,
   MonsterShortNameString,
   MonsterPetPassiveEffectString2,
+  AchievementString,
 };

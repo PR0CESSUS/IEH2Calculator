@@ -250,4 +250,9 @@ export class DataStats {
     this.memoMaxTPGAmongHeroes = num;
     return num;
   }
+
+  TotalMovedDistance() {
+    //TODO TotalMovedDistance function implementation
+    return 0;
+  }
 }

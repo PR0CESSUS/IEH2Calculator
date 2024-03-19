@@ -102,6 +102,10 @@ export class DataMonster {
     return num;
   }
 
+  CapturedNum() {
+    return this.globalInfoList.reduce((a, monster) => a + monster.CapturedNum(), 0);
+  }
+
   Monster(species: MonsterSpecies, color: MonsterColor) {
     return this.GlobalInformation(species, color);
   }

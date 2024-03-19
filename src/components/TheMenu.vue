@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import { useDebugStore } from "@/stores/debug";
 import AppDropdown from "./AppDropdown.vue";
 import { useRouter } from "vue-router/auto";
+import { useGlobalStore } from "@/stores/global";
 
 const routes = useRouter()
   .getRoutes()
   .filter((route) => route.meta.root);
+
+const isDebug = useDebugStore().active;
+const globalStore = useGlobalStore();
 
 // console.log(useRouter().getRoutes());
 </script>
@@ -42,8 +47,20 @@ const routes = useRouter()
           </template>
         </AppDropdown>
       </template>
-      <template v-else>
+      <template v-else-if="route.meta.debug && isDebug">
         <RouterLink :to="route.path"> {{ route.meta.name }} </RouterLink>
+      </template>
+      <template v-else>
+        <template v-if="route.meta.version">
+          <RouterLink :to="route.path" :class="{ warning: globalStore.checkVersion() }">
+            <span @click="globalStore.updateVersion">
+              {{ route.meta.name }}
+            </span>
+          </RouterLink>
+        </template>
+        <template v-else>
+          <RouterLink :to="route.path" v-if="!route.meta.debug"> {{ route.meta.name }}</RouterLink>
+        </template>
       </template>
     </template>
   </nav>
@@ -59,6 +76,14 @@ const routes = useRouter()
 .rightarrow {
   background-image: url(/img/buttonright.png), linear-gradient(#868686, #535353);
   background-size: 1em, contain;
+  background-repeat: no-repeat;
+  background-position: right, left;
+  background-clip: border-box;
+}
+
+.warning {
+  background-image: url(/img/exclamationmark.png), linear-gradient(#868686, #535353);
+  background-size: 2em, contain;
   background-repeat: no-repeat;
   background-position: right, left;
   background-clip: border-box;
