@@ -7,6 +7,7 @@ import { Stance } from "./Stance";
 import { MultiplierInfo } from "../Multiplier";
 import { MultiplierKind } from "@/type/MultiplierKind";
 import { MultiplierType } from "@/type/MultiplierType";
+import { Util } from "@/Util";
 
 export class ClassSkill {
   data: DATA;
@@ -30,11 +31,14 @@ export class ClassSkill {
   }
   MaxReachedTotalLevel() {
     let num = 0;
-    for (let index = 0; index < this.skills.length; index++) num += this.skills[index].maxReachedLevel;
+    for (let index = 0; index < this.skills.length; index++) num += this.skills[index].level.maxReachedLevel;
     return num;
   }
   DamageMultiplierEffectValue() {
     return Math.pow(2.0, Math.floor(this.MaxReachedTotalLevel() / 100.0));
+  }
+  DamageMultiplierEffectValueString() {
+    return Util.percent(this.DamageMultiplierEffectValue());
   }
   // public void SwitchStance(int id) {
   //   if (!this.CansSwitchStance(id))

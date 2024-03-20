@@ -72,8 +72,8 @@ function createSnapshot() {
     <div id="content"><router-view></router-view></div>
 
     <div id="footer" class="footer">
-      Version: <span id="version"> {{ packageInfo.version }} </span> | Game Version (1.2.1.8) | <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a> |
-      Encounter any bug? <a href="https://discordapp.com/users/.processus/">DM me on Discord</a>
+      Version: <span id="version"> {{ packageInfo.version }} </span> | Game Version 1.2.1.9.21(&alpha;) |
+      <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a> | Encounter any bug? <a href="https://discordapp.com/users/.processus/">DM me on Discord</a>
     </div>
   </div>
   <dialog ref="dialog" @mousedown="if (($event.target as HTMLDialogElement).nodeName == dialog.nodeName) dialog.close();" style="background-color: #3a3a3a; color: #fff">

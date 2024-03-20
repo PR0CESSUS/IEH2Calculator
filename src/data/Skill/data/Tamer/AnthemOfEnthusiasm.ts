@@ -1,39 +1,48 @@
-import { MultiplierInfo } from "../../../Multiplier";
-import { SkillPassiveEffect } from "../../SkillPassiveEffect";
-import { SKILL } from "../../SKILL";
-import { MultiplierType } from "../../../../type/MultiplierType";
-import { MultiplierKind } from "../../../../type/MultiplierKind";
-import { HeroKind } from "../../../../type/HeroKind";
-import { BasicStatsKind } from "../../../../type/BasicStatsKind";
-import { Stats } from "../../../../type/Stats";
-import { SkillType } from "../../../../type/SkillType";
-import { Buff } from "../../../../type/Buff";
-import { SkillPassiveEffectKind } from "../../../../type/SkillPassiveEffectKind";
+import { MultiplierInfo } from "@/data/Multiplier";
+import { SkillPassiveEffect } from "@/data/skill/SkillPassiveEffect";
+import { SKILL } from "@/data/skill/SKILL";
+import { DATA } from "@/data/";
+import { Localization } from "@/localization/";
+import { MultiplierType } from "@type/MultiplierType";
+import { MultiplierKind } from "@type/MultiplierKind";
+import { HeroKind } from "@type/HeroKind";
+import { BasicStatsKind } from "@type/BasicStatsKind";
+import { Stats } from "@type/Stats";
+import { SkillType } from "@type/SkillType";
+import { Buff } from "@type/Buff";
 
 export class AnthemOfEnthusiasm extends SKILL {
-  constructor(data, heroKind: HeroKind, id) {
+  constructor(data: DATA, heroKind: HeroKind, id) {
     super(data, heroKind, id);
 
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 10, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MP, MultiplierType.Add, 250.0));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 20, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Mul, 0.05));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 30, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MATK, MultiplierType.Mul, 0.05));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 40, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MP, MultiplierType.Mul, 0.05));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 50, SkillPassiveEffectKind.HeroStats, Stats.MoveSpeed, MultiplierType.Mul, 0.025));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 60, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MATK, MultiplierType.Mul, 0.15));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 70, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Mul, 0.15));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 80, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MATK, MultiplierType.Mul, 0.2));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 90, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Mul, 0.2));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 100, SkillPassiveEffectKind.HeroStats, Stats.MoveSpeed, MultiplierType.Mul, 0.025));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 110, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Mul, 0.25));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 120, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MATK, MultiplierType.Mul, 0.25));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 130, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Mul, 0.35));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 140, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MATK, MultiplierType.Mul, 0.35));
-
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 175, SkillPassiveEffectKind.HeroStats, Stats.MoveSpeed, MultiplierType.Mul, 0.05));
-
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 225, SkillPassiveEffectKind.BasicStats, BasicStatsKind.MATK, MultiplierType.Mul, 0.5));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 250, SkillPassiveEffectKind.BasicStats, BasicStatsKind.ATK, MultiplierType.Mul, 0.5));
-    this.passiveEffectLists.push(new SkillPassiveEffect(this, 500, SkillPassiveEffectKind.HeroStats, Stats.SkillProficiencyGain, MultiplierType.Add, 1.0));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 10, BasicStatsKind.MP, MultiplierType.Add, 250.0));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 20, BasicStatsKind.ATK, MultiplierType.Mul, 0.05));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 30, BasicStatsKind.MATK, MultiplierType.Mul, 0.05));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 40, BasicStatsKind.MP, MultiplierType.Mul, 0.05));
+    this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 50, Stats.MoveSpeed, MultiplierType.Mul, 0.025));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 60, BasicStatsKind.MATK, MultiplierType.Mul, 0.15));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 70, BasicStatsKind.ATK, MultiplierType.Mul, 0.15));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 80, BasicStatsKind.MATK, MultiplierType.Mul, 0.2));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 90, BasicStatsKind.ATK, MultiplierType.Mul, 0.2));
+    this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 100, Stats.MoveSpeed, MultiplierType.Mul, 0.025));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 110, BasicStatsKind.ATK, MultiplierType.Mul, 0.25));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 120, BasicStatsKind.MATK, MultiplierType.Mul, 0.25));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 130, BasicStatsKind.ATK, MultiplierType.Mul, 0.35));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 140, BasicStatsKind.MATK, MultiplierType.Mul, 0.35));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 150, () => Localization.TamerSkillsString(15, 0.05)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 175, Stats.MoveSpeed, MultiplierType.Mul, 0.05));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 200, () => Localization.TamerSkillsString(15, 0.05)));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 225, BasicStatsKind.MATK, MultiplierType.Mul, 0.5));
+    this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 250, BasicStatsKind.ATK, MultiplierType.Mul, 0.5));
+    this.passiveEffectLists.push(
+      SkillPassiveEffect.Register(
+        this,
+        325,
+        () => Localization.WarriorSkillsString(10),
+        (x) => this.unlockFullCast.RegisterCondition(x)
+      )
+    );
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 1000, () => Localization.WarriorSkillsString(7)));
   }
 
   get type() {
@@ -48,14 +57,14 @@ export class AnthemOfEnthusiasm extends SKILL {
     let multiplierInfo1 = new MultiplierInfo(
       MultiplierKind.Buff,
       MultiplierType.Mul,
-      () => this.BuffPercent,
+      () => this.BuffPercent(),
       () => this.IsActiveBuff(heroKind)
     );
     this.data.stats.heroes[heroKind].summonPetATKMATKMultiplier.RegisterMultiplier(multiplierInfo1);
     let multiplierInfo2 = new MultiplierInfo(
       MultiplierKind.Buff,
       MultiplierType.Add,
-      () => this.CritChance,
+      () => this.CritChance(),
       () => this.IsActiveBuff(heroKind)
     );
     this.data.stats.HeroStats(heroKind, Stats.PetPhysCritChance).RegisterMultiplier(multiplierInfo2);
@@ -63,7 +72,7 @@ export class AnthemOfEnthusiasm extends SKILL {
   }
 
   CritChance() {
-    if (this.level >= 200) return 0.1;
-    return this.level >= 150 ? 0.05 : 0.0;
+    if (this.level.value >= 200) return 0.1;
+    return this.level.value >= 150 ? 0.05 : 0.0;
   }
 }

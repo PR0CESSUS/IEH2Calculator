@@ -24,7 +24,7 @@ const infoSnap = monsterSnap.AttackedInfo();
   <div style="margin-left: 10px">
     <p>
       Skill: {{ Localization.SkillName(game.data.source.currentHero, 0) }}
-      <span class="green">Lv {{ Util.tDigit(info.skill.level, 0) }} + {{ Util.tDigit(info.skill.levelBonus, 0) }} </span>
+      <span class="green">Lv {{ Util.tDigit(info.skill.level.value, 0) }} + {{ Util.tDigit(info.skill.levelBonus, 0) }} </span>
       <span class="orange"> &lt; Rank {{ info.skill.rank }} &gt;</span>
     </p>
     <p>- {{ Element[info.skill.element] }} Damage: {{ Util.tDigit(info.skill.DamageOrigin(info.hero, true)) }} * {{ Util.tDigit(info.skill.HitCount(), 0) }}</p>

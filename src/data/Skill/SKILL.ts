@@ -11,6 +11,8 @@ import { DATA } from "..";
 import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { SkillType } from "@/type/SkillType";
 import { SkillTriggeredNum } from "./SkillTriggeredNum";
+import { SkillLevel } from "./SkillLevel";
+import { Localization } from "@/localization";
 
 export class SKILL {
   data: DATA;
@@ -30,7 +32,8 @@ export class SKILL {
   attackArray = Array(Enums.HeroKind);
   hitCount = Array(Enums.HeroKind);
   tempElement: Element;
-
+  level: SkillLevel;
+  unlockFullCast;
   triggeredNum: SkillTriggeredNum;
 
   constructor(DATA: DATA, heroKind: HeroKind, id: number) {
@@ -48,6 +51,12 @@ export class SKILL {
     );
     this.extraHitCount = new Multiplier();
     this.triggeredNum = new SkillTriggeredNum(this.data, heroKind, id);
+    this.level = new SkillLevel(DATA, heroKind, id);
+    this.unlockFullCast = {
+      RegisterCondition: (x) => {
+        return;
+      },
+    };
     // if (id >= 0) {
     //   this.rank = new SkillRank(heroKind, id, (() => SkillParameter.maxSkillRank));
     //   this.level = new SkillLevel(heroKind, id, new Func<long>(this.MaxLevel));
@@ -56,46 +65,12 @@ export class SKILL {
     //   this.proficiency = new SkillProficiency(heroKind, id, new Func<long, double>(this.RequiredProficiency), this.level);
   }
 
+  NameString() {
+    return Localization.SkillName(this.heroKind, this.id);
+  }
+
   get type() {
     return SkillType.Attack;
-  }
-
-  get maxReachedLevel() {
-    switch (this.heroKind) {
-      case HeroKind.Warrior:
-        return this.data.source.warriorMaxReachedSkillLevel[this.id];
-      case HeroKind.Wizard:
-        return this.data.source.wizardMaxReachedSkillLevel[this.id];
-      case HeroKind.Angel:
-        return this.data.source.angelMaxReachedSkillLevel[this.id];
-      case HeroKind.Thief:
-        return this.data.source.thiefMaxReachedSkillLevel[this.id];
-      case HeroKind.Archer:
-        return this.data.source.archerMaxReachedSkillLevel[this.id];
-      case HeroKind.Tamer:
-        return this.data.source.tamerMaxReachedSkillLevel[this.id];
-      default:
-        return 0;
-    }
-  }
-
-  get level() {
-    switch (this.heroKind) {
-      case HeroKind.Warrior:
-        return this.data.source.warriorSkillLevel[this.id];
-      case HeroKind.Wizard:
-        return this.data.source.wizardSkillLevel[this.id];
-      case HeroKind.Angel:
-        return this.data.source.angelSkillLevel[this.id];
-      case HeroKind.Thief:
-        return this.data.source.thiefSkillLevel[this.id];
-      case HeroKind.Archer:
-        return this.data.source.archerSkillLevel[this.id];
-      case HeroKind.Tamer:
-        return this.data.source.tamerSkillLevel[this.id];
-      default:
-        return 0;
-    }
   }
 
   get rank() {
@@ -229,7 +204,7 @@ export class SKILL {
   }
 
   Level() {
-    return this.Rank() <= 0 ? 0 : this.level + this.levelBonus;
+    return this.Rank() <= 0 ? 0 : this.level.value + this.levelBonus;
   }
 
   Rank() {
@@ -276,7 +251,7 @@ export class SKILL {
   //   }
 
   HitCount() {
-    return Math.min(this.maxHitCount, this.initHitCount + this.incrementHitCount * this.level) + this.data.skill.extraSkillHitCount[this.heroKind].Value();
+    return Math.min(this.maxHitCount, this.initHitCount + this.incrementHitCount * this.level.value) + this.data.skill.extraSkillHitCount[this.heroKind].Value();
   }
 
   //   HitCountForPetAttack(heroKind: HeroKind) {

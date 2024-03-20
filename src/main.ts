@@ -16,9 +16,9 @@ const app = createApp(App);
 const pinia = createPinia();
 app.use(router);
 app.use(pinia);
-const snapshotSaveFile = useSaveFileSnapshot();
+
 const data = new DATA(useSaveFileData());
-const snap = new DATA(snapshotSaveFile);
+const snap = new DATA(useSaveFileSnapshot());
 const game = new Game(data, snap);
 
 globalThis.Game = game;

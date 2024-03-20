@@ -27,9 +27,20 @@ import { BuildingString } from "./BuildingString";
 import { BuildingEffectString } from "./BuildingEffectString";
 import { MonsterShortNameString } from "./MonsterShortNameString";
 import { AchievementString } from "./AchievementString";
+import { GradeMilestone } from "./GradeMilestone";
+import { ThiefSkillsString } from "./ThiefSkillsString";
+import { AngelSkillsString } from "./AngelSkillsString";
+import { WarriorSkillsString } from "./WarriorSkillsString";
+import { ArcherSkillsString } from "./ArcherSkillsString";
+import { WizardSkillsString } from "./WizardSkillsString";
+import { TamerSkillsString } from "./TamerSkillsString";
+import { OtherString } from "./OtherString";
+import { GlobalStatsString } from "./GlobalStatsString";
 
 export const Localization = {
   EquipmentEffectName,
+  GlobalStatsString,
+  OtherString,
   EquipmentName,
   StatsBreakdown,
   SDUpgradeString,
@@ -58,4 +69,11 @@ export const Localization = {
   MonsterShortNameString,
   MonsterPetPassiveEffectString2,
   AchievementString,
+  GradeMilestone,
+  ThiefSkillsString,
+  AngelSkillsString,
+  WarriorSkillsString,
+  ArcherSkillsString,
+  WizardSkillsString,
+  TamerSkillsString,
 };

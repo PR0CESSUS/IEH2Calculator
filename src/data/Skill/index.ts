@@ -33,9 +33,11 @@ export class DataSkill {
   baseAttackSlimeBall: Multiplier[] = Array(Enums.HeroKind);
   classSkills: ClassSkill[] = Array(Enums.HeroKind);
   isLog = Array(Enums.HeroKind);
+  unlockSkillPassivePersist: boolean = true;
 
   constructor(DATA: DATA) {
     this.data = DATA;
+
     this.excessSpeedForHitCount = new Multiplier();
     for (let index = 0; index < this.skillRankCostFactors.length; index++)
       this.skillRankCostFactors[index] = new Multiplier(

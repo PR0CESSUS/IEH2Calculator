@@ -83,7 +83,6 @@ export class DATA {
     this.nitro = new DataNitro();
     this.superStats = new DataSuperStats(this);
     this.quest = new DataQuest(this);
-    this.skill = new DataSkill(this);
     this.epicStore = new DataEpicStore(this);
     this.upgrade = new DataUpgrade(this);
     this.achievement = new DataAchievement(this);
@@ -91,6 +90,7 @@ export class DATA {
     for (let index = 0; index < this.battles.length; index++) {
       this.battles[index] = new DataBattle(this, index);
     }
+    this.skill = new DataSkill(this);
 
     this.Start();
   }
