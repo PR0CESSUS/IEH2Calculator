@@ -39,6 +39,7 @@ export class DataMonster {
     this.monsterDefeatNumMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.petStatsMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.petPassiveEffectMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.petPassiveEffectMultiplier.name = "Pet Passive Effect";
     this.colorMaterialDropChance = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => MonsterParameter.colorDropChanceBase));
     for (let species = 0; species < 10; species++) {
       this.globalInformations[species] = Array(Enums.MonsterColor);
@@ -59,7 +60,9 @@ export class DataMonster {
       this.speciesMaterialDropChance[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => MonsterParameter.dropChanceBase));
     for (let index = 0; index < this.captureTripleChance.length; index++) {
       this.doubleCaptureChance[index] = new Multiplier();
+      this.doubleCaptureChance[index].name = "Double Capture Chance";
       this.captureTripleChance[index] = new Multiplier();
+      this.captureTripleChance[index].name = "Triple Capture Chance";
     }
     //   for (let index = 0; index < this.monsterCapturableLevel.length; index++) {
     //     let count = index;
@@ -299,5 +302,19 @@ export class DataMonster {
     this.petPassiveEffectMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Add, () => 15.0, this.isUnlocked(8200)));
     this.SetEffectDoubleCaptureChance(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Add, () => 0.35, this.isUnlocked(8350)));
     this.petActiveCap.RegisterMultiplier(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Add, () => 1.0, this.isUnlocked(8450)));
+
+    this.data.stats.SetEffectPetEXPGain(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Mul, () => 12.0, this.isUnlocked(8600)));
+    this.data.stats.SetEffectLoyalityPointGain(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Mul, () => 150.0, this.isUnlocked(8650)));
+    this.SetEffectTripleCaptureChance(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Add, () => 0.25, this.isUnlocked(8750)));
+    this.data.stats.SetEffectStats(Stats.TamingPointGain, new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Mul, () => 500.0, this.isUnlocked(8850)));
+    this.petStatsMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Mul, () => 25.0, this.isUnlocked(8950)));
+    this.petPassiveEffectMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Add, () => 20.0, this.isUnlocked(9100)));
+    this.data.stats.SetEffectPetEXPGain(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Mul, () => 20.0, this.isUnlocked(9250)));
+    this.data.stats.SetEffectLoyalityPointGain(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Mul, () => 250.0, this.isUnlocked(9300)));
+    this.SetEffectTripleCaptureChance(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Add, () => 0.3, this.isUnlocked(9450)));
+    this.petActiveCap.RegisterMultiplier(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Add, () => 1.0, this.isUnlocked(9650)));
+    this.data.stats.SetEffectStats(Stats.TamingPointGain, new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Mul, () => 1000.0, this.isUnlocked(9750)));
+    this.petStatsMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Mul, () => 50.0, this.isUnlocked(9900)));
+    this.petPassiveEffectMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.PetRankMilestone, MultiplierType.Add, () => 25.0, this.isUnlocked(9950)));
   }
 }

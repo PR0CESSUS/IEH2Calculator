@@ -69,13 +69,14 @@ export class DataSkill {
         // () => 10.0,
         // () => 0.1
       );
+      this.skillRangeMultiplier[index].name = `${HeroKind[index]}'s Class Skills Range`;
 
       this.skillEffectRangeMultiplier[index] = new Multiplier(
         new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0)
         // () => 10.0,
         // () => 0.1
       );
-
+      this.skillEffectRangeMultiplier[index].name = `${HeroKind[index]}'s Class Skills Area of Effect`;
       this.extraSkillHitCount[index] = new Multiplier(
         new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0),
         () => 500.0,
@@ -91,6 +92,7 @@ export class DataSkill {
       );
       this.skillLevelBonusFromHolyArch[index] = new Multiplier();
       this.skillLevelBonus[index].numberType = NumberType.Normal;
+      this.skillLevelBonus[index].name = `${HeroKind[index]}'s Skill Level Bonus`;
     }
     for (let index = 0; index < this.skillPassiveShareFactors.length; index++) this.skillPassiveShareFactors[index] = new Multiplier();
     for (let index = 0; index < this.baseAttackPoisonChance.length; index++) this.baseAttackPoisonChance[index] = new Multiplier();

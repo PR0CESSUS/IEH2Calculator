@@ -36,9 +36,13 @@ import { WizardSkillsString } from "./WizardSkillsString";
 import { TamerSkillsString } from "./TamerSkillsString";
 import { OtherString } from "./OtherString";
 import { GlobalStatsString } from "./GlobalStatsString";
+import { PetRankMilestoneString } from "./PetRankMilestoneString";
+import { ExpeditionMilestoneString } from "./ExpeditionMilestoneString";
 
 export const Localization = {
   EquipmentEffectName,
+  ExpeditionMilestoneString,
+  PetRankMilestoneString,
   GlobalStatsString,
   OtherString,
   EquipmentName,

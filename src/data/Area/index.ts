@@ -34,6 +34,7 @@ export class DataArea {
     this.swarmScoreMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.maxAreaMoveSpeedLevel = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 100.0));
     this.townMaterialDungeonRewardMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.townMaterialDungeonRewardMultiplier.name = "Town Material Gain";
     this.epicSwarmChanceInsteadOfLarge = new Multiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
       () => 1.0,

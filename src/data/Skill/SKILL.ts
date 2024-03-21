@@ -69,6 +69,10 @@ export class SKILL {
     return Localization.SkillName(this.heroKind, this.id);
   }
 
+  get lv() {
+    return !this.data.skill.unlockSkillPassivePersist ? this.level.value : this.level.maxReachedLevel;
+  }
+
   get type() {
     return SkillType.Attack;
   }

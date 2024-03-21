@@ -68,7 +68,7 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
 <template>
   <Tooltip>
     <p @mouseover.once="init = true" @click="console.log(multiplier)" :class="{ underline: !props.inline }">
-      <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }">{{ name }} {{ multiplier.raw.main.name }}</span>
+      <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }"> {{ multiplier.raw.main.name }}</span>
 
       <span :class="[useCompareColor(multiplier.diff.value, multiplier.main.value, multiplier.snap.value)]" class="right"
         >{{ multiplier.compare.value }} {{ Util.convertTo(multiplier.main.Value(), props.precision, multiplier.main.numberType) }} {{ props.valueSuffix }}
@@ -76,7 +76,7 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
     </p>
     <template #content v-if="init">
       <div style="width: 400px">
-        <p class="name">{{ name }}</p>
+        <p class="name">{{ multiplier.raw.main.name }}</p>
         <p class="group">Additive:</p>
         <p v-for="[key, value] in Object.entries(multiplier.diff.additiveKind)">
           <template v-if="multiplier.main.additiveKind[key] > 0 || key == 'Base' || multiplier.snap.additiveKind[key] > 0">

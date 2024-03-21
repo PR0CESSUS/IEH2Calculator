@@ -44,5 +44,6 @@ export class DataCatalyst {
     this.essenceProductionDiminishing.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 2.0));
     this.essenceProductionMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.criticalChanceMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.essenceProductionMultiplier.name = "Essence Convertion Rate";
   }
 }

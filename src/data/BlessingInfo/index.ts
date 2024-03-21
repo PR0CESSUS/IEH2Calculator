@@ -14,8 +14,10 @@ export class DataBlessingInfo {
   constructor(DATA: DATA) {
     this.data = DATA;
     this.duration = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 180.0));
-    for (let index = 0; index < this.effectMultipliers.length; index++)
+    for (let index = 0; index < this.effectMultipliers.length; index++) {
       this.effectMultipliers[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+      this.effectMultipliers[index].name = "Blessing Effect";
+    }
 
     for (let index = 0; index < this.heroes.length; index++) {
       this.heroes[index] = [];

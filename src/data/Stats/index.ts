@@ -29,6 +29,10 @@ export class DataStats {
     for (let kind = 0; kind < this.heroes.length; kind++) this.heroes[kind] = new HeroStats(this.data, kind);
     for (let index = 0; index < this.globalStats.length; index++) this.globalStats[index] = new Multiplier();
     this.globalStats[0].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.globalStats[0].name = "Gold Gain";
+    this.globalStats[1].name = "Stone Gain";
+    this.globalStats[2].name = "Crystal Gain";
+    this.globalStats[3].name = "Leaf Gain";
     this.globalStats[1].numberType = NumberType.Normal;
     this.globalStats[2].numberType = NumberType.Normal;
     this.globalStats[3].numberType = NumberType.Normal;

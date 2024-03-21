@@ -50,6 +50,14 @@ export function OtherString(id, text = "") {
       return "Damage-type skill's damage : <color=green>" + text + "x</color> ( 2x per Lv 100 )";
     case 24:
       return "2x per Lv 50";
+    case 25:
+      return "Artifact Gain Chance";
+    case 26:
+      return "SD Enchant Gain Chance";
+    case 27:
+      return "Right click to select this hero to swap current equipment from.";
+    case 28:
+      return "Right click to swap " + text + "'s current equipment for this hero's current equipment.";
     default:
       return text;
   }

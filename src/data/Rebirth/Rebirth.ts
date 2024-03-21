@@ -38,6 +38,7 @@ export class Rebirth {
     this.initRebirthPoint = new Multiplier();
 
     this.rebirthPointGainFactor = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.rebirthPointGainFactor.name = `Tier ${this.tier + 1} Rebirth Point Gain`;
     switch (this.tier) {
       case 0:
         // this.additionalAbilityPoint.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => Math.min(this.rebirthCtrl.tier1AbilityPointBonusLevelCap.Value(, this.maxHeroLevel) - RebirthParameter.tierHeroLevel[0])));

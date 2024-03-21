@@ -51,6 +51,7 @@ export class DataSuperDungeonGlobal {
     // this.motherStone = new MotherStone();
     // this.refreshTicket = new EntryCostRefreshTicket();
     this.dungeonCoinGain = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.dungeonCoinGain.name = "Dungeon Coin Gain";
     this.dungeonCoinBonus = new Multiplier();
     this.dodgeTimesec = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 10.0));
     // this.unlockFlexibleDodge = new Unlock();

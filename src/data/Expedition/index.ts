@@ -53,6 +53,12 @@ export class DataExpedition {
       this.expeditions[id] = new Expedition(this, id);
     }
     ///
+
+    this.rewardMultiplier.name = "Expedition Reward Amount";
+    this.speedMultiplier.name = "Expedition Speed";
+    this.expGainMultiplier.name = "Expedition EXP Gain";
+    this.passiveEffectMultiplier.name = "Expedition Passive Effect";
+    this.petExpGainMultiplier.name = "Expedition Pet EXP Gain";
   }
   TotalLevel() {
     return this.data.source.expeditionLevels.reduce((a, b) => a + b, 0);

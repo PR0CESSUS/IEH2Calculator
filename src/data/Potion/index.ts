@@ -105,6 +105,7 @@ export class DataPotion {
     this.maxStackNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 10.0));
     this.preventConsumeChance = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0));
     this.effectMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.effectMultiplier.name = "Potion Effect";
     this.talismanPassiveEffectMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     for (let index = 0; index < this.trapCooltimeReduction.length; index++) {
       this.trapCooltimeReduction[index] = new Multiplier(

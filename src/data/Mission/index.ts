@@ -78,6 +78,7 @@ export class DataMission {
       this.data.alchemy.catalyst.essenceProductionDiminishing.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => -0.2));
     if (this.clearNum > 2700) this.data.resource.slimeCoinInterest.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 0.05));
     if (this.clearNum > 2900) this.data.area.swarmScoreMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 0.3));
+    if (this.clearNum > 3100) this.data.town.SetEffectLevelBonusForAllBuilding(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Add, () => 20.0));
   }
 
   get clearNum() {

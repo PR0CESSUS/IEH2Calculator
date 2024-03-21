@@ -32,6 +32,7 @@ export class DataAlchemy {
     this.nitroGainOnCraft = new Multiplier();
     this.maxPurificationLevel = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 50.0));
     this.maxWaterPreservationLevel = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 5.0));
+    this.alchemyPointGainMultiplier.name = "Alchemy Point Gain";
   }
 
   Start() {

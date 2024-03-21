@@ -30,6 +30,7 @@ export class HeroSuperStats {
     // this.fame = new HeroFame(this, heroKind, this.grade);
     // this.fame.isTrackGain = true;
     this.fameGain = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.fameGain.name = "Fame Gain";
     // this.pointLeft = new SuperAbilityPointLeft(heroKind);
     for (let kind = 0; kind < this.superAbilities.length; kind++) this.superAbilities[kind] = new HeroSuperAbility(this.data, heroKind, kind);
   }

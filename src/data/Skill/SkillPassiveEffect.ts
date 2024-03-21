@@ -128,6 +128,101 @@ export class SkillPassiveEffect {
     let multiplier: Function = () => (skill.heroKind == this.data.source.currentHero ? value : value * this.data.skill.skillPassiveShareFactors[skill.heroKind].Value());
 
     switch (kind) {
+      case SkillPassiveKind.PetStat:
+        tempDescription = Localization.PetRankMilestoneString(3, Util.percent(value));
+        this.data.monster.petStatsMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
+
+      case SkillPassiveKind.LoyaltyPointGain:
+        tempDescription = Localization.PetRankMilestoneString(1, Util.percent(value));
+        for (let index = 0; index < Enums.HeroKind; index++) {
+          this.data.stats.heroes[index].loyaltyPoingGain.RegisterMultiplier(
+            new MultiplierInfo(
+              MultiplierKind.SkillPassive,
+              type,
+              () => this.EffectValue(index),
+              () => this.IsActivated()
+            )
+          );
+        }
+        break;
+      case SkillPassiveKind.PetExpGain:
+        tempDescription = Localization.PetRankMilestoneString(2, Util.percent(value));
+        for (let index = 0; index < Enums.HeroKind; index++) {
+          this.data.stats.heroes[index].petExpGainPerDefeat.RegisterMultiplier(
+            new MultiplierInfo(
+              MultiplierKind.SkillPassive,
+              type,
+              () => this.EffectValue(index),
+              () => this.IsActivated()
+            )
+          );
+        }
+        break;
+      case SkillPassiveKind.DoubleCaptureChance:
+        tempDescription = Localization.PetRankMilestoneString(5, Util.percent(value));
+        for (let index = 0; index < Enums.HeroKind; index++) {
+          this.data.monster.doubleCaptureChance[index].RegisterMultiplier(
+            new MultiplierInfo(
+              MultiplierKind.SkillPassive,
+              type,
+              () => this.EffectValue(index),
+              () => this.IsActivated()
+            )
+          );
+        }
+        break;
+      case SkillPassiveKind.TripleCaptureChance:
+        tempDescription = Localization.PetRankMilestoneString(5, Util.percent(value));
+        for (let index = 0; index < Enums.HeroKind; index++) {
+          this.data.monster.captureTripleChance[index].RegisterMultiplier(
+            new MultiplierInfo(
+              MultiplierKind.SkillPassive,
+              type,
+              () => this.EffectValue(index),
+              () => this.IsActivated()
+            )
+          );
+        }
+        break;
+
+      case SkillPassiveKind.ExpeditionExpGain:
+        tempDescription = Localization.ExpeditionMilestoneString(16, Util.percent(value));
+        this.data.expedition.expGainMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
+      case SkillPassiveKind.ExpeditionSpeed:
+        tempDescription = Localization.ExpeditionMilestoneString(19, Util.percent(value));
+        this.data.expedition.speedMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
+      case SkillPassiveKind.ExpeditionRewardAmount:
+        tempDescription = Localization.ExpeditionMilestoneString(17, Util.percent(value));
+        this.data.expedition.rewardMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
+      case SkillPassiveKind.ExpeditionPetExpGain:
+        tempDescription = `Expedition Pet EXP Gain  + ${Util.percent(value)}`;
+        this.data.expedition.petExpGainMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
+      case SkillPassiveKind.ExpeditionPassiveEffect:
+        tempDescription = Localization.ExpeditionMilestoneString(18, Util.percent(value));
+        this.data.expedition.passiveEffectMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
+      case SkillPassiveKind.ArtifactGainChance:
+        tempDescription = Localization.OtherString(25) + " + " + Util.percent(value);
+        this.data.equipment.artifactChance.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
+
+      case SkillPassiveKind.SDEnchantGainChance:
+        tempDescription = Localization.OtherString(26) + " + " + Util.percent(value);
+        this.data.equipment.sdEnchantChance.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
+      case SkillPassiveKind.PetStat:
+        tempDescription = Localization.PetRankMilestoneString(3, Util.percent(value));
+        this.data.monster.petStatsMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
+      case SkillPassiveKind.PetPassiveEffect:
+        tempDescription = "Pet Passive Effect + " + Util.percent(value);
+        this.data.monster.petPassiveEffectMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        break;
       case SkillPassiveKind.SDDamageMultiplier:
         tempDescription = Localization.GradeMilestone(5, Util.percent(value));
         for (let index = 0; index < Enums.HeroKind; index++) {
@@ -475,6 +570,7 @@ export class SkillPassiveEffect {
           tempDescription = Localization.ThiefSkillsString(1, value);
           this.data.stats.HeroStats(heroKind, Stats.PhysCritChance).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Buff, MultiplierType.Add, () => value, trigger));
           break;
+
         case SkillBuffKind.MagicalCritAdd:
           tempDescription = Localization.ThiefSkillsString(4, value);
           this.data.stats.HeroStats(heroKind, Stats.MagCritChance).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Buff, MultiplierType.Add, () => value, trigger));
@@ -582,6 +678,7 @@ export class SkillPassiveEffect {
           this.data.stats.BasicStats(index, this.basicStatsKind).RegisterMultiplier(multiplierInfo);
         }
         break;
+
       case SkillPassiveEffectKind.HeroStats:
         for (let index = 0; index < Enums.HeroKind; index++) {
           let multiplierInfo: MultiplierInfo = new MultiplierInfo(

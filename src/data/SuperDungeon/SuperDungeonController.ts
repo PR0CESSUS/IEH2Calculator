@@ -78,6 +78,12 @@ export class SuperDungeonController {
     this.sdChallengeBossDamageCutMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.armoredFury = new Multiplier();
     this.wardedFury = new Multiplier();
+    this.armoredFury.name = `SD Armored Fury`;
+    this.wardedFury.name = `SD Warded Fury`;
+    this.damageMultiplier.name = "SD Damage Multiplier";
+    this.damageCutMultiplier.name = "SD Damage Cut Multiplier";
+    this.sdChallengeBossDamageMultiplier.name = "SD Challange Boss Damage Multiplier";
+    this.sdChallengeBossDamageCutMultiplier.name = "SD Challange Boss Damage Cut Multiplier";
     this.healPercentEveryFloor = new Multiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.0),
       () => 1.0,

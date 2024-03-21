@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Game } from "@/Game";
+import { HeroKind } from "@/type/HeroKind";
 
 import { inject } from "vue";
 import { definePage } from "vue-router/auto";
@@ -24,27 +25,52 @@ function parse(event: ClipboardEvent) {
   // inGameData.value = textArray;
   // globalStore.test.main1 = textArray;
 }
+
+const testMultipliersList = [...game.data.stats.heroes[game.data.source.currentHero].basicStats, ...game.data.stats.heroes[game.data.source.currentHero].stats];
+
+// function getAllMultipliers(initObject): Multiplier[] {
+//   const list = [];
+
+//   function get(object) {
+//     for (const [key, value] of Object.entries(object)) {
+//       if (typeof value === "object" && value instanceof Multiplier) list.push(value);
+//       if (typeof value === "object" && Array.isArray(value)) get(value);
+//     }
+//   }
+
+//   get(initObject);
+
+//   return list;
+// }
+
+// const testMultipliers = getAllMultipliers(game.data.stats.heroes[2]);
+
+console.log("testMultipliersList.length", testMultipliersList.length);
 </script>
 
 <template>
-  Playgroung
+  <ul>
+    <li>Current Hero: {{ HeroKind[game.data.source.currentHero] }} Lv {{ game.data.source.heroLevel[game.data.source.currentHero] }}</li>
+    <li>Super Dungeon: {{ game.data.source.isSuperDungeon }}</li>
+  </ul>
+
   <input type="text" @paste="parse" />
+  <hr />
 
   <table>
     <tr>
       <td>Name</td>
+      <td>Calculator</td>
       <td>Game</td>
-      <td>Calcualtor</td>
       <td>Pass</td>
     </tr>
-    <tr>
-      <td>HP</td>
-      <!-- <td><AppInput v-model="globalStore.test.main1[2]" :size="12" /></td> -->
-      <td>{{ game.data.stats.currentHero.basicStats[0].ValueString() }}</td>
+    <tr v-for="test in testMultipliersList">
+      <td>{{ test.name }}</td>
+      <td>{{ test.ValueString() }}</td>
+      <td></td>
       <td>{{}}</td>
     </tr>
   </table>
-  game.data.source.isSuperDungeon: {{ game.data.source.isSuperDungeon }}
 </template>
 
 <style scoped></style>

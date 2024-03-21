@@ -10,6 +10,8 @@ import { MultiplierType } from "../../type/MultiplierType";
 import { NumberType } from "../../type/NumberType";
 import { HeroAbility } from "./HeroAbility";
 import { Util } from "@/Util";
+import { Localization } from "@/localization";
+import { Element } from "@/type/Element";
 
 export class HeroStats {
   data: DATA;
@@ -125,6 +127,7 @@ export class HeroStats {
         })
       );
       this.basicStats[index].numberType = NumberType.Normal;
+      this.basicStats[index].name = BasicStatsKind[index];
 
       this.basicStatsPerLevel[index] = new Multiplier();
       this.basicStats[index].RegisterMultiplier(
@@ -133,7 +136,10 @@ export class HeroStats {
         })
       );
     }
-    for (let index = 0; index < this.stats.length; index++) this.stats[index] = new Multiplier();
+    for (let index = 0; index < this.stats.length; index++) {
+      this.stats[index] = new Multiplier();
+      this.stats[index].name = Localization.Stat(index);
+    }
 
     this.stats[0].maxValue = () => {
       return 0.9;
@@ -273,6 +279,9 @@ export class HeroStats {
         })
       );
     }
+    this.optionEffectChance[0].name = "Equipment 1st Enchantment Slot Chance";
+    this.optionEffectChance[1].name = "Equipment 1st Enchantment Slot Chance";
+    this.optionEffectChance[2].name = "Equipment 1st Enchantment Slot Chance";
     this.hpRegenerate = new Multiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
         return 0;
@@ -292,6 +301,8 @@ export class HeroStats {
         return 0.0;
       }
     );
+    this.hpRegenerate.name = "HP Regeneration";
+    this.mpRegenerate.name = "MP Regeneration";
     this.hpRegenerate.numberType = NumberType.Normal;
     this.mpRegenerate.numberType = NumberType.Normal;
     this.skillSlotNum = new Multiplier(
@@ -306,11 +317,8 @@ export class HeroStats {
       })
     );
     for (let index = 0; index < this.monsterDamages.length; index++) {
-      this.monsterDamages[index] = new Multiplier(
-        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-          return 1.0;
-        })
-      );
+      this.monsterDamages[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+      this.monsterDamages[index].name = `Damage to ${Localization.MonsterSpeciesName(index)}`;
     }
     for (let index = 0; index < this.elementDamages.length; index++) {
       this.elementDamages[index] = new Multiplier(
@@ -318,6 +326,7 @@ export class HeroStats {
           return 1.0;
         })
       );
+      this.elementDamages[index].name = `${Element[index]} Damage`;
 
       if (index == 0)
         this.elementDamages[index].RegisterMultiplier(
@@ -342,6 +351,7 @@ export class HeroStats {
           return 0.0;
         }
       );
+      this.elementAbsoptions[index].name = `${Element[index]} Absorption`;
     }
     for (let index = 0; index < this.elementInvalids.length; index++) {
       this.elementInvalids[index] = new Multiplier(
@@ -349,6 +359,7 @@ export class HeroStats {
           return 0.0;
         })
       );
+      this.elementInvalids[index].name = `${Element[index]} Nullify Chance`;
     }
     this.guardianKorInvalidDamageHpPercent = new Multiplier();
     this.monsterDistinguishMaxLevel = new Multiplier();
@@ -363,6 +374,7 @@ export class HeroStats {
         return 1.0;
       })
     );
+    this.guildExpGain.name = "Guild EXP Gain";
     for (let index = 0; index < this.debuffChances.length; index++) this.debuffChances[index] = new Multiplier();
     for (let index = 0; index < this.elementSlayerDamages.length; index++) this.elementSlayerDamages[index] = new Multiplier();
     this.channeledMp = new Multiplier();
@@ -371,11 +383,13 @@ export class HeroStats {
         return 1.0;
       })
     );
+    this.loyaltyPoingGain.name = "Loyalty Point Gain";
     this.petExpGainPerDefeat = new Multiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
         return 1.0;
       })
     );
+    this.petExpGainPerDefeat.name = "Pet EXP Gain";
     this.summonPetATKMATKMultiplier = new Multiplier(
       new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
         return 1.0;
@@ -396,5 +410,6 @@ export class HeroStats {
         return 0.0;
       }
     );
+    this.extraAfterDamage.name = "Extra After Damage";
   }
 }

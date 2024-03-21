@@ -58,6 +58,10 @@ export class DataTown {
     for (let index = 0; index < Enums.ResourceKind; index++) {
       this.townLevelEffectMultipliers[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     }
+
+    this.researchPower[0].name = "Stone Reasearch Power";
+    this.researchPower[1].name = "Crystal Reasearch Power";
+    this.researchPower[2].name = "Leaf Reasearch Power";
   }
 
   Start() {
