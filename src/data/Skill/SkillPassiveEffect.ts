@@ -662,7 +662,7 @@ export class SkillPassiveEffect {
   }
 
   IsEnoughLevel() {
-    return this.data.skill.unlockSkillPassivePersist ? this.level.maxReachedLevel >= this.requiredLevel : this.level >= this.requiredLevel;
+    return this.data.skill.unlockSkillPassivePersist ? this.level.maxReachedLevel >= this.requiredLevel : this.level.value >= this.requiredLevel;
   }
 
   SetEffect() {

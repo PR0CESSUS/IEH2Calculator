@@ -808,4 +808,8 @@ export class HeroSuperStats {
       )
     );
   }
+
+  GradeForEquipment() {
+    return this.grade;
+  }
 }

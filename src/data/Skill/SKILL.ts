@@ -198,7 +198,7 @@ export class SKILL {
 
   // IsActiveBuff(heroKind: HeroKind) {return this.IsEquipped(heroKind) && this.mp[heroKind] > 0.0;}
   IsActiveBuff(heroKind: HeroKind) {
-    return true;
+    return this.IsEquipped(heroKind);
   }
 
   //   Description() {return "";}

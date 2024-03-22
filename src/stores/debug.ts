@@ -4,6 +4,7 @@ import { useStorage } from "@vueuse/core";
 const STORE_NAME = "Debug";
 const DEFAULT_DATA = {
   active: false,
+  data: Array(29).fill(0),
 };
 
 export const useDebugStore = defineStore(STORE_NAME, {

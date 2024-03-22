@@ -31,7 +31,7 @@ export class Equipment {
   requiredGrade;
   requiredLevelWithoutForge;
   requiredGradeWithoutForge;
-  requiredAbilityPoint: number[];
+  requiredAbilityPoint: number[] = [];
   info: MultiplierInfo;
   activateCondition;
   optionNum = 4;
@@ -127,11 +127,10 @@ export class Equipment {
 
   Start() {
     this.CalculateRequiredLevel();
+    this.CalculateRequiredAbilityPoints();
 
     this.SetAgainAllEffect();
 
-    //
-    // this.CalculateRequiredAbilityPoint();
     // if (this.heroKind == HeroKind.Angel && (this.slotId == 2021 || this.slotId == 2022)) {
     //   console.log("gear", this.slotId, this.loadoutSlot, this.IsEquipped(), this.isDisabled(), this.isEffectRegistered);
     // }
@@ -411,7 +410,7 @@ export class Equipment {
   }
 
   EffectValue(baseEffectValue, heroKind: HeroKind) {
-    let num = baseEffectValue * this.EffectMultiplierFromSetItem(heroKind) * (1.0 + this.forgeEffects[3].EffectValue());
+    let num = baseEffectValue * this.EffectMultiplierFromSetItem(heroKind) * (1.0 + this.forgeEffects[3].EffectValue()) * this.EQAbusePercent(heroKind);
     if (!this.globalInfo.isArtifact) num *= this.data.equipment.EffectMultiplier();
     else if (this.data.equipment.effectMultiplierModifierForArtifact.Value() > 0.0) num *= this.data.equipment.ArtifactEffectMultiplier();
     if (num < 0.0) num *= Math.max(0.0, 1 - this.forgeEffects[4].EffectValue());
@@ -495,5 +494,79 @@ export class Equipment {
 
   FindMaxEnchantDPS(optionId: number) {
     EnchantmentOptimizer(this.data.battle.Enemy(), this, optionId);
+  }
+
+  RequiredAbilityPoint(id) {
+    if (this.requiredAbilityPoint == null || this.requiredAbilityPoint.length < this.globalInfo.requiredAbilities.length) {
+      this.requiredAbilityPoint = Array(this.globalInfo.requiredAbilities.length);
+      this.CalculateRequiredAbilityPoint(id);
+    }
+    return this.requiredAbilityPoint[id];
+  }
+
+  CalculateRequiredAbilityPoints() {
+    for (let id = 1; id < this.globalInfo.requiredAbilities.length; id++) this.CalculateRequiredAbilityPoint(id);
+  }
+  CalculateRequiredAbilityPoint(id) {
+    let requiredValue = this.globalInfo.requiredAbilities[id].requiredValue;
+    if (requiredValue > 0) {
+      if (this.globalInfo.isArtifact) {
+        if (this.globalInfo.requiredAbilities[id].isSuperAbility) requiredValue -= this.forgeEffects[1].EffectValue();
+      } else if (!this.globalInfo.requiredAbilities[id].isSuperAbility) requiredValue -= this.forgeEffects[1].EffectValue();
+    }
+    if (this.requiredAbilityPoint == null || this.requiredAbilityPoint.length < this.globalInfo.requiredAbilities.length)
+      this.requiredAbilityPoint = Array(this.globalInfo.requiredAbilities.length);
+    this.requiredAbilityPoint[id] = Math.max(0, requiredValue);
+  }
+
+  IsExistedRequiredLevel() {
+    if (!this.globalInfo.isArtifact) return true;
+    for (let index = 0; index < this.optionEffects.length; index++) {
+      if (!this.optionEffects[index].isAfter && this.optionEffects[index].RequiredLevelIncrement() > 0) return true;
+    }
+    return false;
+  }
+
+  IsExistedRequiredGrade() {
+    if (this.globalInfo.isArtifact) return true;
+    for (let index = 0; index < this.optionEffects.length; index++) {
+      if (this.optionEffects[index].isAfter) return true;
+    }
+    return false;
+  }
+  EQAbusePercent(heroKind: HeroKind) {
+    let val2 = 1.0;
+
+    let num1 = 0.0;
+    let num2 = 0.0;
+    let num3 = 1.0;
+    for (let index = 1; index < this.globalInfo.requiredAbilities.length; index++) {
+      num1++;
+
+      if (this.RequiredAbilityPoint(index) < 1) num2++;
+      else if (this.globalInfo.requiredAbilities[index].isSuperAbility)
+        num2 += Math.min(
+          1.0,
+          this.data.superStats.Hero(heroKind).SuperAbility(this.globalInfo.requiredAbilities[index].kind).Point() / Math.max(1, this.RequiredAbilityPoint(index))
+        );
+      else num2 += Math.min(1.0, this.data.stats.Ability(heroKind, this.globalInfo.requiredAbilities[index].kind).Point() / Math.max(1, this.RequiredAbilityPoint(index)));
+    }
+    let num5 = num1 >= 1.0 ? num3 * (num2 / num1) : 1.0;
+    let num6 = 1.0;
+    if (this.IsExistedRequiredLevel()) {
+      if (this.RequiredLevel(false, false) < 1) num5++;
+      else num5 += Math.min(1.0, this.data.stats.LevelForEquipment(heroKind).Value() / this.RequiredLevel(false, false));
+      num6++;
+    }
+    if (this.IsExistedRequiredGrade()) {
+      if (this.RequiredLevel(false, true) < 1) num5++;
+      else num5 += Math.min(1.0, this.data.superStats.Hero(heroKind).GradeForEquipment() / this.RequiredLevel(false, true));
+      num6++;
+    }
+    val2 = num5 / num6;
+
+    // console.log("num1:", num1), console.log("num2:", num2), console.log("num3:", num3), console.log("num5:", num5), console.log("num6:", num6);
+
+    return Math.min(1.0, Math.max(0.1, val2));
   }
 }

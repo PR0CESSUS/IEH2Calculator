@@ -4,4 +4,5 @@ export enum CopyKind {
   OptionEffect,
   ForgeEffects,
   EquipmentLoadout,
+  Debug,
 }

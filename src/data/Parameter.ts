@@ -1,6 +1,7 @@
 import { TitleKind } from "../type/TitleKind";
 
 export const Parameter = {
+  resourceUpgradeTier: 20,
   baseStats: [
     [20.0, 5.0, 2.0, 0.5, 0.0, 0.0, 0.0, 0.01, 0.0, 2.0, 0.001, 200.0],
     [10.0, 10.0, 0.5, 2.0, 0.0, 0.0, 0.0, 0.0, 0.01, 2.0, 0.001, 150.0],

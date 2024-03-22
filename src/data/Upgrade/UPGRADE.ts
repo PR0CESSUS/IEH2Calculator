@@ -1,125 +1,67 @@
-import { UpgradeKind } from "./../../type/UpgradeKind";
-import { ResourceKind } from "../../type/ResourceKind";
-import { SlimeBankUpgradeKind } from "../../type/SlimeBankUpgradeKind";
+import { ResourceKind } from "@type/ResourceKind";
+import { UpgradeKind } from "@type/UpgradeKind";
 import { DATA } from "..";
-import { Stats } from "../../type/Stats";
-import { MultiplierInfo } from "../Multiplier";
-import { MultiplierKind } from "../../type/MultiplierKind";
-import { MultiplierType } from "../../type/MultiplierType";
+import { UpgradeLevel } from "./UpgradeLevel";
+import { SlimeBankUpgradeKind } from "@/type/SlimeBankUpgradeKind";
+import { Util } from "@/Util";
 
 export class UPGRADE {
   data: DATA;
   id;
-  kind: UpgradeKind;
-  slimebankKind: SlimeBankUpgradeKind;
+  level: UpgradeLevel;
 
-  constructor(DATA: DATA, kind: UpgradeKind, slimeBankKind: SlimeBankUpgradeKind = 0) {
+  constructor(DATA: DATA) {
     this.data = DATA;
-    this.kind = kind;
-    this.slimebankKind = slimeBankKind;
+    this.level = new UpgradeLevel(this.data, this.kind, () => this.id);
   }
 
-  get level() {
-    switch (this.kind) {
-      case UpgradeKind.SlimeBank:
-        return this.data.source.upgradeLevelsSlimebank[this.slimebankKind];
-
-      default:
-        return 0;
-    }
+  get kind() {
+    return UpgradeKind.BasicStats;
   }
 
   get resource() {
-    return ResourceKind.Stone;
+    return ResourceKind.Leaf;
   }
 
-  Start() {
-    switch (this.kind) {
-      case UpgradeKind.SlimeBank:
-        switch (this.slimebankKind) {
-          case SlimeBankUpgradeKind.CritDamage:
-            this.data.stats.SetEffectStats(Stats.CriticalDamage, new MultiplierInfo(MultiplierKind.Upgrade, MultiplierType.Add, () => this.EffectValue()));
-            break;
-          case SlimeBankUpgradeKind.SkillProf:
-            this.data.stats.SetEffectStats(Stats.SkillProficiencyGain, new MultiplierInfo(MultiplierKind.Upgrade, MultiplierType.Mul, () => this.EffectValue()));
-            break;
-          default:
-            break;
-        }
-
-        break;
-
-      default:
-        break;
-    }
+  get slimebankKind() {
+    return SlimeBankUpgradeKind.CritDamage;
   }
 
-  Set() {
-    // this.unlock = new Unlock();
-    // this.level = new UpgradeLevel(this.kind, this.id);
-    // this.SetTransaction();
-    // this.SetUnlockCondition();
-  }
+  Start() {}
 
   CostModifier() {
+    const isSlimeBank = this.kind != UpgradeKind.SlimeBank ? 1 : 0;
     return (
-      (1.0 - +(this.kind != UpgradeKind.SlimeBank) * this.data.upgrade.costReduction.Value()) *
-      (1.0 - +(this.kind != UpgradeKind.SlimeBank) * this.data.upgrade.costReductionFromGuildAbility.Value()) *
-      (1.0 - +(this.kind != UpgradeKind.SlimeBank) * this.data.upgrade.costReductionFromGuildSuperAbility.Value()) *
-      (1.0 - +(this.kind != UpgradeKind.SlimeBank) * this.data.upgrade.costReductionFromMissionMilestone.Value()) *
+      (1.0 - isSlimeBank * this.data.upgrade.costReduction.Value()) *
+      (1.0 - isSlimeBank * this.data.upgrade.costReductionFromGuildAbility.Value()) *
+      (1.0 - isSlimeBank * this.data.upgrade.costReductionFromGuildSuperAbility.Value()) *
+      (1.0 - isSlimeBank * this.data.upgrade.costReductionFromMissionMilestone.Value()) *
       (1.0 - this.data.upgrade.costReductionFromWA.Value())
     );
   }
 
   Cost(level) {
-    switch (this.kind) {
-      case UpgradeKind.SlimeBank:
-        switch (this.slimebankKind) {
-          case SlimeBankUpgradeKind.CritDamage:
-            return 50000.0 * Math.pow(1.1, level);
-
-          default:
-            return 0;
-        }
-
-      default:
-        return 0;
-    }
     return level;
   }
 
-  EffectValue() {
-    switch (this.kind) {
-      case UpgradeKind.SlimeBank:
-        switch (this.slimebankKind) {
-          case SlimeBankUpgradeKind.CritDamage:
-            return 0.025 * this.level;
-          case SlimeBankUpgradeKind.SkillProf:
-            return 0.05 * this.level;
-          default:
-            return 0;
-        }
-
-      default:
-        return 0;
-    }
+  EffectValue(isNextValue = false) {
+    return 1.0;
   }
 
+  ResourceKind() {}
+
   IsUnlocked() {
-    // for (let index = 0; index < this.unlockConditions.length; index++) {
-    //   if (!this.unlockConditions[index]())
-    //     return false;
-    // }
-    // return this.unlock.IsUnlocked();
+    return true;
   }
 
   Name() {
     return "";
   }
-
+  EffectString() {
+    return `${Util.tDigit(this.EffectValue())}`;
+  }
+  SetUnlockCondition() {}
   Description() {
     return "";
   }
-
-  SetUnlockCondition() {}
 }

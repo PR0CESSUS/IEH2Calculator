@@ -2,6 +2,7 @@ import { NumberType } from "../type/NumberType";
 import { MultiplierKind } from "../type/MultiplierKind";
 import { MultiplierType } from "../type/MultiplierType";
 import { Util } from "../Util";
+import { Localization } from "@/localization";
 
 export class Multiplier {
   modifiers: MultiplierInfo[] = [];
@@ -153,6 +154,13 @@ export class Multiplier {
       }
     }
     return this.additive * this.multiplicative;
+  }
+
+  PrintModifiers(type: MultiplierType = 0) {
+    for (let index = 0; index < this.modifiers.length; index++) {
+      const modifier = this.modifiers[index];
+      if (modifier.type == type) console.log(Localization.StatsBreakdown(modifier.kind), MultiplierType[modifier.type], modifier.Value);
+    }
   }
 }
 

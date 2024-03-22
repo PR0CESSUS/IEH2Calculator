@@ -125,7 +125,12 @@ function pasteEvent() {
         </p>
         <br />
 
-        <h5>Effect</h5>
+        <h5>
+          Effect
+          <span class="yellow">{{
+            equipment.EQAbusePercent(equipment.heroKind) < 1 ? `Efficiency(Equipment Tenacity) : ${Util.percent(equipment.EQAbusePercent(equipment.heroKind))}` : ""
+          }}</span>
+        </h5>
         <p
           v-for="(effect, index) in equipment.globalInfo.effects"
           v-html="

@@ -1,3 +1,4 @@
+import { AbilityKind } from "@/type/AbilityKind";
 import { DATA } from "..";
 import { Enums } from "../../Enums";
 import { BasicStatsKind } from "../../type/BasicStatsKind";
@@ -214,6 +215,9 @@ export class DataStats {
 
   //  Ability(heroKind: HeroKind, AbilityKind kind) => this.heroes[heroKind].abilities[kind];
 
+  Ability(heroKind: HeroKind, kind: AbilityKind) {
+    return this.heroes[heroKind].abilities[kind];
+  }
   // TotalAbilityPoint(heroKind: HeroKind) {
   //   num = this.AbilityPointLeft(heroKind).value;
   //   for (let index = 0; index < Enums.abilityKindLength; index++) {

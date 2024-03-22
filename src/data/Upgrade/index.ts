@@ -6,16 +6,45 @@ import { MultiplierType } from "../../type/MultiplierType";
 import { UpgradeKind } from "../../type/UpgradeKind";
 import { SlimeBankUpgradeKind } from "./../../type/SlimeBankUpgradeKind";
 import { UPGRADE } from "./UPGRADE";
+import { ResourceUpgrade } from "./upgrade/ResourceUpgrade";
+import { BasicStatsUpgrade } from "./upgrade/BasicStatsUpgrade";
+import { GoldCapUpgrade } from "./upgrade/GoldCapUpgrade";
+import { GoldGainUpgrade } from "./upgrade/GoldGainUpgrade";
+import { ExpGainUpgrade } from "./upgrade/ExpGainUpgrade";
+import { SB_SlimeCoinCap } from "./upgrade/SB_SlimeCoinCap";
+import { SB_SlimeCoinCap2 } from "./upgrade/SB_SlimeCoinCap2";
+import { SB_SlimeCoinEfficiency } from "./upgrade/SB_SlimeCoinEfficiency";
+import { SB_UpgradeCostReduction } from "./upgrade/SB_UpgradeCostReduction";
+import { SB_ResourceBooster } from "./upgrade/SB_ResourceBooster";
+import { SB_StatsBooster } from "./upgrade/SB_StatsBooster";
+import { SB_GoldCapBooster } from "./upgrade/SB_GoldCapBooster";
+import { SB_GoldGain } from "./upgrade/SB_GoldGain";
+import { SB_MysteriousWaterGain } from "./upgrade/SB_MysteriousWaterGain";
+import { SB_SPD } from "./upgrade/SB_SPD";
+import { SB_FireRes } from "./upgrade/SB_FireRes";
+import { SB_IceRes } from "./upgrade/SB_IceRes";
+import { SB_ThunderRes } from "./upgrade/SB_ThunderRes";
+import { SB_LightRes } from "./upgrade/SB_LightRes";
+import { SB_DarkRes } from "./upgrade/SB_DarkRes";
+import { SB_DebuffRes } from "./upgrade/SB_DebuffRes";
+import { SB_ShopTimer } from "./upgrade/SB_ShopTimer";
+import { SB_MaterialFinder } from "./upgrade/SB_MaterialFinder";
+import { SB_EquipmentProf } from "./upgrade/SB_EquipmentProf";
+import { SB_SkillProf } from "./upgrade/SB_SkillProf";
+import { SB_ResearchPower } from "./upgrade/SB_ResearchPower";
+import { EquipmentInventoryUpgrade } from "./upgrade/EquipmentInventoryUpgrade";
+import { SB_CritDamage } from "./upgrade/SB_CritDamage";
+import { Parameter } from "../Parameter";
 
 export class DataUpgrade {
   data: DATA;
-  upgrades: UPGRADE[][];
-  //   resourceUpgrades: ResourceUpgrade[] = new ResourceUpgrade[Parameter.resourceUpgradeTier];
-  //   basicStatsUpgrades: BasicStatsUpgrade[] = new BasicStatsUpgrade[Enum.GetNames(typeof (BasicStatsKind)).length];
+  upgrades: UPGRADE[];
+  resourceUpgrades: ResourceUpgrade[] = [];
+  basicStatsUpgrades: BasicStatsUpgrade[] = [];
   goldGainUpgrade: UPGRADE;
   expGainUpgrade: UPGRADE;
   equipmentInventoryUpgrade: UPGRADE;
-  //   goldCapUpgrades: GoldCapUpgrade[] = new GoldCapUpgrade[Enums.ResourceKind];
+  goldCapUpgrades: GoldCapUpgrade[] = [];
   generalUpgradeList: UPGRADE[] = [];
   sb1ist: UPGRADE[] = [];
   sb2ist: UPGRADE[] = [];
@@ -80,63 +109,54 @@ export class DataUpgrade {
       () => 5.0,
       () => 0.0
     );
-    // for (let id = 0; id < this.resourceUpgrades.length; id++)
-    //   this.resourceUpgrades[id] = new ResourceUpgrade(id);
-    // for (let index = 0; index < this.basicStatsUpgrades.length; index++) {
-    //   this.basicStatsUpgrades[index] = new BasicStatsUpgrade(index);
-    // }
-    // this.goldGainUpgrade =  new GoldGainUpgrade();
-    // this.expGainUpgrade = new ExpGainUpgrade();
-    // for (let index = 0; index < this.goldCapUpgrades.length; index++) {
-    //   this.goldCapUpgrades[index] = new GoldCapUpgrade(index);
-    // }
-    // this.equipmentInventoryUpgrade = (UPGRADE) new EquipmentInventoryUpgrade();
-    // this.generalUpgradeList.AddRange((IEnumerable<UPGRADE>) this.resourceUpgrades);
-    // this.generalUpgradeList.AddRange((IEnumerable<UPGRADE>) this.basicStatsUpgrades);
-    // this.generalUpgradeList.push(this.goldGainUpgrade);
-    // this.generalUpgradeList.push(this.expGainUpgrade);
-    // this.generalUpgradeList.AddRange((IEnumerable<UPGRADE>) this.goldCapUpgrades);
-    // this.generalUpgradeList.push(this.equipmentInventoryUpgrade);
-    // this.sb1ist.push((UPGRADE) new SB_SlimeCoinCap());
-    // this.sb1ist.push((UPGRADE) new SB_SlimeCoinCap2());
-    // this.sb1ist.push((UPGRADE) new SB_SlimeCoinEfficiency());
-    // this.sb1ist.push((UPGRADE) new SB_UpgradeCostReduction());
-    // this.sb1ist.push((UPGRADE) new SB_ResourceBooster());
-    // this.sb1ist.push((UPGRADE) new SB_StatsBooster());
-    // this.sb1ist.push((UPGRADE) new SB_GoldCapBooster());
-    // this.sb2ist.push((UPGRADE) new SB_GoldGain());
-    // this.sb2ist.push((UPGRADE) new SB_MysteriousWaterGain());
-    // this.sb2ist.push((UPGRADE) new SB_SPD());
-    // this.sb2ist.push((UPGRADE) new SB_FireRes());
-    // this.sb2ist.push((UPGRADE) new SB_IceRes());
-    // this.sb2ist.push((UPGRADE) new SB_ThunderRes());
-    // this.sb2ist.push((UPGRADE) new SB_LightRes());
-    // this.sb2ist.push((UPGRADE) new SB_DarkRes());
-    // this.sb3ist.push((UPGRADE) new SB_DebuffRes());
-    // this.sb3ist.push((UPGRADE) new SB_SkillProf());
-    // this.sb3ist.push((UPGRADE) new SB_EquipmentProf());
-    // this.sb3ist.push((UPGRADE) new SB_MaterialFinder());
-    // this.sb3ist.push((UPGRADE) new SB_ShopTimer());
-    this.sb3ist.push(new UPGRADE(this.data, UpgradeKind.SlimeBank, SlimeBankUpgradeKind.SkillProf));
-    this.sb3ist.push(new UPGRADE(this.data, UpgradeKind.SlimeBank, SlimeBankUpgradeKind.CritDamage));
-    // this.sb3ist.push((UPGRADE) new SB_ResearchPower());
-    // this.slimebankUpgradeList.AddRange((IEnumerable<UPGRADE>) this.sb1ist);
-    // this.slimebankUpgradeList.AddRange((IEnumerable<UPGRADE>) this.sb2ist);
-    // this.slimebankUpgradeList.AddRange((IEnumerable<UPGRADE>) this.sb3ist);
+    for (let id = 0; id < Parameter.resourceUpgradeTier; id++) this.resourceUpgrades.push(new ResourceUpgrade(this.data, id));
+    for (let index = 0; index < 6; index++) this.basicStatsUpgrades.push(new BasicStatsUpgrade(this.data, index));
+    //
+    this.goldGainUpgrade = new GoldGainUpgrade(this.data);
+    this.expGainUpgrade = new ExpGainUpgrade(this.data);
+    for (let index = 0; index < 3; index++) this.goldCapUpgrades[index] = new GoldCapUpgrade(this.data, index);
+    //
+    this.equipmentInventoryUpgrade = new EquipmentInventoryUpgrade(this.data);
+
+    this.generalUpgradeList = [
+      ...this.resourceUpgrades,
+      ...this.basicStatsUpgrades,
+      this.goldGainUpgrade,
+      this.expGainUpgrade,
+      ...this.goldCapUpgrades,
+      this.equipmentInventoryUpgrade,
+    ];
+    this.sb1ist.push(new SB_SlimeCoinCap(this.data));
+    this.sb1ist.push(new SB_SlimeCoinCap2(this.data));
+    this.sb1ist.push(new SB_SlimeCoinEfficiency(this.data));
+    this.sb1ist.push(new SB_UpgradeCostReduction(this.data));
+    this.sb1ist.push(new SB_ResourceBooster(this.data));
+    this.sb1ist.push(new SB_StatsBooster(this.data));
+    this.sb1ist.push(new SB_GoldCapBooster(this.data));
+    this.sb2ist.push(new SB_GoldGain(this.data));
+    this.sb2ist.push(new SB_MysteriousWaterGain(this.data));
+    this.sb2ist.push(new SB_SPD(this.data));
+    this.sb2ist.push(new SB_FireRes(this.data));
+    this.sb2ist.push(new SB_IceRes(this.data));
+    this.sb2ist.push(new SB_ThunderRes(this.data));
+    this.sb2ist.push(new SB_LightRes(this.data));
+    this.sb2ist.push(new SB_DarkRes(this.data));
+    this.sb3ist.push(new SB_DebuffRes(this.data));
+    this.sb3ist.push(new SB_SkillProf(this.data));
+    this.sb3ist.push(new SB_EquipmentProf(this.data));
+    this.sb3ist.push(new SB_MaterialFinder(this.data));
+    this.sb3ist.push(new SB_ShopTimer(this.data));
+    this.sb3ist.push(new SB_CritDamage(this.data));
+
+    this.sb3ist.push(new SB_ResearchPower(this.data));
+
+    this.slimebankUpgradeList = [...this.sb1ist, ...this.sb2ist, ...this.sb3ist];
     // for (let kind = 0; kind < Enum.GetNames(typeof (ResourceKind)).length; kind++)
     //   globalThis.data.stats.ResourceGain(kind).RegisterMultiplier(new MultiplierInfo(MultiplierKind.Upgrade, MultiplierType.Add, (() => this.ResourceGain())));
-    // this.upgrades = new UPGRADE[7][]
-    // {
-    //   (UPGRADE[]) this.resourceUpgrades,
-    //   (UPGRADE[]) this.basicStatsUpgrades,
-    //   new UPGRADE[1]{ this.goldGainUpgrade },
-    //   new UPGRADE[1]{ this.expGainUpgrade },
-    //   (UPGRADE[]) this.goldCapUpgrades,
-    //   this.slimebankUpgradeList.ToArray(),
-    //   new UPGRADE[1]{ this.equipmentInventoryUpgrade }
-    // };
-    this.upgradeList = [...this.sb3ist];
-    // this.upgradeList.AddRange((IEnumerable<UPGRADE>) this.slimebankUpgradeList);
+    this.upgrades = [...this.generalUpgradeList, ...this.slimebankUpgradeList];
+
+    this.upgradeList = this.upgrades;
+
     this.availableQueue = new Multiplier();
   }
 
@@ -154,9 +174,11 @@ export class DataUpgrade {
     return this.slimebankUpgradeList[0];
   }
   TotalLevel(kind: UpgradeKind) {
-    let num = 0;
-    for (let index = 0; index < this.upgrades[kind].length; index++) num += this.upgrades[kind][index].level;
-    return num;
+    return kind;
+    // kind = 0
+    // let num = 0;
+    // for (let index = 0; index < this.upgrades.length; index++) num += this.upgrades[index].level.value;
+    // return num;
   }
 
   //   ResourceGain(isNextValue = false, id = 0) {

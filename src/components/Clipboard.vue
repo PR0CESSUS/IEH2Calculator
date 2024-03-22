@@ -5,7 +5,7 @@ const clipboard = useClipboardStore();
 </script>
 
 <template>
-  <div v-show="clipboard.type != CopyKind.Nothing">Clipboard {{ CopyKind[clipboard.type] }}</div>
+  <div v-show="clipboard.type != CopyKind.Nothing">Clipboard {{ CopyKind[clipboard.type] }} {{ clipboard.type == CopyKind.Debug ? clipboard.data : "" }}</div>
 </template>
 <style scoped>
 div {

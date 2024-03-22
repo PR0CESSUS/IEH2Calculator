@@ -38,8 +38,10 @@ import { OtherString } from "./OtherString";
 import { GlobalStatsString } from "./GlobalStatsString";
 import { PetRankMilestoneString } from "./PetRankMilestoneString";
 import { ExpeditionMilestoneString } from "./ExpeditionMilestoneString";
+import { SlimeBankUpgradeString } from "./SlimeBankUpgradeString";
 
 export const Localization = {
+  SlimeBankUpgradeString,
   EquipmentEffectName,
   ExpeditionMilestoneString,
   PetRankMilestoneString,
