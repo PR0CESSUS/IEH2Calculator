@@ -41,9 +41,9 @@ const expPerPlaytime = computed(() => {
 <template>
   <div style="display: flex">
     <div>
-      <MultiplierInformation name="Max Nitro" :multiplier="`nitro.nitroCap`" :inline="true" />
-      <MultiplierInformation name="Expedition Slots" :multiplier="`expedition.unlockedExpeditionSlotNum`" :inline="true" />
-      <MultiplierInformation name="Efficiency penalty" :multiplier="`expedition.rewardModifierPerHour`" :inline="true" />
+      <MultiplierInformation :multiplier="`nitro.nitroCap`" :inline="true" />
+      <MultiplierInformation :multiplier="`expedition.unlockedExpeditionSlotNum`" :inline="true" />
+      <MultiplierInformation :multiplier="`expedition.rewardModifierPerHour`" :inline="true" />
       Expedition Minimum time: {{ Util.secondsToDhms(game.data.expedition.lowerLimitTime.Value()) }}<br />
       Nitro Speed:
       <input size="5" :value="Util.tDigit(game.data.source.nitroSpeed, 1)" @change="game.data.source.nitroSpeed = parseFloat(($event.target as HTMLInputElement).value)" /><br />

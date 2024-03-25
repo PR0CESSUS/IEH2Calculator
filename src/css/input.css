@@ -59,6 +59,11 @@ input {
 input:focus {
   color: rgb(255, 255, 255);
 }
+
+input:disabled {
+  background-color: #4e4e4e;
+}
+
 input.red {
   color: red;
   border-style: outset;

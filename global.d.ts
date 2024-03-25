@@ -1,3 +1,4 @@
+import { Game } from "@/Game";
 import { DATA } from "./src/Data";
 import { DataDefault } from "./src/Data/DataDefault";
 declare global {
@@ -5,4 +6,5 @@ declare global {
   var SaveFileData: DATA;
   var SaveFileDataSource: DataDefault;
   var SaveFileSnapshotSource: DataDefault;
+  var Game: Game;
 }

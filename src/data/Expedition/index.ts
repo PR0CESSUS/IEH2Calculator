@@ -33,6 +33,7 @@ export class DataExpedition {
       () => 0.95,
       () => 0.85
     );
+    this.rewardModifierPerHour.name = "Efficiency penalty";
     this.petExpGainMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.expGainMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.rewardMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
@@ -40,6 +41,7 @@ export class DataExpedition {
     this.walkedDistanceGainMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.unlockedExpeditionSlotNum = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.unlockedExpeditionSlotNum.numberType = NumberType.Normal;
+    this.unlockedExpeditionSlotNum.name = "Expedition Slots";
     this.fieldTrainingPassiveEffectMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.speedMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.globalInfoList.push(new ExpeditionGlobalInformation(this.data, ExpeditionKind.Brick));

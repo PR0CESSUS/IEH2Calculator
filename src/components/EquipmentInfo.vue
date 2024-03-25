@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { EquipmentForgeEffectKind } from "@/type/EquipmentForgeEffectKind";
 import { computed, inject, ref } from "vue";
 import { Enums } from "../Enums";
+import { Game } from "../Game";
 import { Util } from "../Util/index";
 import { Localization } from "../localization/index";
 import { useClipboardStore } from "../stores/clipboard";
@@ -10,8 +12,8 @@ import { EquipmentPart } from "../type/EquipmentPart";
 import { EquipmentRarity } from "../type/EquipmentRarity";
 import { EquipmentSetKind } from "../type/EquipmentSetKind";
 import { HeroKind } from "../type/HeroKind";
+import AppInput from "./AppInput.vue";
 import Tooltip from "./Tooltip.vue";
-import { Game } from "../Game";
 
 const props = defineProps<{ id: number }>();
 const init = ref(false);
@@ -105,7 +107,12 @@ function pasteEvent() {
           <img class="icon96" :src="getIconPath()" />
           <span class="purple" v-if="equipment.globalInfo.isArtifact">[Artifact]</span>
           {{ Localization.EquipmentName(equipment.kind) }}
-          &lt; <span class="green">Lv {{ equipment.level }}</span> &gt;
+          &lt;
+          <span class="green"
+            >Lv {{ equipment.level }}
+            {{ equipment.forgeEffects[EquipmentForgeEffectKind.EqLevel].effectValue > 0 ? ` + ${equipment.forgeEffects[EquipmentForgeEffectKind.EqLevel].effectValue}` : "" }}</span
+          >
+          &gt;
           <span :class="enchant.isAfter ? 'purple' : 'yellow'" v-for="(enchant, index) in equipment.optionEffects">
             <template v-if="index < equipment.totalOptionNum.Value()">
               [
@@ -145,7 +152,7 @@ function pasteEvent() {
         ></p>
 
         <p v-for="(effect, index) in equipment.optionEffects">
-          <template v-if="index < equipment.totalOptionNum.value">
+          <template v-if="index < equipment.totalOptionNum.Value()">
             {{ Localization.EquipmentEffect(effect.kind, equipment.EffectValue(effect.effectValue, equipment.heroKind)) }}
             <span class="gray" v-if="effect.kind != 0"
               >({{ Localization.EquipmentEffect(effect.kind, equipment.EffectValue(effect.MinEffectValue(), equipment.heroKind), false, 0, true) }} ~
@@ -198,6 +205,17 @@ function pasteEvent() {
                 {{ Localization.EquipmentName(eq.kind) }}
               </option>
             </select>
+            &lt;
+            <span class="green"
+              >Lv {{ equipment.level }}
+              {{
+                equipment.forgeEffects[EquipmentForgeEffectKind.EqLevel].effectValue > 0 ? ` + ${equipment.forgeEffects[EquipmentForgeEffectKind.EqLevel].effectValue}` : ""
+              }}</span
+            >
+            &gt;
+            <div>
+              <span v-for="(level, index) in equipment.globalInfo.levels">{{ HeroKind[index] }} <AppInput v-model="level.value" :size="4" /></span>
+            </div>
           </div>
           <h5>Information</h5>
           <p>-Type : {{ EquipmentPart[equipment.globalInfo.part] }}</p>

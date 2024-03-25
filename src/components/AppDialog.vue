@@ -3,7 +3,10 @@ import { ref } from "vue";
 
 const dialog = ref<HTMLDialogElement>();
 function closeDialog(event: Event) {
+  // console.log("event.target:", event.target);
+
   if ((event.target as HTMLDialogElement).nodeName == dialog.value.nodeName) dialog.value.close();
+  event.stopPropagation();
 }
 
 defineExpose({

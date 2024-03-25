@@ -27,7 +27,9 @@ definePage({
   Most function require using Import Save File otherwise it would require manually adding hundreds of values
   <ol>
     <li><p>How to adjust Ruby Converter ratio without importing Save File?</p></li>
-    <div style="padding-top: 10px; padding-bottom: 10px">Go to <router-link to="/data/challange">Challange</router-link> page and enter values required for specific ratio.</div>
+    <div style="padding-top: 10px; padding-bottom: 10px">
+      Go to <router-link to="/data/challenge/superdungeon">Challange</router-link> page and enter values required for specific ratio.
+    </div>
 
     <li>How to use equipment calculator?</li>
     <div style="padding-top: 10px; padding-bottom: 10px">

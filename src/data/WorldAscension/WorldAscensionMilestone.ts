@@ -1,3 +1,4 @@
+import { Localization } from "@/localization";
 import { DATA } from "..";
 import { WorldAscension } from "./WorldAscension";
 
@@ -28,10 +29,16 @@ export class WorldAscensionMilestone {
   get maxLevelReached() {
     return this.data.source.ascensionMilestoneLevelReached[this.kind];
   }
+  set maxLevelReached(value) {
+    this.data.source.ascensionMilestoneLevelReached[this.kind] = value;
+  }
 
   Name() {
-    return "";
-    // return Localization.WorldAscensionMilestoneString(this).name;
+    return Localization.WorldAscensionMilestoneString(this).name;
+  }
+
+  EffectString() {
+    return Localization.WorldAscensionMilestoneString(this, this.currentPassiveEffectValue).effect;
   }
 
   PassiveEffectValue(level) {

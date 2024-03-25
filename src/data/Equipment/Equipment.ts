@@ -14,6 +14,7 @@ import { EquipmentOptionEffect } from "./EquipmentOptionEffect";
 import { EquipmentParameter } from "./EquipmentParameter";
 import { SetEffect } from "./SetEffect";
 import { EnchantmentOptimizer } from "./EnchantmentOptimizer";
+import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
 
 export class Equipment {
   data: DATA;
@@ -69,7 +70,7 @@ export class Equipment {
     this.forgeEffects[6] = new EquipmentForgeEffect(this, EquipmentForgeEffectKind.EqLevel);
   }
 
-  get globalInfo() {
+  get globalInfo(): EquipmentGlobalInformation {
     return this.data.equipment.globalInformations[this.kind];
   }
 
@@ -90,7 +91,8 @@ export class Equipment {
     // console.log("current part", EquipmentPart[this.globalInfo.part], ">", EquipmentPart[EquipmentParameter.Part(value)], EquipmentPart[this.slotPart]);
     // this.data.source.equipmentKinds[this.id] = value;
     if (EquipmentParameter.Part(value) == this.slotPart || value == EquipmentKind.Nothing) this.data.source.equipmentKinds[this.id] = value;
-    // this.data.inventory.UpdateSetItemEquippedNumHero(this.heroKind);
+    this.data.inventory.UpdateSetItemEquippedNumHero(this.heroKind);
+    // this.data.inventory.UpdateSetItemEquippedNum(this.setKind, this.heroKind);
     this.Start();
   }
 

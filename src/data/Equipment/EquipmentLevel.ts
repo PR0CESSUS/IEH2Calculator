@@ -82,6 +82,8 @@ export class EquipmentLevel {
     }
   }
   set value(value) {
+    value = Math.min(value, this.maxValue());
+
     switch (this.heroKind) {
       case HeroKind.Warrior:
         this.data.source.equipmentLevelsWarrior[this.kind] = value;

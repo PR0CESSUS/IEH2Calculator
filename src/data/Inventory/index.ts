@@ -14,7 +14,7 @@ import { CopyKind } from "../../type/CopyKind";
 import { DATA } from "..";
 
 export class DataInventory {
-  #data: DATA;
+  data: DATA;
   setItemEquippedNums: any[] = Array(Enums.EquipmentSetKind);
   equipmentSlots: Equipment[] = Array(InventoryParameter.allEquipmentSlotId);
   //   EnchantSlot[] enchantSlots = new EnchantSlot[InventoryParameter.enchantSlotId];
@@ -28,7 +28,7 @@ export class DataInventory {
   equipPotionUnlockedNum: Multiplier[] = Array(Enums.HeroKind);
 
   constructor(DATA: DATA) {
-    this.#data = DATA;
+    this.data = DATA;
     for (let index = 0; index < Enums.EquipmentSetKind; index++) {
       this.setItemEquippedNums[index] = new Array(Enums.HeroKind).fill(0);
     }
@@ -54,12 +54,12 @@ export class DataInventory {
     // console.log("Start inventory");
 
     for (let index = 0; index < this.equipmentSlots.length; index++) {
-      this.equipmentSlots[index] = new Equipment(this.#data, index);
+      this.equipmentSlots[index] = new Equipment(this.data, index);
       this.equipmentSlots[index].Start();
     }
 
     for (let index = 0; index < this.potionSlots.length; index++) {
-      this.potionSlots[index] = new EquipmentPotion(this.#data, index);
+      this.potionSlots[index] = new EquipmentPotion(this.data, index);
       this.potionSlots[index].Start();
     }
     // for (let index = 0; index < this.potionSlots.length; index++)
@@ -186,8 +186,8 @@ export class DataInventory {
     // console.log(this.#data.equipment.setItemArray[kind]);
     // return;
 
-    for (let index = 0; index < this.#data.equipment.setItemArray[kind].length; index++) {
-      const equipmentKind = this.#data.equipment.setItemArray[kind][index];
+    for (let index = 0; index < this.data.equipment.setItemArray[kind].length; index++) {
+      const equipmentKind = this.data.equipment.setItemArray[kind][index];
       for (let equipInventorySlotId = start; equipInventorySlotId < stop; equipInventorySlotId++) {
         if (
           this.equipmentSlots[equipInventorySlotId].globalInfo.kind == equipmentKind &&
@@ -212,17 +212,17 @@ export class DataInventory {
     // 520 + this.#data.source.equipmentLoadoutIds[heroKind] * 72 + this.#data.source.currentHero * 720
     switch (heroKind) {
       case HeroKind.Warrior:
-        return 520 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 520 + this.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Wizard:
-        return 1240 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 1240 + this.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Angel:
-        return 1960 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 1960 + this.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Thief:
-        return 2680 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 2680 + this.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Archer:
-        return 3400 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 3400 + this.data.source.equipmentLoadoutIds[heroKind] * 72;
       case HeroKind.Tamer:
-        return 4120 + this.#data.source.equipmentLoadoutIds[heroKind] * 72;
+        return 4120 + this.data.source.equipmentLoadoutIds[heroKind] * 72;
       default:
         return 0;
     }
@@ -230,9 +230,9 @@ export class DataInventory {
 
   CopyCurrentLoadout() {
     let array = [];
-    const INITIAL_OFFSET = 520 + this.#data.source.equipmentLoadoutIds[this.#data.source.currentHero] * 72 + this.#data.source.currentHero * 720;
+    const INITIAL_OFFSET = 520 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72 + this.data.source.currentHero * 720;
     for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
-      array.push(this.#data.inventory.equipmentSlots[index].Copy(CopyKind.Equipment));
+      array.push(this.data.inventory.equipmentSlots[index].Copy(CopyKind.Equipment));
     }
 
     return array;
@@ -240,12 +240,12 @@ export class DataInventory {
 
   PasteLoadout(data) {
     let i = 0;
-    const INITIAL_OFFSET = 520 + this.#data.source.equipmentLoadoutIds[this.#data.source.currentHero] * 72 + this.#data.source.currentHero * 720;
+    const INITIAL_OFFSET = 520 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72 + this.data.source.currentHero * 720;
     // console.log("INITIAL_OFFSET", INITIAL_OFFSET);
 
     for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
       const equipment = this.equipmentSlots[index];
-      this.#data.source.equipmentKinds[equipment.id] = data[i].kind;
+      this.data.source.equipmentKinds[equipment.id] = data[i].kind;
 
       equipment.optionEffects.forEach((effect, o) => {
         effect.SetKind(data[i].optionEffects[o].kind);

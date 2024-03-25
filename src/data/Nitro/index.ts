@@ -9,6 +9,7 @@ export class DataNitro {
   maxNitroSpeed: Multiplier;
   constructor() {
     this.nitroCap = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 5000.0));
+    this.nitroCap.name = "Nitro Cap";
     this.maxNitroSpeed = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 2.0));
     this.nitroCap.numberType = NumberType.Normal;
   }

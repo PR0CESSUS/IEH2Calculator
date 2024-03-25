@@ -76,8 +76,8 @@ export class DATA {
     this.mission = new DataMission(this);
     this.stats = new DataStats(this);
     this.expedition = new DataExpedition(this);
-    this.inventory = new DataInventory(this);
     this.equipment = new DataEquipment(this);
+    this.inventory = new DataInventory(this);
     this.monster = new DataMonster(this);
     this.sdg = new DataSuperDungeonGlobal(this);
     this.nitro = new DataNitro();

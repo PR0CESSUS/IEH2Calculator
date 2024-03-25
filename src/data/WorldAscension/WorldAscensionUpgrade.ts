@@ -3,6 +3,7 @@ import { MultiplierKind } from "@type/MultiplierKind";
 import { MultiplierType } from "@type/MultiplierType";
 import { DATA } from "..";
 import { WorldAscension } from "./WorldAscension";
+import { Localization } from "@/localization";
 
 export class WorldAscensionUpgrade {
   data: DATA;
@@ -50,8 +51,11 @@ export class WorldAscensionUpgrade {
   SetEffect() {}
 
   Name() {
-    return "";
-    // return Localization.WorldAscensionUpgradeString(this).name;
+    return Localization.WorldAscensionUpgradeString(this).name;
+  }
+
+  EffectString() {
+    return Localization.WorldAscensionUpgradeString(this, this.effectValue).effect;
   }
 
   //   EffectString() {

@@ -1,9 +1,10 @@
 import { DATA } from "..";
+import { WorldAscension } from "./WorldAscension";
 import { WorldAscensionTier1 } from "./WorldAscensionTier1";
 
 export class DataAscension {
   data: DATA;
-  worldAscensions = [];
+  worldAscensions: WorldAscension[] = [];
 
   constructor(DATA: DATA) {
     this.data = DATA;

@@ -80,4 +80,8 @@ export class DataEquipment {
   ArtifactEffectMultiplier() {
     return 1.0 + (this.EffectMultiplier() - 1.0) * this.effectMultiplierModifierForArtifact.Value();
   }
+
+  get currentLoadoutInitialOffset() {
+    return 520 + this.data.source.currentHero * 720 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72;
+  }
 }

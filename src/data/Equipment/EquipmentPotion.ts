@@ -71,7 +71,7 @@ export class EquipmentPotion {
 
   UnregisterEffects() {
     this.effectRegister.forEach((effect) => {
-      effect();
+      if (effect) effect();
       // console.log(effect);
     });
     this.effectRegister = [];

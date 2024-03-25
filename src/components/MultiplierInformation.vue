@@ -95,7 +95,7 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
         <br />
         <p class="group">Multiplicative:</p>
         <p v-for="[key, value] in Object.entries(multiplier.diff.multiplicativeKind)">
-          <template v-if="multiplier.main.multiplicativeKind[key] > 1 || key == 'Base'">
+          <template v-if="multiplier.main.multiplicativeKind[key] != 0 || key == 'Base'">
             -{{ Localization.StatsBreakdown(MultiplierKind[key]) }}
             <span class="right" :class="useCompareColor(value as number)">
               {{ multiplier.compare.multiplicativeKind[key] }} {{ key != "Base" ? "*" : "" }}
