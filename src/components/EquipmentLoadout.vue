@@ -11,7 +11,8 @@ import { HeroKind } from "../type/HeroKind";
 import EnchantFinder from "./EnchantFinder.vue";
 const game = inject<Game>("game");
 
-const INITIAL_OFFSET = computed(() => 520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72);
+const EQUIPMENT_INITIAL_OFFSET = computed(() => 520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72);
+const POTION_INITIAL_OFFSET = computed(() => 260 + game.data.source.currentHero * 6);
 </script>
 
 <template>
@@ -48,22 +49,22 @@ const INITIAL_OFFSET = computed(() => 520 + game.data.source.currentHero * 720 +
     <div>
       <div class="part">
         <div class="block">
-          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index" class="equipment" :key="INITIAL_OFFSET + index" />
+          <EquipmentInfo v-for="(_, index) in 24" :id="EQUIPMENT_INITIAL_OFFSET + index" class="equipment" :key="EQUIPMENT_INITIAL_OFFSET + index" />
         </div>
       </div>
       <div class="part">
         <div class="block">
-          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 24" class="equipment" :key="INITIAL_OFFSET + index" />
+          <EquipmentInfo v-for="(_, index) in 24" :id="EQUIPMENT_INITIAL_OFFSET + index + 24" class="equipment" :key="EQUIPMENT_INITIAL_OFFSET + index" />
         </div>
       </div>
       <div class="part">
         <div class="block">
-          <EquipmentInfo v-for="(_, index) in 24" :id="INITIAL_OFFSET + index + 48" class="equipment" :key="INITIAL_OFFSET + index" />
+          <EquipmentInfo v-for="(_, index) in 24" :id="EQUIPMENT_INITIAL_OFFSET + index + 48" class="equipment" :key="EQUIPMENT_INITIAL_OFFSET + index" />
         </div>
       </div>
       <div class="part">
         <div class="block-potion">
-          <PotionInfo v-for="(_, index) in 6" :id="260 + index + game.data.source.currentHero * 6" class="equipment" />
+          <PotionInfo v-for="(_, index) in 6" :id="POTION_INITIAL_OFFSET + index" class="equipment" :key="POTION_INITIAL_OFFSET + index" />
         </div>
       </div>
     </div>

@@ -2,59 +2,58 @@
 import { Util } from "@/Util";
 import { applyLoadoutForge } from "@/data/Equipment/EquipmentApply";
 import { clearLoadout } from "@/data/Equipment/EquipmentClear";
+import { CustomSelectType } from "@/type/CustomSelectType";
 import { computed, inject, ref } from "vue";
 import { Game } from "../Game";
-import { Localization } from "../localization/index";
 import AppDialog from "./AppDialog.vue";
+import AppDownload from "./AppDownload.vue";
+import AppInput from "./AppInput.vue";
+import AppSelect from "./AppSelect.vue";
+import EquipmentLoadoutImport from "./EquipmentLoadoutImport.vue";
 
 const game = inject<Game>("game");
-const INITIAL_OFFSET = computed(() => 520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72);
 
-function getEquipmentList() {
-  let list = {};
-  for (let index = INITIAL_OFFSET.value; index < INITIAL_OFFSET.value + 72; index++) {
-    if (game.data.inventory.equipmentSlots[index].kind == 0 || game.data.inventory.equipmentSlots[index].isDisabled()) continue;
-    let equipment = Localization.EquipmentName(game.data.inventory.equipmentSlots[index].kind);
-    list[equipment] = list[equipment] ? list[equipment] + 1 : 1;
-  }
-
-  return list;
-}
-
-function getEquipmentEffectList() {
-  let list = {};
-
-  for (let index = INITIAL_OFFSET.value; index < INITIAL_OFFSET.value + 72; index++) {
-    const equipment = game.data.inventory.equipmentSlots[index];
-    const totalOptionNum = equipment.totalOptionNum.Value();
-    if (equipment.kind == 0 || equipment.isDisabled()) continue;
-    for (let i = 0; i < equipment.optionEffects.length; i++) {
-      if (equipment.optionEffects[i].kind == 0 || equipment.optionEffects[i].optionId >= totalOptionNum) continue;
-      const effect = Localization.EquipmentEffectName(equipment.optionEffects[i].kind);
-      list[effect] = list[effect] ? list[effect] + 1 : 1;
-    }
-  }
-
-  return list;
-}
-
+const loadoutBreakdownList = computed(() => game.data.inventory.GetLoadoutBreakdownList());
 const applyForgeValues = ref([0, 0, 0, 0, 0, 0, 0]);
-
 const limitForge = computed(() => applyForgeValues.value.filter((element) => element != 0).length);
+
+const enchantementsSlots = computed(() => game.data.inventory.GetLoadoutEnchantments(false));
+
+const addEnchantementsSlots = ref([{ kind: 0, value: 0 }]);
 </script>
 
 <template>
   <div class="container">
     <h1 style="text-align: center">Equipment Breakdown</h1>
-    <div>
-      <h3>Equipment List</h3>
-      <p v-for="(value, key) in getEquipmentList()">{{ key }} x{{ value }}</p>
-    </div>
-    <div>
-      <h3>Enchantements List</h3>
-      <p v-for="(value, key) in getEquipmentEffectList()">{{ key }} x{{ value }}</p>
-    </div>
 
+    <div style="display: flex; column-gap: 10px; flex-wrap: wrap; justify-content: space-evenly">
+      <div>
+        <h3>Equipment List</h3>
+        <div>
+          <h5 class="orange">Weapon:</h5>
+          <p v-for="(value, key) in loadoutBreakdownList.weapons">{{ value }} - {{ key }}</p>
+        </div>
+        <div>
+          <h5 class="orange">Armor:</h5>
+          <p v-for="(value, key) in loadoutBreakdownList.armors">{{ value }} - {{ key }}</p>
+        </div>
+        <div>
+          <h5 class="orange">Jewelry:</h5>
+          <p v-for="(value, key) in loadoutBreakdownList.jewelry">{{ value }} - {{ key }}</p>
+        </div>
+        <div>
+          <h5 class="orange">Utility:</h5>
+          <p v-for="(_, key) in loadoutBreakdownList.utility">{{ key }}</p>
+        </div>
+      </div>
+      <div>
+        <h3>Enchantements List</h3>
+        <p v-for="(value, key) in loadoutBreakdownList.enchants">{{ value }} - {{ key }}</p>
+
+        {{ Object.values(loadoutBreakdownList.enchants).reduce((a, b) => (a as number) + (b as number), 0) }} Total
+      </div>
+    </div>
+    <hr />
     <!-- <button @click="new FindBestEquipment(game.data.stats.currentHero.stats[Stats.SkillProficiencyGain])">Generate</button> -->
     <button @click="clearLoadout('all')">Clear Loadout</button>
     <!-- <button @click="new EquipmentBestEnchantment(game.data.stats.currentHero.stats[Stats.SkillProficiencyGain])" class="btn btn-gray">Find BEST Enchantements</button> -->
@@ -102,6 +101,31 @@ const limitForge = computed(() => applyForgeValues.value.filter((element) => ele
         </button>
       </template>
     </AppDialog>
+    <AppDialog>
+      <template #trigger> <button>Add Enchantements</button></template>
+      <template #content>
+        <h2>
+          Add Enchantements to Loadout
+          <span :class="addEnchantementsSlots.reduce((a, b) => a + b.value, 0) <= enchantementsSlots.length ? 'green' : 'red'"
+            >{{ addEnchantementsSlots.reduce((a, b) => a + b.value, 0) }} / {{ enchantementsSlots.length }}</span
+          >
+        </h2>
+
+        <template v-for="enchant in addEnchantementsSlots">
+          <div>
+            <AppSelect :type="CustomSelectType.EquipmentEffectKind" v-model="enchant.kind" />
+            <AppInput v-model="enchant.value" />
+          </div>
+        </template>
+        <button @click="addEnchantementsSlots.push({ kind: 0, value: 0 })">Add</button>
+
+        <hr />
+        <button @click="game.data.inventory.ApplyLoadoutEnchantments(addEnchantementsSlots)">Apply</button>
+      </template>
+    </AppDialog>
+
+    <AppDownload filename="loadout" :target="game.data.inventory.CopyCurrentLoadout()">Export</AppDownload>
+    <EquipmentLoadoutImport />
   </div>
 </template>
 

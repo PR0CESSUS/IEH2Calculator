@@ -1,3 +1,4 @@
+import { Localization } from "@/localization";
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
 import { Equipment } from "./Equipment";
 import { EquipmentParameter } from "./EquipmentParameter";
@@ -79,6 +80,7 @@ export class EquipmentOptionEffect {
       default:
         break;
     }
+    this.level = this.MaxLevel();
   }
 
   set kind(value) {
@@ -204,6 +206,9 @@ export class EquipmentOptionEffect {
     return EquipmentParameter.IsAfter(this.kind);
   }
 
+  Name() {
+    return Localization.EquipmentEffectName(this.kind);
+  }
   MaxLevel() {
     return EquipmentParameter.MaxLevel(this.kind);
   }

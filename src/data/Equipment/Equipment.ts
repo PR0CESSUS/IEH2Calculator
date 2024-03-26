@@ -15,6 +15,7 @@ import { EquipmentParameter } from "./EquipmentParameter";
 import { SetEffect } from "./SetEffect";
 import { EnchantmentOptimizer } from "./EnchantmentOptimizer";
 import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
+import { Localization } from "@/localization";
 
 export class Equipment {
   data: DATA;
@@ -94,6 +95,20 @@ export class Equipment {
     this.data.inventory.UpdateSetItemEquippedNumHero(this.heroKind);
     // this.data.inventory.UpdateSetItemEquippedNum(this.setKind, this.heroKind);
     this.Start();
+  }
+
+  SetKind(value) {
+    this.data.source.equipmentKinds[this.id] = value;
+  }
+
+  GetOptionEffects(excludeEmpty: boolean = false) {
+    if (this.isDisabled()) return;
+    if (excludeEmpty) return this.optionEffects.filter((effect) => effect.optionId < this.totalOptionNum.Value() && effect.kind != 0);
+    return this.optionEffects.filter((effect) => effect.optionId < this.totalOptionNum.Value());
+  }
+
+  Name() {
+    return Localization.EquipmentName(this.kind);
   }
 
   get heroKind() {
@@ -275,7 +290,8 @@ export class Equipment {
   }
 
   isDisabled() {
-    if (this.slotId < 520 || this.slotId >= 4840) return true;
+    if (this.slotId < 520 || this.slotId >= 4840 || !this.data.source.isActiveBattle[this.heroKind]) return true;
+
     if (this.data.source.isSuperDungeon && this.heroKind == this.data.source.currentHero) {
       switch (this.slotPart) {
         case EquipmentPart.Weapon:

@@ -25,6 +25,10 @@ export class EquipmentPotion {
     this.Start();
   }
 
+  SetKind(value) {
+    this.data.source.potionKinds[this.id] = value;
+  }
+
   get slot() {
     if (this.slotId < 260) return 0;
     return (this.slotId - 260 - this.heroKind * 6) % 6;
@@ -96,5 +100,13 @@ export class EquipmentPotion {
       // console.log("hero", HeroKind[this.heroKind], "slot", slot, " normal", this.data.inventory.equipPotionUnlockedNum[this.heroKind].Value() <= slot);
       return this.data.inventory.equipPotionUnlockedNum[this.heroKind].Value() <= this.slot;
     }
+  }
+  Copy() {
+    return { kind: this.kind, stack: this.stack };
+  }
+
+  Paste(data) {
+    this.SetKind(data.kind);
+    this.stack = data.stack;
   }
 }

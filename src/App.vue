@@ -49,7 +49,7 @@ function createSnapshot() {
 </script>
 
 <template>
-  <div class="wrapper" @some-event.once="console.log('someevent')">
+  <div class="wrapper">
     <div class="header">
       <h1 id="title">
         <TheBreadcrumb />

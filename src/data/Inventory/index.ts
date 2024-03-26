@@ -12,6 +12,7 @@ import { EquipmentPart } from "../../type/EquipmentPart";
 import { EquipmentPotion } from "../Equipment/EquipmentPotion";
 import { CopyKind } from "../../type/CopyKind";
 import { DATA } from "..";
+import { Localization } from "@/localization";
 
 export class DataInventory {
   data: DATA;
@@ -75,20 +76,12 @@ export class DataInventory {
   }
 
   Update() {
-    this.equipmentSlots.forEach((equipment, index) => {
-      if (equipment.IsEquipped()) {
-        equipment.Start();
-      } else {
-        equipment.IsEffectRegisteredClear();
-      }
-    });
+    this.equipmentSlots.forEach((equipment, index) => (equipment.IsEquipped() ? equipment.Start() : equipment.IsEffectRegisteredClear()));
 
-    for (let index = 260; index < this.potionSlots.length; index++) {
-      this.potionSlots[index].Start();
-    }
-    for (let index = 0; index < Enums.HeroKind; index++) {
-      this.UpdateSetItemEquippedNumHero(index);
-    }
+    for (let index = 260; index < this.potionSlots.length; index++) this.potionSlots[index].Start();
+
+    for (let index = 0; index < Enums.HeroKind; index++) this.UpdateSetItemEquippedNumHero(index);
+    this.data.requireUpdate.value = true;
   }
 
   getHeroBySlotId(slotId) {
@@ -231,38 +224,126 @@ export class DataInventory {
   CopyCurrentLoadout() {
     let array = [];
     const INITIAL_OFFSET = 520 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72 + this.data.source.currentHero * 720;
-    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
-      array.push(this.data.inventory.equipmentSlots[index].Copy(CopyKind.Equipment));
-    }
+    const UTILITY_INITIAL_OFFSET = 260 + this.data.source.currentHero * 6;
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) array.push(this.data.inventory.equipmentSlots[index].Copy(CopyKind.Equipment));
+    for (let index = UTILITY_INITIAL_OFFSET; index < UTILITY_INITIAL_OFFSET + 6; index++) array.push(this.data.inventory.potionSlots[index].Copy());
 
     return array;
   }
 
   PasteLoadout(data) {
+    // console.log("starting adding new equipment", data);
+
     let i = 0;
+
     const INITIAL_OFFSET = 520 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72 + this.data.source.currentHero * 720;
+    const UTILITY_INITIAL_OFFSET = 260 + this.data.source.currentHero * 6;
     // console.log("INITIAL_OFFSET", INITIAL_OFFSET);
 
     for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
       const equipment = this.equipmentSlots[index];
-      this.data.source.equipmentKinds[equipment.id] = data[i].kind;
 
+      equipment.SetKind(data[i].kind);
       equipment.optionEffects.forEach((effect, o) => {
         effect.SetKind(data[i].optionEffects[o].kind);
         effect.SetEffectValue(data[i].optionEffects[o].effectValue);
         effect.SetLevel(data[i].optionEffects[o].level);
       });
 
-      equipment.forgeEffects.forEach((forge, f) => {
-        forge.SetEffectValue(data[i].forgeEffects[f].effectValue);
-      });
-
-      // equipment.Start();
-
-      // console.log(i);
-      // equipment.Paste(CopyKind.Equipment, data[i]);
+      equipment.forgeEffects.forEach((forge, f) => forge.SetEffectValue(data[i].forgeEffects[f].effectValue));
       i++;
     }
+    for (let index = UTILITY_INITIAL_OFFSET; index < UTILITY_INITIAL_OFFSET + 6; index++) {
+      const utility = this.potionSlots[index];
+      utility.Paste(data[i]);
+      i++;
+    }
+
+    // console.log(i);
+
     this.Update();
+  }
+
+  GetLoadoutBreakdownList() {
+    const INITIAL_OFFSET = 520 + this.data.source.currentHero * 720 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72;
+    const UTILITY_INITIAL_OFFSET = 260 + this.data.source.currentHero * 6;
+    let list = {
+      weapons: {},
+      armors: {},
+      jewelry: {},
+      utility: {},
+      enchants: {},
+    };
+
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      const equipment = this.equipmentSlots[index];
+      if (equipment.kind == 0 || equipment.isDisabled()) continue;
+      let name = equipment.Name();
+      const effects = equipment.GetOptionEffects(true);
+      effects.forEach((effect) => (list.enchants[effect.Name()] = list.enchants[effect.Name()] ? list.enchants[effect.Name()] + 1 : 1));
+      switch (equipment.slotPart) {
+        case EquipmentPart.Weapon:
+          list.weapons[name] = list.weapons[name] ? list.weapons[name] + 1 : 1;
+          break;
+        case EquipmentPart.Armor:
+          list.armors[name] = list.armors[name] ? list.armors[name] + 1 : 1;
+          break;
+        case EquipmentPart.Jewelry:
+          list.jewelry[name] = list.jewelry[name] ? list.jewelry[name] + 1 : 1;
+          break;
+        default:
+          break;
+      }
+    }
+
+    for (let index = UTILITY_INITIAL_OFFSET; index < UTILITY_INITIAL_OFFSET + 6; index++) {
+      const utility = this.potionSlots[index];
+      if (utility.kind == 0 || utility.isDisabled()) continue;
+      const utilityName = Localization.PotionName(utility.kind);
+      list.utility[utilityName] = list.utility[utilityName] ? list.utility[utilityName] + 1 : 1;
+    }
+
+    return list;
+  }
+
+  GetLoadoutEnchantments(excludeEmpty: boolean = true) {
+    const INITIAL_OFFSET = 520 + this.data.source.currentHero * 720 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72;
+    let list = [];
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      const equipment = this.equipmentSlots[index];
+      if (equipment.kind == 0 || equipment.isDisabled()) continue;
+      const effects = equipment.GetOptionEffects(excludeEmpty);
+
+      if (effects.length) list.push(...effects);
+    }
+
+    return list;
+  }
+
+  ApplyLoadoutEnchantments(data: { kind: number; value: number }[]) {
+    const TOTAL = data.reduce((a, b) => a + b.value, 0);
+    let dataIndex = 0;
+
+    if (TOTAL > this.GetLoadoutEnchantments(false).length) return;
+
+    const INITIAL_OFFSET = 520 + this.data.source.currentHero * 720 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72;
+
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      const equipment = this.equipmentSlots[index];
+      if (equipment.kind == 0 || equipment.isDisabled()) continue;
+      const effects = equipment.GetOptionEffects();
+
+      for (let i = 0; i < effects.length; i++) {
+        const effect = effects[i];
+        if (data[dataIndex].value == 0) dataIndex++;
+        if (dataIndex == data.length || data[dataIndex].value == 0) {
+          this.Update();
+          return;
+        }
+
+        effect.SetKind(data[dataIndex].kind);
+        data[dataIndex].value--;
+      }
+    }
   }
 }
