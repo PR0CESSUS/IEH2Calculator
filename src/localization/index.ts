@@ -41,8 +41,10 @@ import { ExpeditionMilestoneString } from "./ExpeditionMilestoneString";
 import { SlimeBankUpgradeString } from "./SlimeBankUpgradeString";
 import { WorldAscensionMilestoneString } from "./WorldAscensionMilestoneString";
 import { WorldAscensionUpgradeString } from "./WorldAscensionUpgradeString";
+import { EquipmentEffectOptimizerString } from "./EquipmentEffectOptimizerString";
 
 export const Localization = {
+  EquipmentEffectOptimizerString,
   WorldAscensionMilestoneString,
   WorldAscensionUpgradeString,
   SlimeBankUpgradeString,

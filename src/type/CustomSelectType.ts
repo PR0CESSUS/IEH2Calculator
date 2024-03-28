@@ -12,4 +12,5 @@ export enum CustomSelectType {
   MonsterSpecies,
   MonsterColor,
   ChallengeMonsterKind,
+  EquipmentEffectOptimizer,
 }

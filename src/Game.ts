@@ -2,7 +2,6 @@ import { watch } from "vue";
 import { DATA } from "./Data";
 import { Util } from "./Util";
 import { Store } from "pinia";
-import { useDebugStore } from "./stores/debug";
 
 type ReplacePrimitives<T> = T extends Record<any, any>
   ? { [K in keyof T]: T[K] extends Function ? T[K] : ReplacePrimitives<T[K]> }
@@ -22,7 +21,6 @@ export class Game {
     this.data = main;
     this.compare = new Proxy(this.data, this.Proxy());
     // this.data = createPathProxy(test);
-    this.debug = useDebugStore();
     // this.data.Snapshot();
     this.Synchronization();
 

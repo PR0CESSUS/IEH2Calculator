@@ -10,6 +10,7 @@ import AppDownload from "./AppDownload.vue";
 import AppInput from "./AppInput.vue";
 import AppSelect from "./AppSelect.vue";
 import EquipmentLoadoutImport from "./EquipmentLoadoutImport.vue";
+import EquipmentFindBestEnchantments from "./EquipmentFindBestEnchantments.vue";
 
 const game = inject<Game>("game");
 
@@ -126,6 +127,7 @@ const addEnchantementsSlots = ref([{ kind: 0, value: 0 }]);
 
     <AppDownload filename="loadout" :target="game.data.inventory.CopyCurrentLoadout()">Export</AppDownload>
     <EquipmentLoadoutImport />
+    <EquipmentFindBestEnchantments />
   </div>
 </template>
 

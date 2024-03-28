@@ -264,6 +264,10 @@ export class DataInventory {
     this.Update();
   }
 
+  get initialEquipmentLoadoutOffset() {
+    return 520 + this.data.source.currentHero * 720 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72;
+  }
+
   GetLoadoutBreakdownList() {
     const INITIAL_OFFSET = 520 + this.data.source.currentHero * 720 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72;
     const UTILITY_INITIAL_OFFSET = 260 + this.data.source.currentHero * 6;

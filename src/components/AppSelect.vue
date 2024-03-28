@@ -27,6 +27,9 @@ function getType(type: CustomSelectType) {
       break;
     case CustomSelectType.ChallengeMonsterKind:
       return ["Florzporb", "Arachnetta", "Guardian Kor", "Nostro", "Lady Emelda", "Nari Sune", "Octobaddie", "Bananoon", "Glorbliorbus", "Distortion Slime"];
+    case CustomSelectType.EquipmentEffectOptimizer:
+      for (let index = 0; index < Enums.EquipmentEffectOptimizerKind; index++) result.push(Localization.EquipmentEffectOptimizerString(index));
+      break;
     default:
       break;
   }

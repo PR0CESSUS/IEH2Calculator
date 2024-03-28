@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useDebugStore } from "@/stores/debug";
 import AppDropdown from "./AppDropdown.vue";
 import { useRouter } from "vue-router/auto";
 import { useGlobalStore } from "@/stores/global";
@@ -8,7 +7,6 @@ const routes = useRouter()
   .getRoutes()
   .filter((route) => route.meta.root);
 
-const isDebug = useDebugStore().active;
 const globalStore = useGlobalStore();
 
 // console.log(useRouter().getRoutes());
@@ -47,9 +45,6 @@ const globalStore = useGlobalStore();
           </template>
         </AppDropdown>
       </template>
-      <template v-else-if="route.meta.debug && isDebug">
-        <RouterLink :to="route.path"> {{ route.meta.name }} </RouterLink>
-      </template>
       <template v-else>
         <template v-if="route.meta.version">
           <RouterLink :to="route.path" :class="{ warning: globalStore.checkVersion() }" @click="globalStore.updateVersion">
@@ -57,7 +52,7 @@ const globalStore = useGlobalStore();
           </RouterLink>
         </template>
         <template v-else>
-          <RouterLink :to="route.path" v-if="!route.meta.debug"> {{ route.meta.name }}</RouterLink>
+          <RouterLink :to="route.path"> {{ route.meta.name }}</RouterLink>
         </template>
       </template>
     </template>
