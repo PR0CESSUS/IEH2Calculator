@@ -49,6 +49,11 @@ export class EquipmentEffectOptimizer {
       case EquipmentEffectOptimizerKind.SkillProficiency:
         return [EquipmentEffectKind.SkillProficiency, EquipmentEffectKind.SkillProficiencyMultiplier, ...this.GetBlessing()];
 
+      case EquipmentEffectOptimizerKind.TPG:
+        return [EquipmentEffectKind.TamingPoint, EquipmentEffectKind.TamingPointMultiplier];
+      case EquipmentEffectOptimizerKind.LPG:
+        return [EquipmentEffectKind.LoyaltyPointGain, EquipmentEffectKind.LoyaltyPointGainMultiplier];
+
       default:
         return [];
     }
@@ -60,7 +65,10 @@ export class EquipmentEffectOptimizer {
         return { Value: () => this.data.battle.Enemy().AttackedInfo().dps };
       case EquipmentEffectOptimizerKind.SkillProficiency:
         return this.data.stats.currentHero.stats[Stats.SkillProficiencyGain];
-
+      case EquipmentEffectOptimizerKind.TPG:
+        return this.data.stats.currentHero.stats[Stats.TamingPointGain];
+      case EquipmentEffectOptimizerKind.LPG:
+        return this.data.stats.currentHero.loyaltyPoingGain;
       default:
         return this.data.stats.currentHero.stats[Stats.SkillProficiencyGain];
     }

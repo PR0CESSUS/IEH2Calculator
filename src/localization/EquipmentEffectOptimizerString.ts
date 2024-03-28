@@ -6,6 +6,10 @@ export function EquipmentEffectOptimizerString(kind: EquipmentEffectOptimizerKin
       return "DPS";
     case EquipmentEffectOptimizerKind.SkillProficiency:
       return "Skill Proficiency Gain";
+    case EquipmentEffectOptimizerKind.TPG:
+      return "Taming Point Gain";
+    case EquipmentEffectOptimizerKind.LPG:
+      return "Loyalty Point Gain";
     default:
       return "Not Implemented";
   }

@@ -19,7 +19,7 @@ export class Dojo extends BUILDING {
   }
 
   SetEffect() {
-    //   globalThis.data.stats.SetEffectStats(Stats.SkillProficiencyGain, new MultiplierInfo(MultiplierKind.Town, MultiplierType.Mul, () => this.EffectValue));
+    this.data.stats.SetEffectStats(Stats.SkillProficiencyGain, new MultiplierInfo(MultiplierKind.Town, MultiplierType.Mul, () => this.EffectValue()));
     //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 10, (x => globalThis.data.skill.SetEffectSkillCastSpeedModifier(new MultiplierInfo(MultiplierKind.Town, MultiplierType.Mul, (() => 0.1), x))), (() => Localized.localized.BuildingString(136, UsefulMethod.percent(0.1)))));
     //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 20, (x => globalThis.data.stats.globalSkillSlotNum.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Town, MultiplierType.Add, (() => 1.0), x))), (() => Localized.localized.BuildingString(135, "1"))));
     //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 30, (x => globalThis.data.skill.SetEffectSkillCastSpeedModifier(new MultiplierInfo(MultiplierKind.Town, MultiplierType.Mul, (() => 0.2), x))), (() => Localized.localized.BuildingString(136, UsefulMethod.percent(0.2)))));
