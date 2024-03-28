@@ -13,6 +13,12 @@ import { SkillType } from "@/type/SkillType";
 import { SkillTriggeredNum } from "./SkillTriggeredNum";
 import { SkillLevel } from "./SkillLevel";
 import { Localization } from "@/localization";
+import { SkillKindWarrior } from "@/type/SkillKindWarrior";
+import { SkillKindWizard } from "@/type/SkillKindWizard";
+import { SkillKindAngel } from "@/type/SkillKindAngel";
+import { SkillKindThief } from "@/type/SkillKindThief";
+import { SkillKindArcher } from "@/type/SkillKindArcher";
+import { SkillKindTamer } from "@/type/SkillKindTamer";
 
 export class SKILL {
   data: DATA;
@@ -67,6 +73,26 @@ export class SKILL {
 
   NameString() {
     return Localization.SkillName(this.heroKind, this.id);
+  }
+
+  NameURL() {
+    switch (this.heroKind) {
+      case HeroKind.Warrior:
+        return SkillKindWarrior[this.id];
+      case HeroKind.Wizard:
+        return SkillKindWizard[this.id];
+      case HeroKind.Angel:
+        return SkillKindAngel[this.id];
+      case HeroKind.Thief:
+        return SkillKindThief[this.id];
+      case HeroKind.Archer:
+        return SkillKindArcher[this.id];
+      case HeroKind.Tamer:
+        return SkillKindTamer[this.id];
+
+      default:
+        return "Not Implemented";
+    }
   }
 
   get lv() {
@@ -189,13 +215,16 @@ export class SKILL {
   //   CanEquip() {return this.Rank() > 0 && this.IsUnlocked();}
 
   IsEquipped(heroKind: HeroKind) {
-    return false;
-    // let skillSet: SkillSet = this.data.battles[heroKind].skillSet;
-    // if (!skillSet.IsEquipped(this))
-    //   return false;
-    // return this.heroKind == heroKind ? Array.IndexOf<SKILL>(skillSet.currentSkillSet, this) < skillSet.currentEquippingNum : Array.IndexOf<SKILL>(skillSet.currentGlobalSkillSet, this) < skillSet.currentGlobalEquippingNum;
-  }
+    let skillSet = this.data.battles[heroKind].skillSet;
+    if (!skillSet.IsEquipped(this)) return false;
 
+    return this.heroKind == heroKind
+      ? skillSet.currentSkillSet.indexOf(this) < skillSet.currentEquippingNum
+      : skillSet.currentGlobalSkillSet.indexOf(this) < skillSet.currentGlobalEquippingNum;
+  }
+  CanEquip() {
+    return true;
+  }
   // IsActiveBuff(heroKind: HeroKind) {return this.IsEquipped(heroKind) && this.mp[heroKind] > 0.0;}
   IsActiveBuff(heroKind: HeroKind) {
     return this.IsEquipped(heroKind);

@@ -9,4 +9,5 @@ export enum InAppPurchaseKind {
   EpicCoin70000,
   UpdateBundle1,
   UpdateBundle2,
+  UpdateBundle3,
 }

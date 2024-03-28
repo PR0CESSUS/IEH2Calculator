@@ -98,7 +98,9 @@ export class DataSkill {
     for (let index = 0; index < this.baseAttackPoisonChance.length; index++) this.baseAttackPoisonChance[index] = new Multiplier();
     for (let index = 0; index < this.baseAttackSlimeBall.length; index++) this.baseAttackSlimeBall[index] = new Multiplier();
     this.globalSkillProfGainRate = new Multiplier();
+  }
 
+  Start() {
     this.classSkills[0] = new WarriorSkill(this.data);
     this.classSkills[1] = new WizardSkill(this.data);
     this.classSkills[2] = new AngelSkill(this.data);
@@ -107,7 +109,7 @@ export class DataSkill {
     this.classSkills[5] = new TamerSkill(this.data);
   }
 
-  Skill(slot: number, heroKind: HeroKind) {
+  Skill(heroKind: HeroKind, slot: number) {
     return this.classSkills[heroKind].skills[slot];
   }
 

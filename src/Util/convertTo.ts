@@ -9,7 +9,7 @@ export function convertTo(input, precision = 2, type: NumberType | null = null) 
       case NumberType.Meter:
         return "0m / sec";
       default:
-        return 0;
+        return "0";
     }
   }
   input = parseFloat(input);

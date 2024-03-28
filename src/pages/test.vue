@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Game } from "@/Game";
+import SkillLoadout from "@/components/SkillLoadout.vue";
+import { HeroKind } from "@/type/HeroKind";
 
 import { inject } from "vue";
 import { definePage } from "vue-router/auto";
@@ -16,7 +18,16 @@ definePage({
 // const inGameData = ref({main1: globalStore});
 </script>
 
-<template>Test {{ game.data.source.currentHero }}</template>
+<template>
+  Current Hero: {{ HeroKind[game.data.source.currentHero] }}<br />
+  Current Skill Loadout: {{ game.data.source.skillLoadoutIds[game.data.source.currentHero] }}<br />
+
+  <!-- {{ game.data.source.isEquippedAngelSkillForAngel }} -->
+
+  <hr />
+
+  <SkillLoadout />
+</template>
 
 <style scoped>
 .element {

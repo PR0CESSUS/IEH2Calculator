@@ -32,7 +32,20 @@ export class DataEpicStore {
       new MultiplierInfo(MultiplierKind.EpicStore, MultiplierType.Add, () => this.data.source.epicStorePurchasedNum[EpicStoreKind.ExpeditionTeamSlot1])
     );
     this.data.expedition.unlockedExpeditionSlotNum.RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.EpicStore, MultiplierType.Add, () => this.data.source.inAppPurchasedNum[InAppPurchaseKind.UpdateBundle2])
+      new MultiplierInfo(
+        MultiplierKind.EpicStore,
+        MultiplierType.Add,
+        () => 1,
+        () => this.data.source.inAppPurchasedNum[InAppPurchaseKind.UpdateBundle2]
+      )
+    );
+    this.data.expedition.unlockedExpeditionSlotNum.RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.EpicStore,
+        MultiplierType.Add,
+        () => 1,
+        () => this.data.source.inAppPurchasedNum[InAppPurchaseKind.UpdateBundle3]
+      )
     );
     this.data.nitro.nitroCap.RegisterMultiplier(
       new MultiplierInfo(MultiplierKind.EpicStore, MultiplierType.Mul, () => 0.1 * this.data.source.epicStorePurchasedNum[EpicStoreKind.NitroCapExpansion])

@@ -1,4 +1,5 @@
 export const SkillParameter = {
+  maxSkillKindNum: 30,
   skillFactors: [
     [
       [1.0, 0.02, 1.0, 0.025, 0.0, 0.0, 1.5, 0.0, 80.0, 50.0, 0.0, 50.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0],

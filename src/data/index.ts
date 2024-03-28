@@ -87,12 +87,11 @@ export class DATA {
     this.upgrade = new DataUpgrade(this);
     this.achievement = new DataAchievement(this);
 
-    for (let index = 0; index < this.battles.length; index++) {
-      this.battles[index] = new DataBattle(this, index);
-    }
     this.skill = new DataSkill(this);
+    for (let index = 0; index < this.battles.length; index++) this.battles[index] = new DataBattle(this, index);
 
     this.Start();
+    this.Initialize();
   }
 
   get battle(): DataBattle {
@@ -110,9 +109,7 @@ export class DATA {
     this.monster.Start();
     this.sdg.Start();
     this.superStats.Start();
-    for (let index = 0; index < this.battles.length; index++) {
-      this.battles[index].Start();
-    }
+
     this.quest.Start();
     this.rebirth.Start();
     this.upgrade.Start();
@@ -122,7 +119,14 @@ export class DATA {
     this.inventory.Start();
     this.stats.Start();
     this.achievement.Start();
+    this.skill.Start();
+    for (let index = 0; index < this.battles.length; index++) this.battles[index].Start();
+
     this.SuperDungeonToggle();
+  }
+
+  Initialize() {
+    for (let index = 0; index < this.battles.length; index++) this.battles[index].skillSet.Initialize();
   }
 
   SuperDungeonToggle() {

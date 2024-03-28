@@ -35,7 +35,7 @@ export class ClassSkill {
     return num;
   }
   DamageMultiplierEffectValue() {
-    return Math.pow(2.0, Math.floor(this.MaxReachedTotalLevel() / 100.0));
+    return Math.pow(2.0, Math.floor(this.MaxReachedTotalLevel() / 250.0));
   }
   DamageMultiplierEffectValueString() {
     return Util.percent(this.DamageMultiplierEffectValue());
