@@ -14,7 +14,7 @@ const skillSet = computed(() => game.data.battle.skillSet);
       <div class="block">
         <template v-for="skill in skillSet.currentSkillSet">
           <img v-if="skill" :title="skill.NameURL() + ' ' + skill.IsEquipped(game.data.source.currentHero)" :src="`/img/skill/${skill.NameURL()}.png`" />
-          <img v-else title="Skill Slot" :src="`/img/skill/Skillslot.png`" />
+          <img v-else title="Skill Slot" :src="`img/skill/Skillslot.png`" />
         </template>
       </div>
     </div>
@@ -23,7 +23,7 @@ const skillSet = computed(() => game.data.battle.skillSet);
       <div class="block">
         <template v-for="skill in skillSet.currentGlobalSkillSet">
           <img v-if="skill" :title="skill.NameURL() + ' ' + skill.IsEquipped(game.data.source.currentHero)" :src="`/img/skill/${skill.NameURL()}.png`" />
-          <img v-else title="Skill Slot" :src="`/img/skill/Skillslot.png`" />
+          <img v-else title="Skill Slot" :src="`img/skill/Skillslot.png`" />
         </template>
       </div>
     </div>

@@ -23,7 +23,10 @@ export class Dojo extends BUILDING {
     //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 10, (x => globalThis.data.skill.SetEffectSkillCastSpeedModifier(new MultiplierInfo(MultiplierKind.Town, MultiplierType.Mul, (() => 0.1), x))), (() => Localized.localized.BuildingString(136, UsefulMethod.percent(0.1)))));
     //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 20, (x => globalThis.data.stats.globalSkillSlotNum.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Town, MultiplierType.Add, (() => 1.0), x))), (() => Localized.localized.BuildingString(135, "1"))));
     //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 30, (x => globalThis.data.skill.SetEffectSkillCastSpeedModifier(new MultiplierInfo(MultiplierKind.Town, MultiplierType.Mul, (() => 0.2), x))), (() => Localized.localized.BuildingString(136, UsefulMethod.percent(0.2)))));
-    //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 40, (x => globalThis.data.skill.unlockSkillPassivePersist.RegisterCondition(x)), (() => Localized.localized.BuildingString(138))));
+    // this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 40, (x => globalThis.data.skill.unlockSkillPassivePersist.RegisterCondition(x)), (() => Localized.localized.BuildingString(138))));
+
+    this.data.skill.unlockSkillPassivePersist = () => this.Level() >= 40;
+
     //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 50, (x => globalThis.data.skill.SetEffectSkillCastSpeedModifier(new MultiplierInfo(MultiplierKind.Town, MultiplierType.Mul, (() => 0.3), x))), (() => Localized.localized.BuildingString(136, UsefulMethod.percent(0.3)))));
     //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 60, (x => globalThis.data.skill.excessSpeedForHitCount.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Town, MultiplierType.Add, (() => 0.25), x))), (() => Localized.localized.BuildingString(134, "25%"))));
     //   this.passiveEffectList.push(new BuildingPassiveEffect(this.level, 70, (x => globalThis.data.skill.SetEffectSkillCastSpeedModifier(new MultiplierInfo(MultiplierKind.Town, MultiplierType.Mul, (() => 0.4), x))), (() => Localized.localized.BuildingString(136, UsefulMethod.percent(0.4)))));

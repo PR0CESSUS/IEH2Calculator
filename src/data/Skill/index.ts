@@ -33,7 +33,15 @@ export class DataSkill {
   baseAttackSlimeBall: Multiplier[] = Array(Enums.HeroKind);
   classSkills: ClassSkill[] = Array(Enums.HeroKind);
   isLog = Array(Enums.HeroKind);
-  unlockSkillPassivePersist: boolean = false;
+  #unlockSkillPassivePersist = () => false;
+
+  get unlockSkillPassivePersist() {
+    return this.#unlockSkillPassivePersist();
+  }
+
+  set unlockSkillPassivePersist(value: any) {
+    this.#unlockSkillPassivePersist = value;
+  }
 
   constructor(DATA: DATA) {
     this.data = DATA;
