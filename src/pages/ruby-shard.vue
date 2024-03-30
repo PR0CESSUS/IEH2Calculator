@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { inject } from "vue";
+import { computed, inject } from "vue";
 import { Util } from "@util";
 import { Localization } from "@localization/index";
 import { useGlobalStore } from "@stores/global";
 import { Game } from "@/Game";
 import { definePage } from "vue-router/auto";
+import AppInput from "@/components/AppInput.vue";
 
 definePage({
   meta: {
@@ -51,29 +52,43 @@ function totalRubyShards() {
   return total - (total * state.failure) / 100;
 }
 
+const timeNeeded = computed(() => (totalRuns.value * state.time) / game.data.source.nitroSpeed);
+
+const totalRuns = computed(() => runsNum() * 5 * state.ticket);
+
+const perHour = computed(() => (3600 / state.time) * getShardsGain() * game.data.source.nitroSpeed);
+
 const convertCost = game.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.Value();
 </script>
 
 <template>
   Dungeon:
-  <select v-model.number="state.dungeon">
+  <select v-model.number.lazy="state.dungeon">
     <option v-for="(_, index) in 5" :selected="state.dungeon == index" :value="index">{{ Localization.SDName(index) }}</option>
   </select>
 
   Modifier:
-  <input type="text" size="8" v-model.number="state.modifier" /> Floors Cleared: <input type="text" size="8" v-model.number="state.floor" />
+  <input type="text" size="8" v-model.number.lazy="state.modifier" /> Floors Cleared: <input type="text" size="8" v-model.number.lazy="state.floor" />
   <table>
     <tr>
       <td>Failure Rate %</td>
-      <td><input type="text" size="8" v-model.number="state.failure" /> (Total Ruby Shards = Total Ruby Shards - Total Ruby Shards * failure rate)</td>
+      <td><input type="text" size="8" v-model.number.lazy="state.failure" /> (Total Ruby Shards = Total Ruby Shards - Total Ruby Shards * failure rate)</td>
     </tr>
     <tr>
       <td>Tickets</td>
-      <td><input type="text" size="8" v-model.number="state.ticket" /></td>
+      <td><input type="text" size="8" v-model.number.lazy="state.ticket" /></td>
+    </tr>
+    <tr>
+      <td>Time to finish dungeons (seconds)</td>
+      <td><input type="text" size="8" v-model.number.lazy="state.time" /></td>
+    </tr>
+    <tr>
+      <td>Nitro Speed</td>
+      <td><AppInput v-model.convert="game.data.source.nitroSpeed" :precision="1" /></td>
     </tr>
     <tr>
       <td>Reset Value</td>
-      <td><input type="text" size="8" v-model.number="game.data.source.SDAutoLeaveAndRetryTargetEntryCost" /></td>
+      <td><input type="text" size="8" v-model.number.lazy="game.data.source.SDAutoLeaveAndRetryTargetEntryCost" /></td>
     </tr>
     <tr>
       <td>Portal Orb Cost</td>
@@ -94,6 +109,14 @@ const convertCost = game.data.sdg.shopCtrl.rubyConverterPieceOfRubyCost.Value();
     <tr>
       <td>Ruby Converter</td>
       <td>{{ Util.convertTo(convertCost) }}</td>
+    </tr>
+    <tr>
+      <td>Ruby Shard per Hour</td>
+      <td>{{ Util.tDigit(perHour) }}</td>
+    </tr>
+    <tr>
+      <td>Total time needed</td>
+      <td>{{ Util.secondsToDhms(timeNeeded) }}</td>
     </tr>
     <tr>
       <td>Total Ruby</td>

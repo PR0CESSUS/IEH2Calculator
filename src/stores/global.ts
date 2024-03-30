@@ -12,6 +12,7 @@ const DEFAULT_DATA = {
     dungeon: 0,
     modifier: 0,
     floor: 100,
+    time: 0,
   },
   dropChance: {
     level: 0,

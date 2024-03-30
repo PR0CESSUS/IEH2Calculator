@@ -2,7 +2,10 @@
 import { ref } from "vue";
 import { Util } from "../Util/index";
 
-const props = defineProps<{ size?: number }>();
+const props = defineProps<{ size?: number; precision?: number }>();
+const size = ref(props.size ? props.size : 8);
+const precision = ref(props.precision ? props.precision : 2);
+
 const [model, modifiers] = defineModel({
   set(value) {
     if (modifiers.convert) {
@@ -15,15 +18,13 @@ const [model, modifiers] = defineModel({
 
   get(value) {
     if (modifiers.convert) {
-      return Util.convertTo(value);
+      return Util.convertTo(value, precision.value);
     }
     return value;
   },
 });
 
 // console.log();
-
-const size = ref(props.size ? props.size : 8);
 
 // console.log(modifiers);
 </script>
