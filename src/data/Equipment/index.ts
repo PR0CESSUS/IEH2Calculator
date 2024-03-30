@@ -49,6 +49,9 @@ export class DataEquipment {
     this.disassembleMultiplier = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     this.artifactChance = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.01));
     this.sdEnchantChance = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+
+    this.artifactChance.name = "Artifact Drop Chance";
+    this.sdEnchantChance.name = "SD Enchant Chance";
     for (let index = 0; index < this.maxLevels.length; index++)
       this.maxLevels[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => EquipmentParameter.maxLevelForEachHero));
     for (let index = 0; index < Enums.EquipmentSetKind; index++) {

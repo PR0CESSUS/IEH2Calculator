@@ -186,6 +186,8 @@ onMounted(() => {
             <MultiplierInformation :multiplier="'stats.currentHero.stats[8]'" />
 
             <MultiplierInformation :multiplier="`stats.currentHero.monsterDamages[11]`" />
+            <MultiplierInformation :multiplier="`equipment.sdEnchantChance`" />
+            <MultiplierInformation :multiplier="`equipment.artifactChance`" />
           </div>
         </template>
       </TabItem>
