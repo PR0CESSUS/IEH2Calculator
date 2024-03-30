@@ -27,16 +27,19 @@ function getIconPath() {
 <template>
   <div>
     <Tooltip style="width: 700px">
-      <img
-        :tabindex="props.id"
-        ref="img"
-        class="icon48"
-        :src="getIconPath()"
-        @click="potion.isDisabled() ? null : dialog.showModal()"
-        @mouseover.once="init = true"
-        @mouseover="img.focus()"
-        :class="potion.isDisabled() ? 'disabled' : ''"
-      />
+      <template #trigger>
+        <img
+          :tabindex="props.id"
+          ref="img"
+          class="icon48"
+          :src="getIconPath()"
+          @click="potion.isDisabled() ? null : dialog.showModal()"
+          @mouseover.once="init = true"
+          @mouseover="img.focus()"
+          :class="potion.isDisabled() ? 'disabled' : ''"
+        />
+      </template>
+
       <template #content v-if="potion.kind != 0 && init">
         <div class="head">
           <img class="icon96" :src="getIconPath()" />

@@ -1,12 +1,14 @@
+import { BuildingLevel } from "./BuildingLevel";
+
 export class BuildingPassiveEffect {
-  level;
+  level: BuildingLevel;
   requiredLevel;
   descriptionString;
 
-  constructor(level, requiredLevel, registerInfoAction, descriptionString) {
+  constructor(level: BuildingLevel, requiredLevel: number, registerInfoAction, descriptionString = null) {
     this.level = level;
     this.requiredLevel = requiredLevel;
-    if (registerInfoAction != null) registerInfoAction(this.IsActive);
+    if (registerInfoAction != null) registerInfoAction(() => this.IsActive());
     this.descriptionString = descriptionString;
   }
 

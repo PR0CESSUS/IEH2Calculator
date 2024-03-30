@@ -49,7 +49,8 @@ export class IceBolt extends SKILL {
     this.passiveEffectLists.push(SkillPassiveEffect.SkillBuff(this, 425, SkillBuffKind.IceDamage, 2.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 450, BasicStatsKind.MATK, MultiplierType.After, 150.0));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillBuff(this, 475, SkillBuffKind.IceDamage, 3.0));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 500, () => Localization.WarriorSkillsString(7)));
+
+    this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 500, Stats.CriticalDamage, MultiplierType.Mul, 0.1));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillBuff(this, 525, SkillBuffKind.IceDamage, 4.0));
     this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 550, Stats.MagCritChance, MultiplierType.Mul, 0.2));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillBuff(this, 575, SkillBuffKind.IceDamage, 5.0));

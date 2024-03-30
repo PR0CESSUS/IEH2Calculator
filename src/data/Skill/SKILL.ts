@@ -19,6 +19,7 @@ import { SkillKindAngel } from "@/type/SkillKindAngel";
 import { SkillKindThief } from "@/type/SkillKindThief";
 import { SkillKindArcher } from "@/type/SkillKindArcher";
 import { SkillKindTamer } from "@/type/SkillKindTamer";
+import { Util } from "@/Util";
 
 export class SKILL {
   data: DATA;
@@ -96,7 +97,7 @@ export class SKILL {
   }
 
   get lv() {
-    return !this.data.skill.unlockSkillPassivePersist ? this.level.value : this.level.maxReachedLevel;
+    return !this.data.skill.unlockSkillPassivePersist.IsUnlocked() ? this.level.value : this.level.maxReachedLevel;
   }
 
   get type() {
@@ -254,15 +255,24 @@ export class SKILL {
     return this.initDamage * this.damageMultiplier.Value() + this.IncrementDamagePerLevel() * this.Level();
   }
 
+  DamageString() {
+    if (this.type != SkillType.Attack) return "";
+    this.CalculateIntervalInternal(this.data.battle.hero);
+    return `- ${Element[this.element]} Damage: ${Util.tDigit(this.DamageOrigin(this.data.battle.hero, true))} * ${this.hitCount[this.data.battle.heroKind]}`;
+  }
+
   IncrementMpGainPerLevel() {
     return this.incrementMpGain * this.Rank();
   }
 
   GainMp() {
     const value = this.initMpGain + this.IncrementMpGainPerLevel() * this.Level();
-    return this.isLog ? Math.log10(Math.max(1.0, value)) * this.HitCount() * (1.0 / Math.pow(0.1, 0.8)) : value;
+    return this.isLog ? Math.log10(Math.max(1.0, value)) * this.HitCount(this.heroKind) * (1.0 / Math.pow(0.1, 0.8)) : value;
   }
 
+  HitCountString() {
+    return `${this.hitCount[this.heroKind]}`;
+  }
   // GainMp(heroKind: HeroKind) {
   //   if (this.GainMp() < 1.0)
   //     return 0.0;
@@ -283,8 +293,11 @@ export class SKILL {
   //     return this.isLog ? 1.0 + 1.5 * Math.log(Math.max(1.0, this.initMpConsume + this.incrementMpConsume * this.Level()), 2.0) * (2.0 / this.Interval()) : this.initMpConsume + this.incrementMpConsume * this.Level();
   //   }
 
-  HitCount() {
-    return Math.min(this.maxHitCount, this.initHitCount + this.incrementHitCount * this.level.value) + this.data.skill.extraSkillHitCount[this.heroKind].Value();
+  HitCount(heroKind: HeroKind) {
+    this.CalculateHitCount(heroKind);
+    // return Math.min(this.maxHitCount, this.initHitCount + this.incrementHitCount * this.level.value) + this.data.skill.extraSkillHitCount[this.heroKind].Value();
+
+    return this.hitCount[heroKind];
   }
 
   //   HitCountForPetAttack(heroKind: HeroKind) {
@@ -360,6 +373,7 @@ export class SKILL {
   CalculateIntervalInternal(myself: BATTLE) {
     let value = this.IntervalModifier(myself);
     this.exceededIntervalModifier[myself.heroKind] = value >= 0.2 ? 0.0 : 1.0 + (0.2 / value - 1.0) * this.data.skill.excessSpeedForHitCount.Value();
+
     this.interval[myself.heroKind] = this.Interval() * Math.max(0.2, value);
     this.CalculateHitCount(myself.heroKind);
   }
@@ -398,9 +412,13 @@ export class SKILL {
 
   //   ThrowSpeedModifier(myself: BATTLE) {return this.IntervalModifier(myself) <= 0.0 ? 1 : Math.min(5, Math.max(1, 0.5 / this.Interval(myself)));}
 
-  //   Dps(myself: BATTLE, isDisplay = false) {return this.Damage(myself, isDisplay) / this.Interval(myself);}
+  Dps(myself: BATTLE, isDisplay = false) {
+    return this.DamageOrigin(myself, isDisplay) / this.interval[myself.heroKind];
+  }
 
-  //   TotalDps(myself: BATTLE, isDisplay = false) {return this.Dps(myself, isDisplay) * this.HitCount();}
+  TotalDps(myself: BATTLE, isDisplay = false) {
+    return this.Dps(myself, isDisplay) * this.HitCount(myself.heroKind);
+  }
 
   //   Vector2 EffectInitPosition(
   //     effectCenter: SkillEffectCenter,

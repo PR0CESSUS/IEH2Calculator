@@ -5,6 +5,7 @@ import { Element } from "../../type/Element";
 import { HeroKind } from "../../type/HeroKind";
 import { MonsterColor } from "../../type/MonsterColor";
 import { MonsterSpecies } from "../../type/MonsterSpecies";
+import { SKILL } from "../skill/SKILL";
 
 export class BATTLE {
   data: DATA;
@@ -244,12 +245,32 @@ export class BATTLE {
   }
 
   // custom method for attack damage breakdown
-  AttackedInfo() {
+  AttackedInfo(): {
+    skill: SKILL;
+    hero: BATTLE;
+    DamagePerHit: number;
+    tempTotalDamage: number;
+    slayerOilDamage: number;
+    electricDamage: number;
+    totalBeforeExtraAfter: number;
+    extraAfterDamagePerHit: number;
+    extraAfterDamage: number;
+    totalDamage: number;
+
+    damage: number;
+    element: number;
+    SlayerOilValue: number;
+    castTime: number;
+    dps: number;
+    realHitCount: number;
+    dps2: number;
+    totalDps: number;
+  } {
     const battle = this.data.battle.hero;
-    const skill = this.data.skill.Skill(0, this.data.source.currentHero);
+    const skill = this.data.skill.Skill(this.data.source.currentHero, 0);
     const damage = skill.DamageOrigin(battle, false);
     const isCrit = true;
-    const hitCount = this.data.source.currentHero == HeroKind.Angel ? skill.HitCount() / 5 : skill.HitCount();
+    const hitCount = this.data.source.currentHero == HeroKind.Angel ? skill.HitCount(this.heroKind) / 5 : skill.HitCount(this.heroKind);
     let element = skill.element;
 
     const isSlayerOil = !this.isHero && this.battleCtrl.CurrentSlayerElement() != 0;
@@ -272,6 +293,8 @@ export class BATTLE {
       castTime: skill.CalculateInterval(battle),
       dps: 0,
       realHitCount: hitCount,
+      dps2: skill.Dps(battle, true),
+      totalDps: skill.TotalDps(battle, true),
     };
 
     info.tempTotalDamage = info.DamagePerHit * hitCount;

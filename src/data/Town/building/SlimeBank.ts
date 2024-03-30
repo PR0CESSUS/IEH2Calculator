@@ -1,18 +1,15 @@
 import { MultiplierInfo } from "@/Data/Multiplier";
-import { BUILDING } from "../BUILDING";
+import { Util } from "@/Util";
+import { BuildingKind } from "@/type/BuildingKind";
 import { MultiplierKind } from "@/type/MultiplierKind";
 import { MultiplierType } from "@/type/MultiplierType";
 import { ResourceKind } from "@/type/ResourceKind";
-import { BuildingKind } from "@/type/BuildingKind";
-import { DATA } from "@/Data";
-import { Util } from "@/Util";
+import { BUILDING } from "../BUILDING";
 
 export class SlimeBank extends BUILDING {
-  constructor(DATA: DATA) {
-    super(DATA);
-    this.kind = BuildingKind.SlimeBank;
+  get kind() {
+    return BuildingKind.SlimeBank;
   }
-
   EffectValue() {
     return this.Level() * 0.01 * this.townCtrl.townLevelEffectMultiplier.Value() * this.townCtrl.townLevelEffectMultipliers[0].Value();
   }

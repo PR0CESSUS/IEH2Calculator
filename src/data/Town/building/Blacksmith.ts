@@ -1,20 +1,17 @@
 import { MultiplierInfo } from "@/Data/Multiplier";
-import { BUILDING } from "../BUILDING";
+import { Enums } from "@/Enums";
+import { Util } from "@/Util";
+import { BuildingKind } from "@/type/BuildingKind";
 import { MultiplierKind } from "@/type/MultiplierKind";
 import { MultiplierType } from "@/type/MultiplierType";
 import { ResourceKind } from "@/type/ResourceKind";
-import { BuildingKind } from "@/type/BuildingKind";
-import { DATA } from "@/Data";
-import { Enums } from "@/Enums";
 import { Stats } from "@/type/Stats";
-import { Util } from "@/Util";
+import { BUILDING } from "../BUILDING";
 
 export class Blacksmith extends BUILDING {
-  constructor(DATA: DATA) {
-    super(DATA);
-    this.kind = BuildingKind.Blacksmith;
+  get kind() {
+    return BuildingKind.Blacksmith;
   }
-
   EffectValue() {
     return this.Level() * 0.005 * this.townCtrl.townLevelEffectMultiplier.Value() * this.townCtrl.townLevelEffectMultipliers[0].Value();
   }

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { inject } from "vue";
+import { Game } from "@/Game";
+import SkillBreakdown from "@/components/SkillBreakdown.vue";
 import EquipmentLoadout from "@components/EquipmentLoadout.vue";
 import HeroStats from "@components/HeroStats.vue";
-import { Game } from "@/Game";
-import SkillInformation from "@components/SkillInformation.vue";
 import MonsterStats from "@components/MonsterStats.vue";
+import { inject } from "vue";
 import { definePage } from "vue-router/auto";
 
 definePage({
@@ -25,7 +25,7 @@ const game = inject<Game>("game");
     <div>
       <MonsterStats />
       <hr />
-      <SkillInformation :key="game.data.requireUpdate.value ? 'aaa' : 'bbb'" />
+      <SkillBreakdown :key="game.data.requireUpdate.value ? 'aaa' : 'bbb'" />
     </div>
   </div>
 </template>

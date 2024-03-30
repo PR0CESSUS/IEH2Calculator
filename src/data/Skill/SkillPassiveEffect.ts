@@ -116,11 +116,11 @@ export class SkillPassiveEffect {
     instance.level = skill.level;
     instance.requiredLevel = requiredLevel;
     instance.value = value;
-    instance.onInstanceRegister(kind, type);
+    instance.RegisterPassive(kind, type);
     return instance;
   }
 
-  onInstanceRegister(kind: SkillPassiveKind, type: MultiplierType) {
+  RegisterPassive(kind: SkillPassiveKind, type: MultiplierType) {
     let flag = true;
     let tempDescription = "";
     let value = this.value;
@@ -520,12 +520,12 @@ export class SkillPassiveEffect {
     instance.level = skill.level;
     instance.requiredLevel = requiredLevel;
     instance.value = value;
-    instance.onInstanceRegister2(buffKind);
+    instance.RegisterBuff(buffKind);
 
     return instance;
   }
 
-  onInstanceRegister2(buffKind) {
+  RegisterBuff(buffKind) {
     let tempDescription = "";
     let skill = this.skill;
     let value = this.value;
@@ -609,36 +609,15 @@ export class SkillPassiveEffect {
           break;
         case SkillBuffKind.SDDamageMul:
           tempDescription = Localization.OtherString(19, Localization.GradeMilestone(5, Util.percent(value)));
-          this.data.battles[index].superDungeonCtrl.damageMultiplier.RegisterMultiplier(
-            new MultiplierInfo(
-              MultiplierKind.SkillPassive,
-              MultiplierType.Mul,
-              () => this.EffectValue(heroKind),
-              () => this.IsActivated()
-            )
-          );
+          this.data.battles[index].superDungeonCtrl.damageMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Buff, MultiplierType.Mul, () => value, trigger));
           break;
         case SkillBuffKind.SDArmoredFury:
           tempDescription = Localization.OtherString(19, Localization.GradeMilestone(9, Util.percent(value)));
-          this.data.battles[index].superDungeonCtrl.armoredFury.RegisterMultiplier(
-            new MultiplierInfo(
-              MultiplierKind.SkillPassive,
-              MultiplierType.Mul,
-              () => this.EffectValue(heroKind),
-              () => this.IsActivated()
-            )
-          );
+          this.data.battles[index].superDungeonCtrl.armoredFury.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Buff, MultiplierType.Mul, () => value, trigger));
           break;
         case SkillBuffKind.SDWardedFury:
           tempDescription = Localization.OtherString(19, Localization.GradeMilestone(10, Util.percent(value)));
-          this.data.battles[index].superDungeonCtrl.wardedFury.RegisterMultiplier(
-            new MultiplierInfo(
-              MultiplierKind.SkillPassive,
-              MultiplierType.Mul,
-              () => this.EffectValue(heroKind),
-              () => this.IsActivated()
-            )
-          );
+          this.data.battles[index].superDungeonCtrl.wardedFury.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Buff, MultiplierType.Mul, () => value, trigger));
           break;
       }
     }
@@ -662,7 +641,7 @@ export class SkillPassiveEffect {
   }
 
   IsEnoughLevel() {
-    return this.data.skill.unlockSkillPassivePersist ? this.level.maxReachedLevel >= this.requiredLevel : this.level.value >= this.requiredLevel;
+    return this.data.skill.unlockSkillPassivePersist.IsUnlocked() ? this.level.maxReachedLevel >= this.requiredLevel : this.level.value >= this.requiredLevel;
   }
 
   SetEffect() {

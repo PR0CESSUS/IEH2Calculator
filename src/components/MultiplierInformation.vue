@@ -67,13 +67,16 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
 
 <template>
   <Tooltip>
-    <p @mouseover.once="init = true" @click="console.log(multiplier)" :class="{ underline: !props.inline }">
-      <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }"> {{ multiplier.raw.main.name }}</span>
+    <template #trigger>
+      <p @mouseover.once="init = true" @click="console.log(multiplier)" :class="{ underline: !props.inline }">
+        <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }"> {{ multiplier.raw.main.name }}</span>
 
-      <span :class="[useCompareColor(multiplier.diff.value, multiplier.main.value, multiplier.snap.value)]" class="right"
-        >{{ multiplier.compare.value }} {{ Util.convertTo(multiplier.main.Value(), props.precision, multiplier.main.numberType) }} {{ props.valueSuffix }}
-      </span>
-    </p>
+        <span :class="[useCompareColor(multiplier.diff.value, multiplier.main.value, multiplier.snap.value)]" class="right"
+          >{{ multiplier.compare.value }} {{ Util.convertTo(multiplier.main.Value(), props.precision, multiplier.main.numberType) }} {{ props.valueSuffix }}
+        </span>
+      </p>
+    </template>
+
     <template #content v-if="init">
       <div style="width: 400px">
         <p class="name">{{ multiplier.raw.main.name }}</p>
@@ -125,10 +128,10 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
         <div v-if="multiplier.main.after != 0">
           <p class="group">After:</p>
           <div v-for="[key, value] in Object.entries(multiplier.diff.afterKind)">
-            <template v-if="multiplier.main.afterKind[key] > 1">
+            <template v-if="multiplier.main.afterKind[key] != 0">
               -{{ Localization.StatsBreakdown(MultiplierKind[key]) }}
               <span class="right" :class="useCompareColor(value as number)"
-                >{{ multiplier.compare.afterKind[key] }} + {{ Util.convertTo(multiplier.main.afterKind[key] | 0, props.precision, multiplier.main.numberType) }}</span
+                >{{ multiplier.compare.afterKind[key] }} + {{ Util.convertTo(multiplier.main.afterKind[key], props.precision, multiplier.main.numberType) }}</span
               ></template
             >
           </div>

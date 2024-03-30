@@ -13,7 +13,7 @@ export class HeroAbility {
   point: HeroAbilityPoint;
   pointMultiplicativeMultiplier: Multiplier;
 
-  constructor(DATA: DATA, heroKind: HeroKind, kind: AbilityKind, pointLeft) {
+  constructor(DATA: DATA, heroKind: HeroKind, kind: AbilityKind) {
     this.data = DATA;
     this.heroKind = heroKind;
     this.kind = kind;

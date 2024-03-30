@@ -26,7 +26,7 @@ export class ClassSkill {
   Start() {
     for (let index = 0; index < this.skills.length; index++) {
       if (this.skills[index].type == SkillType.Attack)
-        this.skills[index].damageMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Skill, MultiplierType.Mul, () => this.DamageMultiplierEffectValue));
+        this.skills[index].damageMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Skill, MultiplierType.Mul, () => this.DamageMultiplierEffectValue()));
     }
   }
   MaxReachedTotalLevel() {

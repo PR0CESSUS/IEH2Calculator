@@ -49,15 +49,15 @@ export class HeroStats {
   abilities = Array(Enums.AbilityKind);
   abilityPointLeft;
 
-  constructor(DATA: DATA, kind: HeroKind) {
+  constructor(DATA: DATA, heroKind: HeroKind) {
     this.data = DATA;
-    this.heroKind = kind;
+    this.heroKind = heroKind;
     this.level = this.data.source.heroLevel[this.heroKind];
     // console.log(this.level, this.data.source.heroLevel);
 
     this.abilityPointLeft = this.AbilityPointLeft(this.heroKind);
     // console.log(this.stats);
-    for (let kind1 = 0; kind1 < this.abilities.length; kind1++) this.abilities[kind1] = new HeroAbility(this.data, kind, kind1, this.abilityPointLeft);
+    for (let index = 0; index < this.abilities.length; index++) this.abilities[index] = new HeroAbility(this.data, this.heroKind, index);
     this.SetStats();
   }
 
@@ -200,96 +200,38 @@ export class HeroStats {
     this.stats[9].maxValue = () => {
       return 1.0;
     };
+    this.stats[9].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => Parameter.baseStats[this.heroKind][10]));
     this.stats[9].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return Parameter.baseStats[this.heroKind][10];
-      })
+      new MultiplierInfo(MultiplierKind.Ability, MultiplierType.Add, () => Parameter.stats[this.heroKind][10] * Math.pow(this.abilities[4].Point(), 2.0 / 3.0))
     );
-    this.stats[9].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Ability, MultiplierType.Add, () => {
-        return Parameter.stats[this.heroKind][10] * Math.pow(this.abilities[4].Point(), 2.0 / 3.0);
-      })
-    );
+    this.stats[10].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => Parameter.baseStats[this.heroKind][11]));
     this.stats[10].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return Parameter.baseStats[this.heroKind][11];
-      })
+      new MultiplierInfo(MultiplierKind.Ability, MultiplierType.Add, () => Parameter.stats[this.heroKind][11] * Math.pow(this.abilities[3].Point(), 2.0 / 3.0))
     );
-    this.stats[10].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Ability, MultiplierType.Add, () => {
-        return Parameter.stats[this.heroKind][11] * Math.pow(this.abilities[3].Point(), 2.0 / 3.0);
-      })
-    );
-    this.stats[10].minValue = () => {
-      return 50.0;
-    };
+    this.stats[10].minValue = () => 50.0;
     this.stats[10].numberType = NumberType.Meter;
-    this.stats[11].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return 1.0;
-      })
-    );
-    this.stats[12].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return 1.0;
-      })
-    );
-    this.stats[13].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return 1.0;
-      })
-    );
-    this.stats[14].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return 1.0;
-      })
-    );
-    this.stats[17].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return 0.025;
-      })
-    );
-    this.stats[18].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return 0.025;
-      })
-    );
-    this.stats[19].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return 2.0;
-      })
-    );
-    this.stats[21].RegisterMultiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return 1.0;
-      })
-    );
+    this.stats[11].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.stats[12].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.stats[13].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.stats[14].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
+    this.stats[17].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.025));
+    this.stats[18].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.025));
+    this.stats[19].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 2.0));
+    this.stats[21].RegisterMultiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 1.0));
     for (let index = 0; index < this.optionEffectChance.length; index++) {
-      this.optionEffectChance[index] = new Multiplier(
-        new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-          return 0.01 * Math.pow(0.1, index);
-        })
-      );
-      this.optionEffectChance[index].maxValue = () => {
-        return 1.0;
-      };
+      this.optionEffectChance[index] = new Multiplier(new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0.01 * Math.pow(0.1, index)));
+      this.optionEffectChance[index].maxValue = () => 1.0;
       this.optionEffectChance[index].RegisterMultiplier(
-        new MultiplierInfo(MultiplierKind.Ability, MultiplierType.Add, () => {
-          return 0.0002 * Math.pow(0.1, index * this.abilities[4].Point());
-        })
+        new MultiplierInfo(MultiplierKind.Ability, MultiplierType.Add, () => 0.0002 * Math.pow(0.1, index) * this.abilities[AbilityKind.Luck].Point())
       );
     }
     this.optionEffectChance[0].name = "Equipment 1st Enchantment Slot Chance";
-    this.optionEffectChance[1].name = "Equipment 1st Enchantment Slot Chance";
-    this.optionEffectChance[2].name = "Equipment 1st Enchantment Slot Chance";
+    this.optionEffectChance[1].name = "Equipment 2nd Enchantment Slot Chance";
+    this.optionEffectChance[2].name = "Equipment 3rd Enchantment Slot Chance";
     this.hpRegenerate = new Multiplier(
-      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => {
-        return 0;
-      }),
+      new MultiplierInfo(MultiplierKind.Base, MultiplierType.Add, () => 0),
       () => this.basicStats[0].Value(),
-      () => {
-        return 0.0;
-      }
+      () => 0.0
     );
 
     this.mpRegenerate = new Multiplier(

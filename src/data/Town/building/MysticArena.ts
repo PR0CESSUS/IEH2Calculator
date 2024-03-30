@@ -1,21 +1,18 @@
 import { MultiplierInfo } from "@/Data/Multiplier";
-import { BUILDING } from "../BUILDING";
+import { Enums } from "@/Enums";
+import { Util } from "@/Util";
+import { BuildingKind } from "@/type/BuildingKind";
+import { MonsterSpecies } from "@/type/MonsterSpecies";
 import { MultiplierKind } from "@/type/MultiplierKind";
 import { MultiplierType } from "@/type/MultiplierType";
 import { ResourceKind } from "@/type/ResourceKind";
-import { BuildingKind } from "@/type/BuildingKind";
-import { DATA } from "@/Data";
-import { Enums } from "@/Enums";
-import { MonsterSpecies } from "@/type/MonsterSpecies";
-import { Util } from "@/Util";
 import { Stats } from "@/type/Stats";
+import { BUILDING } from "../BUILDING";
 
 export class MysticArena extends BUILDING {
-  constructor(DATA: DATA) {
-    super(DATA);
-    this.kind = BuildingKind.MysticArena;
+  get kind() {
+    return BuildingKind.MysticArena;
   }
-
   EffectValue() {
     return this.Level() * 0.025 * this.townCtrl.townLevelEffectMultiplier.Value() * this.townCtrl.townLevelEffectMultipliers[1].Value();
   }

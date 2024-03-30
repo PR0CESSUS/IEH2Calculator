@@ -23,7 +23,7 @@ const mouseMove = (event) => {
 <template>
   <div>
     <div class="trigger" @mouseenter="isVisible = true" @mousemove="mouseMove($event)" @mouseleave="isVisible = false">
-      <slot></slot>
+      <slot name="trigger"></slot>
     </div>
 
     <div class="tooltip" v-show="isVisible && content.textContent != ''" ref="content">

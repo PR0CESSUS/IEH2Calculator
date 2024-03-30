@@ -141,9 +141,8 @@ onMounted(() => {
 
             <MultiplierInformation :multiplier="`monster.captureTripleChance[${game.data.source.currentHero}]`" />
 
-            <MultiplierInformation :multiplier="'stats.currentHero.petExpGainPerDefeat'" />
-
             <MultiplierInformation :multiplier="'stats.currentHero.stats[13]'" />
+            <MultiplierInformation :multiplier="'stats.currentHero.petExpGainPerDefeat'" />
 
             <MultiplierInformation :multiplier="'stats.currentHero.loyaltyPoingGain'" />
 
@@ -162,7 +161,9 @@ onMounted(() => {
         ><template v-if="globalStore.heroStatsTabSelected == 6">
           <h3>Region Stats</h3>
           <div class="block">
-            <MultiplierInformation v-for="(_, index) in game.data.stats.currentHero.monsterDamages" :multiplier="`stats.currentHero.monsterDamages[${index}]`" /></div
+            <template v-for="(_, index) in game.data.stats.currentHero.monsterDamages">
+              <MultiplierInformation :multiplier="`stats.currentHero.monsterDamages[${index}]`" v-if="index != 10" />
+            </template></div
         ></template>
       </TabItem>
       <TabItem title="SD"

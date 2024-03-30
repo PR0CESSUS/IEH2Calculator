@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Game } from "@/Game";
+import SkillBreakdown from "@/components/SkillBreakdown.vue";
 import SkillLoadout from "@/components/SkillLoadout.vue";
 import { HeroKind } from "@/type/HeroKind";
 
@@ -27,6 +28,8 @@ definePage({
   <hr />
 
   <SkillLoadout />
+
+  <SkillBreakdown />
 </template>
 
 <style scoped>

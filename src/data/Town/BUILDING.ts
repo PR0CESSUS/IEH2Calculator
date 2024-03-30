@@ -5,21 +5,24 @@ import { DataTown } from ".";
 import { Localization } from "../../localization";
 import { ResourceKind } from "../../type/ResourceKind";
 import { Research } from "./research";
+import { BuildingPassiveEffect } from "./BuildingPassiveEffect";
+import { BuildingLevel } from "./BuildingLevel";
 
 export class BUILDING {
   data: DATA;
   townCtrl: DataTown;
-  kind: BuildingKind;
   rank;
-  level: number[];
+  level: BuildingLevel;
   levelBonus: Multiplier;
   research: Research[] = [];
-
+  passiveEffectList: BuildingPassiveEffect[] = [];
+  get kind() {
+    return BuildingKind.Tavern;
+  }
   constructor(DATA: DATA) {
     this.data = DATA;
-
-    this.level = this.data.source.buildingLevels;
     this.townCtrl = this.data.town;
+    this.level = new BuildingLevel(DATA, this.kind);
     this.levelBonus = new Multiplier();
     this.research[0] = new Research(this, ResourceKind.Stone);
     this.research[1] = new Research(this, ResourceKind.Crystal);
@@ -44,7 +47,7 @@ export class BUILDING {
   }
 
   Level() {
-    return this.level[this.kind] + this.levelBonus.Value();
+    return this.level.value + this.levelBonus.Value();
   }
 
   MaxLevel(rank) {

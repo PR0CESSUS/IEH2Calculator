@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, inject } from "vue";
 import { Game } from "../Game";
+import Tooltip from "./Tooltip.vue";
+import { Util } from "@/Util";
 const game = inject<Game>("game");
 // game.data.battle.skillSet.Initialize();
 const skillSet = computed(() => game.data.battle.skillSet);
@@ -13,8 +15,23 @@ const skillSet = computed(() => game.data.battle.skillSet);
       Class Skill
       <div class="block">
         <template v-for="skill in skillSet.currentSkillSet">
-          <img v-if="skill" :title="skill.NameURL() + ' ' + skill.IsEquipped(game.data.source.currentHero)" :src="`/img/skill/${skill.NameURL()}.png`" />
-          <img v-else title="Skill Slot" :src="`img/skill/Skillslot.png`" />
+          <Tooltip>
+            <template #trigger>
+              <img v-if="skill" :src="`img/skill/${skill.NameURL()}.png`" @click="console.log(skill)" />
+              <img v-else title="Skill Slot" :src="`img/skill/Skillslot.png`" />
+            </template>
+
+            <template #content v-if="skill">
+              <p>
+                {{ skill.NameString() }}
+                <span class="green">Lv {{ Util.tDigit(skill.level.value, 0) }} + {{ Util.tDigit(skill.levelBonus, 0) }} </span>
+                <span class="orange"> &lt; Rank {{ skill.rank }} &gt;</span>
+              </p>
+              <p>
+                {{ skill.DamageString() }}
+              </p>
+            </template>
+          </Tooltip>
         </template>
       </div>
     </div>
@@ -22,8 +39,16 @@ const skillSet = computed(() => game.data.battle.skillSet);
       Global Skill
       <div class="block">
         <template v-for="skill in skillSet.currentGlobalSkillSet">
-          <img v-if="skill" :title="skill.NameURL() + ' ' + skill.IsEquipped(game.data.source.currentHero)" :src="`/img/skill/${skill.NameURL()}.png`" />
-          <img v-else title="Skill Slot" :src="`img/skill/Skillslot.png`" />
+          <Tooltip>
+            <template #trigger>
+              <img v-if="skill" :title="skill.NameURL()" :src="`img/skill/${skill.NameURL()}.png`" />
+              <img v-else title="Skill Slot" :src="`img/skill/Skillslot.png`" />
+            </template>
+
+            <template #content>
+              <h2 v-if="skill">{{ skill.NameString() }}</h2>
+            </template>
+          </Tooltip>
         </template>
       </div>
     </div>

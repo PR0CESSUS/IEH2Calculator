@@ -26,6 +26,7 @@ export class DataStats {
 
   constructor(DATA: DATA) {
     this.data = DATA;
+    this.globalSkillSlotNum = new Multiplier();
 
     for (let kind = 0; kind < this.heroes.length; kind++) this.heroes[kind] = new HeroStats(this.data, kind);
     for (let index = 0; index < this.globalStats.length; index++) this.globalStats[index] = new Multiplier();

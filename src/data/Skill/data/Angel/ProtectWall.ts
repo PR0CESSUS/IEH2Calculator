@@ -55,7 +55,7 @@ export class ProtectWall extends SKILL {
     this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 500, () => Localization.AngelSkillsString(6, 0.1)));
     this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 525, Stats.ArmoredFury, MultiplierType.Mul, 0.5));
     this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 550, () => Localization.AngelSkillsString(19, 0.1)));
-    this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 625, Stats.WardedFury, MultiplierType.Mul, 0.5));
+    this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 575, Stats.WardedFury, MultiplierType.Mul, 0.5));
     this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 600, () => Localization.AngelSkillsString(6, 0.1)));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 625, SkillPassiveKind.SDDamageCutMultiplier, 0.5, MultiplierType.Mul));
     this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 650, () => Localization.AngelSkillsString(19, 0.1)));

@@ -90,18 +90,21 @@ function pasteEvent() {
 <template>
   <div>
     <Tooltip style="width: 700px">
-      <img
-        :tabindex="props.id"
-        ref="img"
-        class="icon48"
-        :src="getIconPath()"
-        @click="equipment.isDisabled() ? null : dialog.showModal()"
-        @mouseover.once="init = true"
-        @mouseover="img.focus()"
-        :class="equipment.isDisabled() && equipment.slotId > 500 ? 'disabled' : ''"
-        @keydown.ctrl.c="copyEvent(CopyKind.Equipment)"
-        @keydown.ctrl.v="pasteEvent()"
-      />
+      <template #trigger>
+        <img
+          :tabindex="props.id"
+          ref="img"
+          class="icon48"
+          :src="getIconPath()"
+          @click="equipment.isDisabled() ? null : dialog.showModal()"
+          @mouseover.once="init = true"
+          @mouseover="img.focus()"
+          :class="equipment.isDisabled() && equipment.slotId > 500 ? 'disabled' : ''"
+          @keydown.ctrl.c="copyEvent(CopyKind.Equipment)"
+          @keydown.ctrl.v="pasteEvent()"
+        />
+      </template>
+
       <template #content v-if="equipment.kind != 0 && init">
         <div class="head">
           <img class="icon96" :src="getIconPath()" />

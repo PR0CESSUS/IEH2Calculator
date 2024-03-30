@@ -2,7 +2,6 @@
 import { inject } from "vue";
 import { Game } from "../Game";
 import { Util } from "../Util/index";
-import { Localization } from "../localization/index";
 import { Element } from "../type/Element";
 import { MonsterSpecies } from "../type/MonsterSpecies";
 import AppDifference from "./AppDifference.vue";
@@ -23,11 +22,12 @@ const infoSnap = monsterSnap.AttackedInfo();
 <template>
   <div style="margin-left: 10px">
     <p>
-      Skill: {{ Localization.SkillName(game.data.source.currentHero, 0) }}
+      {{ info.skill.NameString() }}
       <span class="green">Lv {{ Util.tDigit(info.skill.level.value, 0) }} + {{ Util.tDigit(info.skill.levelBonus, 0) }} </span>
       <span class="orange"> &lt; Rank {{ info.skill.rank }} &gt;</span>
     </p>
-    <p>- {{ Element[info.skill.element] }} Damage: {{ Util.tDigit(info.skill.DamageOrigin(info.hero, true)) }} * {{ Util.tDigit(info.skill.HitCount(), 0) }}</p>
+
+    <p>{{ info.skill.DamageString() }}</p>
     <p>- Cast Time: {{ Util.tDigit(info.skill.CalculateInterval(info.hero), 3) }} sec</p>
     <hr />
     <h4>Skill Damage Breakdown</h4>
@@ -77,7 +77,7 @@ const infoSnap = monsterSnap.AttackedInfo();
       </tr>
       <tr>
         <td>Hit Count</td>
-        <td>* {{ Util.tDigit(info.realHitCount, 0) }}</td>
+        <td>* {{ info.skill.HitCountString() }}</td>
       </tr>
       <!-- <tr style="border-bottom: 1px solid #fff">
         <td>Total Damage Before Oil</td>
@@ -112,5 +112,8 @@ const infoSnap = monsterSnap.AttackedInfo();
         <td>= {{ Util.tDigit(info.dps) }} <AppDifference :data="info.dps" :snap="infoSnap.dps" /></td>
       </tr>
     </table>
+    <!-- <hr />
+    <p>DPS : {{ info.dps2 }}</p>
+    <hr /> -->
   </div>
 </template>

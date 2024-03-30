@@ -1,18 +1,15 @@
 import { MultiplierInfo } from "@/Data/Multiplier";
-import { BUILDING } from "../BUILDING";
+import { Util } from "@/Util";
+import { BuildingKind } from "@/type/BuildingKind";
 import { MultiplierKind } from "@/type/MultiplierKind";
 import { MultiplierType } from "@/type/MultiplierType";
 import { ResourceKind } from "@/type/ResourceKind";
-import { BuildingKind } from "@/type/BuildingKind";
-import { DATA } from "@/Data";
-import { Util } from "@/Util";
+import { BUILDING } from "../BUILDING";
 
 export class ArcaneResearcher extends BUILDING {
-  constructor(DATA: DATA) {
-    super(DATA);
-    this.kind = BuildingKind.ArcaneResearcher;
+  get kind() {
+    return BuildingKind.ArcaneResearcher;
   }
-
   EffectValue() {
     return this.Level() * 0.05 * this.townCtrl.townLevelEffectMultiplier.Value() * this.townCtrl.townLevelEffectMultipliers[2].Value();
   }

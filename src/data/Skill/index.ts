@@ -12,6 +12,7 @@ import { TamerSkill } from "./data/Tamer/TamerSkill";
 import { HeroKind } from "../../type/HeroKind";
 import { DATA } from "..";
 import { NumberType } from "../../type/NumberType";
+import { Unlock } from "../Unlock";
 
 export class DataSkill {
   data: DATA;
@@ -33,19 +34,11 @@ export class DataSkill {
   baseAttackSlimeBall: Multiplier[] = Array(Enums.HeroKind);
   classSkills: ClassSkill[] = Array(Enums.HeroKind);
   isLog = Array(Enums.HeroKind);
-  #unlockSkillPassivePersist = () => false;
-
-  get unlockSkillPassivePersist() {
-    return this.#unlockSkillPassivePersist();
-  }
-
-  set unlockSkillPassivePersist(value: any) {
-    this.#unlockSkillPassivePersist = value;
-  }
+  unlockSkillPassivePersist: Unlock;
 
   constructor(DATA: DATA) {
     this.data = DATA;
-
+    this.unlockSkillPassivePersist = new Unlock(true);
     this.excessSpeedForHitCount = new Multiplier();
     for (let index = 0; index < this.skillRankCostFactors.length; index++)
       this.skillRankCostFactors[index] = new Multiplier(
@@ -115,6 +108,10 @@ export class DataSkill {
     this.classSkills[3] = new ThiefSkill(this.data);
     this.classSkills[4] = new ArcherSkill(this.data);
     this.classSkills[5] = new TamerSkill(this.data);
+
+    for (let index = 0; index < this.classSkills.length; index++) {
+      this.classSkills[index].Start();
+    }
   }
 
   Skill(heroKind: HeroKind, slot: number) {
@@ -130,5 +127,9 @@ export class DataSkill {
     }
 
     return num;
+  }
+
+  SetEffectSkillCastSpeedModifier(info: MultiplierInfo) {
+    for (let index = 0; index < this.skillCastSpeedModifier.length; ++index) this.skillCastSpeedModifier[index].RegisterMultiplier(info);
   }
 }
