@@ -45,8 +45,8 @@ definePage({
     <div style="padding-top: 10px; padding-bottom: 10px">
       <ul>
         <li>It test every selected enchantments against selected optimizer type to find best enchantment</li>
-        <li>To reduce unnecessary computation it only iterate over selected enchantments</li>
-        <li><span class="red">WARNING</span> Only enchantments with minimum drop level equal or less than Enemy level are tested</li>
+        <li>Set high enough anvil for Required Hero level so durning testing it does not trigger Equipment Tenacity</li>
+        <li>Make sure your anvil Equipment Effect, Effect increment per level and Equipment bonus level are not capped by SD ritual</li>
         <li>
           Default selected enchantments are chosen based on certain criteria
           <ul>

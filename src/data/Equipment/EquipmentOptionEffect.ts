@@ -84,13 +84,10 @@ export class EquipmentOptionEffect {
   }
 
   set kind(value) {
-    this.equipment.IsEffectRegisteredClear();
+    // this.equipment.IsEffectRegisteredClear();
     this.SetKind(value);
-    this.equipment.Start();
-    // change level and value
-    this.level = this.MaxLevel();
 
-    // this.equipment.Start();
+    this.equipment.Start();
   }
   get effectValue() {
     // if (this.equipment.slotId == 3523) {
@@ -198,7 +195,7 @@ export class EquipmentOptionEffect {
   }
 
   set level(value) {
-    value = Math.min(value, EquipmentParameter.MaxLevel(this.kind));
+    value = Math.min(value, this.MaxLevel());
     this.SetLevel(value);
     this.effectValue = this.MaxEffectValue();
   }

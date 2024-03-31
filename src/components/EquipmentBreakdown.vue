@@ -11,6 +11,7 @@ import AppInput from "./AppInput.vue";
 import AppSelect from "./AppSelect.vue";
 import EquipmentLoadoutImport from "./EquipmentLoadoutImport.vue";
 import EquipmentFindBestEnchantments from "./EquipmentFindBestEnchantments.vue";
+import { SDGemKind } from "@/type/SDGemKind";
 
 const game = inject<Game>("game");
 
@@ -56,7 +57,7 @@ const addEnchantementsSlots = ref([{ kind: 0, value: 0 }]);
     </div>
     <hr />
     <!-- <button @click="new FindBestEquipment(game.data.stats.currentHero.stats[Stats.SkillProficiencyGain])">Generate</button> -->
-    <button @click="clearLoadout('all')">Clear Loadout</button>
+    <button @click="game.data.equipment.ClearLoadout('all')">Clear Loadout</button>
     <!-- <button @click="new EquipmentBestEnchantment(game.data.stats.currentHero.stats[Stats.SkillProficiencyGain])" class="btn btn-gray">Find BEST Enchantements</button> -->
 
     <AppDialog>
@@ -77,19 +78,19 @@ const addEnchantementsSlots = ref([{ kind: 0, value: 0 }]);
         </p>
         <p class="orange">
           <input type="text" v-model.lazy.number="applyForgeValues[3]" :disabled="limitForge == 4 && applyForgeValues[3] == 0" />- This equipment's effect
-          {{ Util.percent(applyForgeValues[3]) }}
+          {{ Util.percent(Math.min(applyForgeValues[3], game.data.source.sdGemLevels[SDGemKind.Kunzite] / 10 + 10)) }}
         </p>
         <p class="orange">
           <input type="text" v-model.lazy.number="applyForgeValues[4]" :disabled="limitForge == 4 && applyForgeValues[4] == 0" />- Decrease this equipment's current negative
-          effects {{ Util.percent(applyForgeValues[4]) }}
+          effects {{ Util.percent(Math.min(applyForgeValues[4], 1)) }}
         </p>
         <p class="orange">
           <input type="text" v-model.lazy.number="applyForgeValues[5]" :disabled="limitForge == 4 && applyForgeValues[5] == 0" />- This equipment's effect increment per level
-          {{ Util.percent(applyForgeValues[5]) }}
+          {{ Util.percent(Math.min(applyForgeValues[5], game.data.source.sdGemLevels[SDGemKind.Carnelian] / 100 + 1)) }}
         </p>
         <p class="orange">
           <input type="text" v-model.lazy.number="applyForgeValues[6]" :disabled="limitForge == 4 && applyForgeValues[6] == 0" />- This equipment's level
-          {{ Util.tDigit(applyForgeValues[6], 0) }}
+          {{ Util.tDigit(Math.min(applyForgeValues[6], game.data.source.sdGemLevels[SDGemKind.BlueTourmaline] + 100), 0) }}
         </p>
         <hr />
         <button

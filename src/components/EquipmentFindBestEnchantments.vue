@@ -33,6 +33,10 @@ async function loop() {
   let multiplier = Optimizer.GetMultiplier();
   let realIndex = 1;
   let iterationMax = 0;
+
+  // clear all enchantements first? no difference
+  // game.data.equipment.ClearLoadout("enchant");
+
   for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
     const equipment = game.data.inventory.equipmentSlots[index];
     if (equipment.kind == 0 || equipment.isDisabled()) continue;
@@ -43,6 +47,7 @@ async function loop() {
 
   for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
     await logRender(`Testing Item ${realIndex} / ${iterationMax} `); // - Enchant ${i + 1} / ${effects.length}
+
     const equipment = game.data.inventory.equipmentSlots[index];
 
     if (equipment.kind == 0 || equipment.isDisabled()) continue;
@@ -54,7 +59,7 @@ async function loop() {
       let bestValue = 0;
       for (let index = 0; index < enchantmentList.value.length; index++) {
         const ennchantTested = enchantmentList.value[index];
-        if (EquipmentParameter.RequiredLevelIncrement(ennchantTested, 1) > game.data.source.enemyLevel) continue;
+        // if (EquipmentParameter.RequiredLevelIncrement(ennchantTested, 1) >= game.data.source.enemyLevel) continue;
         if (EquipmentParameter.IsAfter(ennchantTested) && !equipment.globalInfo.isArtifact) continue;
         effect.kind = ennchantTested;
         const value = multiplier.Value();
@@ -67,7 +72,6 @@ async function loop() {
 
       effect.kind = bestKind;
     }
-
     realIndex++;
   }
   document.dispatchEvent(new CustomEvent("log", { detail: { type: "msg", data: "Finished" } }));

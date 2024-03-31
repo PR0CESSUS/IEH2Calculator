@@ -10,6 +10,7 @@ import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
 import { EquipmentParameter } from "./EquipmentParameter";
 import { SDModifierKind } from "../../type/SDModifierKind";
 import { EquipmentEffectOptimizer } from "./EnchantmentOptimizer";
+import { EquipmentEffectKind } from "@/type/EquipmentEffectKind";
 
 export class DataEquipment {
   data: DATA;
@@ -93,5 +94,40 @@ export class DataEquipment {
 
   get currentLoadoutInitialOffset() {
     return 520 + this.data.source.currentHero * 720 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72;
+  }
+
+  ClearLoadout(type: "all" | "enchant" | "forge" | "equipment" = "all") {
+    const INITIAL_OFFSET = this.data.equipment.currentLoadoutInitialOffset;
+
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      const equipment = this.data.inventory.equipmentSlots[index];
+      if (equipment.isDisabled()) continue;
+
+      if (type == "all" || type == "enchant")
+        for (let index = 0; index < equipment.optionEffects.length; index++) equipment.optionEffects[index].kind = EquipmentEffectKind.Nothing;
+
+      if (type == "all" || type == "forge") for (let index = 0; index < equipment.forgeEffects.length; index++) equipment.forgeEffects[index].SetEffectValue(0);
+
+      if (type == "all" || type == "equipment") equipment.kind = EquipmentKind.Nothing;
+    }
+  }
+  ApplyLoadoutForge(data: number[] = [0, 0, 0, 0, 0, 0, 0]) {
+    const INITIAL_OFFSET = this.data.equipment.currentLoadoutInitialOffset;
+
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      const equipment = this.data.inventory.equipmentSlots[index];
+
+      for (let index = 0; index < equipment.forgeEffects.length; index++) equipment.forgeEffects[index].SetEffectValue(data[index]);
+    }
+    this.StartLoadout();
+  }
+
+  StartLoadout() {
+    const INITIAL_OFFSET = this.data.equipment.currentLoadoutInitialOffset;
+
+    for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
+      const equipment = this.data.inventory.equipmentSlots[index];
+      equipment.Start();
+    }
   }
 }

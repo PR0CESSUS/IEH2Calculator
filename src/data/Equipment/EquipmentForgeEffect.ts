@@ -35,6 +35,8 @@ export class EquipmentForgeEffect {
   }
 
   SetEffectValue(value) {
+    // value = Math.min(value, this.equipment.ForgeEffectMaxValue(this.kind, this.equipment.globalInfo.isArtifact));
+
     switch (this.kind) {
       case EquipmentForgeEffectKind.ReduceRequiredHeroLevel:
         this.equipment.data.source.equipment1stForgeValues[this.equipment.id] = value;
