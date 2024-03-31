@@ -41,15 +41,21 @@ definePage({
       </ul>
     </div>
 
-    <li><RouterLink to="#findMaxDPS" :class="{ selected: currentRoute.hash == '#findMaxDPS' }">Why Find MAX DPS button does not include some enchantments?</RouterLink></li>
+    <li><RouterLink to="#findBestEnchantements" :class="{ selected: currentRoute.hash == '#findBestEnchantements' }">How Find Best Enchantements function works?</RouterLink></li>
     <div style="padding-top: 10px; padding-bottom: 10px">
       <ul>
-        <li>To reduce unnecessary computation it only iterate over enchantments that has potential to increase DPS</li>
-        <li>Only enchantments below or equal to Enemy level are chosen</li>
-        <li>Element enchantments are chosen based on first Skill or Oil equipped</li>
-        <li>Knowledge enchantements are chosen based on Enemy species selected</li>
-        <li>Basic Stats enchantements are choosen based on Swap ATK/MATK with DEF/MDEF modifier</li>
-        <li>Blessing enchantements are choosen based on Blessings checkbox under <button class="small">&#9776;</button></li>
+        <li>It test every selected enchantments against selected optimizer type to find best enchantment</li>
+        <li>To reduce unnecessary computation it only iterate over selected enchantments</li>
+        <li><span class="red">WARNING</span> Only enchantments with minimum drop level equal or less than Enemy level are tested</li>
+        <li>
+          Default selected enchantments are chosen based on certain criteria
+          <ul>
+            <li>Element enchantments are chosen based on first Skill or Oil equipped</li>
+            <li>Knowledge enchantements are chosen based on Enemy species selected</li>
+            <li>Basic Stats enchantements are choosen based on Swap ATK/MATK with DEF/MDEF modifier</li>
+            <li>Blessing enchantements are choosen based on Blessings checkbox under <button class="small">&#9776;</button></li>
+          </ul>
+        </li>
       </ul>
     </div>
   </ol>

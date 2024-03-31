@@ -127,6 +127,7 @@ export class DATA {
 
   Initialize() {
     for (let index = 0; index < this.battles.length; index++) this.battles[index].skillSet.Initialize();
+    this.equipment.Initialize();
   }
 
   SuperDungeonToggle() {

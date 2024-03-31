@@ -248,10 +248,7 @@ function pasteEvent() {
               <select v-model="effect.kind" name="optionKind">
                 <option v-for="(_, i) in Enums.EquipmentEffectKind" :value="i">{{ Localization.EquipmentEffectName(i) }}</option>
               </select>
-              <template v-if="effect.kind == 0"
-                >&nbsp;
-                <button class="small" @click="equipment.FindMaxEnchantDPS(effect.optionId)">Find MAX DPS</button>
-              </template>
+
               <template v-if="effect.kind">
                 &nbsp;Lv&nbsp;
                 <select v-model="effect.level" name="optionLevel">

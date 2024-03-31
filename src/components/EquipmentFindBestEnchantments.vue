@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { EquipmentParameter } from "@/Data/Equipment/EquipmentParameter";
-import { EquipmentEffectOptimizer } from "@/data/Equipment/EnchantmentOptimizerDefault";
 import { Localization } from "@/localization";
 import { CustomSelectType } from "@/type/CustomSelectType";
 import { EquipmentEffectKind } from "@/type/EquipmentEffectKind";
@@ -11,7 +10,7 @@ import AppSelect from "./AppSelect.vue";
 
 const game = inject<Game>("game");
 const optimizerType = ref(0);
-const Optimizer = new EquipmentEffectOptimizer(optimizerType.value);
+const Optimizer = game.data.equipment.optimizer;
 const enchantmentList = ref(Optimizer.list);
 const enchantmentListAdd = ref(0);
 watch(optimizerType, () => {
@@ -107,6 +106,7 @@ function addEnchantementsToList() {
 
         <hr />
         <button @click="loop">Find</button>
+        <RouterLink to="/help/#findBestEnchantements"><button>Help</button></RouterLink>
       </div>
     </template>
   </AppDialog>

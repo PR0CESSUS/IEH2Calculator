@@ -1,6 +1,6 @@
+import { Localization } from "@/localization";
 import { DATA } from "..";
 import { Enums } from "../../Enums";
-import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { CopyKind } from "../../type/CopyKind";
 import { EquipmentEffectKind } from "../../type/EquipmentEffectKind";
 import { EquipmentForgeEffectKind } from "../../type/EquipmentForgeEffectKind";
@@ -8,14 +8,13 @@ import { EquipmentKind } from "../../type/EquipmentKind";
 import { HeroKind } from "../../type/HeroKind";
 import { MultiplierKind } from "../../type/MultiplierKind";
 import { MultiplierType } from "../../type/MultiplierType";
+import { Multiplier, MultiplierInfo } from "../Multiplier";
 import { EquipmentPart } from "./../../type/EquipmentPart";
 import { EquipmentForgeEffect } from "./EquipmentForgeEffect";
+import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
 import { EquipmentOptionEffect } from "./EquipmentOptionEffect";
 import { EquipmentParameter } from "./EquipmentParameter";
 import { SetEffect } from "./SetEffect";
-import { EnchantmentOptimizer } from "./EnchantmentOptimizer";
-import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
-import { Localization } from "@/localization";
 
 export class Equipment {
   data: DATA;
@@ -508,10 +507,6 @@ export class Equipment {
     if (this.slotId < 520) return `Inventory tab ${Math.floor(this.slotId / 52) + 1} position ${this.slotId}`;
     const slot = this.slotPart == EquipmentPart.Weapon ? this.loadoutSlot : this.slotPart == EquipmentPart.Armor ? this.loadoutSlot - 24 : this.loadoutSlot - 48;
     return `${HeroKind[this.heroKind]} Loadout ${this.loadout + 1} - ${EquipmentPart[this.slotPart]} position ${slot + 1}`;
-  }
-
-  FindMaxEnchantDPS(optionId: number) {
-    EnchantmentOptimizer(this.data.battle.Enemy(), this, optionId);
   }
 
   RequiredAbilityPoint(id) {

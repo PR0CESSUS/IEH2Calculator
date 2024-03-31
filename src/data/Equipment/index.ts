@@ -9,6 +9,7 @@ import { DictionaryUpgrade } from "./DictionaryUpgrade";
 import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
 import { EquipmentParameter } from "./EquipmentParameter";
 import { SDModifierKind } from "../../type/SDModifierKind";
+import { EquipmentEffectOptimizer } from "./EnchantmentOptimizer";
 
 export class DataEquipment {
   data: DATA;
@@ -32,9 +33,11 @@ export class DataEquipment {
   disassembleMultiplier: Multiplier;
   autoDisassembleAvailableNum: Multiplier;
   dictionaryEquipmentArray: EquipmentKind[];
+  optimizer: EquipmentEffectOptimizer;
 
   constructor(DATA: DATA) {
     this.data = DATA;
+
     for (let kind = 0; kind < this.globalInformations.length; kind++) this.globalInformations[kind] = new EquipmentGlobalInformation(this.data, kind);
     this.autoDisassembleAvailableNum = new Multiplier();
     this.forgeEffectCapAdderEQLevel = new Multiplier();
@@ -71,6 +74,10 @@ export class DataEquipment {
 
   Start() {
     for (let index = 0; index < this.dictionaryUpgrades.length; index++) this.dictionaryUpgrades[index].Start();
+  }
+
+  Initialize() {
+    this.optimizer = new EquipmentEffectOptimizer(this.data);
   }
   EffectMultiplier() {
     if (this.data.source.isSuperDungeon && this.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveEquipmentEffectBonuses]) {
