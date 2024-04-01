@@ -17,6 +17,6 @@ export function ForgeNameString(kind: EquipmentForgeEffectKind, isArtifactAnvil:
     case EquipmentForgeEffectKind.EqLevel:
       return "Equipment Level";
     default:
-      return kind;
+      return "Not Implemented";
   }
 }

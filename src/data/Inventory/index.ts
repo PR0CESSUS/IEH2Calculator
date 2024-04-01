@@ -13,6 +13,8 @@ import { EquipmentPotion } from "../Equipment/EquipmentPotion";
 import { CopyKind } from "../../type/CopyKind";
 import { DATA } from "..";
 import { Localization } from "@/localization";
+import { EquipmentForgeEffectKind } from "@/type/EquipmentForgeEffectKind";
+import { Util } from "@/Util";
 
 export class DataInventory {
   data: DATA;
@@ -277,6 +279,7 @@ export class DataInventory {
       jewelry: {},
       utility: {},
       enchants: {},
+      anvils: {},
     };
 
     for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
@@ -298,6 +301,12 @@ export class DataInventory {
         default:
           break;
       }
+
+      for (let i = 0; i < equipment.forgeEffects.length; i++) {
+        const forge = equipment.forgeEffects[i];
+
+        list.anvils[i] = list.anvils[i] ? list.anvils[i] + forge.effectValue : forge.effectValue;
+      }
     }
 
     for (let index = UTILITY_INITIAL_OFFSET; index < UTILITY_INITIAL_OFFSET + 6; index++) {
@@ -306,6 +315,14 @@ export class DataInventory {
       const utilityName = Localization.PotionName(utility.kind);
       list.utility[utilityName] = list.utility[utilityName] ? list.utility[utilityName] + 1 : 1;
     }
+
+    list.anvils[EquipmentForgeEffectKind.ReduceRequiredHeroLevel] = Util.tDigit(list.anvils[EquipmentForgeEffectKind.ReduceRequiredHeroLevel]);
+    list.anvils[EquipmentForgeEffectKind.ReduceRequiredAbility] = Util.tDigit(list.anvils[EquipmentForgeEffectKind.ReduceRequiredAbility]);
+    list.anvils[EquipmentForgeEffectKind.IncreaseEffect] = Util.percent(list.anvils[EquipmentForgeEffectKind.IncreaseEffect]);
+    list.anvils[EquipmentForgeEffectKind.EqLevel] = Util.tDigit(list.anvils[EquipmentForgeEffectKind.EqLevel]);
+    list.anvils[EquipmentForgeEffectKind.IncreaseEffectIncrement] = Util.percent(list.anvils[EquipmentForgeEffectKind.IncreaseEffectIncrement]);
+    list.anvils[EquipmentForgeEffectKind.PurifyCurseEffect] = Util.percent(list.anvils[EquipmentForgeEffectKind.PurifyCurseEffect]);
+    list.anvils[EquipmentForgeEffectKind.IncreaseProficiencyGain] = Util.percent(list.anvils[EquipmentForgeEffectKind.IncreaseProficiencyGain]);
 
     return list;
   }

@@ -41,12 +41,12 @@ definePage({
       </ul>
     </div>
 
-    <li><RouterLink to="#findBestEnchantements" :class="{ selected: currentRoute.hash == '#findBestEnchantements' }">How Find Best Enchantements function works?</RouterLink></li>
+    <li><RouterLink to="#findBestEnchantments" :class="{ selected: currentRoute.hash == '#findBestEnchantments' }">How Find Best Enchantements function works?</RouterLink></li>
     <div style="padding-top: 10px; padding-bottom: 10px">
       <ul>
         <li>It test every selected enchantments against selected optimizer type to find best enchantment</li>
-        <li>Set high enough anvil for Required Hero level so durning testing it does not trigger Equipment Tenacity</li>
-        <li>Make sure your anvil Equipment Effect, Effect increment per level and Equipment bonus level are not capped by SD ritual</li>
+        <li>If equipment has Required Hero level anvil, function will increase its value durning testing so it does not trigger Equipment Tenacity</li>
+        <li>It uses max values for anvil Equipment Effect, Effect increment per level and Equipment bonus level based on SD ritual</li>
         <li>
           Default selected enchantments are chosen based on certain criteria
           <ul>

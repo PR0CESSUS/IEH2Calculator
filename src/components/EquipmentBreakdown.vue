@@ -12,6 +12,7 @@ import AppSelect from "./AppSelect.vue";
 import EquipmentLoadoutImport from "./EquipmentLoadoutImport.vue";
 import EquipmentFindBestEnchantments from "./EquipmentFindBestEnchantments.vue";
 import { SDGemKind } from "@/type/SDGemKind";
+import { Localization } from "@/localization";
 
 const game = inject<Game>("game");
 
@@ -49,10 +50,16 @@ const addEnchantementsSlots = ref([{ kind: 0, value: 0 }]);
         </div>
       </div>
       <div>
-        <h3>Enchantements List</h3>
-        <p v-for="(value, key) in loadoutBreakdownList.enchants">{{ value }} - {{ key }}</p>
+        <div>
+          <h3>Enchantements List</h3>
+          <p v-for="(value, key) in loadoutBreakdownList.enchants">{{ value }} - {{ key }}</p>
 
-        {{ Object.values(loadoutBreakdownList.enchants).reduce((a, b) => (a as number) + (b as number), 0) }} Total
+          {{ Object.values(loadoutBreakdownList.enchants).reduce((a, b) => (a as number) + (b as number), 0) }} Total
+        </div>
+        <div>
+          <h3>Anvil List</h3>
+          <p v-for="(value, key) in loadoutBreakdownList.anvils">{{ value }} - {{ Localization.ForgeNameString(parseInt(key)) }}</p>
+        </div>
       </div>
     </div>
     <hr />

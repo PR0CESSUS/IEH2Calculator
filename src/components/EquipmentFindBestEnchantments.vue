@@ -7,15 +7,15 @@ import { inject, ref, watch } from "vue";
 import { Game } from "../Game";
 import AppDialog from "./AppDialog.vue";
 import AppSelect from "./AppSelect.vue";
+import { EquipmentForgeEffectKind } from "@/type/EquipmentForgeEffectKind";
 
 const game = inject<Game>("game");
-const optimizerType = ref(0);
-const Optimizer = game.data.equipment.optimizer;
-const enchantmentList = ref(Optimizer.list);
+const optimizerType = ref(game.data.equipment.optimizer.kind);
+const enchantmentList = ref(game.data.equipment.optimizer.list);
 const enchantmentListAdd = ref(0);
 watch(optimizerType, () => {
-  Optimizer.kind = optimizerType.value;
-  enchantmentList.value = Optimizer.list;
+  game.data.equipment.optimizer.kind = optimizerType.value;
+  enchantmentList.value = game.data.equipment.optimizer.list;
 });
 
 async function logRender(num) {
@@ -30,7 +30,7 @@ async function loop() {
   console.log("loop");
   document.dispatchEvent(new CustomEvent("log", { detail: { type: "start", data: "" } }));
 
-  let multiplier = Optimizer.GetMultiplier();
+  let multiplier = game.data.equipment.optimizer.GetMultiplier();
   let realIndex = 1;
   let iterationMax = 0;
 
@@ -61,6 +61,9 @@ async function loop() {
         const ennchantTested = enchantmentList.value[index];
         // if (EquipmentParameter.RequiredLevelIncrement(ennchantTested, 1) >= game.data.source.enemyLevel) continue;
         if (EquipmentParameter.IsAfter(ennchantTested) && !equipment.globalInfo.isArtifact) continue;
+        // increasing ReduceRequiredHeroLevel to 1M so i does not trigger Equipment Tenacity
+        if (equipment.forgeEffects[EquipmentForgeEffectKind.ReduceRequiredHeroLevel].effectValue > 0)
+          equipment.forgeEffects[EquipmentForgeEffectKind.ReduceRequiredHeroLevel].effectValue = 1000000;
         effect.kind = ennchantTested;
         const value = multiplier.Value();
 
@@ -73,6 +76,11 @@ async function loop() {
       effect.kind = bestKind;
     }
     realIndex++;
+    if (equipment.forgeEffects[EquipmentForgeEffectKind.ReduceRequiredHeroLevel].effectValue > 0)
+      equipment.forgeEffects[EquipmentForgeEffectKind.ReduceRequiredHeroLevel].effectValue = equipment.ForgeEffectMaxValue(
+        EquipmentForgeEffectKind.ReduceRequiredHeroLevel,
+        equipment.globalInfo.isArtifact
+      );
   }
   document.dispatchEvent(new CustomEvent("log", { detail: { type: "msg", data: "Finished" } }));
   document.dispatchEvent(new CustomEvent("log", { detail: { type: "unlock" } }));
