@@ -179,7 +179,7 @@ export class BATTLE {
     }
     // console.log(num1, 1.0 - Math.min(0.9999, this.DamageCutModifier(num2)));
 
-    return num1 * (1.0 - Math.min(0.9999, this.DamageCutModifier(num2)));
+    return num1 * (1.0 - Math.min(0.99999, this.DamageCutModifier(num2)));
   }
 
   DamageModifier(value) {

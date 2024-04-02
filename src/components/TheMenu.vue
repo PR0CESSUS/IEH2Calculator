@@ -47,7 +47,7 @@ const globalStore = useGlobalStore();
       </template>
       <template v-else>
         <template v-if="route.meta.version">
-          <RouterLink :to="route.path" :class="{ warning: globalStore.checkVersion() }" @click="globalStore.updateVersion">
+          <RouterLink :to="route.children[route.children.length - 1]" :class="{ warning: globalStore.checkVersion() }" @click="globalStore.updateVersion">
             {{ route.meta.name }}
           </RouterLink>
         </template>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { inject, ref } from "vue";
 import packageInfo from "../package.json";
-import Clipboard from "./components/Clipboard.vue";
 import { Game } from "./Game";
+import Clipboard from "./components/Clipboard.vue";
+import TheBreadcrumb from "./components/TheBreadcrumb.vue";
+import TheLog from "./components/TheLog.vue";
+import TheMenu from "./components/TheMenu.vue";
 import { useSaveFileData } from "./stores/data";
 import { SDModifierKind } from "./type/SDModifierKind";
-import TheBreadcrumb from "./components/TheBreadcrumb.vue";
-import TheMenu from "./components/TheMenu.vue";
-import TheLog from "./components/TheLog.vue";
 
 const game = inject<Game>("game");
 const dialog = ref<HTMLDialogElement>();
@@ -72,7 +72,7 @@ function createSnapshot() {
     <div id="content"><router-view></router-view></div>
 
     <div id="footer" class="footer">
-      Version: <span id="version"> {{ packageInfo.version }} </span> | Game Version ??? | <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a> |
+      Version: <span id="version"> {{ packageInfo.version }} </span> | Game Version 1.3.1.6 | <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a> |
       Encounter any bug? DM me on <a href="https://discord.com/invite/QEpxWM2fv5" target="_blank">IEH2 Discord</a> @Processus
     </div>
   </div>
