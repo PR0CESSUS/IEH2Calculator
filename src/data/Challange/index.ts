@@ -39,6 +39,7 @@ import { ChallengeHandicap_OctobaddieLv500 } from "./challange/ChallengeHandicap
 import { ChallengeHandicap_OctobaddieLv600 } from "./challange/ChallengeHandicap_OctobaddieLv600";
 import { ChallengeHandicap_OctobaddieLv700 } from "./challange/ChallengeHandicap_OctobaddieLv700";
 import { ChallengeHandicap_OctobaddieLv800 } from "./challange/ChallengeHandicap_OctobaddieLv800";
+import { ChallengeSoloBoss_ArachnettaLv150 } from "./challange/ChallengeSoloBoss_ArachnettaLv150";
 import { ChallengeSoloBoss_FlorzporbLv100 } from "./challange/ChallengeSoloBoss_FlorzporbLv100";
 import { ChallengeSoloBoss_GuardianKorLv200 } from "./challange/ChallengeSoloBoss_GuardianKorLv200";
 import { ChallengeSoloBoss_LadyEmeldaLv300 } from "./challange/ChallengeSoloBoss_LadyEmeldaLv300";
@@ -72,6 +73,7 @@ export class DataChallenge {
     this.solobossList.push(new ChallengeSoloBoss_NariSuneLv350(this.data));
     this.solobossList.push(new ChallengeSoloBoss_NostroLv250(this.data));
     this.solobossList.push(new ChallengeSoloBoss_OctobaddieLv400(this.data));
+    this.solobossList.push(new ChallengeSoloBoss_ArachnettaLv150(this.data));
 
     this.handicapList.push(new ChallengeHandicap_FlorzporbLv100(this.data));
     this.handicapList.push(new ChallengeHandicap_FlorzporbLv200(this.data));

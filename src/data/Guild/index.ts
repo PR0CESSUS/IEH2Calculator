@@ -73,6 +73,9 @@ export class DataGuild {
     this.data.nitro.nitroCap.RegisterMultiplier(
       new MultiplierInfo(MultiplierKind.GuildSuperAbility, MultiplierType.Mul, () => 0.05 * this.data.source.guildSuperAbilityLevels[GuildSuperAbilityKind.Racing])
     );
+    this.data.stats.globalSkillSlotNum.RegisterMultiplier(
+      new MultiplierInfo(MultiplierKind.Guild, MultiplierType.Add, () => this.data.source.guildAbilityLevels[GuildAbilityKind.GlobalSkillSlot])
+    );
   }
 
   Member(kind: HeroKind) {

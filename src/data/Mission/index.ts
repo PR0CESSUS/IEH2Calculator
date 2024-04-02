@@ -28,6 +28,15 @@ export class DataMission {
     if (this.clearNum > 80) this.data.stats.SetEffectStats(Stats.ExpGain, new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.5));
     if (this.clearNum > 90) this.data.monster.colorMaterialDropChance.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.5));
 
+    this.data.stats.globalSkillSlotNum.RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.MissionMilestone,
+        MultiplierType.Add,
+        () => 1.0,
+        () => this.clearNum >= 100
+      )
+    );
+
     if (this.clearNum > 120) this.data.expedition.expGainMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 1.0));
     if (this.clearNum > 140) this.data.alchemy.alchemyPointGainMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 1.0));
     if (this.clearNum > 160) this.data.expedition.rewardMultiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.MissionMilestone, MultiplierType.Mul, () => 0.25));

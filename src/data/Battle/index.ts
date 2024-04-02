@@ -8,6 +8,7 @@ import { MONSTER_BATTLE } from "./MONSTER_BATTLE";
 import { DATA } from "..";
 import { MonsterSpecies } from "../../type/MonsterSpecies";
 import { SkillSet } from "../Skill/SkillSet";
+import { SDModifierKind } from "@/type/SDModifierKind";
 
 export class DataBattle {
   data: DATA;
@@ -29,7 +30,6 @@ export class DataBattle {
   //   bool[] isHandicapped = Array(Enums.ChallengeHandicapKind);
   //   debuffLength = Enum.GetNames(typeof (Debuff)).length;
   superDungeonCtrl: SuperDungeonController;
-  isSuperDungeon = true;
 
   constructor(DATA: DATA, heroKind: HeroKind) {
     this.data = DATA;
@@ -41,6 +41,10 @@ export class DataBattle {
     // if (this.heroKind == HeroKind.Warrior) {
 
     // }
+  }
+
+  get isSuperDungeon() {
+    return this.data.source.isSuperDungeon;
   }
 
   Start() {
@@ -65,8 +69,11 @@ export class DataBattle {
 
   get limitedSkillNum() {
     //TODO limitedSkillNum hardcoded 8 for now
-    //   if (this.isSuperDungeon)
-    //   return (int) Math.Max(0.0, this.superDungeonCtrl.skillSlotNum.Value() - this.superDungeonCtrl.currentSD.modifierCtrl.classSkillSlotDecrement.Value());
+    if (this.isSuperDungeon) {
+      if (this.data.source.isActiveSdModifiers[950 + SDModifierKind.ReduceSkillSlot])
+        return Math.max(0.0, this.superDungeonCtrl.skillSlotNum.Value() - this.data.source.sdModifierValues[950 + SDModifierKind.ReduceSkillSlot]);
+      return this.superDungeonCtrl.skillSlotNum.Value();
+    }
     // if (this.isAttemptOnlyBase || this.isHandicapped[9] || this.isHandicapped[12])
     //   return 1;
     // if (this.isHandicapped[10] || this.isHandicapped[11])
@@ -76,8 +83,7 @@ export class DataBattle {
   }
 
   get limitedGlobalSkillNum() {
-    //   if (this.isSuperDungeon || this.isAttemptOnlyBase || this.isHandicapped[8] || this.isHandicapped[12] || this.isHandicapped[11])
-    //   return 0;
+    if (this.isSuperDungeon) return 0;
     // if (this.isHandicapped[10])
     //   return 1;
     // return Main.main.S.persistentGlobalSkillSlotNum > 0 ? (int) this.skillSet.maxGlobalSkillSlotNum.Value() : 10;

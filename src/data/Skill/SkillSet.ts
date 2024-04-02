@@ -82,6 +82,8 @@ export class SkillSet {
   }
 
   get skillSlotNum() {
+    console.log("sk", this.data.source.persistentSkillSlotNum[this.currentHero]);
+
     return this.data.source.persistentSkillSlotNum[this.currentHero] > 0
       ? Math.max(this.data.source.persistentSkillSlotNum[this.currentHero], this.maxSkillSlotNum.Value())
       : this.maxSkillSlotNum.Value();

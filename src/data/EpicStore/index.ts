@@ -13,6 +13,15 @@ export class DataEpicStore {
   }
 
   Start() {
+    this.data.stats.globalSkillSlotNum.RegisterMultiplier(
+      new MultiplierInfo(
+        MultiplierKind.DLC,
+        MultiplierType.Add,
+        () => 1.0,
+        () => this.data.source.isDlcGlobalSkillSlotPack
+      )
+    );
+
     for (let heroKind = 0; heroKind < Enums.HeroKind; heroKind++) {
       this.data.inventory.equipWeaponUnlockedNum[heroKind].RegisterMultiplier(
         new MultiplierInfo(MultiplierKind.EpicStore, MultiplierType.Add, () => this.data.source.epicStorePurchasedNum[EpicStoreKind.EquipmentWeaponSlot1])
@@ -27,6 +36,10 @@ export class DataEpicStore {
         new MultiplierInfo(MultiplierKind.EpicStore, MultiplierType.Add, () => this.data.source.epicStorePurchasedNum[EpicStoreKind.EquipUtilitySlot1])
       );
     }
+
+    this.data.stats.globalSkillSlotNum.RegisterMultiplier(
+      new MultiplierInfo(MultiplierKind.EpicStore, MultiplierType.Add, () => this.data.source.epicStorePurchasedNum[EpicStoreKind.GlobalSkillSlot1])
+    );
 
     this.data.expedition.unlockedExpeditionSlotNum.RegisterMultiplier(
       new MultiplierInfo(MultiplierKind.EpicStore, MultiplierType.Add, () => this.data.source.epicStorePurchasedNum[EpicStoreKind.ExpeditionTeamSlot1])

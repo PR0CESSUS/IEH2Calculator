@@ -12,12 +12,12 @@ const skillSet = computed(() => game.data.battle.skillSet);
   Skill Loadout
   <div style="display: flex">
     <div>
-      Class Skill
+      Class Skill <button @click="console.log(skillSet.currentSkillSet)">Info</button>
       <div class="block">
         <template v-for="skill in skillSet.currentSkillSet">
           <Tooltip>
             <template #trigger>
-              <img v-if="skill" :src="`img/skill/${skill.NameURL()}.png`" @click="console.log(skill)" />
+              <img v-if="skill" :src="`img/skill/${skill.NameURL()}.png`" @click="console.log(skill)" :class="{ disabled: !skill.IsEquipped(game.data.source.currentHero) }" />
               <img v-else title="Skill Slot" :src="`img/skill/Skillslot.png`" />
             </template>
 
@@ -56,6 +56,10 @@ const skillSet = computed(() => game.data.battle.skillSet);
 </template>
 
 <style scoped>
+.disabled {
+  filter: grayscale(1);
+}
+
 .part {
   display: inline-block;
   margin-right: 8px;

@@ -145,13 +145,19 @@ export class DataInventory {
     return this.potionSlots.slice(offset, offset + 6);
   }
 
-  getLoadout(heroKind: HeroKind) {
-    return {
-      Weapon: this.getSetPart(heroKind, EquipmentPart.Weapon),
-      Armor: this.getSetPart(heroKind, EquipmentPart.Armor),
-      Jewelry: this.getSetPart(heroKind, EquipmentPart.Jewelry),
-      Utility: this.getPotion(heroKind),
-    };
+  get currentLoadoutInitialOffset() {
+    return 520 + this.data.source.currentHero * 720 + this.data.source.equipmentLoadoutIds[this.data.source.currentHero] * 72;
+  }
+
+  get currentLoadout(): Equipment[] {
+    const offset = this.currentLoadoutInitialOffset;
+    let list = [];
+
+    for (let index = offset; index < offset + 72; index++) {
+      list.push(this.equipmentSlots[index]);
+    }
+
+    return list;
   }
 
   getPartOffset(part: EquipmentPart) {

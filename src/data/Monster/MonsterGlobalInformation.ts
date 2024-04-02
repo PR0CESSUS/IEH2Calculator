@@ -47,7 +47,7 @@ export class MonsterGlobalInformation {
   Hp(level, difficulty) {
     if (this.color == MonsterColor.Metal) return MonsterParameter.monsterStats[this.species][this.colorId][0] * level;
     // console.log(MonsterParameter.monsterStats[11]);
-
+    const isSuperDungeon = this.data.source.isSuperDungeon;
     let num1 = MonsterParameter.monsterStats[this.species][this.colorId][0];
     let num2;
     // if (isPet) {
@@ -67,14 +67,21 @@ export class MonsterGlobalInformation {
         100.0 * Math.pow(level / 80.0, 8.0) +
         1000.0 * Math.pow(level / 120.0, 10.0) +
         50000.0 * Math.pow(level / 200.0, 15.0) +
-        250000.0 * Math.pow(level / 300.0, 20.0));
-    if (level < 100) num3 *= 0.5 + (0.5 * level) / 100.0;
+        250000.0 * Math.pow(level / 300.0, 20.0)) *
+      (0.5 + (0.75 * level) / 100.0);
+
+    if (level >= 100) num3 *= Math.pow(2.0, (level - 100) / 200.0);
     if (level >= 400) {
       num3 *= Math.pow(3.0, (level - 400) / 100.0);
       if (level >= 500) num3 *= Math.pow(5.0, (level - 500) / 100.0);
       if (level >= 600) num3 *= Math.pow(10.0, (level - 600) / 100.0);
-      if (this.species == MonsterSpecies.ChallengeBoss) num3 *= Math.pow(5.0, (level - 400) / 100.0);
+      if (this.species == MonsterSpecies.ChallengeBoss) {
+        if (isSuperDungeon) num3 *= Math.pow(3.0, (level - 400) / 100.0);
+        else num3 *= Math.pow(5.0, (level - 400) / 100.0);
+      }
     }
+
+    if (this.species == MonsterSpecies.ChallengeBoss) num3 *= 3.0;
     num2 = num3 * Math.pow(10.0, difficulty / 10.0);
     // }
     return num2;

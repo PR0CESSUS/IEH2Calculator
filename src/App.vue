@@ -89,6 +89,10 @@ function createSnapshot() {
 
       <hr />
       <h4>SD Modifiers</h4>
+      <input type="checkbox" v-model="game.data.source.isActiveSdModifiers[950 + SDModifierKind.ReduceSkillSlot]" class="checkbox" name="ReduceClassSkillSlot" /> Decrease available
+      class skill slots by {{ game.data.source.sdModifierValues[950 + SDModifierKind.ReduceSkillSlot] }}<br />&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      <input type="range" min="1" max="7" v-model.lazy.number="game.data.source.sdModifierValues[950 + SDModifierKind.ReduceSkillSlot]" name="ReduceClassSkillSlotValue" />
+      <br />
 
       <input type="checkbox" v-model="game.data.source.isActiveSdModifiers[950 + SDModifierKind.SwapATKWithDEF]" class="checkbox" name="SwapATKWithDEF" />
       Swap ATK/MATK with DEF/MDEF<br />
