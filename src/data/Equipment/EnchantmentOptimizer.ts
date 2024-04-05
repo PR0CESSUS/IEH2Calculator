@@ -12,14 +12,14 @@ export class EquipmentEffectOptimizer {
   data: DATA;
   #kind: EquipmentEffectOptimizerKind = EquipmentEffectOptimizerKind.DPS;
   list: EquipmentEffectKind[] = [];
+  filterSetKind: boolean[] = [true, false, false, false, false, true, true, true, true, true, false];
+  filterRarity: boolean[] = [false, false, true, true, true];
+  filterArtifact: boolean = true;
 
-  constructor(DATA: DATA, kind?: EquipmentEffectOptimizerKind) {
+  constructor(DATA: DATA) {
     this.data = DATA;
-    if (kind) {
-      this.kind = kind;
-    } else {
-      this.list = this.GetList();
-    }
+    this.list = this.GetList();
+    this.filterArtifact = this.data.source.isSuperDungeon;
   }
 
   get kind() {
@@ -40,15 +40,8 @@ export class EquipmentEffectOptimizer {
           ...this.GetDPS(),
           ...this.GetElement(info.element),
           ...this.GetKnowledge(enemy.species),
-          ...this.GetSkill(this.data.source.currentHero),
-          ...this.GetBasicStats(enemy.data.source.isActiveSdModifiers[950 + SDModifierKind.SwapATKWithDEF] && enemy.data.source.isSuperDungeon),
-
-          EquipmentEffectKind.AllSkillLevel,
-
-          EquipmentEffectKind.CriticalDamage,
-          EquipmentEffectKind.CriticalDamageMultiplier,
-          EquipmentEffectKind.CriticalDamageAfter,
-          EquipmentEffectKind.ExtraAfterDamage,
+          // ...this.GetSkill(this.data.source.currentHero),
+          ...this.GetBasicStats(enemy.data.source.isActiveSdModifiers[950 + SDModifierKind.SwapATKWithDEF]),
         ];
       case EquipmentEffectOptimizerKind.SkillProficiency:
         return [EquipmentEffectKind.SkillProficiency, EquipmentEffectKind.SkillProficiencyMultiplier, ...this.GetBlessing()];
@@ -82,20 +75,24 @@ export class EquipmentEffectOptimizer {
     return this.data.source.isBlessing ? [EquipmentEffectKind.BlessingEffect, EquipmentEffectKind.BlessingEffectMultiplier] : [];
   }
 
+  GetCritical() {
+    return this.data.source.isSuperDungeon ? [EquipmentEffectKind.CriticalDamageAfter] : [EquipmentEffectKind.CriticalDamage, EquipmentEffectKind.CriticalDamageMultiplier];
+  }
+
   GetElement(element: Element) {
     switch (element) {
       case Element.Physical:
-        return [EquipmentEffectKind.PhysicalDamage, EquipmentEffectKind.PhysicalDamageMultiplier, EquipmentEffectKind.PhysicalDamageAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.PhysicalDamageAfter] : [EquipmentEffectKind.PhysicalDamage, EquipmentEffectKind.PhysicalDamageMultiplier];
       case Element.Fire:
-        return [EquipmentEffectKind.FireDamage, EquipmentEffectKind.FireDamageMultiplier, EquipmentEffectKind.FireDamageAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.FireDamageAfter] : [EquipmentEffectKind.FireDamage, EquipmentEffectKind.FireDamageMultiplier];
       case Element.Thunder:
-        return [EquipmentEffectKind.ThunderDamage, EquipmentEffectKind.ThunderDamageMultiplier, EquipmentEffectKind.ThunderDamageAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.ThunderDamageAfter] : [EquipmentEffectKind.ThunderDamage, EquipmentEffectKind.ThunderDamageMultiplier];
       case Element.Ice:
-        return [EquipmentEffectKind.IceDamage, EquipmentEffectKind.IceDamageMultiplier, EquipmentEffectKind.IceDamageAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.IceDamageAfter] : [EquipmentEffectKind.IceDamage, EquipmentEffectKind.IceDamageMultiplier];
       case Element.Light:
-        return [EquipmentEffectKind.LightDamage, EquipmentEffectKind.LightDamageMultiplier, EquipmentEffectKind.LightDamageAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.LightDamageAfter] : [EquipmentEffectKind.LightDamage, EquipmentEffectKind.LightDamageMultiplier];
       case Element.Dark:
-        return [EquipmentEffectKind.DarkDamage, EquipmentEffectKind.DarkDamageMultiplier, EquipmentEffectKind.DarkDamageAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.DarkDamageAfter] : [EquipmentEffectKind.DarkDamage, EquipmentEffectKind.DarkDamageMultiplier];
 
       default:
         return [];
@@ -105,27 +102,27 @@ export class EquipmentEffectOptimizer {
   GetKnowledge(species: MonsterSpecies) {
     switch (species) {
       case MonsterSpecies.Slime:
-        return [EquipmentEffectKind.SlimeKnowledge, EquipmentEffectKind.SlimeKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.SlimeKnowledgeAfter] : [EquipmentEffectKind.SlimeKnowledge];
       case MonsterSpecies.MagicSlime:
-        return [EquipmentEffectKind.MagicSlimeKnowledge, EquipmentEffectKind.MagicSlimeKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.MagicSlimeKnowledgeAfter] : [EquipmentEffectKind.MagicSlimeKnowledge];
       case MonsterSpecies.Spider:
-        return [EquipmentEffectKind.SpiderKnowledge, EquipmentEffectKind.SpiderKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.SpiderKnowledgeAfter] : [EquipmentEffectKind.SpiderKnowledge];
       case MonsterSpecies.Bat:
-        return [EquipmentEffectKind.BatKnowledge, EquipmentEffectKind.BatKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.BatKnowledgeAfter] : [EquipmentEffectKind.BatKnowledge];
       case MonsterSpecies.Fairy:
-        return [EquipmentEffectKind.FairyKnowledge, EquipmentEffectKind.FairyKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.FairyKnowledgeAfter] : [EquipmentEffectKind.FairyKnowledge];
       case MonsterSpecies.Fox:
-        return [EquipmentEffectKind.FoxKnowledge, EquipmentEffectKind.FoxKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.FoxKnowledgeAfter] : [EquipmentEffectKind.FoxKnowledge];
       case MonsterSpecies.DevilFish:
-        return [EquipmentEffectKind.DevilFishKnowledge, EquipmentEffectKind.DevilFishKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.DevilFishKnowledgeAfter] : [EquipmentEffectKind.DevilFishKnowledge];
       case MonsterSpecies.Treant:
-        return [EquipmentEffectKind.TreantKnowledge, EquipmentEffectKind.TreantKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.TreantKnowledgeAfter] : [EquipmentEffectKind.TreantKnowledge];
       case MonsterSpecies.FlameTiger:
-        return [EquipmentEffectKind.FlameTigerKnowledge, EquipmentEffectKind.FlameTigerKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.FlameTigerKnowledgeAfter] : [EquipmentEffectKind.FlameTigerKnowledge];
       case MonsterSpecies.Unicorn:
-        return [EquipmentEffectKind.UnicornKnowledge, EquipmentEffectKind.UnicornKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.UnicornKnowledgeAfter] : [EquipmentEffectKind.UnicornKnowledge];
       case MonsterSpecies.ChallengeBoss:
-        return [EquipmentEffectKind.ChallengeBossKnowledge, EquipmentEffectKind.ChallengeBossKnowledgeAfter];
+        return this.data.source.isSuperDungeon ? [EquipmentEffectKind.ChallengeBossKnowledgeAfter] : [EquipmentEffectKind.ChallengeBossKnowledge];
       default:
         return [];
     }
@@ -152,38 +149,38 @@ export class EquipmentEffectOptimizer {
   }
 
   GetDPS() {
-    return this.data.source.isSuperDungeon ? [EquipmentEffectKind.SDDamageMultiplier] : [EquipmentEffectKind.ArmoredFury, EquipmentEffectKind.WardedFury];
+    return this.data.source.isSuperDungeon
+      ? [EquipmentEffectKind.SDDamageMultiplier, EquipmentEffectKind.ExtraAfterDamage]
+      : [EquipmentEffectKind.ArmoredFury, EquipmentEffectKind.WardedFury];
   }
 
   GetBasicStats(isSwapATKWithDEF: boolean) {
-    let result = [EquipmentEffectKind.SPDAdder, EquipmentEffectKind.SPDMultiplier, EquipmentEffectKind.SPDAfter];
-    if (isSwapATKWithDEF) {
-      result = [
-        ...result,
-        ...[
-          EquipmentEffectKind.DEFAdder,
-          EquipmentEffectKind.MDEFAdder,
-          EquipmentEffectKind.DEFMultiplier,
-          EquipmentEffectKind.MDEFMultiplier,
-          EquipmentEffectKind.DEFPropotion,
-          EquipmentEffectKind.MDEFPropotion,
-          EquipmentEffectKind.DEFAfter,
-          EquipmentEffectKind.MDEFAfter,
-        ],
-      ];
+    let result = this.data.source.isSuperDungeon ? [EquipmentEffectKind.SPDAfter] : [EquipmentEffectKind.SPDAdder, EquipmentEffectKind.SPDMultiplier];
+    if (this.data.source.isSuperDungeon) {
+      if (isSwapATKWithDEF) {
+        if (this.data.battle.skillSet.currentSkillSet[0].element == Element.Physical) {
+          result = [...result, ...[EquipmentEffectKind.DEFAfter]];
+        } else {
+          result = [...result, ...[EquipmentEffectKind.MDEFAfter]];
+        }
+      } else {
+        result = [...result, ...[EquipmentEffectKind.ATKAfter, EquipmentEffectKind.MATKAfter]];
+      }
     } else {
       result = [
         ...result,
-        ...[
-          EquipmentEffectKind.ATKAdder,
-          EquipmentEffectKind.MATKAdder,
-          EquipmentEffectKind.ATKMultiplier,
-          EquipmentEffectKind.MATKMultiplier,
-          EquipmentEffectKind.ATKPropotion,
-          EquipmentEffectKind.MATKPropotion,
-          EquipmentEffectKind.ATKAfter,
-          EquipmentEffectKind.MATKAfter,
-        ],
+        EquipmentEffectKind.ATKMultiplier,
+        EquipmentEffectKind.MATKMultiplier,
+        EquipmentEffectKind.ATKPropotion,
+        EquipmentEffectKind.MATKPropotion,
+        EquipmentEffectKind.ATKAdder,
+        EquipmentEffectKind.MATKAdder,
+        EquipmentEffectKind.DEFAdder,
+        EquipmentEffectKind.MDEFAdder,
+        EquipmentEffectKind.DEFMultiplier,
+        EquipmentEffectKind.MDEFMultiplier,
+        EquipmentEffectKind.DEFPropotion,
+        EquipmentEffectKind.MDEFPropotion,
       ];
     }
 

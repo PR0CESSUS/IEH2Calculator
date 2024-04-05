@@ -21,7 +21,7 @@ export class EquipmentGlobalInformation {
   requiredAbilities: EquipmentRequiredAbility[] = [];
   levelMaxEffects: EquipmentEffect[] = Array(Enums.HeroKind);
   setKind: EquipmentSetKind = EquipmentSetKind.Nothing;
-  isArtifact;
+  isArtifact: boolean = false;
 
   constructor(DATA: DATA, kind: EquipmentKind) {
     this.data = DATA;

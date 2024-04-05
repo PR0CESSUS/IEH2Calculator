@@ -1,59 +1,26 @@
-const testData = {
-  a: {
-    b: [
-      {
-        c: 1,
-      },
-      {
-        c: 2,
-      },
-    ],
-  },
-};
+function sortForRepeatingSequence(arr) {
+  // Count the occurrences of each number
+  const counts = {};
+  for (const num of arr) {
+    counts[num] = (counts[num] || 0) + 1;
+  }
 
-const testData2 = {
-  a: {
-    b: [
-      {
-        c: 3,
-      },
-      {
-        c: 4,
-      },
-    ],
-  },
-};
+  // Create an empty result array
+  const result = [];
 
-const handler = {
-  test: testData2,
-  get(target, prop, receiver) {
-    if (target == testData) this.test = testData2;
-    // console.log("prop", prop);
-
-    if (typeof target[prop] === "object" && target[prop] !== null) {
-      const proxy = new Proxy(Reflect.get(target, prop, receiver), handler);
-      this.test = this.test[prop];
-      return proxy;
-    } else {
-      if (!Array.isArray(target)) console.log("orginal value:", Reflect.get(target, prop, receiver), "second value", this.test[prop]);
-
-      return Reflect.get(target, prop, receiver);
+  // Loop through numbers 1, 2, 3 and add them to the result array based on their counts
+  for (let num = 1; num <= 3; num++) {
+    if (counts[num]) {
+      for (let i = 0; i < counts[num]; i++) {
+        result.push(num);
+      }
     }
-  },
-};
+  }
 
-const test = new Proxy(testData, handler) as typeof testData;
-
-// case 1
-/* console.log(test.a.b); */
-// case 2 works fine
-// console.log(test.a.b[0].c); // return 1 and 3
-// case 3
-
-// for (const property in test.a.b) {
-//   console.log(`${property}: ${test.a.b[property]}`);
-// }
-
-for (let index = 0; index < test.a.b.length; index++) {
-  console.log("index", index, "value", test.a.b[index].c);
+  return result;
 }
+
+const myArray = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3];
+const sortedArray = sortForRepeatingSequence(myArray);
+
+console.log(sortedArray);

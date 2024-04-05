@@ -113,7 +113,9 @@ function pasteEvent() {
           &lt;
           <span class="green"
             >Lv {{ equipment.level }}
-            {{ equipment.forgeEffects[EquipmentForgeEffectKind.EqLevel].effectValue > 0 ? ` + ${equipment.forgeEffects[EquipmentForgeEffectKind.EqLevel].effectValue}` : "" }}</span
+            {{
+              equipment.forgeEffects[EquipmentForgeEffectKind.EqLevel].effectValue > 0 ? ` + ${equipment.forgeEffects[EquipmentForgeEffectKind.EqLevel].EffectValue()}` : ""
+            }}</span
           >
           &gt;
           <span :class="enchant.isAfter ? 'purple' : 'yellow'" v-for="(enchant, index) in equipment.optionEffects">

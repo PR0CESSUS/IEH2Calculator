@@ -41,7 +41,7 @@ definePage({
       </ul>
     </div>
 
-    <li><RouterLink to="#findBestEnchantments" :class="{ selected: currentRoute.hash == '#findBestEnchantments' }">How Find Best Enchantements function works?</RouterLink></li>
+    <li><RouterLink to="#OptimizeEnchantments" :class="{ selected: currentRoute.hash == '#OptimizeEnchantments' }">How Optimize Enchantments function works?</RouterLink></li>
     <div style="padding-top: 10px; padding-bottom: 10px">
       <ul>
         <li>It test every selected enchantments against selected optimizer type to find best enchantment</li>

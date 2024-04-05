@@ -37,7 +37,15 @@ button.blue {
   border-left-color: #13213b;
   border-right-color: #1c3257;
 }
-
+button.green {
+  background-image: linear-gradient(#4d7432, #375324);
+  background-color: #4d7432;
+  border-top-color: #7da861;
+  border-bottom-color: #334825;
+  border-left-color: #355322;
+  border-right-color: #3b5a26;
+  color: #fff;
+}
 button.small {
   height: 20px;
   border-width: 2px;

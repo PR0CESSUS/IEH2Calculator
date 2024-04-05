@@ -160,6 +160,15 @@ export class DataInventory {
     return list;
   }
 
+  GetCurrentLoadout(includeNothing: boolean = true): Equipment[] {
+    let loadout = this.equipmentSlots.filter(
+      (equipment) => equipment.slotId >= this.currentLoadoutInitialOffset && equipment.slotId < this.currentLoadoutInitialOffset + 72 && equipment.isDisabled() == false
+    );
+    if (!includeNothing) loadout = loadout.filter((equipment) => equipment.kind != 0);
+
+    return loadout;
+  }
+
   getPartOffset(part: EquipmentPart) {
     switch (part) {
       case EquipmentPart.Weapon:

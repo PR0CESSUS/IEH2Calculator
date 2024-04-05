@@ -17,7 +17,9 @@ watch(optimizerType, () => {
   game.data.equipment.optimizer.kind = optimizerType.value;
   enchantmentList.value = game.data.equipment.optimizer.list;
 });
-
+watch(game.data.requireUpdate, () => {
+  enchantmentList.value = game.data.equipment.optimizer.list;
+});
 async function logRender(num) {
   let timeout = 0;
   document.dispatchEvent(new CustomEvent("log", { detail: { type: "msg", data: num } }));
@@ -67,6 +69,8 @@ async function loop() {
         effect.kind = ennchantTested;
         const value = multiplier.Value();
 
+        console.log();
+
         if (value > bestValue) {
           bestValue = value;
           bestKind = ennchantTested;
@@ -95,10 +99,10 @@ function addEnchantementsToList() {
 
 <template>
   <AppDialog>
-    <template #trigger> <button>Find Best Enchantements</button></template>
+    <template #trigger> <button class="green small">Optimize Enchantments</button></template>
     <template #content>
       <div class="container">
-        <h2>Find Best Enchantements</h2>
+        <h2>Optimize Enchantments</h2>
         <AppSelect :type="CustomSelectType.EquipmentEffectOptimizer" v-model="optimizerType" />&nbsp;
 
         <h3>Enchantements to test</h3>
@@ -118,13 +122,17 @@ function addEnchantementsToList() {
 
         <hr />
         <button @click="loop">Find</button>
-        <RouterLink to="/help/#findBestEnchantements"><button>Help</button></RouterLink>
+        <RouterLink to="/help/#OptimizeEnchantments"><button>Help</button></RouterLink>
       </div>
     </template>
   </AppDialog>
 </template>
 
 <style scoped>
+span {
+  font-size: 12px;
+}
+
 .interactive {
   cursor: pointer;
 }

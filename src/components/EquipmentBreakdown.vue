@@ -2,7 +2,9 @@
 import { Util } from "@/Util";
 import { applyLoadoutForge } from "@/data/Equipment/EquipmentApply";
 import { clearLoadout } from "@/data/Equipment/EquipmentClear";
+import { Localization } from "@/localization";
 import { CustomSelectType } from "@/type/CustomSelectType";
+import { SDGemKind } from "@/type/SDGemKind";
 import { computed, inject, ref } from "vue";
 import { Game } from "../Game";
 import AppDialog from "./AppDialog.vue";
@@ -10,9 +12,6 @@ import AppDownload from "./AppDownload.vue";
 import AppInput from "./AppInput.vue";
 import AppSelect from "./AppSelect.vue";
 import EquipmentLoadoutImport from "./EquipmentLoadoutImport.vue";
-import EquipmentFindBestEnchantments from "./EquipmentFindBestEnchantments.vue";
-import { SDGemKind } from "@/type/SDGemKind";
-import { Localization } from "@/localization";
 
 const game = inject<Game>("game");
 
@@ -135,7 +134,6 @@ const addEnchantementsSlots = ref([{ kind: 0, value: 0 }]);
 
     <AppDownload filename="loadout" :target="game.data.inventory.CopyCurrentLoadout()">Export</AppDownload>
     <EquipmentLoadoutImport />
-    <EquipmentFindBestEnchantments />
   </div>
 </template>
 

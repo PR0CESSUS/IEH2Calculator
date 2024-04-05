@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { Equipment } from "@/Data/Equipment/Equipment";
 import { Game } from "@/Game";
 import MultiplierInformation from "@/components/MultiplierInformation.vue";
-import SkillBreakdown from "@/components/SkillBreakdown.vue";
 import SkillLoadout from "@/components/SkillLoadout.vue";
 import { useGlobalStore } from "@/stores/global";
+import { EquipmentPart } from "@/type/EquipmentPart";
 import { HeroKind } from "@/type/HeroKind";
 
 import { inject } from "vue";
@@ -17,6 +18,32 @@ definePage({
     debug: true,
   },
 });
+const loadout = game.data.inventory.GetCurrentLoadout();
+
+function Sort(array: Equipment[]) {
+  const newArray = [];
+  const weapons = array.filter((equipment) => equipment.slotPart == EquipmentPart.Weapon);
+  const armors = array.filter((equipment) => equipment.slotPart == EquipmentPart.Armor);
+  const jewelry = array.filter((equipment) => equipment.slotPart == EquipmentPart.Jewelry);
+
+  weapons.reverse();
+  armors.reverse();
+  jewelry.reverse();
+
+  for (let index = 0; index < array.length; index++) {
+    const w = weapons.pop();
+    const a = armors.pop();
+    const j = jewelry.pop();
+
+    if (w) newArray.push(w);
+    if (a) newArray.push(a);
+    if (j) newArray.push(j);
+  }
+
+  return newArray;
+}
+
+const test = Sort(loadout);
 
 // const inGameData = ref({main1: globalStore});
 </script>
@@ -41,10 +68,8 @@ definePage({
 
   <SkillLoadout />
 
-  <SkillBreakdown />
-
   <hr />
-
+  <button @click="console.log(test)">GetCurrentLoadout</button>
   <!-- {{ game.data.inventory.currentLoadout[0].Level() }}
   {{ game.data.inventory.currentLoadout[0].globalInfo.effects[0].baseValue }}
   {{ game.data.inventory.currentLoadout[0].globalInfo.effects[0].initValue }}

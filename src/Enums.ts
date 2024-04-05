@@ -27,9 +27,11 @@ import { Debuff } from "./type/Debuff";
 import { ChallengeKind } from "./type/ChallengeKind";
 import { QuestKindTitle } from "./type/QuestKindTitle";
 import { EquipmentEffectOptimizerKind } from "./type/EquipmentEffectOptimizerKind";
+import { EquipmentRarity } from "./type/EquipmentRarity";
 
 export const Enums = {
   HeroKind: Object.entries(HeroKind).length / 2,
+  EquipmentRarity: Object.entries(EquipmentRarity).length / 2,
   AreaKind: Object.entries(AreaKind).length / 2,
   ResourceKind: Object.entries(ResourceKind).length / 2,
   GlobalStats: Object.entries(GlobalStats).length / 2,

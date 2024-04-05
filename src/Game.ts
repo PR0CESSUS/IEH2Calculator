@@ -136,6 +136,7 @@ export class Game {
       () => this.data.source.currentHero,
       (newValue, oldValue) => {
         this.snap.source.currentHero = newValue;
+        this.data.equipment.optimizer.list = this.data.equipment.optimizer.GetList();
       }
     );
 
