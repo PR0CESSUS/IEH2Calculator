@@ -89,9 +89,7 @@ async function loop() {
 
 <template>
   <AppDialog>
-    <template #trigger>
-      <button class="green small">Find <s>Best</s> Decent Items</button></template
-    >
+    <template #trigger> <button class="green small">??? (WIP)</button></template>
     <template #content>
       <div class="container">
         <h2>Find Decent Items</h2>
