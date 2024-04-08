@@ -3,31 +3,31 @@ import { Util } from "@/Util";
 export function ArcherSkillsString(id, value = 0.0) {
   switch (id) {
     case 0:
-      return "This skill's Hit Count + 1";
+      return "Hit Count +1 for this Skill";
     case 1:
-      return "+" + Util.percent(value) + " Physical Damage while this skill is equipped";
+      return "Physical Damage +" + Util.percent(value) + " while this Skill is equipped";
     case 2:
-      return "Enables a penetrating attack for this skill";
+      return "Enables piercing of Enemies for this Skill";
     case 3:
       return "Placeholder";
     case 4:
-      return "Shoot multiple arrows that target all the monsters in the field";
+      return "Shoot multiple Arrows that target all the Monsters in the field";
     case 5:
-      return "+" + Util.percent(value) + " Thunder Damage while this skill is equipped";
+      return "Thunder Damage +" + Util.percent(value) + " while this Skill is equipped";
     case 6:
-      return "+" + Util.percent(value) + " Ice Damage while this skill is equipped";
+      return "Ice Damage +" + Util.percent(value) + " while this Skill is equipped";
     case 7:
-      return "Strike a penetrating ice arrow at the furthest monster";
+      return "Strike a piercing Ice Arrow at the furthest Monster";
     case 8:
-      return "+" + Util.percent(value) + " Fire Damage while this skill is equipped";
+      return "Fire Damage +" + Util.percent(value) + " while this Skill is equipped";
     case 9:
-      return "+" + Util.percent(value) + " Light Damage while this skill is equipped";
+      return "Light Damage +" + Util.percent(value) + " while this Skill is equipped";
     case 10:
-      return "+" + Util.percent(value) + " Dark Damage while this skill is equipped";
+      return "Dark Damage +" + Util.percent(value) + " while this Skill is equipped";
     case 11:
-      return "Shoots an arrow at the center that pulls all monsters on screen toward it";
+      return "Shoots an Arrow at the center that pulls all Monsters on the field toward it";
     case 12:
-      return "Circle the edge of the field to move out of melee range of monsters with a movement penalty during Auto Move mode";
+      return "Circle the edge of the field to move out of melee range of Monsters with a Move Speed modifier during Auto Move mode";
     default:
       return "";
   }

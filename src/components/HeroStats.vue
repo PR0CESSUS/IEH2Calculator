@@ -28,7 +28,7 @@ onMounted(() => {
           <h3>Main Stats</h3>
           <div class="block">
             <MultiplierInformation v-for="(_, index) in game.data.stats.currentHero.basicStats" :multiplier="`stats.currentHero.basicStats[${index}]`" />
-            <MultiplierInformation :multiplier="`stats.currentHero.stats[10]`" />
+            <MultiplierInformation :multiplier="`stats.currentHero.stats[10]`" value-suffix="/ sec" />
             <MultiplierInformation :multiplier="'stats.currentHero.stats[9]'" />
             <MultiplierInformation :multiplier="'stats.currentHero.optionEffectChance[0]'" />
             <MultiplierInformation :multiplier="'stats.currentHero.optionEffectChance[1]'" />

@@ -3,33 +3,31 @@ import { Util } from "@/Util";
 export function ThiefSkillsString(id, value = 0.0) {
   switch (id) {
     case 0:
-      return "This skill's Hit Count + 1";
+      return "Hit Count +1 for this Skill";
     case 1:
-      return "+" + Util.percent(value) + " Physical Critical Chance (Add) while this skill is equipped";
+      return "Physical Critical Chance +" + Util.percent(value) + " (Add) while this Skill is equipped";
     case 2:
-      return "Enables a penetrating attack for this skill";
+      return "Enables piercing of Enemies for this Skill";
     case 3:
-      return "This skill's damage";
+      return "Damage +" + Util.percent(value, 0) + " for this Skill";
     case 4:
-      return "+" + Util.percent(value) + " Magical Critical Chance (Add) while this skill is equipped";
+      return "Magical Critical Chance +" + Util.percent(value) + " (Add) while this Skill is equipped";
     case 5:
-      return "Steal Chance";
+      return "Steal Chance +" + Util.percent(value) + " for this Skill";
     case 6:
-      return "This skill's Area of Effect + ";
+      return "";
     case 7:
       return "Placeholder";
     case 8:
-      return "This skill's critical chance : ";
+      return "Critical chance: ";
     case 9:
-      return "Disappear briefly and reappear at the furthest monster to deal damage";
+      return "Disappear briefly and reappear at the furthest Monster to deal damage";
     case 10:
-      return " chance to steal a loot material every trigger";
-    case 11:
-      return "Steal more 1 material while this skill is equipped";
+      return "Chance to steal Common Materials: " + Util.percent(value);
     case 12:
-      return "+" + Util.percent(value) + " Physical Critical Chance (Mul) while this skill is equipped";
+      return "Physical Critical Chance +" + Util.percent(value) + " (Mul) while this Skill is equipped";
     case 13:
-      return "+" + Util.percent(value) + " Magical Critical Chance (Mul) while this skill is equipped";
+      return "Magical Critical Chance +" + Util.percent(value) + " (Mul) while this Skill is equipped";
     default:
       return "";
   }

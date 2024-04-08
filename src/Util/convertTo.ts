@@ -37,7 +37,7 @@ export function convertTo(input, precision = 2, type: NumberType | null = null) 
   } else {
     output = input.toExponential(precision);
   }
-  if (type == NumberType.Meter) return output + "m / sec";
+  if (type == NumberType.Meter) return output + "m";
 
   if (isNegative) {
     (output as string).slice(0, 1);

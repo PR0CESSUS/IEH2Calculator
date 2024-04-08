@@ -1,16 +1,15 @@
-import { Util } from "@/Util";
-import { SkillPassiveEffect } from "@/data/skill/SkillPassiveEffect";
-import { SKILL } from "@/data/skill/SKILL";
 import { DATA } from "@/data/";
+import { SKILL } from "@/data/skill/SKILL";
+import { SkillPassiveEffect } from "@/data/skill/SkillPassiveEffect";
 import { Localization } from "@/localization/";
-import { Debuff } from "@type/Debuff";
-import { MultiplierType } from "@type/MultiplierType";
-import { HeroKind } from "@type/HeroKind";
 import { BasicStatsKind } from "@type/BasicStatsKind";
+import { Debuff } from "@type/Debuff";
 import { Element } from "@type/Element";
-import { Stats } from "@type/Stats";
 import { GlobalStats } from "@type/GlobalStats";
+import { HeroKind } from "@type/HeroKind";
+import { MultiplierType } from "@type/MultiplierType";
 import { SkillPassiveKind } from "@type/SkillPassiveKind";
+import { Stats } from "@type/Stats";
 
 export class ChillingTouch extends SKILL {
   constructor(data: DATA, heroKind: HeroKind, id) {
@@ -19,7 +18,7 @@ export class ChillingTouch extends SKILL {
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 5, BasicStatsKind.MATK, MultiplierType.Add, 10.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 10, BasicStatsKind.MDEF, MultiplierType.Add, 25.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 15, BasicStatsKind.DEF, MultiplierType.Add, 25.0));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 25, () => Localization.WizardSkillsString(2) + Util.meter(70.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 25, () => Localization.WarriorSkillsString(2, 70)));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 30, BasicStatsKind.MP, MultiplierType.Add, 100.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 40, BasicStatsKind.MDEF, MultiplierType.Add, 50.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 50, BasicStatsKind.DEF, MultiplierType.Add, 50.0));
@@ -27,7 +26,7 @@ export class ChillingTouch extends SKILL {
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 70, SkillPassiveKind.IceDamage, 0.05, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 80, SkillPassiveKind.ThisSkillCastTime, 0.2, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 90, BasicStatsKind.MATK, MultiplierType.Add, 30.0));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 100, () => Localization.WizardSkillsString(2) + Util.meter(150.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 100, () => Localization.WarriorSkillsString(2, 150)));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 120, BasicStatsKind.MDEF, MultiplierType.Mul, 0.1));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 140, BasicStatsKind.DEF, MultiplierType.Mul, 0.1));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 160, BasicStatsKind.MATK, MultiplierType.Mul, 0.075));
@@ -47,7 +46,7 @@ export class ChillingTouch extends SKILL {
     );
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 350, SkillPassiveKind.GuildExp, 0.3, MultiplierType.Mul));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 375, SkillPassiveKind.ThisSkillCastTime, 0.2, MultiplierType.Add));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 400, () => Localization.WizardSkillsString(2) + Util.meter(150.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 400, () => Localization.WarriorSkillsString(2, 150)));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 425, SkillPassiveKind.SDDamageCutMultiplier, 0.25, MultiplierType.Mul));
     this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 450, Stats.MagCritChance, MultiplierType.Mul, 0.15));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 475, SkillPassiveKind.ThisSkillCastTime, 0.2, MultiplierType.Add));

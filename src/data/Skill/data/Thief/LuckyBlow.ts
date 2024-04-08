@@ -1,4 +1,3 @@
-import { Util } from "@/Util";
 import { DATA } from "@/data/";
 import { MultiplierInfo } from "@/data/Multiplier";
 import { SKILL } from "@/data/skill/SKILL";
@@ -26,7 +25,7 @@ export class LuckyBlow extends SKILL {
     this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 70, () => Localization.ThiefSkillsString(1, 0.05)));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 80, SkillPassiveKind.EssenceConversionRate, 0.2, MultiplierType.Mul));
     this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 90, Stats.ExpGain, MultiplierType.Add, 1.0));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 100, () => Localization.ThiefSkillsString(6) + Util.meter(100.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 100, () => Localization.WarriorSkillsString(2, 100)));
     this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 120, Stats.ExpGain, MultiplierType.Add, 0.5));
     this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 140, () => Localization.ThiefSkillsString(1, 0.1)));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 160, SkillPassiveKind.EssenceConversionRate, 0.2, MultiplierType.Mul));

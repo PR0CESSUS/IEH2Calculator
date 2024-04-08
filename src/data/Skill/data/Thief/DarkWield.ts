@@ -1,4 +1,3 @@
-import { Util } from "@/Util";
 import { DATA } from "@/data/";
 import { SKILL } from "@/data/skill/SKILL";
 import { SkillPassiveEffect } from "@/data/skill/SkillPassiveEffect";
@@ -21,21 +20,21 @@ export class DarkWield extends SKILL {
     this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 20, Stats.MagCritChance, MultiplierType.Add, 0.05));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 30, BasicStatsKind.MATK, MultiplierType.Add, 50.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 40, BasicStatsKind.MATK, MultiplierType.Add, 75.0));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 50, () => Localization.ThiefSkillsString(6) + Util.meter(100.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 50, () => Localization.WarriorSkillsString(2, 100)));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 60, BasicStatsKind.MATK, MultiplierType.Add, 125.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 70, BasicStatsKind.MP, MultiplierType.Mul, 0.025));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 80, BasicStatsKind.HP, MultiplierType.Add, 1500.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 90, BasicStatsKind.SPD, MultiplierType.Add, 200.0));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 100, SkillPassiveKind.ThisSkillCastTime, 0.25, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 120, BasicStatsKind.MP, MultiplierType.Add, 500.0));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 140, () => Localization.ThiefSkillsString(6) + Util.meter(150.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 140, () => Localization.WarriorSkillsString(2, 150)));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 160, BasicStatsKind.MATK, MultiplierType.Mul, 0.75));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 180, BasicStatsKind.DEF, MultiplierType.Mul, 0.1));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 200, SkillPassiveKind.ThisSkillCastTime, 0.25, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 225, BasicStatsKind.MDEF, MultiplierType.Mul, 0.1));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 250, BasicStatsKind.MATK, MultiplierType.Mul, 1.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 275, BasicStatsKind.MATK, MultiplierType.Mul, 3.0));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 300, () => Localization.ThiefSkillsString(6) + Util.meter(150.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 300, () => Localization.WarriorSkillsString(2, 150)));
     this.passiveEffectLists.push(
       SkillPassiveEffect.Register(
         this,
@@ -64,7 +63,7 @@ export class DarkWield extends SKILL {
     this.passiveEffectLists.push(SkillPassiveEffect.SkillBuff(this, 775, SkillBuffKind.DarkDamage, 50.0));
     this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 800, Stats.MagCritChance, MultiplierType.After, 0.3));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillBuff(this, 825, SkillBuffKind.DarkDamage, 100.0));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 850, () => Localization.ThiefSkillsString(6) + Util.meter(150.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 850, () => Localization.WarriorSkillsString(2, 150)));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillBuff(this, 875, SkillBuffKind.DarkDamage, 200.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 900, BasicStatsKind.MATK, MultiplierType.After, 15000.0));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillBuff(this, 925, SkillBuffKind.DarkDamage, 300.0));

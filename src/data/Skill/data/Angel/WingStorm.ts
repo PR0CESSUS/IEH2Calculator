@@ -1,4 +1,3 @@
-import { Util } from "@/Util";
 import { DATA } from "@/data/";
 import { SKILL } from "@/data/skill/SKILL";
 import { SkillPassiveEffect } from "@/data/skill/SkillPassiveEffect";
@@ -20,18 +19,18 @@ export class WingStorm extends SKILL {
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 10, BasicStatsKind.MP, MultiplierType.Add, 100.0));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 15, BasicStatsKind.MP, MultiplierType.Add, 150.0));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 20, SkillPassiveKind.ThisSkillCastTime, 0.2, MultiplierType.Add));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 25, () => Localization.AngelSkillsString(9) + Util.meter(50.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 25, () => Localization.WarriorSkillsString(2, 50)));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 30, SkillPassiveKind.ThisSkillDamage, 1.0, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 40, SkillPassiveKind.ThisSkillDamage, 1.0, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 50, SkillPassiveKind.ThisSkillHitCount, 1.0, MultiplierType.Add));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 60, () => Localization.AngelSkillsString(9) + Util.meter(50.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 60, () => Localization.WarriorSkillsString(2, 50)));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 70, SkillPassiveKind.ThisSkillDamage, 1.0, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 80, SkillPassiveKind.ThisSkillDamage, 2.0, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.Stats(this, 90, Stats.CriticalDamage, MultiplierType.Add, 0.5));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 100, SkillPassiveKind.ThisSkillHitCount, 1.0, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 120, BasicStatsKind.MATK, MultiplierType.Mul, 0.1));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 140, SkillPassiveKind.ThisSkillHitCount, 1.0, MultiplierType.Add));
-    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 160, () => Localization.AngelSkillsString(9) + Util.meter(100.0)));
+    this.passiveEffectLists.push(SkillPassiveEffect.Register(this, 160, () => Localization.WarriorSkillsString(2, 100)));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 180, SkillPassiveKind.ThisSkillDamage, 2.0, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.SkillPassive(this, 200, SkillPassiveKind.ThisSkillHitCount, 1.0, MultiplierType.Add));
     this.passiveEffectLists.push(SkillPassiveEffect.BasicStats(this, 225, BasicStatsKind.MP, MultiplierType.Mul, 0.125));

@@ -306,7 +306,7 @@ export class SkillPassiveEffect {
         this.data.stats.SetEffectGuildExp(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
         break;
       case SkillPassiveKind.ThisSkillDamage:
-        tempDescription = Localization.ThiefSkillsString(3) + ` + ${Util.percent(value)}`;
+        tempDescription = Localization.ThiefSkillsString(3, value);
         skill.damageMultiplier.RegisterMultiplier(
           new MultiplierInfo(
             MultiplierKind.SkillPassive,
@@ -504,6 +504,18 @@ export class SkillPassiveEffect {
       case SkillPassiveKind.SlimeCoinCap:
         tempDescription = `Slime Coin Cap + ${Util.percent(value)}`;
         this.data.resource.slimeCoinCap.RegisterMultiplier(new MultiplierInfo(MultiplierKind.SkillPassive, type, multiplier, () => this.IsActivated()));
+        flag = false;
+        break;
+      case SkillPassiveKind.ThisSkillPetDamageMultiplier:
+        tempDescription = Localization.TamerSkillsString(2, value);
+        skill.damageMultiplier.RegisterMultiplier(
+          new MultiplierInfo(
+            MultiplierKind.SkillPassive,
+            MultiplierType.Add,
+            () => value,
+            () => this.IsActivated()
+          )
+        );
         flag = false;
         break;
     }

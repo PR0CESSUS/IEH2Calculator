@@ -2,7 +2,7 @@
   "name": "ieh2calculator",
   "description": "Calculator for Incremental Epic Hero 2",
   "private": true,
-  "version": "0.1.43",
+  "version": "0.1.44",
   "type": "module",
   "scripts": {
     "dev": "vite",

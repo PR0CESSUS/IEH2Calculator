@@ -3,51 +3,49 @@ import { Util } from "@/Util";
 export function AngelSkillsString(id, value = 0.0) {
   switch (id) {
     case 0:
-      return "This skill fires an additional projectile";
+      return "Projectile +1 for this Skill";
     case 1:
-      return "25% chance to double Heal Point every trigger";
+      return "Heal twice as much at 25% chance";
     case 2:
-      return "25% chance to cure debuffs every trigger";
+      return "Cure Debuffs at 25% chance";
     case 3:
-      return "5% chance to additionally restore 10% of Max HP";
+      return "Heal 10% of Max HP at 5% chance";
     case 4:
-      return "0.5% chance to Full Heal every trigger";
+      return "Heal 100% of Max HP at 0.5% chance";
     case 5:
-      return "HP Regeneration + " + Util.tDigit(value, 1) + " / sec while this skill is equipped";
+      return "HP Regeneration +" + Util.tDigit(value, 1) + "/sec while this Skill is equipped";
     case 6:
-      return "+" + Util.percent(value) + " Physical Nullified Chance while this skill is equipped";
+      return "Physical Nullify Chance +" + Util.percent(value) + " while this Skill is equipped";
     case 7:
-      return "Move Speed + " + Util.percent(value) + " while this skill is equipped";
+      return "Move Speed +" + Util.percent(value) + " while this Skill is equipped";
     case 8:
-      return "This skill's damage + 50% per dash meter";
+      return "";
     case 9:
-      return "This skill's Area of Effect + ";
+      return "";
     case 10:
-      return "This skill's Hit Count + 1";
+      return "Hit Count +1 for this Skill";
     case 11:
-      return "This skill's Cast Time -25%";
+      return "Cast Time -25% for this Skill";
     case 12:
       return "Placeholder";
     case 13:
-      return "+" + Util.percent(value) + " Debuff Resistance while this skill is equipped";
+      return "Debuff Resistance +" + Util.percent(value) + " while this Skill is equipped";
     case 14:
-      return "HP Regeneration + " + Util.tDigit(value, 1) + " / sec (After) while this skill is equipped";
+      return "HP Regeneration +" + Util.tDigit(value, 1) + "/sec (After) while this Skill is equipped";
     case 15:
-      return "HP + " + Util.tDigit(value, 1) + " (After) while this skill is equipped";
+      return "HP +" + Util.tDigit(value, 1) + " (After) while this Skill is equipped";
     case 16:
-      return "ATK + " + Util.tDigit(value, 1) + " (After) while this skill is equipped";
+      return "ATK +" + Util.tDigit(value, 1) + " (After) while this Skill is equipped";
     case 17:
-      return "MATK + " + Util.tDigit(value, 1) + " (After) while this skill is equipped";
+      return "MATK +" + Util.tDigit(value, 1) + " (After) while this Skill is equipped";
     case 18:
-      return "SD Damage Multiplier + " + Util.percent(value, 1) + " (Mul) while this skill is equipped";
+      return "SD Damage Multiplier +" + Util.percent(value) + " (Mul) while this Skill is equipped";
     case 19:
-      return "+" + Util.percent(value) + " Magical Nullified Chance while this skill is equipped";
-    case 20:
-      return "increase Hero's skill +" + Util.tDigit(value, 1) + " without increase MPConsumption while this skill is equipped";
+      return "Magical Nullify Chance +" + Util.percent(value) + " while this Skill is equipped";
     case 21:
-      return "This skill's Hit Count + " + Util.tDigit(value);
+      return "Hit Count +" + Util.tDigit(value) + " for this Skill";
     case 22:
-      return "This skill's Cast Time -" + Util.percent(value, 0);
+      return "Cast Time -" + Util.percent(value, 0) + " for this Skill";
     default:
       return "";
   }

@@ -1,27 +1,29 @@
-export function WarriorSkillsString(id) {
+import { Util } from "@/Util";
+
+export function WarriorSkillsString(id, value = 0.0) {
   switch (id) {
     case 0:
-      return "This skill's Hit Count + 1";
+      return "Hit Count +1 for this Skill";
     case 1:
-      return "This skill's MP Consumption -50%";
+      return "MP Consumption -50% for this Skill";
     case 2:
-      return "This skill's Area of Effect + ";
+      return "Area of Effect +" + Util.meter(value) + " for this Skill";
     case 3:
-      return "This skill's Cast Time -50%";
+      return "Cast Time -50% for this Skill";
     case 4:
-      return "Remove this skill's MP Consumption";
+      return "MP Consumption -100% for this Skill";
     case 5:
-      return "This skill's Range + ";
+      return "Range +" + Util.meter(value) + " for this Skill";
     case 6:
-      return "This skill's Cast Time -25%";
+      return "Cast Time -25% for this Skill";
     case 7:
       return "Placeholder";
     case 8:
-      return "This skill's damage + 50% per dash meter";
+      return "Damage +50% per dash meter for this Skill";
     case 9:
-      return "Makes a running dash toward the target monster to attack.";
+      return "Makes a running dash toward the target Monster to attack.";
     case 10:
-      return "This skill's cast time starts at full on area start";
+      return "Cast Time ready on Area start for this Skill";
     default:
       return "";
   }

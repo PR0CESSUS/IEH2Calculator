@@ -39,4 +39,5 @@ export enum SkillPassiveKind {
   ExpeditionPetExpGain,
   ExpeditionPassiveEffect,
   PetPassiveEffect,
+  ThisSkillPetDamageMultiplier,
 }
