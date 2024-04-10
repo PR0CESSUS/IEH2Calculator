@@ -109,8 +109,8 @@ export class SuperDungeonPowerup {
     //   if (this.ctrl.data.battles[index].isSuperDungeon && this.ctrl.data.battles[index].superDungeonCtrl.currentSD.modifierCtrl.powerupEffectDecrement.Value() > 0.0)
     //     return (this.initEffectValue + this.rank * this.incrementEffectValuePerRank) * Math.max(0.0, 1.0 - this.ctrl.currentSD.modifierCtrl.powerupEffectDecrement.Value());
     // }
-    if (this.sdgCtrl.data.source.isSuperDungeon && this.sdgCtrl.data.source.isActiveSdModifiers[950 + SDModifierKind.ReducePowerupEffect]) {
-      const value = this.sdgCtrl.data.source.sdModifierValues[950 + SDModifierKind.ReducePowerupEffect];
+    if (this.sdgCtrl.data.source.isSuperDungeon && this.sdgCtrl.data.source.isActiveSdModifiersCustom[SDModifierKind.ReducePowerupEffect]) {
+      const value = this.sdgCtrl.data.source.sdModifierValuesCustom[SDModifierKind.ReducePowerupEffect];
       const modifier = value == 0 ? 0.5 : value == 1 ? 0.9 : 0.99;
 
       return baseFormula * Math.max(0.0, 1.0 - modifier);
@@ -143,7 +143,7 @@ export class SuperDungeonPowerup {
     //     return 0.0;
     // }
     // }
-    if (this.sdgCtrl.data.source.isSuperDungeon && this.sdgCtrl.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveSDPowerupPassives]) {
+    if (this.sdgCtrl.data.source.isSuperDungeon && this.sdgCtrl.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveSDPowerupPassives]) {
       return 0;
     }
 

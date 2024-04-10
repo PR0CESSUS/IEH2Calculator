@@ -81,7 +81,7 @@ export class DataEquipment {
     this.optimizer = new EquipmentEffectOptimizer(this.data);
   }
   EffectMultiplier() {
-    if (this.data.source.isSuperDungeon && this.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveEquipmentEffectBonuses]) {
+    if (this.data.source.isSuperDungeon && this.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveEquipmentEffectBonuses]) {
       return 1;
     }
 

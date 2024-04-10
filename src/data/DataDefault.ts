@@ -13,6 +13,8 @@ export class DataDefault {
   enemyColor: MonsterColor = 0;
   enemySpecies: MonsterSpecies = 0;
   enemyChallenge: ChallengeMonsterKind = 0;
+  sdModifierValuesCustom: number[] = Array(Enums.SDModifierKind).fill(0);
+  isActiveSdModifiersCustom: boolean[] = Array(Enums.SDModifierKind).fill(false);
   // isActiveSdModifiers is used to store modifier data it starts at index 950 + SDModifierKind
   // sdModifierValues is used to store modifier data it starts at index 950 + SDModifierKind
   // custom end

@@ -29,6 +29,8 @@ async function logRender(num) {
 
 async function loop() {
   const INITIAL_OFFSET = game.data.inventory.initialEquipmentLoadoutOffset;
+  const loadoutBreakdownListBefore = game.data.inventory.GetLoadoutBreakdownList();
+
   console.log("loop");
   document.dispatchEvent(new CustomEvent("log", { detail: { type: "start", data: "" } }));
 
@@ -86,8 +88,27 @@ async function loop() {
         equipment.globalInfo.isArtifact
       );
   }
-  document.dispatchEvent(new CustomEvent("log", { detail: { type: "msg", data: "Finished" } }));
+  let summary = ``;
+
+  const loadoutBreakdownListAfter = game.data.inventory.GetLoadoutBreakdownList();
+  // const loadoutBreakdownListFinal = {};
+
+  // for (const [key, value] of Object.entries(loadoutBreakdownListBefore.enchants)) loadoutBreakdownListFinal[key] = value;
+  // for (const [key, value] of Object.entries(loadoutBreakdownListAfter.enchants)) {
+  //   if (loadoutBreakdownListFinal[key]) loadoutBreakdownListFinal[key] = value;
+  // }
+  summary += `Enchantments Before Optimization\n`;
+  summary += `------------------------------\n`;
+  for (const [key, value] of Object.entries(loadoutBreakdownListBefore.enchants)) summary += `${key} - ${value}\n`;
+  // summary += `------------------------------------------------------------\n`;
+  summary += `\n\n\n`;
+  summary += `Enchantments After Optimization\n`;
+  summary += `------------------------------\n`;
+  for (const [key, value] of Object.entries(loadoutBreakdownListAfter.enchants)) summary += `${key} - ${value}\n`;
+
+  document.dispatchEvent(new CustomEvent("log", { detail: { type: "msg", data: summary } }));
   document.dispatchEvent(new CustomEvent("log", { detail: { type: "unlock" } }));
+  // console.log(loadoutBreakdownListBefore, loadoutBreakdownListAfter, loadoutBreakdownListFinal);
 }
 
 function addEnchantementsToList() {

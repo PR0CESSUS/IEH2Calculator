@@ -70,8 +70,8 @@ export class DataBattle {
   get limitedSkillNum() {
     //TODO limitedSkillNum hardcoded 8 for now
     if (this.isSuperDungeon) {
-      if (this.data.source.isActiveSdModifiers[950 + SDModifierKind.ReduceSkillSlot])
-        return Math.max(0.0, this.superDungeonCtrl.skillSlotNum.Value() - this.data.source.sdModifierValues[950 + SDModifierKind.ReduceSkillSlot]);
+      if (this.data.source.isActiveSdModifiersCustom[SDModifierKind.ReduceSkillSlot])
+        return Math.max(0.0, this.superDungeonCtrl.skillSlotNum.Value() - this.data.source.sdModifierValuesCustom[SDModifierKind.ReduceSkillSlot]);
       return this.superDungeonCtrl.skillSlotNum.Value();
     }
     // if (this.isAttemptOnlyBase || this.isHandicapped[9] || this.isHandicapped[12])

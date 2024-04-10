@@ -41,6 +41,6 @@ export class SDU_SDDamageMultiplier extends SuperDungeonUpgrade {
   }
 
   IsActive() {
-    return !this.sdgCtrl.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveSDUpgrade1];
+    return !this.sdgCtrl.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveSDUpgrade1];
   }
 }

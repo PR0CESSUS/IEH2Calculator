@@ -41,7 +41,7 @@ export class EquipmentEffectOptimizer {
           ...this.GetElement(info.element),
           ...this.GetKnowledge(enemy.species),
           // ...this.GetSkill(this.data.source.currentHero),
-          ...this.GetBasicStats(enemy.data.source.isActiveSdModifiers[950 + SDModifierKind.SwapATKWithDEF]),
+          ...this.GetBasicStats(enemy.data.source.isActiveSdModifiersCustom[SDModifierKind.SwapATKWithDEF]),
         ];
       case EquipmentEffectOptimizerKind.SkillProficiency:
         return [EquipmentEffectKind.SkillProficiency, EquipmentEffectKind.SkillProficiencyMultiplier, ...this.GetBlessing()];

@@ -28,8 +28,10 @@ import { ChallengeKind } from "./type/ChallengeKind";
 import { QuestKindTitle } from "./type/QuestKindTitle";
 import { EquipmentEffectOptimizerKind } from "./type/EquipmentEffectOptimizerKind";
 import { EquipmentRarity } from "./type/EquipmentRarity";
+import { SDModifierKind } from "./type/SDModifierKind";
 
 export const Enums = {
+  SDModifierKind: Object.entries(SDModifierKind).length / 2,
   HeroKind: Object.entries(HeroKind).length / 2,
   EquipmentRarity: Object.entries(EquipmentRarity).length / 2,
   AreaKind: Object.entries(AreaKind).length / 2,

@@ -40,13 +40,13 @@ export class HERO_BATTLE extends BATTLE {
   }
 
   get atk() {
-    return this.battleCtrl.data.source.isSuperDungeon && this.battleCtrl.data.source.isActiveSdModifiers[950 + SDModifierKind.SwapATKWithDEF]
+    return this.battleCtrl.data.source.isSuperDungeon && this.battleCtrl.data.source.isActiveSdModifiersCustom[SDModifierKind.SwapATKWithDEF]
       ? this.battleCtrl.data.stats.BasicStats(this.heroKind, BasicStatsKind.DEF).Value()
       : this.battleCtrl.data.stats.BasicStats(this.heroKind, BasicStatsKind.ATK).Value();
   }
 
   get matk() {
-    return this.battleCtrl.data.source.isSuperDungeon && this.battleCtrl.data.source.isActiveSdModifiers[950 + SDModifierKind.SwapATKWithDEF]
+    return this.battleCtrl.data.source.isSuperDungeon && this.battleCtrl.data.source.isActiveSdModifiersCustom[SDModifierKind.SwapATKWithDEF]
       ? this.battleCtrl.data.stats.BasicStats(this.heroKind, BasicStatsKind.MDEF).Value()
       : this.battleCtrl.data.stats.BasicStats(this.heroKind, BasicStatsKind.MATK).Value();
   }

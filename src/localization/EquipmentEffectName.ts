@@ -175,11 +175,11 @@ export function EquipmentEffectName(kind: EquipmentEffectKind) {
     case EquipmentEffectKind.TownMatAreaClearGain:
       return "Area Town Material";
     case EquipmentEffectKind.RebirthPointGain1:
-      return "Tier 1 Rebirth PoGain";
+      return "Tier 1 Rebirth Point Gain";
     case EquipmentEffectKind.RebirthPointGain2:
-      return "Tier 2 Rebirth PoGain";
+      return "Tier 2 Rebirth Point Gain";
     case EquipmentEffectKind.RebirthPointGain3:
-      return "Tier 3 Rebirth PoGain";
+      return "Tier 3 Rebirth Point Gain";
     case EquipmentEffectKind.CriticalDamage:
       return "Critical Damage";
     case EquipmentEffectKind.BlessingEffect:

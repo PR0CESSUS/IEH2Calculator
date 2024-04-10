@@ -89,36 +89,36 @@ function createSnapshot() {
 
       <hr />
       <h4>SD Modifiers</h4>
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiers[950 + SDModifierKind.ReduceSkillSlot]" class="checkbox" name="ReduceClassSkillSlot" /> Decrease available
-      class skill slots by {{ game.data.source.sdModifierValues[950 + SDModifierKind.ReduceSkillSlot] }}<br />&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-      <input type="range" min="1" max="7" v-model.lazy.number="game.data.source.sdModifierValues[950 + SDModifierKind.ReduceSkillSlot]" name="ReduceClassSkillSlotValue" />
+      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.ReduceSkillSlot]" class="checkbox" name="ReduceClassSkillSlot" /> Decrease available
+      class skill slots by {{ game.data.source.sdModifierValuesCustom[SDModifierKind.ReduceSkillSlot] }}<br />&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+      <input type="range" min="1" max="7" v-model.lazy.number="game.data.source.sdModifierValuesCustom[SDModifierKind.ReduceSkillSlot]" name="ReduceClassSkillSlotValue" />
       <br />
 
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiers[950 + SDModifierKind.SwapATKWithDEF]" class="checkbox" name="SwapATKWithDEF" />
+      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.SwapATKWithDEF]" class="checkbox" name="SwapATKWithDEF" />
       Swap ATK/MATK with DEF/MDEF<br />
 
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveSDUpgrade1]" class="checkbox" name="RemoveSDUpgrade1" />
+      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveSDUpgrade1]" class="checkbox" name="RemoveSDUpgrade1" />
       Remove the effect of SD Damage-type and Fury upgrades in SD Upgrade I<br />
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiers[950 + SDModifierKind.ReducePowerupEffect]" class="checkbox" name="ReducePowerupEffect" />
+      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.ReducePowerupEffect]" class="checkbox" name="ReducePowerupEffect" />
       Reduce the effect of powerups by
 
       {{
-        game.data.source.sdModifierValues[950 + SDModifierKind.ReducePowerupEffect] == 0
+        game.data.source.sdModifierValuesCustom[SDModifierKind.ReducePowerupEffect] == 0
           ? "50.00%"
-          : game.data.source.sdModifierValues[950 + SDModifierKind.ReducePowerupEffect] == 1
+          : game.data.source.sdModifierValuesCustom[SDModifierKind.ReducePowerupEffect] == 1
           ? "90.00%"
           : "99.00%"
       }}
       <br />
       &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-      <input type="range" min="0" max="2" v-model.lazy.number="game.data.source.sdModifierValues[950 + SDModifierKind.ReducePowerupEffect]" name="ReducePowerupEffectValue" />
+      <input type="range" min="0" max="2" v-model.lazy.number="game.data.source.sdModifierValuesCustom[SDModifierKind.ReducePowerupEffect]" name="ReducePowerupEffectValue" />
       <br />
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveSDPowerupPassives]" class="checkbox" name="RemoveSDPowerupPassives" />
+      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveSDPowerupPassives]" class="checkbox" name="RemoveSDPowerupPassives" />
       Remove the permanent effects of SD Powerups
       <br />
       <input
         type="checkbox"
-        v-model="game.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveEquipmentEffectBonuses]"
+        v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveEquipmentEffectBonuses]"
         class="checkbox"
         name="RemoveEquipmentEffectBonuses"
       />

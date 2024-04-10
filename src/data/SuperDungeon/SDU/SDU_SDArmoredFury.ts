@@ -40,6 +40,6 @@ export class SDU_SDArmoredFury extends SuperDungeonUpgrade {
   }
 
   IsActive() {
-    return !this.sdgCtrl.data.source.isActiveSdModifiers[950 + SDModifierKind.RemoveSDUpgrade1];
+    return !this.sdgCtrl.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveSDUpgrade1];
   }
 }
