@@ -34,6 +34,8 @@ export class EquipmentEffect {
       case EquipmentEffectKind.MDEFAfter:
       case EquipmentEffectKind.MPAdder:
       case EquipmentEffectKind.MPAfter:
+      case EquipmentEffectKind.SPDAdder:
+      case EquipmentEffectKind.SPDAfter:
         return NumberType.Normal;
       case EquipmentEffectKind.MoveSpeedAdder:
       case EquipmentEffectKind.MoveSpeedAfter:

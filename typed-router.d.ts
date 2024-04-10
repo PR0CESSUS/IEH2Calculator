@@ -47,6 +47,7 @@ declare module 'vue-router/auto-routes' {
     '/changelog/0.1.42': RouteRecordInfo<'/changelog/0.1.42', '/changelog/0/1/42', Record<never, never>, Record<never, never>>,
     '/changelog/0.1.43': RouteRecordInfo<'/changelog/0.1.43', '/changelog/0/1/43', Record<never, never>, Record<never, never>>,
     '/changelog/0.1.44': RouteRecordInfo<'/changelog/0.1.44', '/changelog/0/1/44', Record<never, never>, Record<never, never>>,
+    '/changelog/0.1.45': RouteRecordInfo<'/changelog/0.1.45', '/changelog/0/1/45', Record<never, never>, Record<never, never>>,
     '/data': RouteRecordInfo<'/data', '/data', Record<never, never>, Record<never, never>>,
     '/data/': RouteRecordInfo<'/data/', '/data', Record<never, never>, Record<never, never>>,
     '/data/ability': RouteRecordInfo<'/data/ability', '/data/ability', Record<never, never>, Record<never, never>>,

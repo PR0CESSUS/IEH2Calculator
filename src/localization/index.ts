@@ -42,9 +42,15 @@ import { SlimeBankUpgradeString } from "./SlimeBankUpgradeString";
 import { WorldAscensionMilestoneString } from "./WorldAscensionMilestoneString";
 import { WorldAscensionUpgradeString } from "./WorldAscensionUpgradeString";
 import { EquipmentEffectOptimizerString } from "./EquipmentEffectOptimizerString";
+import { GuildSuperAbility } from "./GuildSuperAbility";
+import { GuildAbilityName } from "./GuildAbilityName";
+import { GuildAbilityEffect } from "./GuildAbilityEffect";
 
 export const Localization = {
   EquipmentEffectOptimizerString,
+  GuildSuperAbility,
+  GuildAbilityEffect,
+  GuildAbilityName,
   WorldAscensionMilestoneString,
   WorldAscensionUpgradeString,
   SlimeBankUpgradeString,
