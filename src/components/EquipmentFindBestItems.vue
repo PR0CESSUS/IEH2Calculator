@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { Equipment } from "@/Data/Equipment/Equipment";
-import { EquipmentEvaluateController } from "@/data/Equipment/EquipmentEvaluateController";
+import { Localization } from "@/localization";
 import { CustomSelectType } from "@/type/CustomSelectType";
 import { EquipmentPart } from "@/type/EquipmentPart";
 import { EquipmentRarity } from "@/type/EquipmentRarity";
 import { EquipmentSetKind } from "@/type/EquipmentSetKind";
 import { computed, inject, ref, watch } from "vue";
 import { Game } from "../Game";
+import AppCheckbox from "./AppCheckbox.vue";
 import AppDialog from "./AppDialog.vue";
 import AppSelect from "./AppSelect.vue";
+import EquipmentLoadoutApplyForge from "./EquipmentLoadoutApplyForge.vue";
 
 const game = inject<Game>("game");
 const optimizerType = ref(game.data.equipment.optimizer.kind);
@@ -16,6 +18,10 @@ const filterSetKind = ref(game.data.equipment.optimizer.filterSetKind);
 const filterRarity = ref(game.data.equipment.optimizer.filterRarity);
 const filterArtifact = ref(game.data.equipment.optimizer.filterArtifact);
 const filter = ref(game.data.equipment.optimizer.list);
+const enchantmentListAdd = ref(0);
+const EEC = ref(game.data.equipment.evaluateController);
+const forgeValues = ref();
+// const optimizerBonusLevel = ref(EEC.)
 
 const globalInformations = computed(() =>
   game.data.equipment.globalInformations.filter(
@@ -26,7 +32,10 @@ const globalInformations = computed(() =>
 
 watch(optimizerType, () => {
   game.data.equipment.optimizer.kind = optimizerType.value;
+  game.data.equipment.optimizer.list = game.data.equipment.optimizer.GetList();
   filter.value = game.data.equipment.optimizer.list;
+  game.data.equipment.evaluateController.UpdateScoring();
+  console.log("watch optimizerType");
 });
 
 async function logRender(num) {
@@ -44,7 +53,12 @@ async function loop() {
   // let multiplier = game.data.equipment.optimizer.GetMultiplier();
   const loadout = Sort(game.data.inventory.GetCurrentLoadout());
 
-  // game.data.equipment.ApplyLoadoutForge([])
+  // apply forge values to test
+  forgeValues.value.applyForge();
+  EEC.value.anvilBonusLevel = forgeValues.value.forgeValues[6];
+  EEC.value.anvilIncrement = forgeValues.value.forgeValues[5];
+  // remove custom enchantements
+  game.data.equipment.ClearLoadout("enchant");
 
   function Sort(array: Equipment[]) {
     const newArray = [];
@@ -69,21 +83,26 @@ async function loop() {
     return newArray;
   }
 
-  const EEC = new EquipmentEvaluateController(game.data);
+  // const EEC = new EquipmentEvaluateController(game.data);
 
   for (let index = 0; index < loadout.length; index++) {
     const equipment = loadout[index];
     await logRender(`Testing Item ${index} / ${loadout.length} `);
     // let bestKind = equipment.kind;
     // let bestValue = multiplier.Value();
-
-    equipment.kind = EEC.Test(equipment);
+    EEC.value.Test(equipment);
+    // equipment.kind = EEC.value.Test(equipment);
     // equipment.kind = bestKind;
   }
 
   document.dispatchEvent(new CustomEvent("log", { detail: { type: "msg", data: "Finished" } }));
   document.dispatchEvent(new CustomEvent("log", { detail: { type: "unlock" } }));
-  console.log(EEC);
+  console.log(EEC.value);
+}
+
+function AddEffectToOptimizer() {
+  game.data.equipment.optimizer.AddToList(enchantmentListAdd.value);
+  filter.value.push(enchantmentListAdd.value);
 }
 </script>
 
@@ -93,15 +112,32 @@ async function loop() {
     <template #content>
       <div class="container">
         <h2>Find Decent Items</h2>
-        <AppSelect :type="CustomSelectType.EquipmentEffectOptimizer" v-model="optimizerType" />&nbsp; Include Artifacts: <input type="checkbox" v-model="filterArtifact" />
+        <AppSelect :type="CustomSelectType.EquipmentEffectOptimizer" v-model="optimizerType" />&nbsp;
+        <h3>Enchantments</h3>
 
-        <h3>Set to test</h3>
+        <span v-for="(effect, index) in filter" class="optimizeEffect" :title="effect.toString()">
+          {{ Localization.EquipmentEffectName(effect) }}
+          <span class="red interactive" @click="filter.splice(index, 1)">&#10006;</span>
+        </span>
+
+        <AppDialog>
+          <template #trigger> <button class="small">Add</button></template>
+          <template #content>
+            <AppSelect :type="CustomSelectType.EquipmentEffectKind" v-model="enchantmentListAdd" />
+            <button @click="AddEffectToOptimizer">Add</button>
+          </template>
+        </AppDialog>
+        <h3>Set</h3>
         <template v-for="(_, index) in filterSetKind">
           <span style="display: inline-block"><input type="checkbox" v-model="filterSetKind[index]" /> {{ EquipmentSetKind[index] }} </span>
         </template>
         <h3>Rarity</h3>
         <template v-for="(_, index) in filterRarity"> <input type="checkbox" v-model="filterRarity[index]" /> {{ EquipmentRarity[index] }} </template>
-
+        <h3>Other</h3>
+        Include Artifacts:
+        <AppCheckbox v-model="filterArtifact" />&nbsp;
+        <hr />
+        <EquipmentLoadoutApplyForge ref="forgeValues" :initial-values="[0, 0, 0, 0, 0, 1.5, 150]" />
         <br />
         <hr />
         Weapons to test:
@@ -111,8 +147,8 @@ async function loop() {
         Jewelry to test:
         {{ globalInformations.filter((equipment) => equipment.part == EquipmentPart.Jewelry).length }}
         <hr />
-        <button @click="loop">Find</button>
-        <RouterLink to="/help/#findBestEnchantements"><button>Help</button></RouterLink>
+        <button @click="loop">Find</button><button @click="console.log(game.data.equipment.optimizer)">DEBUG</button
+        ><button @click="console.log(game.data.equipment.evaluateController)">DEBUG EEC</button>
       </div>
     </template>
   </AppDialog>
@@ -135,6 +171,7 @@ async function loop() {
 .container {
   width: 700px;
   padding: 10px;
+  font-size: 12px;
 }
 </style>
 @use/EquipmentBest

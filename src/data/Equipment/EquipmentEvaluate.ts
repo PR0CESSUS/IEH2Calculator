@@ -3,6 +3,7 @@ import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
 import { DATA } from "..";
 import { EquipmentEffectKind } from "@/type/EquipmentEffectKind";
 import { EquipmentEvaluateController } from "./EquipmentEvaluateController";
+import { EquipmentParameter } from "./EquipmentParameter";
 
 type EquipmentEvaluateScore = {
   type: string;
@@ -29,12 +30,22 @@ export class EquipmentEvaluate {
     this.kind = info.kind;
     this.name = EquipmentKind[info.kind];
     this.slots = info.levelMaxEffects[3].initValue() + 4;
+    let highestValue = this.controller.enchantmentsTestList[0]; // Initialize with the first element
+
+    // get highest score enchantment
+    for (const num of this.controller.enchantmentsTestList) {
+      if (num.value > highestValue.value) {
+        highestValue = num;
+      }
+    }
     this.scoreList.push({
       type: "Slots",
       score: this.slots,
+      // score: this.slots * highestValue.value * EquipmentParameter.EffectCalculation(highestValue.kind, EquipmentParameter.MaxLevel(highestValue.kind) + 1),
+      value: EquipmentParameter.EffectCalculation(highestValue.kind, EquipmentParameter.MaxLevel(highestValue.kind) + 1),
+      kind: EquipmentEffectKind[highestValue.kind],
+      // score: this.slots * highestValue,
     });
-
-    // bad
 
     // this.setBonus = this.data.inventory.SetItemEquippedNum(info.setKind, this.data.source.currentHero);
     this.setBonus = this.SetBonus();
@@ -47,7 +58,7 @@ export class EquipmentEvaluate {
         const value = effect.EffectValue(120 + this.controller.anvilBonusLevel, 1 + this.controller.anvilIncrement);
         this.scoreList.push({
           type: "Effect",
-          score: value / this.controller.enchantmentsTestList.filter((test) => test.kind)[0].value,
+          score: value * this.controller.enchantmentsTestList.filter((test) => test.kind)[0].value,
           kind: EquipmentEffectKind[effect.kind],
           value: value,
         });
@@ -60,7 +71,7 @@ export class EquipmentEvaluate {
         const value = effect.EffectValue(120 + this.controller.anvilBonusLevel, 1 + this.controller.anvilIncrement);
         this.scoreList.push({
           type: "Mastery",
-          score: value / this.controller.enchantmentsTestList.filter((test) => test.kind)[0].value,
+          score: value * this.controller.enchantmentsTestList.filter((test) => test.kind)[0].value,
           kind: EquipmentEffectKind[effect.kind],
           value: value,
         });

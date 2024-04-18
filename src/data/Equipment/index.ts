@@ -11,6 +11,7 @@ import { EquipmentParameter } from "./EquipmentParameter";
 import { SDModifierKind } from "../../type/SDModifierKind";
 import { EquipmentEffectOptimizer } from "./EnchantmentOptimizer";
 import { EquipmentEffectKind } from "@/type/EquipmentEffectKind";
+import { EquipmentEvaluateController } from "./EquipmentEvaluateController";
 
 export class DataEquipment {
   data: DATA;
@@ -35,6 +36,7 @@ export class DataEquipment {
   autoDisassembleAvailableNum: Multiplier;
   dictionaryEquipmentArray: EquipmentKind[];
   optimizer: EquipmentEffectOptimizer;
+  evaluateController: EquipmentEvaluateController;
 
   constructor(DATA: DATA) {
     this.data = DATA;
@@ -79,6 +81,7 @@ export class DataEquipment {
 
   Initialize() {
     this.optimizer = new EquipmentEffectOptimizer(this.data);
+    this.evaluateController = new EquipmentEvaluateController(this.data);
   }
   EffectMultiplier() {
     if (this.data.source.isSuperDungeon && this.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveEquipmentEffectBonuses]) {
@@ -117,7 +120,7 @@ export class DataEquipment {
     for (let index = INITIAL_OFFSET; index < INITIAL_OFFSET + 72; index++) {
       const equipment = this.data.inventory.equipmentSlots[index];
 
-      for (let index = 0; index < equipment.forgeEffects.length; index++) equipment.forgeEffects[index].SetEffectValue(data[index]);
+      for (let i = 0; i < equipment.forgeEffects.length; i++) equipment.forgeEffects[i].SetEffectValue(data[i]);
     }
     this.StartLoadout();
   }

@@ -13,6 +13,7 @@ import { HeroKind } from "../../type/HeroKind";
 import { DATA } from "..";
 import { NumberType } from "../../type/NumberType";
 import { Unlock } from "../Unlock";
+import { Util } from "@/Util";
 
 export class DataSkill {
   data: DATA;
@@ -127,6 +128,9 @@ export class DataSkill {
     }
 
     return num;
+  }
+  TotalTriggeredNumString() {
+    return Util.tDigit(this.TotalTriggeredNum());
   }
 
   SetEffectSkillCastSpeedModifier(info: MultiplierInfo) {

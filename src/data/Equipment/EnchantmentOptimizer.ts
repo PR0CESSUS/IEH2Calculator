@@ -7,10 +7,11 @@ import { MonsterSpecies } from "../../type/MonsterSpecies";
 import { SDModifierKind } from "../../type/SDModifierKind";
 
 import { EquipmentEffectOptimizerKind } from "@/type/EquipmentEffectOptimizerKind";
+import { Multiplier } from "../Multiplier";
 
 export class EquipmentEffectOptimizer {
   data: DATA;
-  #kind: EquipmentEffectOptimizerKind = EquipmentEffectOptimizerKind.DPS;
+  kind: EquipmentEffectOptimizerKind = EquipmentEffectOptimizerKind.TPG;
   list: EquipmentEffectKind[] = [];
   filterSetKind: boolean[] = [true, false, false, false, false, true, true, true, true, true, false];
   filterRarity: boolean[] = [false, false, true, true, true];
@@ -22,12 +23,17 @@ export class EquipmentEffectOptimizer {
     this.filterArtifact = this.data.source.isSuperDungeon;
   }
 
-  get kind() {
-    return this.#kind;
-  }
-  set kind(value) {
-    this.#kind = value;
-    this.list = this.GetList();
+  // get kind() {
+  //   return this.#kind;
+  // }
+  // set kind(value) {
+  //   this.#kind = value;
+  //   this.list = this.GetList();
+  // }
+
+  AddToList(kind: EquipmentEffectKind) {
+    if (this.list.includes(kind) || kind == 0) return;
+    this.list.push(kind);
   }
 
   GetList() {
@@ -56,10 +62,10 @@ export class EquipmentEffectOptimizer {
     }
   }
 
-  GetMultiplier() {
+  GetMultiplier(): Multiplier {
     switch (this.kind) {
       case EquipmentEffectOptimizerKind.DPS:
-        return { Value: () => this.data.battle.Enemy().AttackedInfo().dps };
+        return { Value: () => this.data.battle.Enemy().AttackedInfo().dps } as Multiplier;
       case EquipmentEffectOptimizerKind.SkillProficiency:
         return this.data.stats.currentHero.stats[Stats.SkillProficiencyGain];
       case EquipmentEffectOptimizerKind.TPG:

@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { Util } from "@/Util";
-import { applyLoadoutForge } from "@/data/Equipment/EquipmentApply";
-import { clearLoadout } from "@/data/Equipment/EquipmentClear";
 import { Localization } from "@/localization";
 import { CustomSelectType } from "@/type/CustomSelectType";
-import { SDGemKind } from "@/type/SDGemKind";
 import { computed, inject, ref } from "vue";
 import { Game } from "../Game";
 import AppDialog from "./AppDialog.vue";
@@ -12,12 +8,11 @@ import AppDownload from "./AppDownload.vue";
 import AppInput from "./AppInput.vue";
 import AppSelect from "./AppSelect.vue";
 import EquipmentLoadoutImport from "./EquipmentLoadoutImport.vue";
+import EquipmentLoadoutApplyForge from "./EquipmentLoadoutApplyForge.vue";
 
 const game = inject<Game>("game");
 
 const loadoutBreakdownList = computed(() => game.data.inventory.GetLoadoutBreakdownList());
-const applyForgeValues = ref([0, 0, 0, 0, 0, 0, 0]);
-const limitForge = computed(() => applyForgeValues.value.filter((element) => element != 0).length);
 
 const enchantementsSlots = computed(() => game.data.inventory.GetLoadoutEnchantments(false));
 
@@ -67,47 +62,8 @@ const addEnchantementsSlots = ref([{ kind: 0, value: 0 }]);
     <!-- <button @click="new EquipmentBestEnchantment(game.data.stats.currentHero.stats[Stats.SkillProficiencyGain])" class="btn btn-gray">Find BEST Enchantements</button> -->
 
     <AppDialog>
-      <template #trigger> <button>Change Loadout Forge</button></template>
-      <template #content>
-        <h2>Apply Forge to Loadout: (Limit: {{ limitForge }} / 4)</h2>
-        <p class="orange">
-          <input type="text" v-model.lazy.number="applyForgeValues[0]" :disabled="limitForge == 4 && applyForgeValues[0] == 0" />- Required Hero Level of this equipment
-          {{ Util.tDigit(applyForgeValues[0]) }}
-        </p>
-        <p class="orange">
-          <input type="text" v-model.lazy.number="applyForgeValues[1]" :disabled="limitForge == 4 && applyForgeValues[1] == 0" />- Required Ability Point of this equipment
-          {{ Util.tDigit(applyForgeValues[1]) }}
-        </p>
-        <p class="orange">
-          <input type="text" v-model.lazy.number="applyForgeValues[2]" :disabled="limitForge == 4 && applyForgeValues[2] == 0" />- Proficiency Gain of this equipment
-          {{ Util.percent(applyForgeValues[2]) }}
-        </p>
-        <p class="orange">
-          <input type="text" v-model.lazy.number="applyForgeValues[3]" :disabled="limitForge == 4 && applyForgeValues[3] == 0" />- This equipment's effect
-          {{ Util.percent(Math.min(applyForgeValues[3], game.data.source.sdGemLevels[SDGemKind.Kunzite] / 10 + 10)) }}
-        </p>
-        <p class="orange">
-          <input type="text" v-model.lazy.number="applyForgeValues[4]" :disabled="limitForge == 4 && applyForgeValues[4] == 0" />- Decrease this equipment's current negative
-          effects {{ Util.percent(Math.min(applyForgeValues[4], 1)) }}
-        </p>
-        <p class="orange">
-          <input type="text" v-model.lazy.number="applyForgeValues[5]" :disabled="limitForge == 4 && applyForgeValues[5] == 0" />- This equipment's effect increment per level
-          {{ Util.percent(Math.min(applyForgeValues[5], game.data.source.sdGemLevels[SDGemKind.Carnelian] / 100 + 1)) }}
-        </p>
-        <p class="orange">
-          <input type="text" v-model.lazy.number="applyForgeValues[6]" :disabled="limitForge == 4 && applyForgeValues[6] == 0" />- This equipment's level
-          {{ Util.tDigit(Math.min(applyForgeValues[6], game.data.source.sdGemLevels[SDGemKind.BlueTourmaline] + 100), 0) }}
-        </p>
-        <hr />
-        <button
-          @click="
-            clearLoadout('forge');
-            applyLoadoutForge(applyForgeValues);
-          "
-        >
-          Apply
-        </button>
-      </template>
+      <template #trigger><button>Change Loadout Forge</button></template>
+      <template #content><EquipmentLoadoutApplyForge manual-apply /></template>
     </AppDialog>
     <AppDialog>
       <template #trigger> <button>Add Enchantements</button></template>

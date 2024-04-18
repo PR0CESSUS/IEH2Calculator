@@ -1,16 +1,24 @@
-import { EquipmentKind } from "@/type/EquipmentKind";
-import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
-import { DATA } from "..";
+import { Enums } from "@/Enums";
 import { EquipmentEffectKind } from "@/type/EquipmentEffectKind";
-import { EquipmentParameter } from "./EquipmentParameter";
+import { EquipmentEffectOptimizerKind } from "@/type/EquipmentEffectOptimizerKind";
+import { EquipmentKind } from "@/type/EquipmentKind";
+import { MultiplierKind } from "@/type/MultiplierKind";
+import { MultiplierType } from "@/type/MultiplierType";
+import { DATA } from "..";
+import { MultiplierInfo } from "../Multiplier";
 import { Equipment } from "./Equipment";
 import { EquipmentEvaluate } from "./EquipmentEvaluate";
-import { Enums } from "@/Enums";
+import { EquipmentGlobalInformation } from "./EquipmentGlobalInformation";
 
 type EquipmentEvaluateEnchantTest = {
   kind: EquipmentEffectKind;
   value: number;
   name: string;
+};
+
+type EquipmentEvaluateHistory = {
+  winnerKind: EquipmentKind;
+  tested: EquipmentEvaluate[];
 };
 
 export class EquipmentEvaluateController {
@@ -20,23 +28,23 @@ export class EquipmentEvaluateController {
   enchantmentsTestList: EquipmentEvaluateEnchantTest[] = [];
   anvilBonusLevel = 160;
   anvilIncrement = 1.7;
-  history = [];
-  selected: EquipmentEvaluate[] = [];
+  history: EquipmentEvaluateHistory[];
+  selected: EquipmentEvaluate[];
   selectedSet: Set<EquipmentKind>[] = Array(Enums.EquipmentSetKind);
 
   constructor(DATA: DATA) {
     this.data = DATA;
 
+    // this.UpdateScoring();
+    this.Initialize();
+  }
+
+  Initialize() {
+    this.history = [];
+    this.selected = [];
     for (let index = 0; index < this.selectedSet.length; index++) {
       this.selectedSet[index] = new Set();
     }
-
-    for (let index = 0; index < this.data.equipment.optimizer.list.length; index++) {
-      const kind = this.data.equipment.optimizer.list[index];
-
-      this.enchantmentsTestList.push({ kind: kind, name: EquipmentEffectKind[kind], value: EquipmentParameter.EffectCalculation(kind, EquipmentParameter.MaxLevel(kind) + 1) });
-    }
-
     this.equipmentTestList = this.data.equipment.globalInformations.filter(
       (equipment) =>
         this.data.equipment.optimizer.filterRarity[equipment.rarity] &&
@@ -47,6 +55,7 @@ export class EquipmentEvaluateController {
 
   Test(equipment: Equipment) {
     let testedEquipmentList: EquipmentEvaluate[] = [];
+    this.UpdateScoring();
 
     for (let i = 0; i < this.equipmentTestList.length; i++) {
       const testedEquipment = this.equipmentTestList[i];
@@ -65,7 +74,7 @@ export class EquipmentEvaluateController {
       // }
     }
     const max = testedEquipmentList.reduce((prev, current) => (prev && prev.score > current.score ? prev : current)); //returns object
-    this.history.push(testedEquipmentList);
+    this.history.push({ winnerKind: max.kind, tested: testedEquipmentList });
     this.selected.push(max);
     this.selectedSet[max.info.setKind].add(max.info.kind);
     return max.info.kind;
@@ -89,5 +98,26 @@ export class EquipmentEvaluateController {
     this.selectedSet[equipment.info.setKind].delete(equipment.info.kind);
 
     return after - score;
+  }
+
+  UpdateScoring() {
+    this.enchantmentsTestList = [];
+    console.log("this.UpdateScoring();");
+    if (this.data.equipment.optimizer.kind == EquipmentEffectOptimizerKind.DPS) return;
+
+    for (let index = 0; index < this.data.equipment.optimizer.list.length; index++) {
+      const kind = this.data.equipment.optimizer.list[index];
+      const multiplier = this.data.equipment.optimizer.GetMultiplier();
+      const valueBefore = multiplier.Value();
+      //TODO multiplier type for different enchants
+      const type = kind == 77 ? MultiplierType.Add : MultiplierType.Mul;
+
+      const unregister = multiplier.RegisterMultiplier(new MultiplierInfo(MultiplierKind.Equipment, type, () => 1));
+
+      const valueAfter = multiplier.Value();
+      unregister();
+
+      this.enchantmentsTestList.push({ kind: kind, name: EquipmentEffectKind[kind], value: valueAfter - valueBefore });
+    }
   }
 }
