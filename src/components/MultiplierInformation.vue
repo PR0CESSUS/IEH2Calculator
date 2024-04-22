@@ -69,7 +69,8 @@ const multiplier = ref(useCompareMultiplier(props.multiplier));
   <Tooltip>
     <template #trigger>
       <p @mouseover.once="init = true" @click="console.log(multiplier)" :class="{ underline: !props.inline }">
-        <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }"> {{ multiplier.raw.main.name }}</span>
+        <span class="nameWrap" :class="{ yellow: multiplier.main.isLog }"> {{ multiplier.raw.main.name }}</span
+        >&nbsp;
 
         <span :class="[useCompareColor(multiplier.diff.value, multiplier.main.value, multiplier.snap.value)]" class="right"
           >{{ multiplier.compare.value }} {{ Util.convertTo(multiplier.main.Value(), props.precision, multiplier.main.numberType) }} {{ props.valueSuffix }}

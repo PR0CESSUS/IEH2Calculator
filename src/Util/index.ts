@@ -7,6 +7,7 @@ import { secondsToDhms } from "./secondsToDhms";
 // import { encoder, decoder } from "./encoder";
 import { stringToPath } from "./stringToPath";
 import { get } from "./get";
+import { secondsToTime } from "./secondsToTime";
 
 export const Util = {
   convertTo,
@@ -21,6 +22,7 @@ export const Util = {
     return convertTo(value, precision, NumberType.Meter);
   },
   secondsToDhms,
+  secondsToTime,
   getBaseLog: (x, y) => {
     return Math.log(x) / Math.log(y);
   },

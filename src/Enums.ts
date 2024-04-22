@@ -29,8 +29,12 @@ import { QuestKindTitle } from "./type/QuestKindTitle";
 import { EquipmentEffectOptimizerKind } from "./type/EquipmentEffectOptimizerKind";
 import { EquipmentRarity } from "./type/EquipmentRarity";
 import { SDModifierKind } from "./type/SDModifierKind";
+import { GuildSuperAbilityKind } from "./type/GuildSuperAbilityKind";
+import { SDGemKind } from "./type/SDGemKind";
 
 export const Enums = {
+  SDGemKind: Object.entries(SDGemKind).length / 2,
+  GuildSuperAbilityKind: Object.entries(GuildSuperAbilityKind).length / 2,
   SDModifierKind: Object.entries(SDModifierKind).length / 2,
   HeroKind: Object.entries(HeroKind).length / 2,
   EquipmentRarity: Object.entries(EquipmentRarity).length / 2,

@@ -72,7 +72,7 @@ function createSnapshot() {
     <div id="content"><router-view></router-view></div>
 
     <div id="footer" class="footer">
-      Version: <span id="version"> {{ packageInfo.version }} </span> | Game Version 1.3.1.6 | <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a> |
+      Version: <span id="version"> {{ packageInfo.version }} </span> | Game Version 1.3.1.7 | <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a> |
       Encounter any bug? DM me on <a href="https://discord.com/invite/QEpxWM2fv5" target="_blank">IEH2 Discord</a> @Processus
     </div>
   </div>

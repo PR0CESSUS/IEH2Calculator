@@ -55,6 +55,7 @@ export class DataGuild {
     //   this.members[index] = new GuildMember(this, index);
     // this.abilityPointLeft = new GuildAbilityPointLeft();
     for (let kind = 0; kind < this.abilities.length; kind++) this.abilities[kind] = new GuildAbility(this, kind);
+
     this.superAbilityList.push(new GSA_SuperMining(this));
     this.superAbilityList.push(new GSA_SuperSynthesizing(this));
     this.superAbilityList.push(new GSA_SuperGathering(this));
@@ -65,9 +66,9 @@ export class DataGuild {
     this.superAbilityList.push(new GSA_Finding(this));
     this.superAbilityList.push(new GSA_Racing(this));
     this.superAbilityList.push(new GSA_Socializing(this));
-    this.superAbilityList.push(new GSA_Haggling(this));
     this.superAbilityList.push(new GSA_Ritualizing(this));
     this.superAbilityList.push(new GSA_Artificing(this));
+    this.superAbilityList.push(new GSA_Haggling(this));
     // for (int guildLevel = 0; guildLevel < this.accomplishGuildLevels.length; guildLevel++)
     //   this.accomplishGuildLevels[guildLevel] = new AccomplishGuildLevel(guildLevel);
     // this.grade = new GuildGrade((Func<long>) (() => GuildParameter.maxGuildLevel));
