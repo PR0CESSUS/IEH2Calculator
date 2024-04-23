@@ -31,8 +31,37 @@ import { EquipmentRarity } from "./type/EquipmentRarity";
 import { SDModifierKind } from "./type/SDModifierKind";
 import { GuildSuperAbilityKind } from "./type/GuildSuperAbilityKind";
 import { SDGemKind } from "./type/SDGemKind";
+import { SkillKindAngel } from "./type/SkillKindAngel";
+import { SkillKindArcher } from "./type/SkillKindArcher";
+import { SkillKindTamer } from "./type/SkillKindTamer";
+import { SkillKindThief } from "./type/SkillKindThief";
+import { SkillKindWizard } from "./type/SkillKindWizard";
 
 export const Enums = {
+  Enum: {
+    SDGemKind,
+    GlobalStats,
+    GuildSuperAbilityKind,
+    SDModifierKind,
+    HeroKind,
+    EquipmentRarity,
+    AreaKind,
+    BasicStatsKind,
+    MonsterSpecies,
+    MonsterColor,
+    ChallengeMonsterKind,
+    EquipmentSetKind,
+    EquipmentKind,
+    EquipmentPart,
+    EquipmentForgeEffectKind,
+    SuperDungeonPowerupKind,
+    SkillKindWarrior,
+    SkillKindWizard,
+    SkillKindAngel,
+    SkillKindThief,
+    SkillKindArcher,
+    SkillKindTamer,
+  },
   SDGemKind: Object.entries(SDGemKind).length / 2,
   GuildSuperAbilityKind: Object.entries(GuildSuperAbilityKind).length / 2,
   SDModifierKind: Object.entries(SDModifierKind).length / 2,
