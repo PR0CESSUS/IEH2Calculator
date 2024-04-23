@@ -8,6 +8,7 @@ import { useSaveFileData } from "./stores/data";
 import { useSaveFileSnapshot } from "./stores/snap";
 import { createRouter, createWebHashHistory } from "vue-router/auto";
 import { useGlobalStore } from "./stores/global";
+import { Enums } from "./Enums";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -23,11 +24,9 @@ const game = new Game(data, snap);
 
 globalThis.Game = game;
 globalThis.globalStore = useGlobalStore();
+globalThis.Enums = Enums;
 
-// deprecated
-globalThis.SaveFileData = data;
-globalThis.SaveFileSnapshot = snap;
-
+// debug
 app.config.performance = true;
 
 app.provide("game", game);
