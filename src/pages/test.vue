@@ -56,6 +56,7 @@ const aaa = ref(12);
 </script>
 
 <template>
+  <hr />
   <button style="font-size: 12px" @click="store.version = '0.1.41'">TEST Changelog new version</button>
   <hr />
 

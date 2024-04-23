@@ -17,7 +17,7 @@ const game = inject<Game>("game");
 const state = useGlobalStore().talisman;
 
 function cost(talisman) {
-  return talisman.level == 50 ? 0 : talisman.Cost(talisman.level + 1);
+  return talisman.level == 50 ? 0 : talisman.Cost(talisman.level);
 }
 
 function bestTalisman() {
@@ -26,7 +26,7 @@ function bestTalisman() {
   for (let index = 0; index < game.data.potion.talismans.length; index++) {
     const talisman = game.data.potion.talismans[index];
     const fragments = talisman.talismanDisassembleFragmentNumPerLevel * talisman.level * state.perWA[index];
-    const cost = talisman.level == 50 ? 0 : talisman.Cost(talisman.level + 1);
+    const cost = talisman.level == 50 ? 0 : talisman.Cost(talisman.level);
     const efficiency = cost ? fragments / cost : 0;
 
     if (bestEfficiency < efficiency) {
@@ -49,7 +49,7 @@ function totalFragments() {
 
 function efficiency(talisman, index) {
   const fragments = (talisman.talismanDisassembleFragmentNumPerLevel * talisman.level * state.perWA[index]) | 0;
-  const cost = talisman.level == 50 ? 0 : talisman.Cost(talisman.level + 1);
+  const cost = talisman.level == 50 ? 0 : talisman.Cost(talisman.level);
   const efficiency = cost ? fragments / cost : 0;
   return Util.tDigit(efficiency, 5);
 }

@@ -20,8 +20,8 @@ definePage({
       <AppDifference :data="game.data.skill.TotalTriggeredNum()" :snap="game.snap.skill.TotalTriggeredNum()" />
     </template>
     <template #content>
-      Snapshot: {{ game.snap.skill.TotalTriggeredNum() }} ({{ game.snap.skill.TotalTriggeredNumString() }}) <br />
-      Current: {{ game.data.skill.TotalTriggeredNum() }} ({{ game.data.skill.TotalTriggeredNumString() }})
+      Snapshot [{{ Util.secondsToTime(game.snap.source.allTimeRealtime) }}]: {{ game.snap.skill.TotalTriggeredNum() }} ({{ game.snap.skill.TotalTriggeredNumString() }}) <br />
+      Current [{{ Util.secondsToTime(game.data.source.allTimeRealtime) }}]: {{ game.data.skill.TotalTriggeredNum() }} ({{ game.data.skill.TotalTriggeredNumString() }})
       <hr />
       Difference: {{ game.data.skill.TotalTriggeredNum() - game.snap.skill.TotalTriggeredNum() }} ({{
         Util.tDigit(game.data.skill.TotalTriggeredNum() - game.snap.skill.TotalTriggeredNum())
