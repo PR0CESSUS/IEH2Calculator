@@ -373,7 +373,7 @@ export class DataInventory {
         const effect = effects[i];
         if (data[dataIndex].value == 0) dataIndex++;
         if (dataIndex == data.length || data[dataIndex].value == 0) {
-          this.Update();
+          // this.Update();
           return;
         }
 
@@ -381,5 +381,7 @@ export class DataInventory {
         data[dataIndex].value--;
       }
     }
+
+    this.Update();
   }
 }

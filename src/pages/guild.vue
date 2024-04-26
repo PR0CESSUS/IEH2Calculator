@@ -4,6 +4,7 @@ import { Util } from "@util";
 import { useGlobalStore } from "@stores/global";
 import { Game } from "@/Game";
 import { definePage } from "vue-router/auto";
+import AppInput from "@/components/AppInput.vue";
 
 definePage({
   meta: {
@@ -15,41 +16,18 @@ const game = inject<Game>("game");
 const state = useGlobalStore().guild;
 
 function getTime() {
-  let levelTotal = state.targetLevel - game.data.source.guildLevel;
-
-  if (levelTotal > 0 && state.expPerHour > 0) {
+  if (state.targetLevel - game.data.guild.level > 0 && state.expPerHour > 0) {
     let requiredExpTotal = 0;
     let time = 0;
-    let talismanPassive = 1.0 - game.data.potion.talismans[0].passiveEffectValue;
-
-    for (let i = 0; i < levelTotal; i++) {
-      let level = game.data.source.guildLevel + i;
-      let requiredExp =
-        Math.floor(
-          (500.0 * (level + 1) +
-            50.0 * Math.pow(level, 2.0) +
-            500.0 * Math.pow(level / 5.0, 3.0) +
-            2000.0 * Math.pow(level / 10.0, 6.0) +
-            25000.0 * Math.pow(level / 20.0, 9.0) +
-            300000.0 * Math.pow(level / 30.0, 12.0)) *
-            Math.pow(10.0, Math.max(0, level - 300) / 25.0)
-        ) * talismanPassive;
-
-      requiredExpTotal += requiredExp;
-    }
-
     let expPerSeconds = (state.expPerHour / 3600) * game.data.source.nitroSpeed;
+    for (let level = game.data.guild.level; level < state.targetLevel; level++) requiredExpTotal += game.data.guild.RequiredExp(level);
+
     time = requiredExpTotal / expPerSeconds;
 
-    return Util.secondsToDhms(time);
+    return Util.secondsToTime(time);
   } else {
-    return 0;
+    return "0";
   }
-  //
-}
-
-function formatValue(event: Event) {
-  state.expPerHour = Util.convertFrom((event.target as HTMLInputElement).value);
 }
 </script>
 
@@ -58,32 +36,26 @@ function formatValue(event: Event) {
     <tr>
       <td>Nitro Speed</td>
       <td>
-        <input
-          type="text"
-          size="12"
-          :value="Util.tDigit(game.data.source.nitroSpeed, 1)"
-          @change="game.data.source.nitroSpeed = parseFloat(($event.target as HTMLInputElement).value)"
-        />
+        <AppInput v-model.convert="game.data.source.nitroSpeed" :size="12" :precision="1" :max="7.0" :min="1.0" />
       </td>
     </tr>
     <tr>
       <td>Current Level</td>
-      <td><input type="text" size="12" v-model.number="game.data.source.guildLevel" /></td>
+      <td><AppInput v-model="game.data.source.guildLevel" :size="12" /></td>
     </tr>
     <tr>
       <td>Target Level</td>
-      <td><input type="text" size="12" v-model.number="state.targetLevel" /></td>
+      <td><AppInput v-model="state.targetLevel" :size="12" :max="500" :precision="0" /></td>
     </tr>
     <tr>
       <td>Guild EXP per hour</td>
-      <td><input type="text" size="12" :value="Util.convertTo(state.expPerHour)" @change="formatValue($event)" /></td>
+      <td>
+        <AppInput v-model.convert="state.expPerHour" :size="12" />
+      </td>
     </tr>
     <tr>
       <td>Guild Member's Emblem Disasambled</td>
-      <td>
-        <input type="text" size="12" v-model.number="game.data.potion.talismans[0].disassembledNum" />Reduce Guild EXP requirement to level by
-        {{ Util.percent(game.data.potion.talismans[0].passiveEffectValue) }}
-      </td>
+      <td><AppInput v-model="game.data.potion.talismans[0].disassembledNum" :size="12" /> {{ game.data.potion.talismans[0].EffectValueString() }}</td>
     </tr>
     <tr>
       <td>Approximate Time Needed</td>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { EquipmentForgeEffectKind } from "@/type/EquipmentForgeEffectKind";
 import { computed, inject, ref } from "vue";
-import { Enums } from "../Enums";
 import { Game } from "../Game";
 import { Util } from "../Util/index";
 import { Localization } from "../localization/index";
@@ -13,6 +12,7 @@ import { EquipmentRarity } from "../type/EquipmentRarity";
 import { EquipmentSetKind } from "../type/EquipmentSetKind";
 import { HeroKind } from "../type/HeroKind";
 import AppInput from "./AppInput.vue";
+import AppSelectEnchantments from "./AppSelectEnchantments.vue";
 import Tooltip from "./Tooltip.vue";
 
 const props = defineProps<{ id: number }>();
@@ -247,9 +247,7 @@ function pasteEvent() {
           <br />
           <p v-for="(effect, index) in equipment.optionEffects" style="display: flex">
             <template v-if="index < equipment.totalOptionNum.Value()">
-              <select v-model="effect.kind" name="optionKind">
-                <option v-for="(_, i) in Enums.EquipmentEffectKind" :value="i">{{ Localization.EquipmentEffectName(i) }}</option>
-              </select>
+              <AppSelectEnchantments v-model="effect.kind" />
 
               <template v-if="effect.kind">
                 &nbsp;Lv&nbsp;

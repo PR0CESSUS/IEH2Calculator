@@ -1,21 +1,17 @@
 <script setup lang="ts">
 import { Localization } from "@/localization";
-import { CustomSelectType } from "@/type/CustomSelectType";
 import { computed, inject, ref } from "vue";
 import { Game } from "../Game";
 import AppDialog from "./AppDialog.vue";
 import AppDownload from "./AppDownload.vue";
 import AppInput from "./AppInput.vue";
-import AppSelect from "./AppSelect.vue";
-import EquipmentLoadoutImport from "./EquipmentLoadoutImport.vue";
+import AppSelectEnchantments from "./AppSelectEnchantments.vue";
 import EquipmentLoadoutApplyForge from "./EquipmentLoadoutApplyForge.vue";
+import EquipmentLoadoutImport from "./EquipmentLoadoutImport.vue";
 
 const game = inject<Game>("game");
-
 const loadoutBreakdownList = computed(() => game.data.inventory.GetLoadoutBreakdownList());
-
 const enchantementsSlots = computed(() => game.data.inventory.GetLoadoutEnchantments(false));
-
 const addEnchantementsSlots = ref([{ kind: 0, value: 0 }]);
 </script>
 
@@ -77,8 +73,8 @@ const addEnchantementsSlots = ref([{ kind: 0, value: 0 }]);
 
         <template v-for="enchant in addEnchantementsSlots">
           <div>
-            <AppSelect :type="CustomSelectType.EquipmentEffectKind" v-model="enchant.kind" />
-            <AppInput v-model="enchant.value" />
+            <AppSelectEnchantments v-model="enchant.kind" />
+            <AppInput v-model="enchant.value" :precision="0" :max="enchantementsSlots.length" />
           </div>
         </template>
         <button @click="addEnchantementsSlots.push({ kind: 0, value: 0 })">Add</button>

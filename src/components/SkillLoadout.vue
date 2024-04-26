@@ -9,10 +9,9 @@ const skillSet = computed(() => game.data.battle.skillSet);
 </script>
 
 <template>
-  Skill Loadout
   <div style="display: flex">
     <div>
-      Class Skill <button @click="console.log(skillSet.currentSkillSet)">Info</button>
+      Class Skill
       <div class="block">
         <template v-for="skill in skillSet.currentSkillSet">
           <Tooltip>
@@ -27,9 +26,8 @@ const skillSet = computed(() => game.data.battle.skillSet);
                 <span class="green">Lv {{ Util.tDigit(skill.level.value, 0) }} + {{ Util.tDigit(skill.levelBonus, 0) }} </span>
                 <span class="orange"> &lt; Rank {{ skill.rank }} &gt;</span>
               </p>
-              <p>
-                {{ skill.DamageString() }}
-              </p>
+              <p>{{ skill.DamageString() }}</p>
+              <p>- Cast Time : {{ Util.tDigit(skill.CalculateInterval(game.data.battle.hero), 3) }} sec</p>
             </template>
           </Tooltip>
         </template>
@@ -41,12 +39,18 @@ const skillSet = computed(() => game.data.battle.skillSet);
         <template v-for="skill in skillSet.currentGlobalSkillSet">
           <Tooltip>
             <template #trigger>
-              <img v-if="skill" :title="skill.NameURL()" :src="`img/skill/${skill.NameURL()}.png`" />
+              <img v-if="skill" :title="skill.NameURL()" :src="`img/skill/${skill.NameURL()}.png`" :class="{ disabled: !skill.IsEquipped(game.data.source.currentHero) }" />
               <img v-else title="Skill Slot" :src="`img/skill/Skillslot.png`" />
             </template>
 
-            <template #content>
-              <h2 v-if="skill">{{ skill.NameString() }}</h2>
+            <template #content v-if="skill">
+              <p>
+                {{ skill.NameString() }}
+                <span class="green">Lv {{ Util.tDigit(skill.level.value, 0) }} + {{ Util.tDigit(skill.levelBonus, 0) }} </span>
+                <span class="orange"> &lt; Rank {{ skill.rank }} &gt;</span>
+              </p>
+              <p>{{ skill.DamageString() }}</p>
+              <p>- Cast Time : {{ Util.tDigit(skill.CalculateInterval(game.data.battle.hero), 3) }} sec</p>
             </template>
           </Tooltip>
         </template>
@@ -69,7 +73,7 @@ const skillSet = computed(() => game.data.battle.skillSet);
   display: grid;
   grid-template-columns: repeat(4, 48px);
   gap: 0px;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 ul {

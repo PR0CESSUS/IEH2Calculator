@@ -27,7 +27,6 @@ export class DataGuild {
   guildLevelCap: Multiplier;
   timecountSec;
   activableNum: Multiplier;
-  level;
   exp;
   expRequirementReduction: Multiplier;
   members; //= new GuildMember[Enums.HeroKind)];
@@ -97,6 +96,14 @@ export class DataGuild {
     this.abilities[kind];
   }
 
+  get level() {
+    return this.data.source.guildLevel;
+  }
+
+  set level(value) {
+    this.data.source.guildLevel = value;
+  }
+
   Level() {
     return this.level;
   }
@@ -106,7 +113,7 @@ export class DataGuild {
   }
 
   RequiredExp(level = 0) {
-    if (level == 0) return this.RequiredExp(this.Level());
+    // if (level == 0) return this.RequiredExp(this.Level());
     return GuildParameter.RequiredExp(level) * (1.0 - this.expRequirementReduction.Value());
   }
 

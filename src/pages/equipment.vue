@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Game } from "@/Game";
 import SkillBreakdown from "@/components/SkillBreakdown.vue";
+import SkillLoadout from "@/components/SkillLoadout.vue";
 import EquipmentLoadout from "@components/EquipmentLoadout.vue";
 import HeroStats from "@components/HeroStats.vue";
 import MonsterStats from "@components/MonsterStats.vue";
@@ -24,6 +25,8 @@ const game = inject<Game>("game");
     </div>
     <div>
       <MonsterStats />
+      <hr />
+      <SkillLoadout />
       <hr />
       <SkillBreakdown :key="game.data.requireUpdate.value ? 'aaa' : 'bbb'" />
     </div>

@@ -9,7 +9,7 @@ import { Stats } from "@type/Stats";
 import { SkillPassiveKind } from "@type/SkillPassiveKind";
 
 export class ShieldAttack extends SKILL {
-  dushMeter;
+  dushMeter = 1;
 
   constructor(data: DATA, heroKind: HeroKind, id) {
     super(data, heroKind, id);
@@ -79,7 +79,7 @@ export class ShieldAttack extends SKILL {
     return num;
   }
 
-  Damage() {
-    return this.Damage() * (1.0 + this.DamageBonusPermeter() * this.dushMeter);
-  }
+  // Damage() {
+  //   return this.Damage() * (1.0 + this.DamageBonusPermeter() * this.dushMeter);
+  // }
 }
