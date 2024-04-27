@@ -2,12 +2,8 @@
 import { inject, ref } from "vue";
 import packageInfo from "../package.json";
 import { Game } from "./Game";
-import Clipboard from "./components/Clipboard.vue";
 import TheBreadcrumb from "./components/TheBreadcrumb.vue";
-import TheLog from "./components/TheLog.vue";
 import TheMenu from "./components/TheMenu.vue";
-import { useSaveFileData } from "./stores/data";
-import { SDModifierKind } from "./type/SDModifierKind";
 
 const game = inject<Game>("game");
 const dialog = ref<HTMLDialogElement>();
@@ -41,11 +37,6 @@ function hardReset() {
     window.alert("Data cleared, Reload page if you wish to start over");
   }
 }
-
-function createSnapshot() {
-  localStorage.setItem("SaveFileSnapshot", JSON.stringify(useSaveFileData().$state));
-  location.reload();
-}
 </script>
 
 <template>
@@ -55,13 +46,11 @@ function createSnapshot() {
         <TheBreadcrumb />
       </h1>
       <div id="settings">
-        <TheLog />
-        <button style="font-size: 12px" @click="dialog.showModal()">&#9776;</button>
+        <!-- <button style="font-size: 12px" @click="dialog.showModal()">&#9776;</button> -->
 
-        <button @click="createSnapshot()">Create Snapshot</button>
-        <label for="saveFileImport" class="importLabel">Import Save File</label>
-        <input type="file" id="saveFileImport" accept=".txt" @change="importSaveFile" />
-        <button id="data-restart" type="reset" @click="hardReset()">Hard Reset</button>
+        <!-- <label for="saveFileImport" class="importLabel">Import Save File</label> -->
+        <!-- <input type="file" id="saveFileImport" accept=".txt" @change="importSaveFile" /> -->
+        <!-- <button id="data-restart" type="reset" @click="hardReset()">Hard Reset</button> -->
       </div>
     </div>
 
@@ -72,60 +61,9 @@ function createSnapshot() {
     <div id="content"><router-view></router-view></div>
 
     <div id="footer" class="footer">
-      Version: <span id="version"> {{ packageInfo.version }} </span> | Game Version 1.3.1.7 | <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a> |
-      Encounter any bug? DM me on <a href="https://discord.com/invite/QEpxWM2fv5" target="_blank">IEH2 Discord</a> @Processus
+      Version: <span id="version"> {{ packageInfo.version }} </span> | <a href="https://github.com/pr0cessus/IEH2Calculator">Github Repository Page</a>
     </div>
   </div>
-  <dialog ref="dialog" @mousedown="if (($event.target as HTMLDialogElement).nodeName == dialog.nodeName) dialog.close();" style="background-color: #3a3a3a; color: #fff">
-    <div style="padding: 10px">
-      <input type="checkbox" v-model="game.data.source.isSuperDungeon" class="checkbox" name="isSuperDungeon" />
-      Super Dungeon<br />
-
-      <input type="checkbox" v-model="game.data.source.superDungeonPowerupIsActive" class="checkbox" name="superDungeonPowerupIsActive" />
-      Active Powerup<br />
-
-      <input type="checkbox" v-model="game.data.source.isBlessing" class="checkbox" name="isBlessing" />
-      Blessings<br />
-
-      <hr />
-      <h4>SD Modifiers</h4>
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.ReduceSkillSlot]" class="checkbox" name="ReduceClassSkillSlot" /> Decrease available
-      class skill slots by {{ game.data.source.sdModifierValuesCustom[SDModifierKind.ReduceSkillSlot] }}<br />&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-      <input type="range" min="1" max="7" v-model.lazy.number="game.data.source.sdModifierValuesCustom[SDModifierKind.ReduceSkillSlot]" name="ReduceClassSkillSlotValue" />
-      <br />
-
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.SwapATKWithDEF]" class="checkbox" name="SwapATKWithDEF" />
-      Swap ATK/MATK with DEF/MDEF<br />
-
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveSDUpgrade1]" class="checkbox" name="RemoveSDUpgrade1" />
-      Remove the effect of SD Damage-type and Fury upgrades in SD Upgrade I<br />
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.ReducePowerupEffect]" class="checkbox" name="ReducePowerupEffect" />
-      Reduce the effect of powerups by
-
-      {{
-        game.data.source.sdModifierValuesCustom[SDModifierKind.ReducePowerupEffect] == 0
-          ? "50.00%"
-          : game.data.source.sdModifierValuesCustom[SDModifierKind.ReducePowerupEffect] == 1
-          ? "90.00%"
-          : "99.00%"
-      }}
-      <br />
-      &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-      <input type="range" min="0" max="2" v-model.lazy.number="game.data.source.sdModifierValuesCustom[SDModifierKind.ReducePowerupEffect]" name="ReducePowerupEffectValue" />
-      <br />
-      <input type="checkbox" v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveSDPowerupPassives]" class="checkbox" name="RemoveSDPowerupPassives" />
-      Remove the permanent effects of SD Powerups
-      <br />
-      <input
-        type="checkbox"
-        v-model="game.data.source.isActiveSdModifiersCustom[SDModifierKind.RemoveEquipmentEffectBonuses]"
-        class="checkbox"
-        name="RemoveEquipmentEffectBonuses"
-      />
-      Remove Equipment Effect Bonus
-    </div>
-  </dialog>
-  <Clipboard />
 </template>
 
 <style scoped>

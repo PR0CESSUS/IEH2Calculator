@@ -4,7 +4,7 @@ import { definePage } from "vue-router/auto";
 definePage({
   meta: {
     name: "Data",
-    root: true,
+    root: false,
     submenu: true,
   },
 });

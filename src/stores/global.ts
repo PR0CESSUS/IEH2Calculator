@@ -5,29 +5,6 @@ import packageInfo from "../../package.json";
 const STORE_NAME = "GlobalStore";
 const DEFAULT_DATA = {
   version: "0.0.0",
-  heroStatsTabSelected: 0,
-  rubyShard: {
-    ticket: 0,
-    failure: 0,
-    dungeon: 0,
-    modifier: 0,
-    floor: 100,
-    time: 0,
-  },
-  dropChance: {
-    level: 0,
-    sdchance: 1,
-  },
-  guild: {
-    targetLevel: 0,
-    expPerHour: 0,
-  },
-  talisman: {
-    perWA: Array(47).fill(0),
-  },
-  expedition: {
-    playtime: 0,
-  },
 };
 
 export const useGlobalStore = defineStore(STORE_NAME, {
