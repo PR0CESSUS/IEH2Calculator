@@ -1,8 +1,8 @@
 {
-  "name": "idlewizardcalc",
-  "description": "Calculator for Idle Wizard",
+  "name": "ieh2calculator",
+  "description": "Calculator for Incremental Epic Hero 2",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.49",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,20 +13,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PR0CESSUS/IdleWizardCalc.git"
+    "url": "git+https://github.com/PR0CESSUS/IEH2Calculator.git"
   },
   "keywords": [
-    "Idle",
-    "Wizard",
-    "Idle Wizard",
+    "IEH2",
+    "Incremental",
+    "Epic",
+    "Hero",
     "Calculator"
   ],
   "author": "Processus",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/PR0CESSUS/IdleWizardCalc/issues"
+    "url": "https://github.com/PR0CESSUS/IEH2Calculator/issues"
   },
-  "homepage": "https://github.com/PR0CESSUS/IdleWizardCalc#readme",
+  "homepage": "https://github.com/PR0CESSUS/IEH2Calculator#readme",
   "dependencies": {
     "@vueuse/core": "^10.7.2",
     "pinia": "^2.1.7",

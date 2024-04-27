@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <RouterLink to="/">IdleWizardCalc</RouterLink>
+  <RouterLink to="/">IEH2Calculator</RouterLink>
   <template v-for="route in $route.matched">
     <template v-if="!route.meta.default">
       /
