@@ -15,7 +15,7 @@ const enchantmentList = ref(game.data.equipment.optimizer.list);
 const enchantmentListAdd = ref(0);
 watch(optimizerType, () => {
   game.data.equipment.optimizer.kind = optimizerType.value;
-  enchantmentList.value = game.data.equipment.optimizer.list;
+  enchantmentList.value = game.data.equipment.optimizer.GetList();
 });
 watch(game.data.requireUpdate, () => {
   enchantmentList.value = game.data.equipment.optimizer.list;
