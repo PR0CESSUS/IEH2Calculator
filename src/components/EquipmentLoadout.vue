@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { computed, inject } from "vue";
-import EquipmentInfo from "./EquipmentInfo.vue";
-import PotionInfo from "./PotionInfo.vue";
 import { Game } from "../Game";
-import AppDialog from "./AppDialog.vue";
-import EquipmentBreakdown from "./EquipmentBreakdown.vue";
-import AppSelect from "./AppSelect.vue";
 import { CustomSelectType } from "../type/CustomSelectType";
 import { HeroKind } from "../type/HeroKind";
+import AppDialog from "./AppDialog.vue";
+import AppSelect from "./AppSelect.vue";
 import EnchantFinder from "./EnchantFinder.vue";
-import EquipmentFindBestItems from "./EquipmentFindBestItems.vue";
+import EquipmentBreakdown from "./EquipmentBreakdown.vue";
 import EquipmentFindBestEnchantments from "./EquipmentFindBestEnchantments.vue";
+import EquipmentInfo from "./EquipmentInfo.vue";
+import PotionInfo from "./PotionInfo.vue";
 const game = inject<Game>("game");
 
 const EQUIPMENT_INITIAL_OFFSET = computed(() => 520 + game.data.source.currentHero * 720 + game.data.source.equipmentLoadoutIds[game.data.source.currentHero] * 72);
@@ -47,7 +46,7 @@ const POTION_INITIAL_OFFSET = computed(() => 260 + game.data.source.currentHero 
           : `Level: ${game.data.source.heroLevel[game.data.source.currentHero]}`
       }}
 
-      <EquipmentFindBestItems />
+      <!-- <EquipmentFindBestItems /> -->
       <EquipmentFindBestEnchantments />
     </div>
 

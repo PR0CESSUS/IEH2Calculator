@@ -156,7 +156,7 @@ export class EquipmentEffectOptimizer {
 
   GetDPS() {
     return this.data.source.isSuperDungeon
-      ? [EquipmentEffectKind.SDDamageMultiplier, EquipmentEffectKind.ExtraAfterDamage]
+      ? [EquipmentEffectKind.SDDamageMultiplier, EquipmentEffectKind.ExtraAfterDamage, EquipmentEffectKind.CriticalDamageAfter]
       : [EquipmentEffectKind.ArmoredFury, EquipmentEffectKind.WardedFury];
   }
 

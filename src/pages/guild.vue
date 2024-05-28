@@ -41,7 +41,7 @@ function getTime() {
     </tr>
     <tr>
       <td>Current Level</td>
-      <td><AppInput v-model="game.data.source.guildLevel" :size="12" /></td>
+      <td><AppInput v-model.int="game.data.source.guildLevel" :size="12" /></td>
     </tr>
     <tr>
       <td>Target Level</td>

@@ -18,6 +18,7 @@ const [model, modifiers] = defineModel({
     if (props.max) value = Math.min(value as number, props.max);
     if (props.min) value = Math.max(value as number, props.min);
     if (modifiers.convert) return Util.convertFrom(value);
+    if (modifiers.int) return Math.floor(value as number);
 
     return value;
   },
@@ -25,6 +26,7 @@ const [model, modifiers] = defineModel({
   get(value) {
     if (props.max) value = Math.min(value as number, props.max);
     if (modifiers.convert) return Util.convertTo(value, props.precision);
+    if (modifiers.int) return Math.floor(value as number);
 
     return value;
   },
@@ -33,7 +35,7 @@ const [model, modifiers] = defineModel({
 function checkMinMax($el: HTMLInputElement) {
   let value = modifiers.convert ? Util.convertFrom($el.value) : parseFloat($el.value);
   let valueChecked = value > props.max ? props.max : value < props.min ? props.min : value;
-  $el.value = modifiers.convert ? Util.convertTo(valueChecked, props.precision) : valueChecked.toFixed(props.precision);
+  $el.value = modifiers.convert ? Util.convertTo(valueChecked, props.precision) : modifiers.int ? parseInt(valueChecked) : valueChecked.toFixed(props.precision);
 }
 
 // console.log();
