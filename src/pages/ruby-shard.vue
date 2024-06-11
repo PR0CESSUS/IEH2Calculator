@@ -19,7 +19,7 @@ const state = useGlobalStore().rubyShard;
 
 function runsNum() {
   let runs = 0;
-  while (game.data.source.SDAutoLeaveAndRetryTargetEntryCost > Math.pow(2, runs)) runs++;
+  while (game.data.source.SDAutoLeaveAndRetryTargetEntryCost >= Math.pow(2, runs)) runs++;
   return runs;
 }
 
