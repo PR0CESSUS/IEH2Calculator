@@ -22,7 +22,7 @@ export class MonsterPet {
   unlockActiveEffectImprovement;
   saveId: number;
   //   loyaltyExp: MonsterPetLoyaltyExp;
-  //   MonsterPetTamingPotamingPoint;
+  // MonsterPetTamingPotamingPoint;
   //   unlockActiveEffectImprovement: Unlock;
 
   constructor(DATA: DATA, globalInfo: MonsterGlobalInformation, species: MonsterSpecies, color: MonsterColor) {
@@ -38,6 +38,11 @@ export class MonsterPet {
   // get saveId() {
   //   return this.color + 10 * this.species + this.challengeMonsterKind;
   // }
+
+  get monsterPetTamingPoints() {
+    return this.data.source.monsterPetTamingPoints[this.saveId];
+  }
+
   get level() {
     return this.data.source.monsterPetLevels[this.saveId];
   }

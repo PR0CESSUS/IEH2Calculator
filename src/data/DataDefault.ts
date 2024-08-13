@@ -502,7 +502,7 @@ export class DataDefault {
   monsterPetExps?: number[]; // = Array(130).fill(0);
   monsterPetLoyalty: number[] = Array(130).fill(0);
   monsterPetLoyaltyExp?: number[]; // = Array(130).fill(0);
-  monsterPetTamingPoints?: number[]; // = Array(130).fill(0);
+  monsterPetTamingPoints?: number[] = Array(130).fill(0);
   monsterPetIsActives?: boolean[]; // = Array(130).fill(false);
   openedChestNum?: number; // = 0;
   totalMovedDistance?: number[]; // = Array(6).fill(0);
